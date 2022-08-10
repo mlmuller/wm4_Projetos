@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	
+	<ui:define name="corpo">
+		<style type="text/css">
+
+		.panelgrlsb .ui-panelgrid {
+			border: none !important;
+		}
+		
+		.pangrdicb .uipanelgrid {
+			border: 1px;
+		}
+		
+		.ui-fieldset-legend {
+			padding: 10px 10px !important;
+			height: 0.5em;
+			background: #dae8ef;
+			color: black;
+			font-size: 11px;
+		}
+		.ui-growl-message {
+		    width: 250px;
+		    height: 30px;
+		 }
+		
+		</style>
+		<h:form id="crudFormConstrucao" >
+		  <pf:growl id="construcaoMensagem" globalOnly="true"/>	
+			<pf:panel header="#{msg['construcao.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{construcaoController.add()}"
+				update=":addEditFormConstrucao"
+				oncomplete="PF('addEditFormConstrucaoDlg').show()"
+				style="font-size:11px;" />
+				
+				<pf:dataTable id="tblLazyConstrucao" 
+				value="#{dtlazyConstrucaoView.lazyModel}" 
+				var="_row" 
+				paginator="true" 
+				rows="5" 
+				paginatorPosition="bottom" 
+				scrollHeight="800px" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+			{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+				style="text-align:center">
+				<pf:column width="87">
+					<pf:commandLink action="#{construcaoController.edit(_row)}" 
+					title="#{msg['botao.edit']}" update="crudFormConstrucao:construcaoMensagem :addEditFormConstrucao" 
+					oncomplete="PF('addEditFormConstrucaoDlg').show()" 
+					 style="font-size:11px;">
+					<i class="fa fa-fw fa-edit" style="font-size: 1.5em; color: #9ecda2;"  />										
+					</pf:commandLink>
+					
+					<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;" 
+					process="@this" 
+					title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em; color: #f77e6b;" />
+					</pf:commandLink>
+
+					<pf:commandLink  action="#{construcaoController.duplicaConstrucao(_row)}"
+						oncomplete="PF('addEditFormConstrucaoDlg').show()" 
+						title="#{msg['botao.duplicar'] }" 
+						update="crudFormConstrucao:construcaoMensagem :addEditFormConstrucao" style="font-size:11px;" >
+						<i class="fa fa-clone" style="font-size: 1.5em; color: #ead73a;"/>
+					</pf:commandLink>
+
+					<pf:commandLink oncomplete="PF('addEditFormConstrucaoDlg').show()" 
+						title="#{msg['botao.view'] }" 
+						update="crudFormConstrucao:construcaoMensagem :addEditFormConstrucao" style="font-size:11px;" >
+						<i class="fa fa-eye" style="font-size: 1.5em; color: #81c6f5;"/>
+					</pf:commandLink>
+					
+				</pf:column>
+				
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_row.construcaoid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.construcao}"
+					sortBy="#{_row.construcao}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.construcao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.versao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.versao}"
+					sortBy="#{_row.versao}" filterMatchMode="contains"
+					style="font-size:12px;" width="30px;">
+					<h:outputText value="#{_row.versao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.forma']}"
+					filterStyle="height:2.2em;"
+					filterBy="#{_row.referenciaforma}"
+					sortBy="#{_row.referenciaforma}" filterMatchMode="contains"
+					style="font-size:12px;" width="40px;">
+					<h:outputText value="#{_row.referenciaforma}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.bloqueio']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.bloqueio}"
+					sortBy="#{_row.bloqueio}" filterMatchMode="contains"
+					style="font-size:12px;" width="50px">
+					<h:outputText value="#{_row.bloqueio.label}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.comercial']}" width="70px">
+					<h:outputText value="#{construcaoController.construcao.comercial ? 'Negociada' : 'Não Negociada'}" style="font-size:12px;" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.situacao']}" width="40px;">
+					<h:outputText
+						value="#{construcaoController.construcao.situacao.label}" style="font-size:12px;" />
+				</pf:column>
+				
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="#{msg['construcao.label.titulo']}"
+			widgetVar="addEditFormConstrucaoDlg" width="99%" draggable="false" position="top center" showEffect="flip"
+			onShow="PF('addEditFormConstrucaoDlg').initPosition()"
+			resizable="false" modal="true" appendTo="@(body)">
+			<h:form id="addEditFormConstrucao">
+				<pf:growl id="mensagem" globalOnly="true"/>
+				<pf:scrollPanel mode="native" style="font-size:12px;width:98%;height:750px;" styleClass="panelgrlsb">
+					<pf:panelGrid layout="grid" columns="2"  styleClass="panelgrlsb" style="horizontal-align:left;" >
+						<pf:column style="horizontal-align:left" >
+							<pf:row style="horizontal-align:left" >
+								<h:panelGrid  columns="9">
+									<h:outputLabel value="Construcao:"
+										style="font-size:11px;heigth:0.7em" />
+									<pf:inputText
+										value="#{construcaoController.construcao.construcao}"
+										requiredMessage="Por favor , informe nome Construção !"
+										required="true"
+										style="height:0.7em;font-size:11px;" size="15"
+										maxlength="18" converter="upperCaseConverter" placeholder="(Informe Construção)">
+										<pf:ajax event="blur" update="@this" />
+									</pf:inputText>
+									<h:outputLabel value="Versão:"
+										style="text-align:left;font-size:12px;height:0.7em;" />
+									<pf:inputText value="#{construcaoController.construcao.versao}" 
+									requiredMessage="Por Favor,informe Versão !" 
+									required="true" 
+									style="font-size:12px; height:0.7em;" size="2" maxlength="2" />
+									<pf:commandLink action="#{construcaoController.verVersoesConstrucao()}" update=":formVerVersoes"
+									oncomplete="PF('verVersoesFormConstrucaoDlg').show()" title="Pesquisa Versões" >
+									<i class="fa fa-eye" style="font-size:1.5em;"/>
+									</pf:commandLink>
+									<h:outputLabel value="#{msg['construcao.label.forma']}"/>
+									<pf:inputText value="#{construcaoController.referenciaForma}" 
+									size="6" maxlength="6" required="true" 
+									requiredMessage="Por Favor,informe Construção,Informação Obrigatória!">
+										
+									</pf:inputText>
+									<pf:commandLink actionListener="#{construcaoController.buscaFormaPre()}" update="addEditFormConstrucao ">
+										<i class="fa fa-search" style="font-size:1.5em;" title="Pesquisa Forma"/>
+									</pf:commandLink>
+									<pf:selectOneMenu value="#{construcaoController.construcao.forma}" 
+									converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:12px;height:0.7em;text-align:left;"  />
+										<f:selectItems value="#{construcaoController.listaFormas}"
+											var="formas" itemValue="#{formas}"
+											itemLabel="#{formas.referenciaforma}"/>
+									</pf:selectOneMenu>
+								</h:panelGrid>
+							</pf:row>
+							<pf:row style="horizontal-align:left">
+								<h:panelGrid columns="6">
+								
+									<h:outputLabel value="#{msg['construcao.label.bloqueio']}"
+										style="font-size:12px;height:0.7px;text-align:left;" />
+									<pf:selectOneMenu
+										value="#{construcaoController.construcao.bloqueio}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:12px;height:0.7em;text-align:left;"  />
+										<f:selectItems value="#{construcaoController.simnao}"
+											var="simnao" itemValue="#{simnao}"
+											itemLabel="#{simnao.label}"/>
+									</pf:selectOneMenu>
+									<h:outputLabel value="#{msg['construcao.label.situacao']}"
+										style="font-size:12px;height:0.7px;" />
+									<pf:selectOneMenu
+										value="#{construcaoController.construcao.situacao}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:12px;height:0.7em;text-align:left;" />
+										<f:selectItems value="#{construcaoController.situacao}"
+											var="situacao" itemValue="#{situacao}"
+											itemLabel="#{situacao.label}" />
+									</pf:selectOneMenu>
+								    <h:outputLabel value="Status:"/>
+								    <pf:inputText value="#{construcaoController.negocnnegoc}" style="color:red;text-align:left;" size="14"/>
+								</h:panelGrid>
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.solalaminada']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.solalaminada}"
+											size="23" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solalaminadamaterial}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solalaminadaespessura}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solalaminadafornecedor}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.label']}">
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.labela'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.labeldescricao2}"
+											size="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.descricao2}"
+											size="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<h:outputText value="#{msg['construcao.label.labelb'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.labeldescricao4}"
+											size="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.descricao4}"
+											size="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.solainjetada']}">
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['construcao.label.abrasao']}" />
+										<h:outputText value="#{msg['usocomum.label.dureza']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.solainjetada}"
+											size="18" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solainjetadamaterial}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solainjabrasao}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solainjdureza}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.solainjfornecedor}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+
+									</h:panelGrid>
+								</pf:fieldset>
+
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.carimbosola']}">
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{construcaoController.construcao.carimbosola}"
+											size="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.entressola']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.entressola}"
+											size="23" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.entressolamaterial}"
+											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.entressolaespessura}"
+											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.entressolafornecedor}"
+											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.vira1']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.vira1}"
+											size="19" maxlength="18" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.vira1material}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.vira1referencia}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.vira1fornecedor}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.vira2']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.vira2}"
+											size="19" maxlength="18" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.vira2material}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.vira2referencia}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.vira2fornecedor}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.tipobeira']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{construcaoController.construcao.tipobeira}"
+											size="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+						</pf:column>
+
+						<pf:column>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.salto']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.salto}"
+											size="32" maxlength="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.saltomaterial}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.saltoreferencia}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.saltofornecedor}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.fixasalto']}">
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{construcaoController.construcao.fixasalto}"
+											size="46" maxlength="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.label']}">
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.label1']}" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+
+										<pf:inputText
+											value="#{construcaoController.construcao.labeldescricao1}"
+											size="21" maxlength="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+										
+										<pf:inputText
+											value="#{construcaoController.construcao.descricao1}"
+											size="49" maxlength="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.tacao']}">
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.dureza']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.tacao}"
+											size="18" maxlength="17" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.tacaomaterial}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.tacaoespessura}"
+											size="6" maxlength="5" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.tacaodurreza}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.tacaofornecedor}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+
+									</h:panelGrid>
+								</pf:fieldset>
+
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.fixatacao']}">
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{construcaoController.construcao.fixatacao}"
+											size="46" maxlength="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.plataforma']}">
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.plataforma}"
+											size="29" maxlength="28" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.plataformamaterial}"
+											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.plataformafornecedor}"
+											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.palmilhamontagem']}">
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['construcao.label.padrao']}" />
+										<h:outputText value="#{msg['construcao.label.codigo']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{construcaoController.construcao.palmilhamontagem}"
+											size="29" maxlength="28" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.palmilhamonpadrao}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.palmilhamontagemcodigo}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+										<pf:inputText
+											value="#{construcaoController.construcao.palmilhamontagemfornecedor}"
+											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.relevobico']}">
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{construcaoController.construcao.relevobico}"
+											size="10" maxlength="10" placeholder="Milimetros" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.label']}">
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.label3']}" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+
+										<pf:inputText
+											value="#{construcaoController.construcao.labeldescricao3}"
+											size="22" maxlength="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+										
+										<pf:inputText
+											value="#{construcaoController.construcao.descricao3}"
+											size="50" maxlength="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+
+							<pf:row>
+								<pf:fieldset legend="#{msg['construcao.label.complconst']}">
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputTextarea cols="60" rows="2" maxlength="1120"
+											value="#{construcaoController.construcao.obsconstrucao}"
+											style="font-size:11px;">
+										</pf:inputTextarea>
+									</h:panelGrid>
+								</pf:fieldset>
+							</pf:row>
+							
+						</pf:column>
+
+					</pf:panelGrid>
+
+				</pf:scrollPanel>
+				<h:panelGrid id="btnSave" columns="2">
+					<pf:commandButton  rendered="#{construcaoController.MStatus}" value="#{msg['botao.save']}"
+						actionListener="#{construcaoController.preSave()}" update="addEditFormConstrucao addEditFormConstrucao:mensagem :crudFormConstrucao:tblLazyConstrucao">
+					</pf:commandButton>
+					<c:if test="${construcaoController.temFicha}">
+						<pf:commandButton onclick="PF('confirmation').show()" icon="fa fa-exclamation-triangle" title="Confirmar Alterações Construções" 
+						style="1.5em;color:red;background-color:#bad9cb"/>
+					</c:if>	
+					<pf:commandButton value="#{msg['botao.fechar']}" oncomplete="PF('addEditFormConstrucaoDlg').hide();" >
+					</pf:commandButton>
+					</h:panelGrid>
+					<pf:commandButton rendered="#{!construcaoController.MStatus }">
+						
+					</pf:commandButton>
+			</h:form>
+		</pf:dialog>
+
+		<pf:confirmDialog message="Esta alteração valerá para TODAS as fichas,Confirme! " header="Alterar Fichas"
+              severity="alert" widgetVar="confirmation" appendTo="@(body)">
+              <h:form id="formVariasConstrucoes">
+                  <pf:commandButton value="Sim" actionListener="#{construcaoController.save()}"
+                      oncomplete="PF('confirmation').hide();PF('addEditFormConstrucaoDlg').hide()"
+                      process="@form" update=":addEditFormConstrucao:mensagem" />
+                  <pf:commandButton value="Não" onclick="PF('confirmation').hide()" type="button" />
+              </h:form>
+          </pf:confirmDialog>
+		
+		<pf:dialog header="Versões existentes"
+			widgetVar="verVersoesFormConstrucaoDlg" draggable="false" modal="false"  
+			position="top center" showEffect="flip" onShow="PF('verVersoesFormConstrucaoDlg').initPosition()"
+			resizable="false" width="25%" height="150px" closable="true">
+			<h:form id="formVerVersoes">
+			<pf:growl id="mensagemver" globalOnly="true"/>
+			<pf:dataTable value="#{construcaoController.listaConstrucaoVersoes}"
+				var="_rowb" paginator="true" rows="10" paginatorPosition="bottom">
+				<pf:column headerText="#{msg['usocomum.label.descricao']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_rowb.construcao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.versao']}"
+					styleClass="numeric" width="10" style="font-size:11px;">
+					<h:outputText value="#{_rowb.versao}" />
+				</pf:column>
+			</pf:dataTable>
+			</h:form>
+		</pf:dialog>
+		<pf:dialog>
+		
+		</pf:dialog>
+	</ui:define>
+</ui:decorate>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+	<h:form id="crudFormEstacao">
+		<pf:panel header="#{msg['estacao.label.titulo']}">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{estacaoController.add()}"
+			update=":addEditFormEstacao"
+			oncomplete="PF('addEditFormEstacaoDlg').show()" style="font-size:12px;" />
+		<pf:dataTable value="#{estacaoController.listaEstacao}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" scrollHeight="800px" style="text-align:center;">
+			
+			<pf:column width="50" >
+				<pf:commandLink action="#{estacaoController.edit(_row)}"
+					update=":addEditFormEstacao"
+					oncomplete="PF('addEditFormEstacaoDlg').show()"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+				</pf:commandLink>
+				<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+					action="#{estacaoController.delete(_row)}"
+					update=":crudFormEstacao"
+					title="#{msg['botao.delete']}">
+					<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.id']}" styleClass="numeric" width="20" 
+			style="font-size:12px;" >
+				<h:outputText value="#{_row.estacaoid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.nome']}" filterStyle="height:2.2em;" filterBy="#{_row.nome}" sortBy="#{_row.nome}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.nome}" />
+			</pf:column>
+			<pf:column headerText="#{msg['estacao.label.dtinicial']}" filterStyle="height:2.2em;" style="font-size:12px;">
+				<h:outputText value="#{_row.inicioestacao}">
+  				  <f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['estacao.label.dtfinal']}" filterStyle="height:2.2em;" style="font-size:12px;">
+				<h:outputText value="#{_row.fimestacao}">
+  				  <f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['estacao.label.descricao']}" filterStyle="height:2.2em;" filterBy="#{_row.nomeport}" 
+			sortBy="#{_row.nomeport}" filterMatchMode="contains" >
+				<h:outputText value="#{_row.nomeport}" style="font-size:12px;">
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['estacao.label.inglesa'] }" filterStyle="height:2.2em;" filterBy="#{_row.siglainglesa}"
+			sortBy="_row.siglainglesa" filterMatchMode="contains" >
+				<h:outputText value="#{_row.siglainglesa}" style="font-size:12px;" />
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Estações" widgetVar="addEditFormEstacaoDlg" width="550" height="280" resizable="false" 
+	position="center center" showEffect="clip" 
+	onShow="PF('addEditFormEstacaoDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormEstacao" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px;text-align:left" >
+				<h:outputText value="#{msg['estacao.label.nome']}:" /> 
+				<pf:inputMask mask="a-99" style="font-size:11px;" size="4" maxlength="4" 
+				value="#{estacaoController.estacao.nome}" converter="upperCaseConverter" 
+				required="true" requiredMessage="Informe Abreviação para a Estação !">
+				<pf:ajax event="blur" update="@this" />
+				</pf:inputMask>
+				<h:outputLabel value="#{msg['estacao.label.dtinicial']}" />
+				<pf:calendar showMinute="true" showSecond="true"
+					showTodayButton="true" showWeek="true" navigator="true"
+					pattern="dd-MM-yyyy" mask="true"
+					value="#{estacaoController.estacao.inicioestacao}" showOn="button"
+					effect="explode">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</pf:calendar>
+				<h:outputLabel value="#{msg['estacao.label.dtfinal']}" />
+				<pf:calendar showMinute="true" showSecond="true"
+					showTodayButton="true" showWeek="true" navigator="true"
+					pattern="dd-MM-yyyy" mask="true"
+					value="#{estacaoController.estacao.fimestacao}" showOn="button"
+					effect="explode">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</pf:calendar>
+				<h:outputLabel value="#{msg['estacao.label.inglesa']}" />
+				<pf:inputText value="#{estacaoController.estacao.siglainglesa}" size="6" maxlength="6" required="true" 
+				requiredMessage="Por favor, informe descrição formato Inglês !" converter="upperCaseConverter">
+					<pf:ajax event="blur" update="@this" />
+				</pf:inputText>				
+				<h:outputLabel value="#{msg['estacao.label.descricao'] }"/>
+				<pf:inputText value="#{estacaoController.estacao.nomeport}" size="15" maxlength="15" required="true" 
+				requiredMessage="Por favor,inform descriçã estacção Português !"/>				
+				<h:outputLabel value="#{msg['usocomum.label.situacao']}" />
+				  <pf:selectOneMenu value="#{estacaoController.estacao.situacao}" 
+				  converter="omnifaces.SelectItemsConverter" required="true" 
+				  requiredMessage="Situação de Atividade da Estacao!" filter="true" 
+				  filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{bancoController.ativoInativo}" var="estacao" 
+					itemValue="#{estacao}" itemLabel="#{estacao.label}" />
+				</pf:selectOneMenu>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{estacaoController.save()}"
+						update=":addEditFormEstacao :crudFormEstacao" oncomplete="if (!args.validationFailed) PF('addEditFormEstacaoDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormEstacaoDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

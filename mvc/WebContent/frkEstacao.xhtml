@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pf="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.ui-widget {
+	font-size: 100%;
+}
+
+.ui-panel-title {
+	font-size: 3.5em;
+	color: black;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form>
+		<div>
+			<i id="estacaoheader" style="display: none; text-align:center"></i>
+			<pf:panel header="Seleção Estação" />
+			<pf:dataTable value="#{facadeView.listaEstacoes}" var="_rowe"
+				rows="12" scrollHeight="600px">
+
+				<pf:column headerText="Escolha"
+					style="font-size:12px;width:10px;text-align:center;">
+					<pf:commandLink actionListener="#{facadeView.selecionarEstacao(_rowe)}" process="@this">
+						<i class="pi pi-replay" style="font-size: 1.5em;"
+							title="Pesquisa Estação" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					style="font-size:12px;width:15px;text-align:center;">
+					<h:outputText value="#{_rowe.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['estacao.label.inglesa']}"
+					style="font-size:12px;width:25px;text-align:center;">
+					<h:outputText value="#{_rowe.siglainglesa}" />
+				</pf:column>
+
+			</pf:dataTable>
+		</div>
+	</h:form>
+</h:body>
+</html>

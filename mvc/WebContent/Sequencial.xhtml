@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+	
+	<h:outputStylesheet name="css/geral.css"  />
+	<h:form id="crudFormSequencial">
+		<pf:panel header="Cadastro Sequenciais">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{sequencialController.add()}"
+			update=":addEditFormSequencial"
+			oncomplete="PF('addEditFormSequencialDlg').show()" style="font-size:12px;" />
+		<pf:dataTable value="#{sequencialController.listaSequencial}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" style="text-align:center;width:60%;" >
+			
+			<pf:column width="30" >
+				<pf:commandLink action="#{sequencialController.edit(_row)}"
+					update=":addEditFormSequencial"
+					oncomplete="PF('addEditFormSequencialDlg').show()"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="Id" styleClass="numeric" width="10" style="font-size:12px;" >
+				<h:outputText value="#{_row.nextreferenciaid}" />
+			</pf:column>
+			<pf:column headerText="Sequencia" style="font-size:12px;">
+				<h:outputText value="#{_row.referencia}" />
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Sequenciais" widgetVar="addEditFormSequencialDlg" width="380" height="100" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormSequencialDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormSequencial" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px;text-align:left" >
+				<h:outputText value="Sequencia Referencias:" /> 
+				<h:inputText value="#{sequencialController.novasequencia.referencia}" size="6" maxlength="6" required="true" requiredMessage="Informe Referência Inicial!" />
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{sequencialController.save()}"
+						proccess="@form"
+						update=":addEditFormSequencial crudFormSequencial"
+						oncomplete="if (!args.validationFailed) PF('addEditFormSequencialDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormSequencialDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

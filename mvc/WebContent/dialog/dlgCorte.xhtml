@@ -1,0 +1,1312 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" >
+<h:body>
+ <style type="text/css" >
+ 
+
+.CorteC .ui-panel-titlebar .ui-panel-title {
+	color: black;
+	font-size: 12px;
+}
+.Corte .ui-panel-titlebar .ui-panel-title .ui-icon {
+	color: black;
+	font-size: 14px;
+}
+.Cabecalho .ui-panel .ui-panel-titlebar{
+	background-color: #2eb3d9 !important;
+} 
+.Corteheaders {
+	color: black;
+	background-color: #2eb3d9 !important;
+	font-size: 12px;
+}
+
+.TabelaAux thead th {
+	border: none !important;
+	background: none !important;
+	display: none !important;
+}
+
+.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+	overflow: hidden;
+}
+
+.hide-column-names table thead tr {
+	display: none;
+}
+
+.colspace1 {
+	padding-left: 20px;
+}
+
+.colspace2 {
+	padding-right: 10px;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}
+
+
+.panelgrlsb {
+	border: none;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+
+.alturaLinha .ui-panelgrid {
+	padding: 2px 5px;
+}
+
+.dialogueCorte .ui-dialog-titlebar {
+	background-color: #2eb3d9 !important;
+	color: black;
+	font-size: 12px;
+}
+
+.alinhamento {
+	horizontal-align: right;
+}
+.ui-scrollpanel {
+    height: 650px;
+    width: 100%;
+}
+
+</style>
+</h:body>
+		<pf:dialog header="Cadastrar Corte" widgetVar="dialogCorte"
+			resizable="false" position="right top" showEffect="slide" hideEffect="slide" modal="true"
+			styleClass="dialogueCorte" style="color-font:black;" 
+			draggable="true" closable="false" appendTo="@(body)" width="100%" dynamic="true" >
+			<h:form id="frmCorteAmostra" >
+			  <pf:growl id="mensagemCorte" globalOnly="true" />
+				<pf:scrollPanel mode="native" style="font-size:12px;">
+<!-- Palmilha Interna -->
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.palmilhainterna']}"
+								style="align-text:right;" styleClass="Corte" >
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.palmilhainterna}"
+											size="28" maxlength="28" />
+										<pf:inputText
+											value="#{controller.corteAmostra.palmilhainternareferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.palmilhainternafornecedor}"
+											size="10" maxlength="10" />
+											
+									</h:panelGrid>
+								</pf:row>
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['corte.label.cplpalmilhainterna']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.palmilhainternacomplemento}"
+											size="45" maxlength="45" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column >
+							<pf:panel header="#{msg['corte.cor.palmilhainterna']}" styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).palmilhainterna}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).palmilhainterna}"
+												size="16" maxlength="16" />
+												
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).palmilhainterna}"
+												size="16" maxlength="16" />
+												
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).palmilhainterna}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb" >
+										<pf:column rendered="#{controller.parametros.pricor}" >
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).palmilhainternacomplemento}"
+												size="16" maxlength="16"/>
+										</pf:column>
+
+										<pf:column rendered="#{controller.parametros.segcor}" >
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).palmilhainternacomplemento}"
+												size="16" maxlength="16"/>
+										</pf:column>
+
+										<pf:column rendered="#{controller.parametros.tercor}" >
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).palmilhainternacomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).palmilhainternacomplemento}"
+												size="16" maxlength="16"/>
+										</pf:column>
+
+									</pf:panelGrid>
+								</pf:row>
+									
+							</pf:panel>
+
+						</pf:column>
+					</pf:panelGrid>
+<!--
+Label 1
+ -->
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.label1']}"
+								styleClass="CorteC">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<pf:column>
+											<h:outputText value="#{msg['corte.label.label1']}" />
+											<pf:inputText
+												value="#{controller.corteAmostra.labeldescricao1}"
+												size="20" maxlength="20" />
+										</pf:column>
+										<pf:column>
+											<h:outputText value="#{msg['corte.label.labeldescricao']}" />
+											<pf:inputText
+												value="#{controller.corteAmostra.descricao1}"
+												size="45" maxlength="45" />
+										</pf:column>
+									</h:panelGrid>
+								</pf:row>
+
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.label1']}" styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb" >
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>
+<!-- 
+Forro Gaspea
+ -->				
+					 <pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#2eb3d9;">				
+						
+						<pf:column>
+						
+							<pf:panel header="#{msg['corte.label.forrogaspea']}"
+								styleClass="CorteC">
+								<pf:row>
+									<h:panelGrid columns="3" styleClass="panelgrlsb">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrogaspea}"
+											size="28" maxlength="28" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrogaspeafornecedor}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrogaspeafornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+								<pf:row>
+									<h:panelGrid columns="2" styleClass="panelgrlsb">
+										<h:outputText value="#{msg['corte.label.cplforrogaspea']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrogaspeacomplemento}"
+											size="45" maxlength="45" />
+									</h:panelGrid>
+								</pf:row>
+								
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.forrogaspea']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText 
+												value="#{controller.listaCorCorteAmostra.get(0).forrogaspea}" 
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).forrogaspea}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).forrogaspea}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).forrogaspea}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+								
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).forrogaspeacomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).forrogaspeacomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).forrogaspeacomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).forrogaspeacomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+
+									</pf:panelGrid>
+								</pf:row>
+									
+							</pf:panel>
+
+						</pf:column>
+						
+						
+					</pf:panelGrid>
+					
+<!-- 
+Forro Traseiro 
+-->	
+									
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.forrotraseiro']}"
+								styleClass="CorteC">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrotraseiro}"
+											size="28" maxlength="28" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrotraseiroreferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrotraseirofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['corte.label.cplforrotraseiro']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.forrotraseirocomplemento}"
+											size="45" maxlength="45" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.forrotraseiro']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).forrotraseiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).forrotraseiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).forrotraseiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).forrotraseiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).forrotraseirocomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).forrotraseirocomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).forrotraseirocomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).forrotraseirocomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Dublagem forro
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.dublagemforro']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.dublagemforro}"
+											size="28" maxlength="28" />
+										<pf:inputText
+											value="#{controller.corteAmostra.dublagemforroreferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.dublagemforrofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.dublagemforro']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).dublagemforro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).dublagemforro}"
+												size="16" maxlength="16" />
+												
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).dublagemforro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).dublagemforro}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+															
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- Espuma -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.espuma']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.densidade']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										
+										<pf:inputText
+											value="#{controller.corteAmostra.espuma}"
+											size="17" maxlength="17"  />
+										<pf:inputText
+											value="#{controller.corteAmostra.espumatipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.espumaespessura}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.espumadensidade}"
+											size="5" maxlength="5" />
+										<pf:inputText
+											value="#{controller.corteAmostra.espumafornecedor}"
+											size="10" maxlength="10" />
+											
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.dublagemforro']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).espuma}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).espuma}"
+												size="16" maxlength="16" />
+												
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).espuma}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).espuma}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Debrum Palmilha
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.debrumpalmilha']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.debrumpalmilha}"
+											size="38" maxlength="38" />
+										<pf:inputText
+											value="#{controller.corteAmostra.debrumpalmilhatipo}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.debrumpalmilha']}"
+								styleClass="Corte">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).debrumpalmilha}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).debrumpalmilha}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).debrumpalmilha}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).debrumpalmilha}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+															
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Avesso
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.avesso']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+
+										<pf:inputText
+											value="#{controller.corteAmostra.avesso}"
+											size="28" maxlength="28" />
+										<pf:inputText
+											value="#{controller.corteAmostra.avessotipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.avessoreferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.avessofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.debrumpalmilha']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).avesso}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).avesso}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).avesso}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).avesso}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+															
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Contraforte A
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.contrafortea']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.contraforte}"
+											size="28" maxlength="38" />
+										<pf:inputText
+											value="#{controller.corteAmostra.contrafortereferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.contrafortefornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.contrafortea']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).contraforte}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).contraforte}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(2).contraforte}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).contraforte}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+contraForte B
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.contraforteb']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.contraforte2}"
+											size="28" maxlength="28" />
+										<pf:inputText
+											value="#{controller.corteAmostra.contraforte2referencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.contraforte2fornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.contrafortea']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).contraforte2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).contraforte2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).contraforte2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).contraforte2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Couraça A
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.couracaa']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couraca}"
+											size="18" maxlength="18" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couracatipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couracareferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couracafornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.couracaa']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).couraca}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).couraca}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).couraca}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).couraca}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+<!-- 
+Couraca B
+ -->
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.couracab']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couraca2}"
+											size="18" maxlength="18" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couraca2tipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couraca2referencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.corteAmostra.couraca2fornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.couracab']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).couraca2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).couraca2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).couraca2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).couraca2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Carimbo / Etiqueta
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;" >
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.caretiq']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.carimboetiqueta}"
+											size="45" maxlength="45" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.caretiq']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).carimboetiqueta}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).carimboetiqueta}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).carimboetiqueta}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).carimboetiqueta}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- 
+Label A
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.labela']}"
+								styleClass="CorteC">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<pf:column>
+											<h:outputText value="#{msg['corte.label.labela']}" />
+											<pf:inputText
+												value="#{controller.corteAmostra.labeldescricao2}"
+												size="20" />
+										</pf:column>
+										<pf:column>
+											<h:outputText value="#{msg['corte.label.labelad']}" />
+											<pf:inputText
+												value="#{controller.corteAmostra.descricao2}"
+												size="45" />
+										</pf:column>
+									</h:panelGrid>
+								</pf:row>
+ 						    </pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.labela']}" styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb" >
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).descricao2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).descricao2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>
+
+<!--
+ Label B
+  -->
+
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#2eb3d9;">
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.labelb']}"
+								styleClass="CorteC">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<pf:column>
+											<h:outputText value="#{msg['corte.label.labelb']}" />
+											<pf:inputText
+												value="#{controller.corteAmostra.labeldescricao3}"
+												size="20" />
+										</pf:column>
+										<pf:column>
+											<h:outputText value="#{msg['corte.label.labelbd']}" />
+											<pf:inputText
+												value="#{controller.corteAmostra.descricao3}"
+												size="45" />
+										</pf:column>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.labelb']}" styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(1).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>
+
+<!-- 
+Complemento Corte
+ -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#2eb3d9;" >
+						<pf:column>
+							<pf:panel header="#{msg['corte.label.cplcorte']}"
+								styleClass="CorteC" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.corteAmostra.complementocorte}"
+											size="60" maxlength="60" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.cplcorte']}"
+								styleClass="CorteC">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricor}">
+											<h:outputLabel value="#{controller.listaCorCorteAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(0).cortecomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#2eb3d9;"/>
+												<pf:inputText value="#{controller.listaCorCorteAmostra.get(1).cortecomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+												<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(2).cortecomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacor}">
+											<h:outputLabel
+												value="#{controller.listaCorCorteAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#2eb3d9;" />
+											<pf:inputText
+												value="#{controller.listaCorCorteAmostra.get(3).cortecomplemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+				</pf:scrollPanel>
+				<h:panelGrid columns="2" >
+					<pf:commandButton value="#{msg['botao.save']}" action="#{controller.saveCorte}" process="@form" update="crudFormAmostraSecundario  crudFormAmostraSecundario:pnlGrpCor "/>
+					<pf:commandButton value="#{msg['botao.fechar']}" oncomplete="PF('dialogCorte').hide()"/>
+						
+				</h:panelGrid>
+				</h:form>
+				</pf:dialog>
+</ui:composition>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+	
+	<h:outputStylesheet name="css/geral.css"  />
+	<h:form id="crudFormPais">
+		<pf:panel header="#{msg['pais.titulo']}">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{paisController.add()}"
+			update=":addEditFormPais"
+			oncomplete="PF('addEditFormPaisDlg').show()" style="font-size:12px;" />
+		<pf:dataTable value="#{paisController.listaPaises}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" scrollHeight="800px">
+			
+			<pf:column width="50" >
+				<pf:commandLink action="#{paisController.edit(_row)}"
+					update=":addEditFormPais"
+					oncomplete="PF('addEditFormPaisDlg').show()"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o" />
+				</pf:commandLink>
+				<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+					action="#{paisController.delete(_row)}"
+					update=":crudFormPais"
+					title="#{msg['botao.delete']}">
+					<i class="fa fa-fw fa-trash-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.id']}" styleClass="numeric" width="20" style="font-size:12px;" >
+				<h:outputText value="#{_row.paisid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.nome']}" filterStyle="height:2.2em" filterBy="#{_row.nome}" sortBy="#{_row.nome}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.nome}" />
+			</pf:column>
+			<pf:column headerText="#{msg['pais.label.sigla']}" filterStyle="height:2.2em" style="font-size:12px;" sortBy="#{_row.sigla}">
+				<h:outputText value="#{_row.sigla}" />
+			</pf:column>
+			<pf:column headerText="#{msg['pais.label.nomeingles']}" filterStyle="height:2.2em" filterBy="#{_row.nomeingles}" 
+					   sortBy="#{_row.nomeingles}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.nomeingles}" />
+			</pf:column>
+			<pf:column headerText="#{msg['pais.label.codecontinente']}" filterStyle="height:2.2em" filterBy="#{_row.grupopais}" 
+					   sortBy="#{_row.grupopais}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.grupopais}" />
+			</pf:column>
+			<pf:column headerText="#{msg['pais.label.continente']}" filterStyle="height:2.2em" filterBy="#{_row.nomecontinente}" 
+					   sortBy="#{_row.nomecontinente}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.nomecontinente}" />
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Paises" widgetVar="addEditFormPaisDlg" width="480" height="250" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormPaisDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormPais" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px">
+				<h:outputText value="#{msg['pais.label.sigla']}:"/> 
+				<pf:inputText value="#{paisController.pais.sigla}" converter="upperCaseConverter" size="3" 
+				required="true" requiredMessage="Informe Sigla do País!">
+				<pf:ajax event="blur" update="@this"/>
+				</pf:inputText>
+				<h:outputText value="#{msg['usocomum.label.nome']}:"/> 
+				<h:inputText value="#{paisController.pais.nome}" required="true" requiredMessage="Informe nome do País!" />
+				<h:outputText value="#{msg['pais.label.codigopais']}"  />
+				<h:inputText value="#{paisController.pais.codigopais}" size="5" required="true" requiredMessage="Informe Código do País!" />
+				<h:outputText value="#{msg['pais.label.nomeingles']}" />
+				<h:inputText value="#{paisController.pais.nomeingles}" required="true" requiredMessage="Informe nome do País!" />
+				<h:outputText value="#{msg['pais.label.continente']}" />
+				<pf:selectOneMenu value="#{paisController.pais.continente}" 
+				required="true" requiredMessage="Informe continente deste País !" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{paisController.continentes}"
+						var="continente" itemValue="#{continente}"
+						itemLabel="#{continente.label1}" />
+			    </pf:selectOneMenu>
+					</h:panelGrid>
+			<h:panelGrid columns="2">
+				<pf:commandButton value="#{msg['botao.save']}"
+					actionListener="#{paisController.save()}"
+					proccess="@form"
+					update=":addEditFormPais :crudFormPais"
+					oncomplete="if (!args.validationFailed) PF('addEditFormPaisDlg').hide()" />
+				<pf:commandButton value="#{msg['botao.cancel']}"
+					onclick="PF('addEditFormPaisDlg').hide(); return false;" />
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+
+		<h:outputStylesheet name="css/geral.css" />
+		<h:form id="crudFormTiCa">
+			<pf:panel header="#{msg['tipocalcado.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{tipoCalcadoController.add()}" update=":addEditFormTiCa"
+				oncomplete="PF('addEditFormTiCaDlg').show()"
+				style="font-size:12px;" />
+			<pf:dataTable value="#{tipoCalcadoController.listaTiposProdutos}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{tipoCalcadoController.edit(_row)}"
+						update=":addEditFormTiCa"
+						oncomplete="PF('addEditFormTiCaDlg').show()"
+						title="#{msg['botao.edit']}" style="font-size:11px;">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{tipoCalcadoController.delete(_row)}" update=":crudFormTiCa"
+						title="#{msg['botao.delete']}" style="font-size:11px;">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.tipocalcadoid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['tipocalcado.label.defineportugues']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nomeport}"
+					sortBy="#{_row.nomeport}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.nomeport}" />
+				</pf:column>
+				<pf:column headerText="#{msg['tipocalcado.label.definieingles']}"
+					filterStyle="height:2.2em;" style="font-size:12px;" filterBy="#{_row.nomeingles}"
+					sortBy="#{_row.nomeingles}" filterMatchMode="contains">
+					<h:outputText value="#{_row.nomeingles}" />
+				</pf:column>
+				<pf:column headerText="#{msg['tipocalcado.label.identifca']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.identificacalcado}"
+					sortBy="#{_row.identificacalcado}" filterMatchMode="contains"
+					style="font-size:12px;text-align:center;">
+					<h:outputText value="#{_row.identificacalcado}">
+					</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['tipocalcado.label.precoamostra']}">
+					<h:outputText value="#{_row.pramostracli}" style="font-size:12px;">
+						<f:convertNumber minFractionDigits="2" pattern="####,####" />
+					</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['tipocalcado.label.taxafrete']}">
+					<h:outputText value="#{_row.taxafrete}" style="font-size:12px;">
+					   <f:convertNumber minFractionDigits="2" pattern="####,####" />
+					</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['tipocalcado.label.status']}" style="text-align:center">
+					<h:outputText value="#{_row.situacao}" style="font-size:12px;"/>
+				</pf:column>
+				
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Tipos Produtos" widgetVar="addEditFormTiCaDlg"
+			width="450" height="280" resizable="false" position="center center"
+			showEffect="clip" onShow="PF('addEditFormTiCaDlg').initPosition()"
+			modal="false" draggable="false">
+			<h:form id="addEditFormTiCa">
+				<pf:row id="messages" globalOnly="true" />
+				<h:panelGrid columns="2" style="font-size:12px;">
+					<h:outputLabel value="#{msg['tipocalcado.label.defineportugues']}:" />
+					<pf:inputText value="#{tipoCalcadoController.tipoCalcado.nomeport}" size="45"
+						required="true" requiredMessage="Informe Definicao Português!" style="font-size:12px;" />
+					<h:outputLabel value="#{msg['tipocalcado.label.definieingles']}:" />
+					<pf:inputText value="#{tipoCalcadoController.tipoCalcado.nomeingles}" size="45" style="font-size:12px;" />
+					<pf:outputLabel value="#{msg['tipocalcado.label.precoamostra']}" style="font-size:12px;" />
+					<pf:inputMask mask="999.9999" value="#{tipoCalcadoController.tipoCalcado.pramostracli}"/>
+					<pf:outputLabel value="#{msg['tipocalcado.label.taxafrete']}" style="font-size:12px;" />
+					<pf:inputMask mask="999.9999" value="#{tipoCalcadoController.tipoCalcado.taxafrete}" />
+					<h:outputLabel value="#{msg['tipocalcado.label.identifca']}" />
+					<pf:selectOneMenu value="#{tipoCalcadoController.tipoCalcado.identificacalcado}" 
+					required="true" requiredMessage="Informe Tipo de Produto!" filter="true" 
+					filterMatchMode="contains" converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{tipoCalcadoController.tipoProduto}"
+							var="tipoproduto" itemValue="#{tipoproduto}" itemLabel="#{tipoproduto.label}"/>
+					</pf:selectOneMenu>
+					<h:outputLabel value="#{msg['tipocalcado.label.status']}" />
+					<pf:selectOneMenu value="#{tipoCalcadoController.tipoCalcado.situacao}" 
+					required="true" requiredMessage="Informe Status do Produto!" filter="true" 
+					filterMatchMode="contains" converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{tipoCalcadoController.ativoInativo}"
+							var="situacao" itemValue="#{situacao}" itemLabel="#{situacao.label}"/>
+					</pf:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{tipoCalcadoController.save()}" proccess="@form"
+						update=":addEditFormTiCa :crudFormTiCa"
+						oncomplete="if (!args.validationFailed) PF('addEditFormTiCaDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormTiCaDlg').hide(); return false;" />
+				</h:panelGrid>
+
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

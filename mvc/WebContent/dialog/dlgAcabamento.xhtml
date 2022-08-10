@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" >
+<h:body>
+ <style type="text/css" >
+ 
+
+.AcabamentoC .ui-panel-titlebar .ui-panel-title {
+	color:black;
+	font-size: 12px;
+}
+.Acabamento .ui-panel-titlebar .ui-panel-title {
+	color: black;
+	font-size: 14px;
+}
+.Cabecalho .ui-panel .ui-panel-titlebar{
+	background-color: #cab734 !important;
+} 
+.Acabamentoheaders {
+	color: black;
+	background-color: #cab734 !important;
+	font-size: 12px;
+}
+
+.TabelaAux thead th {
+	border: none !important;
+	background: none !important;
+	display: none !important;
+}
+
+.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+	overflow: hidden;
+}
+
+.hide-column-names table thead tr {
+	display: none;
+}
+
+.colspace1 {
+	padding-left: 20px;
+}
+
+.colspace2 {
+	padding-right: 10px;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}
+
+
+.panelgrlsb {
+	border: none;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+
+.alturaLinha .ui-panelgrid {
+	padding: 2px 5px;
+}
+
+.dialogueAcabamento .ui-dialog-titlebar {
+	background-color: #cab734 !important;
+	color: black;
+	font-size: 14px;
+}
+
+.alinhamento {
+	horizontal-align: right;
+}
+.ui-scrollpanel {
+    height: 650px;
+    width: 100%;
+}
+
+</style>
+</h:body>
+		<pf:dialog header="Cadastrar Acabamento" widgetVar="dialogAcabamento" resizable="false" 
+		position="right top" showEffect="slide" hideEffect="slide" modal="true" 
+		draggable="true" closable="false" appendTo="@(body)" width="100%"
+			styleClass="dialogueAcabamento" style="color-font:white;" dynamic="true">
+			<h:form id="frmAcabamentoAmostra" >
+			  <pf:growl id="mensagemAcabamento" globalOnly="true" />
+				<pf:scrollPanel mode="native" style="font-size:11px; ">
+<!--
+ Atacador
+-->
+				 <pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" 
+				 style="border-color:#cab734">				
+						
+						<pf:column>
+						
+							<pf:panel header="#{msg['acabamento.label.atacador']}"
+								styleClass="Acabamento">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['acabamento.label.comprimento']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.atacador}"
+											size="17" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.atacadortipo}"
+											size="10" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.atacadorcompr}"
+											size="5" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.atacadorforn}" 
+											size="10" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['acabamento.cor.atacador']}"
+								styleClass="Acabamento">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#cab734;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(0).atacador}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#cab734;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(1).atacador}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#cab734;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(2).atacador}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#cab734;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(3).atacador}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+									
+							</pf:panel>
+
+						</pf:column>
+					</pf:panelGrid>
+<!--
+Label 1
+-->
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#cab734;">
+						<pf:column>
+							<pf:panel header="#{msg['usocomum.label.label1']}"
+								styleClass="Acabamento">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.label1'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.labeldescricao1}"
+											size="20" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.descricao1}"
+											size="48" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['acabamento.cor.label1']}" styleClass="Acabamento">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(0).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(1).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(2).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#cab734c;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(3).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Label 2
+-->				
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#cab734;">
+						<pf:column>
+							<pf:panel header="#{msg['usocomum.label.label2']}"
+								styleClass="Acabamento">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.label2'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.labeldescricao2}"
+											size="20" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.descricao2}"
+											size="48" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['acabamento.cor.label2']}" styleClass="Acabamento">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(0).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(1).descricao2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(2).descricao2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(3).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Label 3
+-->				
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#cab734;">
+						<pf:column>
+							<pf:panel header="#{msg['usocomum.label.label3']}"
+								styleClass="Acabamento">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.label3'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.labeldescricao3}"
+											size="20" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.descricao3}"
+											size="48" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['acabamento.cor.label3']}" styleClass="Acabamento">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(0).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(1).descricao3}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(2).descricao3}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(3).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+
+<!--
+Complemento Acabamento
+-->				
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#cab734;">
+						<pf:column>
+							<pf:panel header="#{msg['acabamento.label.cplacabamento']}"
+								styleClass="Acabamento">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.acabamentoAmostra.complemento}"
+											size="60" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['acabamento.cor.cplacabamento']}" styleClass="Acabamento">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(0).complemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(1).complemento}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(2).complemento}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacord}">
+											<h:outputLabel
+												value="#{controller.listaCorAcabamentoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#cab734;" />
+											<pf:inputText
+												value="#{controller.listaCorAcabamentoAmostra.get(3).complemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+
+				</pf:scrollPanel>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{controller.saveAcabamento}"  process="@form" oncomplete="PF('dialogAcabamento').hide()" 
+						update="crudFormAmostraSecundario crudFormAmostraSecundario:pnlGrpCor "/>
+					<pf:commandButton value="#{msg['botao.fechar']}" oncomplete="PF('dialogAcabamento').hide();"/>
+				</h:panelGrid>
+				</h:form>
+				</pf:dialog>
+</ui:composition>

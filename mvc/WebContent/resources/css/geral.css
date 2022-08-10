@@ -1,0 +1,161 @@
+@CHARSET "ISO-8859-1";
+
+._save{background-image: url("./icons/Save.png") !important;}
+._back{background-image: url("./icons/back.png") !important;}
+._execute{background-image: url("./icons/execute.png") !important;}
+._new{background-image: url("./icons/toAdd.png") !important;}
+._view{background-image: url("./icons/toView.png") !important;}
+.edit16{background-image: url("./icons/Edit16.png") !important;}
+.view16{background-image: url("./icons/View16.png") !important;}
+.trash16{background-image: url("./icons/Trash16.png") !important;}
+.add16{background-image: url("./icons/Add16.png") !important;}
+._mixer{background-image:url("./icons/mixer.png") !important; }
+._edit{background-image: url("./icons/toEdit.png") !important;}
+._delete{background-image: url("./icons/toTrash.png") !important;}
+._check{background-image: url("./icons/toCheck.png") !important;}
+._close{background-image: url("./icons/toClose.png") !important;}
+._print{background-image: url("./icons/print_16.png") !important;}
+.cadastro{background-image:url("./icons/2.png") !important;}
+.movimento{background-image:url("./icons/52.png") !important;}
+.estatistica{background-image:url("./icons/74.png") !important;}
+.consulta{background-image:url("./icons/77.png") !important;}
+.relatorio{background-image:url("./icons/16.png") !important;}
+.order{background-image:url("./icons/69.png") !important;}
+._pdf{background-image:url("./icons/pdfDoc.png") !important;}
+._edit16{background-image:url("./icons/_edit16.png") !important;}
+._remake{background-image:url("./icons/redo.png") !important;}
+._restart{background-image:url("./icons/restart.png") !important;}
+._moreopt{background-image:url("./icons/moreoption.png") !important;}
+._savepartial{background-image:url("./icons/savepartial.png") !important;}
+._invoice{background-image:url("./icons/inv.png") !important;}
+._runprog{background-image:url("./icons/runnow.png") !important; }
+._savetmp{background-image:url("./icons/savetmp.png") !important;}
+._resume{background-image:url("./icons/resume.png") !important;}
+._circlegreen{background-image:url("./icons/ativo_true.png") !important;}
+._circlered{background-image:url("./icons/ativo_false.png") !important;}
+._mixer{background-image:url("./icons/mixer.png") !important;}
+._invoice{background-image:url("./icons/inv.png") !important;}
+
+
+body {
+	background-color: white;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.hidden {display: none;}
+
+/* Layout */
+.layoutPadrao .ui-layout-unit-content {
+	padding: 0px;
+	background: linear-gradient(to bottom, #ffffff 30%, #fafaff 100%);
+	
+}
+.mudaCorPainel .ui-panel-titlebar{
+	background-color:red; 
+}
+
+
+.MyOneMenu.ui-selectonemenu .ui-selectonemenu-label .ui-selectonemenu-trigger {
+          font-size: 12px;
+          height: 33px !important;
+}
+ 
+.layoutPadrao {
+	padding: 0px;
+}
+
+.ui-layout-north {
+	overflow: visible !important;
+	z-index: 20 !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow:visible !important;
+}
+
+::-webkit-input-placeholder {
+	font-family: Arial;
+	font-weight: normal;
+	color: #D3D3D3;
+}
+::-moz-placeholder {
+	font-family: Arial;
+	font-weight: normal;
+	color: #C2C2C2;
+} /* firefox 19+ */
+input:-moz-placeholder {
+	font-family: Arial;
+	font-weight: normal;
+	color: #C2C2C2;
+}
+:-ms-input-placeholder {
+	font-family: Arial;
+	font-weight: normal;
+	color: #D3D3D3;
+} /* ie */
+
+.button {
+	width: 40px;
+	height: 40px;
+	margin-bottom: 2px; 
+	margin-left: 3px;
+}
+
+.numeric {
+	text-align: right;
+}
+/*MegaMenu*/
+.ui-menu{
+	font-size: 10px;	
+}
+.ui-menubar{
+	font-size: 10px;
+}
+.ui-megamenu{
+	font-size: 10px;
+}
+.ui-menu-list{
+	font-size:10px;
+}
+.ui-menuitem{
+	font-size:10px;
+}
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 90%;
+}
+.ui-datatable, .ui-datatable, .ui-datatable-tablewrapper, .ui-datatable-content tr {
+    font-size: 8px !important;
+}
+.ui-datatable-data{
+	font-size: 8px;
+}
+.ui-datatable-header{
+	height: 40px;
+	
+}
+.ui-widget{
+	font-size: 8px;
+}
+ /* For Paginator */
+ .ui-datatable .ui-paginator .ui-paginator-first, 
+ .ui-datatable .ui-paginator .ui-paginator-prev, 
+ .ui-datatable .ui-paginator .ui-paginator-pages .ui-paginator-page, 
+ .ui-datatable .ui-paginator .ui-paginator-next, 
+ .ui-datatable .ui-paginator .ui-paginator-last, 
+ .ui-datatable .ui-paginator .ui-paginator-rpp-options {
+      font-size: 12px !important;
+ }
+          
+ .ui-datatable .ui-paginator .ui-paginator-current {
+     font-size: 12px !important;
+}
+.ui-column-filter {
+    text-align: left !important;
+    height: 5px;
+ }
+      
+.ui-growl-message-warn .ui-growl-item {
+background-color: #a94442;
+}
+
+ 

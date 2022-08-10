@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pf="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.ui-widget {
+	font-size: 100%;
+}
+
+.ui-panel-title {
+	font-size: 3.5em;
+	color: black;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="card">
+			<i id="referenciaheader" style="display: none; text-align: center"></i>
+			<pf:panel header="Seleção Referência" />
+			<pf:dataTable value="#{facadeView.listaReferencias}" var="_rowr"
+				rows="12" scrollHeight="800px">
+
+				<pf:column headerText="Escolha"
+					style="font-size:12px;width:30px;text-align:center;">
+					<pf:commandLink action="#{facadeView.Selecionar(_rowr)}" process="@this">
+						<i class="pi pi-replay" style="font-size: 1.5em;"
+							title="Pesquisa Referência" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['livroreferencia.label.abreviacao']}"
+					style="font-size:12px;width:25px;">
+					<h:outputText value="#{_rowr.abreviacao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['livroreferencia.label.referencia']}"
+					style="font-size:12px;width:50px;">
+					<h:outputText value="#{_rowr.referencia}" />
+				</pf:column>
+				<pf:column headerText="#{msg['livroreferencia.label.versao']}"
+					style="font-size:12px;width:25px;">
+					<h:outputText value="#{_rowr.versaorefer}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					style="font-size:12px;width:110px;">
+					<h:outputText value="#{_rowr.construcaonome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['construcao.label.versao']}"
+					style="font-size:12px;width:25px;">
+					<h:outputText value="#{_rowr.versao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['forma.label.refforma']}"
+					style="font-size:12px;width:45px;">
+					<h:outputText value="#{_rowr.referenciaforma}" />
+				</pf:column>
+			</pf:dataTable>
+		</div>
+	</h:form>
+</h:body>
+</html>

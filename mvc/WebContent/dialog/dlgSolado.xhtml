@@ -1,0 +1,1293 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" >
+<h:body>
+ <style type="text/css" >
+ 
+
+.SoladoC .ui-panel-titlebar .ui-panel-title {
+	color: white;
+	font-size: 12px;
+}
+.Solado .ui-panel-titlebar .ui-panel-title {
+	color: black;
+	font-size: 14px;
+}
+.Cabecalho .ui-panel .ui-panel-titlebar{
+	background-color: #c28104 !important;
+} 
+.Soladoheaders {
+	color: white;
+	background-color: #c28104 !important;
+	font-size: 12px;
+}
+
+.TabelaAux thead th {
+	border: none !important;
+	background: none !important;
+	display: none !important;
+}
+
+.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+	overflow: hidden;
+}
+
+.hide-column-names table thead tr {
+	display: none;
+}
+
+.colspace1 {
+	padding-left: 20px;
+}
+
+.colspace2 {
+	padding-right: 10px;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}
+
+
+.panelgrlsb {
+	border: none;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+
+.alturaLinha .ui-panelgrid {
+	padding: 2px 5px;
+}
+
+.dialogueSolado .ui-dialog-titlebar {
+	background-color: #7bb03c !important;
+	color: white;
+	font-size: 12px;
+}
+
+.alinhamento {
+	horizontal-align: right;
+}
+.ui-scrollpanel {
+    height: 650px;
+    width: 100%;
+}
+
+</style>
+</h:body>
+	<pf:dialog header="Cadastrar Solado" widgetVar="dialogSolado" resizable="false" 
+		position="right top" showEffect="slide" hideEffect="slide" modal="true" 
+		draggable="true" closable="false" appendTo="@(body)" width="100%"
+			styleClass="dialogueSolado" style="color-font:white;" dynamic="true">
+			<pf:panelGrid layout="grid" columns="10" styleClass="pangrdicb" style="border-color:#7bb03c">
+				<h:outputLabel value="Referência :" style="font-size:14px;" />
+				<pf:outputLabel value="#{controller.amostra.referencia}" style="color:blue;" />
+				<h:outputLabel value="Versão :" style="font-size:14px;"/>
+				<pf:outputLabel value="#{controller.amostra.versaoRefer}" style="color:blue;"/>
+				<h:outputLabel value="Construção :" style="font-size:14px;"/>
+				<pf:outputLabel value="#{controller.amostra.livroReferencia.construcao.construcao}" style="color:blue;"/>
+				<h:outputLabel value="Versão :" style="font-size:14px;"/>
+				<pf:outputLabel value="#{controller.amostra.livroReferencia.construcao.versao}" style="color:blue;"/>
+				<h:outputLabel value="Forma :" style="font-size:14px;"/>
+				<pf:outputLabel value="#{controller.amostra.referenciaForma}" style="color:blue;"/>
+			</pf:panelGrid>
+			<h:form id="frmSoladoAmostra" >
+			  <pf:growl id="mensagemSolado" globalOnly="true" />
+				<pf:scrollPanel mode="native" style="font-size:11px; ">
+<!--
+ Sola Laminada
+-->
+				 <pf:panelGrid rendered="#{controller.soladoAmostra.solalaminada ne '' ? true : false}" 
+				 layout="grid" columns="2" styleClass="alinhamento" 
+				 style="border-color:#7bb03c">				
+						
+						<pf:column>
+						
+							<pf:panel header="#{msg['solado.label.solalaminada']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.solalaminada}"
+											size="23" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.solalaminadamaterial}"
+											size="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.solalaminadaespessura}"
+											size="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.solalaminadafornecedor}" 
+											size="10" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.solalaminada']}"
+								styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).solalaminada}"
+												size="16" maxlength="16"/>
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).solalaminada}"
+												size="16" maxlength="16"/>
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).solalaminada}"
+												size="16" maxlength="16"/>
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).solalaminada}"
+												size="16" maxlength="16"/>
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+									
+							</pf:panel>
+
+						</pf:column>
+					</pf:panelGrid>
+<!--
+Label A
+-->
+					<pf:panelGrid rendered="#{controller.soladoAmostra.descricao2 ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.labela']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.labela'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.labeldescricao2}"
+											size="20" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.descricao2}"
+											size="48" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.labela']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).descricao2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).descricao2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Label B
+-->				
+					<pf:panelGrid rendered="#{controller.soladoAmostra.descricao4 ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.labelb']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.labelb'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.labeldescricao4}"
+											size="20" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.descricao4}"
+											size="48" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.labelb']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).descricao4}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).descricao4}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).descricao4}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).descricao4}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Sola Injetada
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.solainjetada ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.solainjetada']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['construcao.label.abrasao']}" />
+										<h:outputText value="#{msg['usocomum.label.dureza']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.solainjetada}"
+											size="18" readonly="true"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.solainjetadamaterial}"
+											size="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.solainjabrasao}"
+											size="10" readonly="true" style="font-size:11px;" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.solainjdureza}"
+											size="10" readonly="true" style="font-size:11px;" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.solainjfornecedor}"
+											size="10" readonly="true" style="font-size:11px;" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.solainjetada']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).solainjetada}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).solainjetada}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).solainjetada}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).solainjetada}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Carimbo Sola
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.carimbosola ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.carimbosola']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.carimbosola}"
+											size="48" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.carimbosola']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).carimbosola}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).carimbosola}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).carimbosola}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).carimbosola}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Entressola
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.entressola ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.entressola']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.entressola}"
+											size="23" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.entressolamaterial}"
+											size="10" readonly="true" style="font-size:11px;" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.entressolaespessura}"
+											size="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.entressolafornecedor}"
+											size="10" maxlength="10" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.entressola']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).entressola}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).entressola}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).entressola}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).entressola}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Vira 1
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.vira1 ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.vira1']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira1}"
+											size="19" maxlength="18" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira1material}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira1referencia}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira1fornecedor}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;" />
+									</h:panelGrid>
+									</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.vira1']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).vira1}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).vira1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).vira1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).vira1}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Vira 2
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.vira2 ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.vira2']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira2}"
+											size="19" maxlength="18" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira2material}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira2referencia}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.vira2fornecedor}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;" />
+									</h:panelGrid>
+									</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.vira2']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).vira2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).vira2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).vira2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).vira2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Beira
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.tipobeira ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.tipobeira']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="1">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.tipobeira}"
+											size="45" readonly="true" style="font-size:11px;" />
+									</h:panelGrid>
+									</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.tipobeira']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).tipobeira}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).tipobeira}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).tipobeira}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).tipobeira}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Salto
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.salto ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.salto']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.salto}"
+											size="32" maxlength="45" readonly="true" style="font-size:11px;" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.saltomaterial}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.saltoreferencia}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.saltofornecedor}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.salto']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).salto}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).salto}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).salto}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).salto}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Fixa Salto
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.fixasalto ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.fixasalto']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.fixasalto}"
+											size="46" maxlength="45" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+						</pf:column>
+					</pf:panelGrid>
+<!--
+Label 1
+-->				
+					<pf:panelGrid rendered="#{controller.soladoAmostra.labeldescricao1 ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.label1']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.label1'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.labeldescricao1}"
+											size="20" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.descricao1}"
+											size="48" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.label1']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Tacao
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.tacao ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.tacao']}"
+								styleClass="Solado">
+								<pf:row>
+										<h:panelGrid columns="5">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.dureza']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.tacao}"
+											size="18" maxlength="17" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.tacaomaterial}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.tacaoespessura}"
+											size="6" maxlength="5" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.tacaodurreza}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.tacaofornecedor}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.tacao']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).tacao}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).tacao}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).tacao}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).tacao}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Plataforma
+-->
+					<pf:panelGrid rendered="#{controller.soladoAmostra.plataforma ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.plataforma']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.plataforma}"
+											size="29" maxlength="28" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.plataformamaterial}"
+											size="10" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.plataformafornecedor}"
+											size="10" maxlength="10" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+									</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.plataforma']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).plataforma}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).plataforma}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).plataforma}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).plataforma}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Palmilha Montagem
+-->
+					<pf:panelGrid rendered="#{controller.soladoAmostra.palmilhamontagem ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.palmilhamontagem']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
+										<h:outputText value="#{msg['construcao.label.padrao']}" />
+										<h:outputText value="#{msg['construcao.label.codigo']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.palmilhamontagem}"
+											size="29" maxlength="28" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.palmilhamonpadrao}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.palmilhamontagemcodigo}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.palmilhamontagemfornecedor}"
+											size="11" maxlength="10" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+									</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.palmilhamontagem']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).palmilhamontagem}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).palmilhamontagem}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).palmilhamontagem}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).palmilhamontagem}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+<!--
+Relevo bico
+-->	
+					<pf:panelGrid rendered="#{controller.soladoAmostra.relevobico ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.relevobico']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['construcao.label.relevobico'] }" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.relevobico}"
+											size="10" maxlength="10" readonly="true" style="font-size:11px;"/>
+										<h:outputText value="(MM)"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+						</pf:column>
+					</pf:panelGrid>
+
+<!--
+Label 3
+-->				
+					<pf:panelGrid rendered="#{controller.soladoAmostra.labeldescricao3 ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.label3']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['construcao.label.label3'] }" />
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.soladoAmostra.labeldescricao3}"
+											size="20" readonly="true" style="font-size:11px;"/>
+										<pf:inputText
+											value="#{controller.soladoAmostra.descricao3}"
+											size="48" readonly="true" style="font-size:11px;"/>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['construcao.cor.labelb']}" styleClass="Solado">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(0).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.segcorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(1).descricao3}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.tercorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(2).descricao3}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{controller.parametros.quacorc}">
+											<h:outputLabel
+												value="#{controller.listaCorSoladoAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#7bb03c;" />
+											<pf:inputText
+												value="#{controller.listaCorSoladoAmostra.get(3).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+
+<!--
+Complemento construcao
+-->				
+					<pf:panelGrid rendered="#{controller.soladoAmostra.obsconstrucao ne '' ? true : false}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['construcao.label.complconst']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="1">
+									<h:outputText value="#{msg['construcao.label.complconst']}" />
+									<pf:inputTextarea cols="90" maxlength="120"
+										value="#{controller.soladoAmostra.obsconstrucao}"
+										style="font-size:12px;height:50%;" autoResize="false" readonly="true">
+									</pf:inputTextarea>
+
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+						</pf:column>
+					 </pf:panelGrid>	
+
+<!--
+Complemento Solado/Amostra
+-->				
+					<pf:panelGrid rendered="#{controller.amostra.obsSolado ne '' ? true : true}" 
+					layout="grid" columns="2" styleClass="alinhamento" 
+					style="border-color:#7bb03c;">
+						<pf:column>
+							<pf:panel header="#{msg['amostra.label.obssolado']}"
+								styleClass="Solado">
+								<pf:row>
+									<h:panelGrid columns="1">
+									<h:outputText value="#{msg['amostra.label.obs']}" />
+									<pf:inputText value="#{controller.amostra.obsSolado}"
+										size="60" maxlength="60">
+									</pf:inputText>
+
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+						</pf:column>
+					 </pf:panelGrid>	
+
+				</pf:scrollPanel>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{controller.saveSolado}" process="@form" oncomplete="PF('dialogSolado').hide()" 
+						update="crudFormAmostraSecundario crudFormAmostraSecundario:pnlGrpCor " />
+					<pf:commandButton value="#{msg['botao.fechar']}" oncomplete="PF('dialogSolado').hide();"/>
+				</h:panelGrid>
+				</h:form>
+				</pf:dialog>
+</ui:composition>

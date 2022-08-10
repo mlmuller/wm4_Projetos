@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<ui:decorate xmlns="httpf://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+
+	<ui:define name="corpo">
+	<style type="text/css">
+	.ui-fieldset-legend {
+		padding: 10px 10px !important;
+		height: 0.5em;
+		color: black;
+		font-size: 11px;
+		background-color: #7cdbfb !important;
+	}
+	
+	.TabelaAux thead th {
+		border: none !important;
+		background: none !important;
+		display: none !important;
+	}
+	
+	.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+		overflow: hidden;
+	}
+	
+	.hide-column-names table thead tr {
+		display: none;
+	}
+	
+	.ui-tabs.ui-tabs-top .ui-tabs-nav li {
+		height: 40px;
+		padding-right: 50px;
+		font-size: 10px;
+		color: black;
+		border: 1px;
+		border-top-right-radius: 15px;
+	}
+	/* Anothers cool css for p:tabview */
+	div.ui-tabs div.ui-tabs-panel {
+		padding: 8px 4px 2px;
+	}
+	
+	div.ui-tabs ul.ui-tabs-nav li {
+		background-color: #7ac4ec;
+		font-weight: bold;
+	}
+	
+	div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected {
+		padding-bottom: 0;
+		border-bottom: 1px solid #A8A8A8 !important;
+		background-color: #dbeff6;
+		box-shadow: 4px 4px 4px #191918;
+	}
+	
+	div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected.ui-state-hover {
+		background-color: #2dc4ef !important;
+	}
+	
+	.ui-tabs .ui-tabs-nav {
+		text-align: center;
+		align-content: center;
+	}
+	
+	.ui-tabs .ui-tabs-nav li {
+		float: none !important;
+		display: inline-block;
+	}
+	.customPanelGrid .ui-panelgrid-content {
+		align-items: center;
+	}
+	.panelgrlsb {
+		border: none;
+	}
+	
+	.pangrdicb .uipanelgrid {
+		border: 1px;
+	}
+	
+	.alturaLinha .ui-panelgrid {
+		padding: 2px 5px;
+	}
+	
+	.alinhamento {
+		horizontal-align: right;
+	}
+	.alinhaData {
+		horizontal-align: right;
+		font-size:12px;
+	}
+</style>
+
+	 <h:form id="frmlistagem">
+	 <pf:growl />
+		<pf:panel header="Jack Rogers - View">
+			<pf:commandButton value="#{msg['botao.add']}" icon="fa fa-plus-square-o" actionListener="#{etiquetasController.novaEtiqueta}" 
+			oncomplete="PF('dlgetiqueta').show();" 
+			update=":frmetiqueta:pnletiqueta" 
+			style="font-size:12px;" />
+			<pf:dataTable id="tabela" rows="10" var="jackrogers" paginator="true" paginatorPosition="bottom" 
+						  value="#{etiquetasController.listaEtiquetas}" style="text-align:center;">
+				 <pf:column headerText="Opcoes" style="width: 10%;font-size:12px" >
+			     <pf:commandLink
+					actionListener="#{etiquetasController.editEtiqueta(jackrogers)}"
+					onclick="PF('dlgetiqueta').show()"
+					update=":frmetiqueta:pnletiqueta" title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o"
+						style="font-size: 1.5em; color: #9ecda2;" />
+				</pf:commandLink>
+
+				<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{etiquetasController.deleteEtiqueta(jackrogers)}"
+						update=":frmetiqueta:pnletiqueta" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o"
+							style="font-size: 1.5em; color: #f77e6b;" />
+				</pf:commandLink>
+				 </pf:column>
+
+				 <pf:column headerText="Date"  style="width: 12%;font-size:12px;" filterBy="#{jackrogers.inclusao}" 
+				 sortBy="#{jackrogers.inclusao}" filterMatchMode="contains">
+					<h:outputText value="#{jackrogers.inclusao}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Style"  style="width: 15%;font-size:12px;" filterBy="#{jackrogers.referencia}" 
+				 sortBy="#{jackrogers.referencia}" filterMatchMode="contains">
+					<h:outputText value="#{jackrogers.referencia}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Style Name" style="width: 25%;font-size:12px;" filterBy="#{jackrogers.stylename1}" 
+				 sortBy="jackrogers.stylename1" filterMatchMode="contains" >
+				 	<h:outputText value="#{jackrogers.stylename1}#{jackrogers.stylename2}"/>
+				 </pf:column>
+
+				 <pf:column headerText="Code Cust." style="width: 14%;font-size:12px;" filterBy="#{jackrogers.codecustomer}" 
+				 sortBy="#{jackrogers.codecustomer}" filterMatchMode="contains" >
+				 	<h:outputText value="#{jackrogers.codecustomer}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Construcao" style="width: 14%;font-size:12px;" filterBy="#{jackrogers.construcao}" 
+				 sortBy="jackrogers.construcao" filterMatchMode="contains" >
+				 	<h:outputText value="#{jackrogers.construcao}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Last" style="width: 15%;font-size:12px;" filterBy="#{jackrogers.forma}" 
+				 sortBy="jackrogers.forma" filterMatchMode="contains" >
+				 	<h:outputText value="#{jackrogers.forma}"/>
+				 </pf:column>
+				 
+				 
+				 <pf:column headerText="Upper" style="width: 20%;font-size:12px;" filterBy="#{jackrogers.material}" 
+				 sortBy="jackrogers.material" filterMatchMode="contains" >
+				 	<h:outputText value="#{jackrogers.material}"/>
+				 </pf:column>
+
+				 <pf:column headerText="Color" style="width: 20%;font-size:12px;" filterBy="#{jackrogers.cor}"
+				 sortBy="jackrogers.cor" filterMatchMode="contains">
+				 	<h:outputText value="#{jackrogers.cor}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Cliente" style="width: 14%;font-size:12px;" filterBy="#{jackrogers.clientenome}" 
+				 sortBy="jackrogers.clientenome" filterMatchMode="contains" >
+				 	<h:outputText value="#{jackrogers.clientenome}"/>
+				 </pf:column>
+
+				 <pf:column headerText="Fase" style="width: 25%;font-size:12px;" filterBy="#{jackrogers.fase}"
+				 sortBy="jackrogers.fase" filterMatchMode="contains">	
+				   <h:outputText value="#{jackrogers.fase}"/>		 
+				 </pf:column>
+				 
+			</pf:dataTable>
+			<pf:confirmDialog global="true" >
+				<pf:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				<pf:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+			</pf:confirmDialog>
+		</pf:panel>
+	</h:form>
+	<pf:dialog header="Detalhes Etiqueta Jack Rogers" widgetVar="dlgetiqueta" 
+	draggable="false" resizable="false" 
+	modal="false" 
+	closable="true" 
+	showEffect="clip" 
+	hideEffect="clip" 
+	width="500px">
+	 	<h:form id="frmetiqueta">	
+	 	<pf:growl></pf:growl>
+	 		<h:panelGrid id="pnletiqueta"  columns="2" styleClass="panelgrlsb">
+
+				<pf:outputLabel value="Inclusao:" />
+				<pf:datePicker id="ampara" pattern="dd-MM-yyyy" 
+					value="#{etiquetasController.detailEtiqueta.inclusao}"
+					size="10" monthNavigator="true"> 
+					<pf:effect event="dbclick" type="slide"/>	
+					<f:convertDateTime type="localDate" dateStyle="short"
+						pattern="dd-MM-yyyy" />
+					<pf:ajax process="@this"/>
+			    </pf:datePicker>
+
+
+				<pf:outputLabel value="Fase:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.fase}" converter="upperCaseConverter" size="30" maxlength="28">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+	
+		        <pf:outputLabel value="Style:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.referencia}"  size="15" maxlength="15">
+				</pf:inputText>
+
+		        <pf:outputLabel value="Style Name:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.stylename1}" converter="upperCaseConverter" size="35" maxlength="32">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+
+		        <pf:outputLabel value="Complemento:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.stylename2}" converter="upperCaseConverter" size="35" maxlength="32">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+
+		        <pf:outputLabel value="Code cust:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.codecustomer}" size="25" maxlength="20">
+				</pf:inputText>
+	
+		        <pf:outputLabel value="Construcao:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.construcao}" converter="upperCaseConverter" size="15" maxlength="15">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+
+		        <pf:outputLabel value="Forma:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.forma}" size="15" maxlength="15">
+				</pf:inputText>
+
+		        <pf:outputLabel value="Upper:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.material}" converter="upperCaseConverter" size="35" maxlength="32">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+
+		        <pf:outputLabel value="Complemento:" />
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.materialb}" converter="upperCaseConverter" size="35" maxlength="32">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+		
+					<h:outputLabel value="#{msg['usocomum.label.nomecliente']}" />
+					 <pf:selectOneMenu value="#{etiquetasController.detailEtiqueta.cliente}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="Por favor, Selecione um cliente!" filter="true"
+						filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{etiquetasController.listaClientes}" var="clinov"
+							itemValue="#{clinov}" itemLabel="#{clinov.nome}" />
+					 </pf:selectOneMenu>
+
+ 				<pf:outputLabel value="Color:"/>
+				<pf:inputText value="#{etiquetasController.detailEtiqueta.cor}" converter="upperCaseConverter" size="35" maxlength="37" style="text-align:left">
+				  <pf:ajax event="blur" update="@this" />
+				</pf:inputText>
+			    <pf:outputLabel value="Copias"/>
+		    	<pf:spinner value="#{etiquetasController.detailEtiqueta.copias}" 
+		    	size="2" 
+		    	stepFactor="1" 
+		    	style="width:50px;" min="1"/>
+				</h:panelGrid>
+				<h:panelGrid styleClass="panelgrlsb">
+				  <pf:panel styleClass="panelgrlsb">
+				  <pf:commandButton value="Salvar" icon="fa fa-floppy-o" actionListener="#{etiquetasController.save()}" 
+				  update=":frmlistagem :frmlistagem:tabela :frmetiqueta:pnletiqueta">
+				  <pf:commandButton value="Fechar" icon="fa fa-times-circle-o" oncomplete="PF('dlgetiqueta').hide();"/>
+					</pf:commandButton>
+				  </pf:panel>
+				</h:panelGrid>
+			</h:form>
+	</pf:dialog>
+  </ui:define>
+</ui:decorate>

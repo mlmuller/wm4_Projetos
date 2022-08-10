@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<ui:decorate xmlns="httpf://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="frmMain">
+			<pf:growl></pf:growl>
+			<pf:panel id="tblMain" header="Etiquetas - Jack Rogers">
+				<pf:dataTable id="tblEtiquetas" var="cursoretiqueta" 
+				value="#{etiquetasController.listaEtiquetas}" scrollHeight="400px;" scrollable="true">
+			        <pf:column headerText="" style="width:10%;text-align:center" >
+					     <pf:selectBooleanCheckbox value="#{cursoretiqueta.escolha}"/>
+			       </pf:column>
+					<pf:column headerText="Qtd" style="width:8%;text-align:center;;font-size:12px;"
+						filterBy="#{cursoretiqueta.copias}"
+						filterStyle="max-width: 40px; min-width: 40px;"
+						sortBy="#{cursoretiqueta.copias}" filterMatchMode="contains">
+						<h:outputText value="#{cursoretiqueta.copias}" />
+					</pf:column>
+				 <pf:column headerText="Date"  style="width: 12%;font-size:12px;" filterBy="#{cursoretiqueta.inclusao}" 
+				 sortBy="#{cursoretiqueta.inclusao}" filterMatchMode="contains">
+					<h:outputText value="#{cursoretiqueta.inclusao}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Style"  style="width: 15%;font-size:12px;" filterBy="#{cursoretiqueta.referencia}" 
+				 sortBy="#{cursoretiqueta.referencia}" filterMatchMode="contains">
+					<h:outputText value="#{cursoretiqueta.referencia}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Style Name" style="width: 25%;font-size:12px;" filterBy="#{cursoretiqueta.stylename1}" 
+				 sortBy="cursoretiqueta.stylename1" filterMatchMode="contains" >
+				 	<h:outputText value="#{cursoretiqueta.stylename1}#{cursoretiqueta.stylename2}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Construcao" style="width: 14%;font-size:12px;" filterBy="#{cursoretiqueta.construcao}" 
+				 sortBy="cursoretiqueta.construcao" filterMatchMode="contains" >
+				 	<h:outputText value="#{cursoretiqueta.construcao}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Last" style="width: 15%;font-size:12px;" filterBy="#{cursoretiqueta.forma}" 
+				 sortBy="cursoretiqueta.forma" filterMatchMode="contains" >
+				 	<h:outputText value="#{cursoretiqueta.forma}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Upper" style="width: 20%;font-size:12px;" filterBy="#{cursoretiqueta.material}" 
+				 sortBy="cursoretiqueta.material" filterMatchMode="contains" >
+				 	<h:outputText value="#{cursoretiqueta.material}"/>
+				 </pf:column>
+
+				 <pf:column headerText="Color" style="width: 20%;font-size:12px;" filterBy="#{cursoretiqueta.cor}"
+				 sortBy="cursoretiqueta.cor" filterMatchMode="contains">
+				 	<h:outputText value="#{cursoretiqueta.cor}"/>
+				 </pf:column>
+				 
+				 <pf:column headerText="Cliente" style="width: 14%;font-size:12px;" filterBy="#{cursoretiqueta.clientenome}" 
+				 sortBy="cursoretiqueta.clientenome" filterMatchMode="contains" >
+				 	<h:outputText value="#{cursoretiqueta.clientenome}"/>
+				 </pf:column>
+
+				 <pf:column headerText="Code Cust." style="width: 14%;font-size:12px;" filterBy="#{cursoretiqueta.codecustomer}" 
+				 sortBy="cursoretiqueta.codecustomer" filterMatchMode="contains" >
+				 	<h:outputText value="#{cursoretiqueta.codecustomer}"/>
+				 </pf:column>
+
+				 <pf:column headerText="Fase" style="width: 18%;font-size:12px;" filterBy="#{cursoretiqueta.fase}"
+				 sortBy="cursoretiqueta.fase" filterMatchMode="contains">	
+				   <h:outputText value="#{cursoretiqueta.fase}"/>		 
+				 </pf:column>
+			
+				</pf:dataTable>
+					<f:facet name="footer">
+						<pf:panelGrid columns="6" styleClass="blueBackground">
+							<pf:column>
+								<pf:outputLabel value="Cliente ? : " style="text-align:left;"/>
+								<pf:selectBooleanCheckbox value="#{etiquetasController.varTo}"/>
+							</pf:column>
+						    <pf:column>
+						     <pf:outputLabel value="English ? :  " style="text-align:left;"/> 
+						     <pf:selectBooleanCheckbox value="#{etiquetasController.varIdioma}"/>
+							</pf:column>
+						    <pf:column>
+						      <pf:outputLabel value="Termica ? : " style="text-align:left;"/>
+						      <pf:selectBooleanCheckbox value="#{etiquetasController.varTermica}"/> 
+						    </pf:column>
+						    <pf:column>
+						      <pf:outputLabel value="A Partir: "/>
+						      <pf:spinner value="#{etiquetasController.MCount}" min="1"  max="8"/> 
+						    </pf:column>
+							<pf:commandButton value="Executar" icon="fa fa-thumbs-o-up" 
+							style="width:110px;" 
+							actionListener="#{etiquetasController.chamaEtiqueta}" 
+							oncomplete="PF('dlgEtqGerar').show()" 
+							update=":frmEtqGerar:tblEtqGerar">
+							</pf:commandButton>
+						</pf:panelGrid>
+					</f:facet>
+			</pf:panel>
+		</h:form>
+		<pf:dialog header="Etiquetas Para Gerar" widgetVar="dlgEtqGerar"
+			draggable="false" resizable="false" modal="false" closable="true"
+			showEffect="clip" hideEffect="clip" width="90%">
+			<h:form id="frmEtqGerar">
+				<pf:growl globalOnly="true"></pf:growl>
+				<pf:panel id="pnlGerar" header="Etiquetas - Couros">
+					<pf:dataTable id="tblEtqGerar"
+						emptyMessage="Nao Foram Selecionadas Etiquetas !!! !"
+						var="cursoretq" value="#{etiquetasController.listaMultiplasEtiquetas}" 
+						style="text-align:center;" scrollable="true" scrollHeight="250px;">
+						<f:facet name="footer">
+							<pf:panelGrid columns="7" >
+									<pf:column>
+										<pf:outputLabel value="Para:"/>
+										<h:outputText value="#{etiquetasController.varTo ? 'Cliente' : 'GVD'}" style="font-weight:normal;color:red;font-size:14px;font-style:italic"/>
+									</pf:column>
+									<pf:column>
+										<pf:outputLabel value="Tipo:" />
+										<h:outputText value="#{etiquetasController.varTermica ? 'Termica' : 'Laser'}" style="font-weight:normal;color:red;font-size:14px;font-style:italic" />
+									</pf:column>
+								   <pf:column>
+								     <pf:outputLabel value="" style="color:#000000;"/>
+								     	<h:outputText value="#{etiquetasController.varIdioma ? 'Ingles' : 'Portugues'}" style="font-weight:normal;color:green;font-size:14px;font-style:italic"/>
+								   </pf:column>
+								   <pf:column >
+								     <pf:outputLabel value="Etiquetas a gerar:" style="color:#000000;"/>
+								     	<h:outputText value="#{etiquetasBean.geralEtiquetas}" style="font-weight:normal;color:green;font-size:14px;font-style:italic"/>
+								   </pf:column>
+								     <pf:column >
+								     	<pf:outputLabel value="Paginas:" style="color:#000000;"/>
+								     	<h:outputText value="#{etiquetasController.geralEtiquetas}" style="font-weight:normal;color:green;font-size:14px;font-style:italic" >
+								     	   <f:convertNumber minFractionDigits="2" pattern="##,##"/>
+								     	</h:outputText>
+								     </pf:column>
+								   <pf:column >
+								     <pf:outputLabel value="A Partir da:" style="color:#000000;"/>
+								     	<h:outputText value="#{etiquetasController.MCount}" style="font-weight:bold;color:green;font-size:14px;font-style:italic"/>
+								   </pf:column>
+								     <pf:column>
+								     
+										 <pf:commandButton value="Preview PDF" icon="fa fa-eye"
+											style="width:100px;"
+											action="#{etiquetasController.printEtiqueta}" ajax="false" onclick="this.form.target='_blank'"
+											process="@form" update=":mensagem :frmMain ">
+										</pf:commandButton>
+									</pf:column>
+							</pf:panelGrid>
+						</f:facet>
+						<pf:column headerText="Qtd" style="width: 10%;font-size:12px" >
+							<pf:inputText value="#{cursoretq.copias}" style="font-size:12px;width: 8%"/>
+						</pf:column>
+						
+						
+						<pf:column headerText="Fabrica" style="width: 16%;font-size:12px" >
+							<h:outputText value="#{cursoretq.fabricanome}" />
+						</pf:column>
+						<pf:column headerText="Material " style="width: 15%;font-size:12px">
+							<h:outputText value="#{cursoretq.material}">
+							</h:outputText>
+						</pf:column>
+						<pf:column headerText="Cor " style="width: 15%;font-size:12px">
+							<h:outputText value="#{cursoretq.cor}">
+							</h:outputText>
+						</pf:column>
+						<pf:column headerText="Referencia " style="width: 15%;font-size:12px">
+							<h:outputText value="#{cursoretq.referencia}">
+							</h:outputText>
+						</pf:column>
+					</pf:dataTable>
+				</pf:panel>
+			</h:form>
+		</pf:dialog>
+	</ui:define>
+</ui:decorate>

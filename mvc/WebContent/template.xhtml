@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+
+	<h:outputScript name="js/ripple-effect.js" 
+		library="adamantium-layout" />
+	<h:outputScript name="js/perfect-scrollbar.js"
+		library="adamantium-layout" />
+	<h:outputScript name="js/layout.js" 
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/core-layout.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/animate.css" 
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/adamantium-font.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/ripple-effect.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/perfect-scrollbar.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/font-awesome.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/adamantium-layout.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="css/theme.css"
+		library="adamantium-layout" />
+	<h:outputStylesheet name="theme/theme.less"
+		library="less" />
+	<h:outputStylesheet name="variables/theme-variables.less"
+		library="less" />
+
+
+  </h:head>
+<h:body>
+
+	<pe:layout fullPage="true">
+		<pe:layoutPane  
+			position="north" 
+			size="65" 
+			closable="false" resizable="false">
+	   		<ui:include src="topo.xhtml"/>
+	   	</pe:layoutPane>	
+
+	 	 <pe:layoutPane id="fouc" position="center"  >
+	 	 	<h:form>
+	 	 		<ui:include src="layoutmenu.xhtml" />
+	 	 	</h:form>
+	 	 		<ui:insert name="corpo"/> 
+	      </pe:layoutPane>
+	
+	</pe:layout>
+
+
+</h:body>	
+</html>

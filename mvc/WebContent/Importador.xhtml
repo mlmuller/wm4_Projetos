@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormImportador">
+			<pf:panel header="#{msg['importador.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{importadorController.add()}"
+				update=":addEditFormImportador"
+				oncomplete="PF('addEditFormImportadorDlg').show()"
+				style="font-size:12px;" />
+			<pf:dataTable value="#{importadorController.listaImportador}"
+				var="_row" paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{importadorController.edit(_row)}"
+						update=":addEditFormImportador"
+						oncomplete="PF('addEditFormImportadorDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{importadorController.delete(_row)}"
+						update=":crudFormImportador" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.importadorid}" />
+				</pf:column>
+				<pf:column headerText="Imp"
+					filterStyle="height:2.2em;" filterBy="#{_row.tipoimportador}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.tipoimportador}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nome}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.resumido']}"
+					filterStyle="height:2.2em;" style="font-size:12px;"
+					filterBy="#{_row.sucinto}" sortBy="#{_row.sucinto}"
+					filterMatchMode="contains">
+					<h:outputText value="#{_row.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['importador.label.tipopessoa']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.tipopessoa.label}"
+					sortBy="#{_row.tipopessoa.label}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.tipopessoa.label}" />
+				</pf:column>
+				<pf:column headerText="#{msg['importador.label.cnpjcpf']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.cnpjcpf}"
+					sortBy="#{_row.cnpjcpf}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.cnpjcpf}" />
+				</pf:column>
+				<pf:column headerText="#{msg['importador.label.bairro']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.bairro}"
+					sortBy="#{_row.bairro}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.bairro}" />
+				</pf:column>
+				<pf:column headerText="#{msg['importador.label.cep']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.cep}"
+					sortBy="#{_row.cep}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.cep}" />
+				</pf:column>
+				<pf:column headerText="#{msg['importador.label.inscricao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.inscricaoestadual}"
+					sortBy="#{_row.inscricaoestadual}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.inscricaoestadual}" />
+				</pf:column>
+				<pf:column headerText="#{msg['importador.label.telefone']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.telefone}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.telefone}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Importadores" widgetVar="addEditFormImportadorDlg"
+			width="680" height="525" resizable="false" position="center center"
+			showEffect="clip"
+			onShow="PF('addEditFormImportadorDlg').initPosition()" modal="false"
+			draggable="false">
+			<h:form id="addEditFormImportador">
+				<pf:row id="messages" globalOnly="true" />
+				<pf:panel>
+					<h:panelGrid columns="2">
+						<pf:outputLabel value="#{msg['importador.label.tipoimport']}" />
+						<pf:selectOneMenu
+							value="#{importadorController.importador.tipoimportador}"
+							required="true" requiredMessage="Informe Tipo Importador !"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{importadorController.tipoimportador}"
+								var="tipoimport" itemValue="#{tipoimport}"
+								itemLabel="#{tipoimport.label}" />
+						</pf:selectOneMenu>
+						<pf:outputLabel value="#{msg['usocomum.label.nome']}:" />
+						<pf:inputText value="#{importadorController.importador.nome}"
+							required="true" requiredMessage="Informe Nome do Importador!"
+							style="text-align:left;" size="40">
+						</pf:inputText>
+						<pf:outputLabel value="#{msg['usocomum.label.resumido']}:" />
+						<pf:inputText value="#{importadorController.importador.sucinto}"
+							required="true" requiredMessage="Informe Resumido do Importador!"
+							size="20" />
+						<pf:outputLabel value="#{msg['importador.label.cidade']}" />
+						<pf:selectOneMenu
+							value="#{importadorController.importador.cidade}" required="true"
+							requiredMessage="Informe Cidade !"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{importadorController.listaCidades}"
+								var="tipocidade" itemValue="#{tipocidade}"
+								itemLabel="#{tipocidade.nome}" />
+						</pf:selectOneMenu>
+						<pf:outputLabel value="#{msg['importador.label.endereco']}:" />
+						<pf:inputText value="#{importadorController.importador.endereco}"
+							size="40" />
+						<pf:outputLabel value="#{msg['importador.label.bairro']}:" />
+						<pf:inputText value="#{importadorController.importador.bairro}"
+							size="30" />
+						<pf:outputLabel value="#{msg['importador.label.cep']}:" />
+						<pf:inputMask mask="99999-999"
+							value="#{importadorController.importador.cep}" />
+						<pf:outputLabel value="#{msg['importador.label.tipofone']}" />
+						<pf:selectOneMenu
+							value="#{importadorController.importador.tipotelefone}"
+							required="true" requiredMessage="Informe Tipo Telefone !"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{importadorController.tipotelefone}"
+								var="tipofone" itemValue="#{tipofone}"
+								itemLabel="#{tipofone.label}" />
+							<pf:ajax update="pnlTelefone" immediate="true" />
+						</pf:selectOneMenu>
+						<pf:outputLabel value="#{msg['importador.label.telefone']}" />
+						<h:panelGroup id="pnlTelefone">
+							<pf:inputMask
+								rendered="#{importadorController.importador.tipotelefone == 'F'}"
+								mask="(99)-9999-9999" size="15"
+								value="#{importadorController.importador.telefone}"
+								placeholder="Fixo" />
+							<pf:inputMask
+								rendered="#{importadorController.importador.tipotelefone == 'C'}"
+								mask="(99)-99999-9999" size="15"
+								value="#{importadorController.importador.telefone}"
+								placeholder="Celular" />
+						</h:panelGroup>
+								
+						<pf:outputLabel value="#{msg['importador.label.tipopessoa']}" />
+						<pf:selectOneMenu
+							value="#{importadorController.importador.tipopessoa}"
+							required="true" requiredMessage="Informe Tipo Pessoa !"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{importadorController.tipopessoa}"
+								var="tipopessoa" itemValue="#{tipopessoa}"
+								itemLabel="#{tipopessoa.label}" />
+							<pf:ajax update="pnlTipo" immediate="true" />
+						</pf:selectOneMenu>
+						<pf:outputLabel value="CPF/CNPJ:" />
+						<h:panelGroup id="pnlTipo">
+							<pf:inputMask
+								rendered="#{importadorController.importador.tipopessoa == 'J'}"
+								mask="99.999.999/9999-99" size="22"
+								value="#{importadorController.importador.cnpjcpf}"
+								placeholder="CNPJ" />
+							<pf:inputMask
+								rendered="#{importadorController.importador.tipopessoa == 'F'}"
+								mask="999.999.999-99" size="15"
+								value="#{importadorController.importador.cnpjcpf}"
+								placeholder="CPF" />
+						</h:panelGroup>
+						<pf:outputLabel value="#{msg['importador.label.inscricao']}" />
+						<pf:inputText
+							value="#{importadorController.importador.inscricaoestadual}" />
+						<pf:outputLabel value="#{msg['usocomum.label.situacao']}" />
+						<pf:selectOneMenu
+							value="#{importadorController.importador.situacao}"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{importadorController.ativoinativo}"
+								var="ativoinativo" itemValue="#{ativoinativo}"
+								itemLabel="#{ativoinativo.label}" />
+						</pf:selectOneMenu>
+					</h:panelGrid>
+				</pf:panel>
+				<pf:panel>
+					<pf:panelGrid columns="2">
+						<pf:commandButton value="#{msg['botao.save']}"
+							actionListener="#{importadorController.save()}" proccess="@form"
+							update=":addEditFormImportador :crudFormImportador"
+							oncomplete="if (!args.validationFailed) PF('addEditFormImportadorDlg').hide()" />
+						<pf:commandButton value="#{msg['botao.cancel']}"
+							onclick="PF('addEditFormImportadorDlg').hide(); return false;" />
+					</pf:panelGrid>
+				</pf:panel>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

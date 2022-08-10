@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+
+	<ui:define name="corpo">
+		<style type="text/css">
+		.panelgrlsb .ui-panelgrid {
+			border: none !important;
+		}
+		
+		.pangrdicb .uipanelgrid {
+			border: 1px;
+		}
+		
+		.ui-fieldset-legend {
+			padding: 10px 10px !important;
+			height: 0.5em;
+			background: #dae8ef;
+			color: black;
+			font-size: 11px;
+		}
+		
+		.ui-growl-message {
+			width: 250px;
+			height: 30px;
+		}
+		</style>
+		<h:form id="crudFormLivroReferencia">
+			<pf:panel header="#{msg['livroreferencia.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{livroReferenciaController.add()}"
+				update=":addEditFormLivroReferencia"
+				oncomplete="PF('addEditFormLivroReferenciaDlg').show()"
+				style="font-size:11px;" />
+
+			<pf:dataTable id="tblLazyLivroReferencia"
+				value="#{dtlazyLivroReferenciaView.lazyModel}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+			{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				style="text-align:center">
+				<pf:column width="50">
+					<pf:commandLink action="#{livroReferenciaController.edit(_row)}"
+						title="#{msg['botao.edit']}" update=":altEditFormLivroReferencia"
+						oncomplete="PF('altEditFormLivroReferenciaDlg').show()"
+						style="font-size:11px;">
+						<i class="fa fa-fw fa-edit" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						action="#{livroReferenciaController.duplicaLivroReferencia(_row)}" 
+						title="#{msg['botao.duplicar'] }" update=":altEditFormLivroReferencia"
+						oncomplete="PF('addEditFormLivroReferenciaDlg').show()" 
+						 style="font-size:11px;">
+						<i class="fa fa-clone" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						process="@this" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_row.livroreferenciaid}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.abreviacao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.abreviacao}"
+					sortBy="#{_row.abreviacao}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.abreviacao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.referencia']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.referencia}"
+					sortBy="#{_row.referencia}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.referencia}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.versao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.versaorefer}"
+					sortBy="#{_row.versaorefer}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.versaorefer}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.construcaonome}"
+					sortBy="#{_row.construcaonome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.construcaonome}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.versao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.versao}"
+					sortBy="#{_row.versao}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.versao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.forma']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.referenciaforma}"
+					sortBy="#{_row.referenciaforma}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.referenciaforma}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.usuario']}">
+					<h:outputText value="#{_row.usuariostamp}" style="font-size:12px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.datastamp']}">
+					<h:outputText value="#{_row.datastamp}" style="font-size:12px;">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</pf:column>
+
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="#{msg['livroreferencia.label.titulo']}"
+			widgetVar="addEditFormLivroReferenciaDlg" width="65%"
+			draggable="false" modal="false" position="top center"
+			showEffect="flip"
+			onShow="PF('addEditFormLivroReferenciaDlg').initPosition()"
+			resizable="false">
+			<h:form id="addEditFormLivroReferencia">
+				<pf:growl id="mensagem" globalOnly="true" />
+				<h:panelGrid style="font-size:12px;" styleClass="panelgrlsb">
+					<pf:row>
+
+						<h:panelGrid columns="2" styleClass="panelgrlsb">
+							<h:outputLabel
+								value="#{msg['livroreferencia.label.abreviacao']}"
+								style="font-size:12px;heigth:0.7em" >
+							</h:outputLabel>
+
+							<pf:inputText
+								value="#{livroReferenciaController.livroReferencia.abreviacao}"
+								style="height:0.7em;font-size:12px;" size="3" maxlength="3" converter="upperCaseConverter">
+								<pf:ajax event="blur" update="@this" immediate="true" />
+								
+							</pf:inputText>	
+						</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid columns="8" styleClass="panelgrlsb">
+							<h:outputLabel value="Construcao?"
+								style="font-size:12px;heigth:0.7em" />
+							<pf:inputText
+								value="#{livroReferenciaController.construcaoSelecionada}"
+								requiredMessage="Por favor , informe nome Construção !"
+								required="true" style="height:0.7em;font-size:12px;" size="18" 
+								maxlength="18" converter="upperCaseConverter">
+								<pf:ajax event="blur" update="@this" immediate="true" />
+							</pf:inputText>
+
+							<pf:commandLink
+								action="#{livroReferenciaController.buscaConstrucoes()}"
+								update="addEditFormLivroReferencia">
+								<i class="fa fa-search" style="font-size: 1.5em;"
+									title="Pesquisa Construção" />
+							</pf:commandLink>
+
+							<pf:selectOneMenu
+								value="#{livroReferenciaController.livroReferencia.construcao}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="Construção/Versão/Forma"
+									style="font-size:12px;height:0.7em;text-align:left;width:200px;"/>
+								<f:selectItems
+									value="#{livroReferenciaController.listaConstrucao}"
+									var="construcao" itemValue="#{construcao}"
+									itemLabel="#{construcao.construcao}/#{construcao.versao}/#{construcao.referenciaforma}" />
+								<pf:ajax update="grdConstrucao pnlComplReferencia" event="change"
+									listener="#{livroReferenciaController.complementaLivroReferencia}" process="@this" />
+							</pf:selectOneMenu>
+							<h:panelGrid id="grdConstrucao" columns="4" styleClass="panelgrlsb">
+								<h:outputLabel value="Versão:"
+									style="text-align:left;font-size:12px;height:0.7em;" />
+								<pf:inputText readonly="true"
+									value="#{livroReferenciaController.livroReferencia.construcao.versao}"
+									style="font-size:12px; height:0.7em;" size="2" maxlength="2" />
+	
+								<h:outputLabel value="#{msg['construcao.label.forma']}" />
+								<pf:inputText readonly="true"
+									value="#{livroReferenciaController.livroReferencia.construcao.referenciaforma}" size="6"
+									maxlength="6" />
+							</h:panelGrid>
+						</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid columns="2" styleClass="panelgrlsb">
+							<h:outputLabel
+								value="#{msg['livroreferencia.label.referenciacliente']}"
+								style="height:0.7em;font-size:12px;" />
+							<pf:inputText
+								value="#{livroReferenciaController.livroReferencia.referenciacliente}" />
+						</h:panelGrid>
+					</pf:row>
+				</h:panelGrid>
+				<h:panelGrid columns="6" id="pnlComplReferencia" rendered="#{livroReferenciaController.habilitaComplemento}" styleClass="panelgrlsb">
+						<h:outputLabel value="Nova Referência:"
+							style="height:0.7em;font-size:12px;" />
+						<pf:inputText readonly="true"
+							value="#{livroReferenciaController.livroReferencia.referencia}"  style="color:green;"/>
+						<pf:outputLabel value="Versão:"/>
+						<pf:inputText readonly="#{livroReferenciaController.libVersaoReferencia}" value="#{livroReferenciaController.livroReferencia.versaorefer}"/>	
+						<h:outputLabel value="Autor Reserva:" />
+						<pf:inputText readonly="true" 
+						value="#{livroReferenciaController.livroReferencia.usuariostamp }" style="color:green;"/>
+						<h:outputLabel value="Data Reserva:" />
+						<pf:inputText readonly="true" 
+						value="#{livroReferenciaController.livroReferencia.datastamp}" style="color:green"/>
+				</h:panelGrid>
+				<h:panelGrid id="btnSave" columns="2">
+					<pf:commandButton rendered="#{livroReferenciaController.MStatus}"
+						value="#{msg['botao.save']}"
+						actionListener="#{livroReferenciaController.save()}" 
+						update="addEditFormLivroReferencia addEditFormLivroReferencia:pnlComplReferencia addEditFormLivroReferencia:btnSave :crudFormLivroReferencia :crudFormLivroReferencia:tblLazyLivroReferencia " process="@this" />
+						
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormLivroReferenciaDlg').hide(); return false;" />
+				</h:panelGrid>
+				<pf:confirmDialog global="true" showEffect="flip" hideEffect="flip"
+					rendered="#{livroReferenciaController.temFicha} }">
+					<pf:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+					<pf:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="pi pi-times"
+						oncomplete="PF('addEditFormLivroReferenciaDlg').hide()"
+						update=" :crudFormLivroReferencia :crudFormLivroReferencia:tblLazyLivroReferencia" />
+				</pf:confirmDialog>
+
+			</h:form>
+		</pf:dialog>
+		
+		<pf:dialog header="Alteração/Duplicação Referência" 
+		    widgetVar="altEditFormLivroReferenciaDlg" width="60%"
+			draggable="false" modal="false" position="top center"
+			showEffect="flip"
+			onShow="PF('altEditFormLivroReferenciaDlg').initPosition()"
+			resizable="false">
+			<h:form id="altEditFormLivroReferencia">
+				<pf:growl id="mensagem" globalOnly="true" />
+				<h:panelGrid style="font-size:12px;" styleClass="panelgrlsb">
+					<pf:row>
+
+						<h:panelGrid columns="7" styleClass="panelgrlsb">
+							<h:outputLabel
+								value="#{msg['livroreferencia.label.abreviacao']}"
+								style="font-size:12px;heigth:0.7em" >
+							</h:outputLabel>
+
+							<pf:inputText
+								value="#{livroReferenciaController.livroReferencia.abreviacao}"
+								style="height:0.7em;font-size:12px;" size="3" maxlength="3" converter="upperCaseConverter">
+								<pf:ajax event="blur" update="@this" immediate="true" />
+								
+							</pf:inputText>	
+						<h:outputLabel value="Referência:"
+							style="height:0.7em;font-size:12px;" />
+						<pf:inputText readonly="true"
+							value="#{livroReferenciaController.livroReferencia.referencia}"  style="color:green;"/>
+
+						<pf:commandLink action="#{livroReferenciaController.verVersoesLivroReferencia()}" update=":formVerVersoesLivroReferencia" 
+							oncomplete="PF('verVersoesFormLivroReferenciaDlg').show()" title="Pesquisa Referencia(s) Versão(oes)" >
+							<i class="fa fa-eye" style="font-size:1.5em;"></i>
+						</pf:commandLink>
+
+						<pf:outputLabel value="Versão:"/>
+						<pf:inputText readonly="#{livroReferenciaController.libVersaoReferencia}" 
+						value="#{livroReferenciaController.livroReferencia.versaorefer}" size="3" maxlength="3"/>	
+						</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid columns="8" styleClass="panelgrlsb">
+							<h:outputLabel value="Construcao?"
+								style="font-size:12px;heigth:0.7em" />
+							<pf:inputText
+								value="#{livroReferenciaController.construcaoSelecionada}"
+								requiredMessage="Por favor , informe nome Construção !"
+								required="true" style="height:0.7em;font-size:12px;" size="18" 
+								maxlength="18" converter="upperCaseConverter">
+								<pf:ajax event="blur" update="@this" immediate="true" />
+							</pf:inputText>
+
+							<pf:commandLink
+								action="#{livroReferenciaController.buscaConstrucoes()}"
+								update="altEditFormLivroReferencia">
+								<i class="fa fa-search" style="font-size: 1.5em;"
+									title="Pesquisa Construção" />
+							</pf:commandLink>
+
+							<pf:selectOneMenu
+								value="#{livroReferenciaController.livroReferencia.construcao}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="Construção/Versão/Forma"
+									style="font-size:12px;height:0.7em;text-align:left;width:200px;"/>
+								<f:selectItems
+									value="#{livroReferenciaController.listaConstrucao}"
+									var="construcao" itemValue="#{construcao}"
+									itemLabel="#{construcao.construcao}/#{construcao.versao}/#{construcao.referenciaforma}" />
+								<pf:ajax update="grdConstrucao" event="change"
+									listener="#{livroReferenciaController.complementaLivroReferencia()}" process="@this" />
+							</pf:selectOneMenu>
+							<h:panelGrid id="grdConstrucao" columns="4" styleClass="panelgrlsb">
+								<h:outputLabel value="Versão:"
+									style="text-align:left;font-size:12px;height:0.7em;" />
+								<pf:inputText readonly="true"
+									value="#{livroReferenciaController.livroReferencia.construcao.versao}"
+									style="font-size:12px; height:0.7em;" size="2" maxlength="2" />
+	
+								<h:outputLabel value="#{msg['construcao.label.forma']}" />
+								<pf:inputText readonly="true"
+									value="#{livroReferenciaController.livroReferencia.construcao.referenciaforma}" size="6"
+									maxlength="6" />
+							</h:panelGrid>
+						</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid columns="2" styleClass="panelgrlsb">
+							<h:outputLabel
+								value="#{msg['livroreferencia.label.referenciacliente']}"
+								style="height:0.7em;font-size:12px;" />
+							<pf:inputText
+								value="#{livroReferenciaController.livroReferencia.referenciacliente}" />
+						</h:panelGrid>
+					</pf:row>
+				</h:panelGrid>
+				<h:panelGrid id="btnSave" columns="2">
+					<pf:commandButton rendered="#{livroReferenciaController.MStatus}"
+						value="#{msg['botao.save']}"
+						actionListener="#{livroReferenciaController.save()}" 
+						update="altEditFormLivroReferencia altEditFormLivroReferencia:btnSave :crudFormLivroReferencia :crudFormLivroReferencia:tblLazyLivroReferencia" process="@this" />
+						
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('altEditFormLivroReferenciaDlg').hide(); return false;" />
+				</h:panelGrid>
+
+			</h:form>		
+		</pf:dialog>
+
+		<pf:dialog header="Versões existentes"
+			widgetVar="verVersoesFormLivroReferenciaDlg" draggable="false"
+			modal="false" position="top center" showEffect="flip"
+			onShow="PF('verVersoesFormLivroReferenciaDlg').initPosition()"
+			resizable="false" width="25%" height="250px" closable="true">
+			<h:form id="formVerVersoesLivroReferencia">
+				<pf:growl id="mensagemver" globalOnly="true" />
+				<pf:dataTable
+					value="#{livroReferenciaController.listaVersoesLivroReferencia}"
+					var="_rowb" paginator="true" rows="9" paginatorPosition="bottom">
+					<pf:column headerText="#{msg['livroreferencia.label.referencia']}"
+						styleClass="numeric" width="20" style="font-size:11px;">
+						<h:outputText value="#{_rowb.referencia}" />
+					</pf:column>
+					<pf:column headerText="#{msg['livroreferencia.label.versao']}"
+						styleClass="numeric" width="10" style="font-size:11px;">
+						<h:outputText value="#{_rowb.versaorefer}" />
+					</pf:column>
+				</pf:dataTable>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+</ui:decorate>

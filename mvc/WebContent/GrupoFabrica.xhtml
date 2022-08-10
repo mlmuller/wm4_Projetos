@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormGrpFabrica">
+			<pf:panel header="#{msg['fabgrp.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{grupoFabricaController.add()}"
+				update=":addEditFormGrpFabrica"
+				oncomplete="PF('addEditFormGrpFabricaDlg').show()" />
+			<pf:dataTable value="#{grupoFabricaController.listaGrupoFabrica}"
+				var="_row" paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center;">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{grupoFabricaController.edit(_row)}"
+						update=":addEditFormGrpFabrica"
+						oncomplete="PF('addEditFormGrpFabricaDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{grupoFabricaController.delete(_row)}"
+						update=":crudFormGrpFabrica" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.fabricagrpid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					style="font-size:12px;" sortBy="#{_row.nome}"
+					filterMatchMode="contains" filterBy="#{_row.nome}">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabgrp.label.sucintogrp']}"
+					style="font-size:12px;" sortBy="#{_row.sucinto}">
+					<h:outputText value="#{_row.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabgrp.label.prioridade']}"
+					style="font-size:12px;" sortBy="#{_row.prioridade}">
+					<h:outputText value="#{_row.prioridade}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="Grupos Fábricas"
+			widgetVar="addEditFormGrpFabricaDlg" width="480" height="300"
+			resizable="false" position="center center" showEffect="clip"
+			onShow="PF('addEditFormGrpFabricaDlg').initPosition()" modal="false"
+			draggable="false">
+			<h:form id="addEditFormGrpFabrica">
+				<pf:growl id="messages" globalOnly="true" />
+				<h:panelGrid columns="2" style="font-size:12px">
+					<pf:outputLabel value="#{msg['usocomum.label.nome']}:" />
+					<pf:inputText value="#{grupoFabricaController.grupoFabrica.nome}"
+						required="true"
+						requiredMessage="Pro favor, informe nome Grupo Fábrica !" />
+					<pf:outputLabel value="#{msg['fabgrp.label.sucintogrp']}" />
+					<pf:selectOneMenu
+						value="#{grupoFabricaController.grupoFabrica.quadrofabrica}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="Informe Tipo de Fabrica a qual pertence !!"
+						filter="true" filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{grupoFabricaController.quadrofabrica}"
+							var="quadro" itemValue="#{quadro}" itemLabel="#{quadro.label}" />
+					</pf:selectOneMenu>
+					<pf:outputLabel value="#{msg['fabgrp.label.prioridade']}" />
+					<pf:selectOneMenu
+						value="#{grupoFabricaController.grupoFabrica.prioridade}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="Informe Tipo de Fabrica a qual pertence !!"
+						filter="true" filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{grupoFabricaController.prioridade}"
+							var="priori" itemValue="#{priori}" itemLabel="#{priori.label}" />
+					</pf:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{grupoFabricaController.save()}" process="@form"
+						update=":addEditFormGrpFabrica :crudFormGrpFabrica"
+						oncomplete="if (!args.validationFailed) PF('addEditFormGrpFabricaDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormGrpFabricaDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

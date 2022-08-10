@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<style type="text/css">
+.ui-fieldset-legend {
+	padding: 10px 10px !important;
+	height: 0.5em;
+	color: black;
+	font-size: 11px;
+	background-color: #7cdbfb !important;
+}
+
+.TabelaAux thead th {
+	border: none !important;
+	background: none !important;
+	display: none !important;
+}
+
+.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+	overflow: hidden;
+}
+
+.hide-column-names table thead tr {
+	display: none;
+}
+
+.ui-tabs.ui-tabs-top .ui-tabs-nav li {
+	height: 40px;
+	padding-right: 50px;
+	font-size: 10px;
+	color: black;
+	border: 1px;
+	border-top-right-radius: 15px;
+}
+/* Anothers cool css for p:tabview */
+div.ui-tabs div.ui-tabs-panel {
+	padding: 8px 4px 2px;
+}
+
+div.ui-tabs ul.ui-tabs-nav li {
+	background-color: #7ac4ec;
+	font-weight: bold;
+}
+
+div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected {
+	padding-bottom: 0;
+	border-bottom: 1px solid #A8A8A8 !important;
+	background-color: #dbeff6;
+	box-shadow: 4px 4px 4px #191918;
+}
+
+div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected.ui-state-hover {
+	background-color: #2dc4ef !important;
+}
+
+.ui-tabs .ui-tabs-nav {
+	text-align: center;
+	align-content: center;
+}
+
+.ui-tabs .ui-tabs-nav li {
+	float: none !important;
+	display: inline-block;
+}
+
+.colspace1 {
+	padding-left: 20px;
+}
+
+.colspace2 {
+	padding-right: 10px;
+}
+
+.column1 {
+	width: 65%;
+	height: auto
+}
+
+.column2 {
+	width: 35%;
+	height: auto
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}
+
+.column01 {
+	width: 50px;
+	height: auto;
+	text-align: center
+}
+
+.column02 {
+	width: 150px;
+	height: auto;
+	text-align: center
+}
+
+.column03 {
+	width: 10px;
+	height: auto;
+	text-align: center
+}
+
+.column04 {
+	width: 10px;
+	height: auto;
+	text-align: center
+}
+
+.column05 {
+	width: 150px;
+	height: auto;
+	text-align: center
+}
+
+.column06 {
+	width: 20px;
+	height: auto;
+	text-align: center
+}
+
+.column07 {
+	width: 150px;
+	height: auto;
+	text-align: center
+}
+
+.column08 {
+	width: 40px;
+	height: auto;
+	text-align: center
+}
+
+.column81 {
+	width: 40px;
+	height: auto;
+	text-align: center
+}
+
+.column09 {
+	width: 40px;
+	height: auto;
+	text-align: center
+}
+
+.panelgrlsb {
+	border: none;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+
+.alturaLinha .ui-panelgrid {
+	padding: 2px 5px;
+}
+
+.alinhamento {
+	horizontal-align: right;
+}
+.alinhaData {
+	horizontal-align: right;
+	font-size:14px;
+}
+</style>
+		<h:form id="crudFormCriaProdPrimario">
+			<pf:panel styleClass="panelgrlsb"/>
+			<pf:growl id="priMessage" globalOnly="true" sticky="true" />
+			<h:panelGroup id="accordionPanelGroup" >
+				<pf:accordionPanel dynamic="true" 
+				id="accordionPanel" 
+				activeIndex="#{criaFichaProducaoController.activeIndexes}" 
+				multiple="true" cache="false" rendered="true">
+			        <pf:ajax event="tabChange" listener="#{criaFichaProducaoController.onTabChange}" global="false" update="@none"/>
+					<pf:tab>
+						<h:panelGrid lang="grid" columns="1">
+							<pf:column>
+								<pf:panel>
+									<h:panelGrid columns="2">
+										<h:outputLabel value="#{msg['amostra.label.amostra']}" />
+										<pf:inputText
+											value="#{criaFichaProducaoController.amostra.amostraId}" size="6"
+											style="font-size:12px;" />
+										<h:outputLabel value="#{msg['usocomum.label.tipoamostra']}" />
+										<pf:selectOneMenu
+											value="#{criaFichaProducaoController.amostra.tipo}"
+											converter="omnifaces.SelectItemsConverter" filter="true"
+											filterMatchMode="contains"
+											style="vertical-align:middle;font-size:12px;">
+											<f:selectItem itemValue="#{null}"
+												itemLabel="#{msg['usuario.label.escolher']}" />
+											<f:selectItems value="#{criaFichaProducaoController.tipoamostra}"
+												var="tpamostra" itemValue="#{tpamostra}"
+												itemLabel="#{tpamostra.label}" />
+											<pf:ajax process="@this" />
+										</pf:selectOneMenu>
+										<h:outputLabel value="#{msg['usocomum.label.mercado']}" />
+										<pf:selectOneMenu
+											value="#{criaFichaProducaoController.amostra.mercado}"
+											converter="omnifaces.SelectItemsConverter" filter="true"
+											filterMatchMode="contains"
+											style="vertical-align:middle;font-size:12px;">
+											<f:selectItem itemValue="#{null}"
+												itemLabel="#{msg['usuario.label.escolher']}" />
+											<f:selectItems value="#{criaFichaProducaoController.mercado}"
+												var="mercado" itemValue="#{mercado}"
+												itemLabel="#{mercado.name()}" />
+											<pf:ajax process="@this" />
+										</pf:selectOneMenu>
+										
+									</h:panelGrid>
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.estacao']}" />
+										<pf:inputText id="pnlEstacao"
+											value="#{facadeView.informaEstacao}" />
+										<pf:commandLink action="#{facadeView.visaoEstacao()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Estação(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{criaFichaProducaoController.estacaoSelecionada}"
+												process="@this" update="pnlEstacao" />
+										</pf:commandLink>
+										</h:panelGrid>
+										<h:panelGrid columns="6">
+										<h:outputLabel value="#{msg['usocomum.label.referencia']}" />
+										<pf:inputText
+											value="#{criaFichaProducaoController.amostra.abreviacao}" size="3"
+											maxlength="3" style="font-size:12px;">
+										</pf:inputText>
+										<pf:inputText id="pnlreferencia"
+											value="#{facadeView.informaReferencia}" size="8"
+											maxlength="8" />
+										<pf:commandLink action="#{facadeView.visaoLivroReferencia()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Referência(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{criaFichaProducaoController.referenciaSelecionada}"
+												process="@this" update="pnlreferencia" />
+										</pf:commandLink>
+										<h:outputLabel value="Versão:"
+											style="font-size:12px;height:0.7em;" />
+										<pf:inputText readonly="true"
+											value="#{criaFichaProducaoController.amostra.livroReferencia.versaorefer}"
+											size="3" maxlength="3" />
+									</h:panelGrid>
+
+									<h:panelGrid columns="5">
+										<h:outputLabel value="#{msg['usocomum.label.construcao']}" />
+										<pf:inputText id="pnlconstrucao"
+											value="#{facadeView.informaConstrucao}" size="16"
+											maxlength="16" />
+										<pf:commandLink action="#{facadeView.visaoConstrucao()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{criaFichaProducaoController.construcaoSelecionada()}"
+												process="@this" update="pnlForma">
+											</pf:ajax>
+										</pf:commandLink>
+										<h:outputLabel value="Versão:"
+											style="font-size:12px;height:0.7em;" />
+										<pf:inputText readonly="true"
+											value="#{criaFichaProducaoController.amostra.livroReferencia.construcao.versao}"
+											style="font-size:12px; 
+									height:0.7em;" size="3"
+											maxlength="3" />
+									</h:panelGrid>
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.forma']}" />
+										<pf:inputText id="pnlForma" value="#{facadeView.informaForma}"
+											size="6" maxlength="6" />
+										<pf:commandLink action="#{facadeView.visaoForma()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{criaFichaProducaoController.formaSelecionada()}"
+												process="@this">
+											</pf:ajax>
+										</pf:commandLink>
+									</h:panelGrid>
+	
+									<h:panelGrid columns="3">
+
+										<h:outputLabel value="#{msg['usocomum.label.nomecliente']}" />
+										<pf:inputText id="pnlCliente"
+											value="#{facadeView.informaCliente}" size="15" maxlength="15"
+											placeholder="Informe Cliente" style="font-size:12px;" />
+										<pf:commandLink action="#{facadeView.visaoCliente()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Cliente(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{criaFichaProducaoController.clienteSelecionado()}"
+												process="@this" update="pnlCliente" />
+										</pf:commandLink>
+									</h:panelGrid>
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.amostrap']}"
+											style="text-align:center;width:450px;border-color:#7ecff5;">
+											<h:outputLabel value="#{msg['usocomum.label.datainicio']}"/>
+											<pf:datePicker value="#{criaFichaProducaoController.iniamostrap}" 
+											pattern="dd-MM-yyyy" 
+											size="9" 
+											style="text-align:left;" monthNavigator="true" >
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short" 
+												pattern="dd-MM-yyyy"/>
+											    <pf:ajax update="@this"/>
+											</pf:datePicker>
+											<h:outputLabel value="#{msg['usocomum.label.datafinal']}"/>
+											<pf:datePicker pattern="dd-MM-yyyy" value="#{criaFichaProducaoController.finamostrap}" 
+											size="9" 
+											style="text-align:left;" 
+											monthNavigator="true">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+										</pf:fieldset>
+									</pf:panelGrid>
+									
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.liberap']}"
+											style="text-align:center;width:450px;border-color:#7ecff5;">
+											<h:outputLabel value="#{msg['usocomum.label.datainicio']}"/>
+											<pf:datePicker value="#{criaFichaProducaoController.iniamostrap}" 
+											pattern="dd-MM-yyyy" 
+											size="9" 
+											style="text-align:left;" monthNavigator="true" >
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short" 
+												pattern="dd-MM-yyyy"/>
+											    <pf:ajax update="@this"/>
+											</pf:datePicker>
+											<h:outputLabel value="#{msg['usocomum.label.datafinal']}"/>
+											<pf:datePicker pattern="dd-MM-yyyy" value="#{criaFichaProducaoController.finamostrap}" 
+											size="9" 
+											style="text-align:left;" 
+											monthNavigator="true">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+										</pf:fieldset>
+									</pf:panelGrid>
+									
+							   </pf:panel>
+							</pf:column>
+						</h:panelGrid>
+					</pf:tab>
+				</pf:accordionPanel>
+				<pf:commandButton id="closeAllButton" value="Fecha Filtros"
+					update="accordionPanel"
+					actionListener="#{criaFichaProducaoController.inactiveAllIndexes}" />
+				<pf:commandButton value="Executar" update=":crudFormCriaProdPrimario">
+				</pf:commandButton>
+
+			</h:panelGroup>
+			<pf:panel header="#{msg['producao.label.titulo']}">
+			</pf:panel>
+
+			<pf:commandButton value="#{msg['botao.geracao']}"
+				action="#{amostraNovaController.add()}"
+				oncomplete="PF('addEditFormAmostraNovaDlg').show()"
+				update=":crudFormAmostraSecundario" style="font-size:12px;" />
+			<pf:dataTable id="tblFiltroAmostra"
+				value="#{criaFichaProducaoController.model}" var="_rowamostra"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				widgetVar="Table" lazy="true" style="text-align:center" scrollable="true" scrollHeight="450" >
+
+
+				<pf:column headerText="#{msg['amostra.label.amostra']}"
+					filterStyle="height:2.2em;" filterBy="#{_rowamostra.amostraId}"
+					sortBy="#{_rowamostra.amostraId}" filterMatchMode="contains"
+					style="font-size:11px;" width="60">
+					<h:outputText value="#{_rowamostra.amostraId}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.mercado']}"
+					filterStyle="height:2.2em;"
+					filterBy="#{_rowamostra.mercado.name()}"
+					sortBy="#{_rowamostra.mercado.name()}" filterMatchMode="contains"
+					style="font-size:11px;" width="65">
+					<h:outputText value="#{_rowamostra.mercado.name()}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.tipo']}" width="35">
+					<h:outputText value="#{_rowamostra.tipo.label}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.referencia']}" width="60">
+					<h:outputText value="#{_rowamostra.livroReferencia.referencia}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.livroReferencia.construcaonome}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.forma']}" width="30">
+					<h:outputText
+						value="#{_rowamostra.livroReferencia.referenciaforma}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nomecliente']}" width="70">
+					<h:outputText value="#{_rowamostra.cliente.sucinto}"
+						style="font-size:10x;"  />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nomefabrica']}" width="70">
+					<h:outputText value="#{_rowamostra.fabrica.sucinto}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.Solicitacao']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.dataSolicitacao}"
+						style="font-size:10x;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.amostradata']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.dataEntrega}"
+						style="font-size:10x;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.amostrafabrica']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.dataXfcFinal}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.prs']}" width="8">
+					<h:outputText value="#{_rowamostra.pares}" style="font-size:10x;" />
+				</pf:column>
+				<pf:column width="300" headerText="Materiais"
+					style="text-align:center;">
+					<pf:dataTable var="cor" value="#{_rowamostra.coresAmostra}"
+						styleClass="hide-column-names">
+						<pf:column style="font-size:9px;width:130px;">
+							<h:outputText value="#{cor.material}" style="font-size:9px;" />
+						</pf:column>
+						<pf:column style="font-size:9px;" width="50">
+							<h:outputText value="#{cor.corPrincipal }" style="font-size:9px;" />
+						</pf:column>
+						<pf:column style="font-size:9px;" width="20">
+							<h:outputText value="#{cor.totalPar}" style="font-size:9px;" />
+						</pf:column>
+						<pf:column style="font-size:9px;" width="20">
+							<h:outputText value="#{cor.sizeCor}" style="font-size:9px;" />
+						</pf:column>
+
+					</pf:dataTable>
+				</pf:column>
+			</pf:dataTable>
+
+		</h:form>
+
+
+		
+
+	</ui:define>
+
+</ui:decorate>

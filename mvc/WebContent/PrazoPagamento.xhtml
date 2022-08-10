@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormPrazoPgto">
+			<pf:panel header="#{msg['prazopgto.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{prazoPgtoController.add()}" update=":addEditFormPrazoPgto"
+				oncomplete="PF('addEditFormPrazoPgtoDlg').show()" />
+			<pf:dataTable value="#{prazoPgtoController.listaPrazoPgto}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center;width:60%">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{prazoPgtoController.edit(_row)}"
+						update=":addEditFormPrazoPgto"
+						oncomplete="PF('addEditFormPrazoPgtoDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{prazoPgtoController.delete(_row)}" update=":crudFormPrazoPgto"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+				</pf:column >
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" style="font-size:12px;width:5%;" >
+					<h:outputText value="#{_row.prazopagamentoid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['prazopgto.label.dias']}"
+					filterStyle="height:2.2em" style="font-size:12px;width:15%;" sortBy="#{_row.prazo}" 
+					filterBy="#{_row.prazo}" filterMatchMode="contains" >
+					<h:outputText value="#{_row.prazo}"  />
+				</pf:column>
+				<pf:column headerText="#{msg['prazopgto.label.descricao']}" 
+				filterStyle="height:2.2em" style="font-size:12px;width:15%;" sortBy="#{_row.descricao}" 
+				filterBy="#{_row.descricao}" filterMatchMode="contains" >
+					<h:outputText value="#{_row.descricao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.situacao']}" 
+				filterStyle="height:2.2em" style="font-size:12px;width:5%" sortBy="#{_row.situacao}" 
+				filterBy="#{_row.situacao}" filterMatchMode="contains" >
+					<h:outputText value="#{_row.situacao}" />
+				</pf:column>
+				
+		</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Prazo Pagamento" widgetVar="addEditFormPrazoPgtoDlg"
+			width="480" height="180" resizable="false" position="center center"
+			showEffect="clip" onShow="PF('addEditFormPrazoPgtoDlg').initPosition()"
+			modal="false" draggable="false">
+			<h:form id="addEditFormPrazoPgto">
+				<pf:growl id="messages" globalOnly="true" />
+				<h:panelGrid columns="2" style="font-size:12px">
+					<h:outputLabel value="#{msg['prazopgto.label.dias']}:" />
+					<pf:inputText value="#{prazoPgtoController.prazoPagamento.prazo}" 
+					required="true" requiredMessage="Informe Dias para o Prazo !" />
+					<h:outputLabel value="#{msg['prazopgto.label.descricao']}:" />
+					<pf:inputText value="#{prazoPgtoController.prazoPagamento.descricao}" size="20"
+						required="true" requiredMessage="Informe Descricao para o Prazo informado !"/>
+						<h:outputLabel value="#{msg['usocomum.label.situacao']}" />
+						<pf:selectOneMenu
+							value="#{prazoPgtoController.prazoPagamento.situacao}"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{prazoPgtoController.ativoinativo}"
+								var="ativoinativo" itemValue="#{ativoinativo}"
+								itemLabel="#{ativoinativo.label}" />
+						</pf:selectOneMenu>
+						
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{prazoPgtoController.save()}" process="@form"
+						update=":addEditFormPrazoPgto :crudFormPrazoPgto"
+						oncomplete="if (!args.validationFailed) PF('addEditFormPrazoPgtoDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormPrazoPgtoDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+		
+		</ui:define>
+	
+
+</ui:decorate>

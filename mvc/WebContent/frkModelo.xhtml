@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pf="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.ui-widget {
+	font-size: 100%;
+}
+
+.ui-panel-title {
+	font-size: 3.5em;
+	color: black;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="card">
+			<i id="modeloheader" style="display: none; text-align: center"></i>
+			<pf:panel header="Seleção Modelo" />
+			<pf:dataTable value="#{facadeView.listaModelos}" var="_rowm"
+				rows="12" scrollHeight="600px">
+
+				<pf:column headerText="Escolha"
+					style="font-size:12px;width:35px;text-align:center;">
+					<pf:commandLink actionListener="#{facadeView.selecionarModelo(_rowm)}" process="@this">
+						<i class="fa fa-arrow-circle-o-left" style="font-size: 1.5em;"
+							title="Pesquisa Modelo" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					style="font-size:12px;width:20px;">
+					<h:outputText value="#{_rowm.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.resumido']}"
+					style="font-size:12px;width:30px;">
+					<h:outputText value="#{_rowm.cliente.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nomecliente']}"
+					style="font-size:12px;width:30px;">
+					<h:outputText value="#{_rowm.cliente.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.estacao']}"
+					style="font-size:12px;width:30px;">
+					<h:outputText value="#{_rowm.estacao.nome}" />
+				</pf:column>
+
+			</pf:dataTable>
+		</div>
+	</h:form>
+</h:body>
+</html>

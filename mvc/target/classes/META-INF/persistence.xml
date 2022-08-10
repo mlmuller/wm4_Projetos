@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="default" transaction-type="JTA">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<jta-data-source>java:/datasources/Dev2DS</jta-data-source>
+
+		<!-- Model -->
+		<class>br.com.gvdexport.model.Construcao</class>
+		<class>br.com.gvdexport.model.LivroReferencia</class>
+		<class>br.com.gvdexport.model.Personagem</class>
+		<class>br.com.gvdexport.model.Forma</class>
+		<class>br.com.gvdexport.model.Modelo</class>
+		<class>br.com.gvdexport.model.Pais</class>
+		<class>br.com.gvdexport.model.GrupoFabrica</class>
+		<class>br.com.gvdexport.model.Fabrica</class>
+		<class>br.com.gvdexport.model.DigitalizarContratoFabrica</class>
+		<class>br.com.gvdexport.model.Regiao</class>
+		<class>br.com.gvdexport.model.Estado</class>
+		<class>br.com.gvdexport.model.Cidade</class>
+		<class>br.com.gvdexport.model.GrupoCliente</class>
+		<class>br.com.gvdexport.model.Transportador</class>
+		<class>br.com.gvdexport.model.Despachante</class>
+		<class>br.com.gvdexport.model.Importador</class>
+		<class>br.com.gvdexport.model.Banco</class>
+		<class>br.com.gvdexport.model.PrazoPagamento</class>
+		<class>br.com.gvdexport.model.Moeda</class>
+		<class>br.com.gvdexport.model.Consignatario</class>
+		<class>br.com.gvdexport.model.Notificar</class>
+		<class>br.com.gvdexport.model.Vendedor</class>
+		<class>br.com.gvdexport.model.Comprador</class>
+		<class>br.com.gvdexport.model.ClienteProjecao</class>
+		<class>br.com.gvdexport.model.Hts</class>
+		<class>br.com.gvdexport.model.Nbm</class>
+		<class>br.com.gvdexport.model.TipoCalcado</class>
+		<class>br.com.gvdexport.model.Produto</class>
+		<class>br.com.gvdexport.model.Componente</class>
+		<class>br.com.gvdexport.model.Conversao</class>
+		<class>br.com.gvdexport.model.Cotacao</class>
+		<class>br.com.gvdexport.model.Revisor</class>
+		<class>br.com.gvdexport.model.AvisoRetorno</class>
+		<class>br.com.gvdexport.model.Estacao</class>
+		<class>br.com.gvdexport.model.Modelo</class>
+		<class>br.com.gvdexport.model.MarcaCliente</class>
+		<class>br.com.gvdexport.model.GrupoClienteInvoice</class>
+		<class>br.com.gvdexport.model.ClienteMercado</class>
+		<class>br.com.gvdexport.model.DestinoAmCf</class>
+		<class>br.com.gvdexport.model.Amostra</class>
+		<class>br.com.gvdexport.model.AcabamentoAmostra</class>
+		<class>br.com.gvdexport.model.Maquete</class>
+		<class>br.com.gvdexport.model.AcabamentoMaquete</class>
+		<class>br.com.gvdexport.model.CorAmostra</class>
+		<class>br.com.gvdexport.model.CorAmostraMulti</class>
+		<class>br.com.gvdexport.model.CorCabedalAm</class>
+		<class>br.com.gvdexport.model.CorAcabamentoAm</class>
+		<class>br.com.gvdexport.model.CorConstrucaoAm</class>
+		<class>br.com.gvdexport.model.CorCorteAm</class>
+		<class>br.com.gvdexport.model.CorCosturaAm</class>
+		<class>br.com.gvdexport.model.CorMaquete</class>
+		<class>br.com.gvdexport.model.CorteAmostra</class>
+		<class>br.com.gvdexport.model.CosturaAmostra</class>
+		<class>br.com.gvdexport.model.ImagemReferencia</class>
+		<class>br.com.gvdexport.model.CorAcabamentoMq</class>
+		<class>br.com.gvdexport.model.RazaoAlteracao</class>
+		<class>br.com.gvdexport.model.Confirmacao</class>
+		<class>br.com.gvdexport.model.CorConfirmacao</class>
+		<class>br.com.gvdexport.model.CorConstrucaoCf</class>
+		<class>br.com.gvdexport.model.CorAcabamentoCf</class>
+		<class>br.com.gvdexport.model.AcabamentoConfirmacao</class>
+		<class>br.com.gvdexport.model.CorCabedalCf</class>
+		<class>br.com.gvdexport.model.CorCorteCf</class>
+		<class>br.com.gvdexport.model.CorCosturaCf</class>
+		<class>br.com.gvdexport.model.CorteConfirmacao</class>
+		<class>br.com.gvdexport.model.CosturaConfirmacao</class>
+		<class>br.com.gvdexport.model.Cor</class>
+		<class>br.com.gvdexport.model.Material</class>
+		<class>br.com.gvdexport.model.FichaProducao</class>
+		<class>br.com.gvdexport.model.MotivoProducao</class>
+		<class>br.com.gvdexport.model.Setor</class>
+		<class>br.com.gvdexport.model.ProblemaProducao</class>
+		<class>br.com.gvdexport.model.EnderecoCliente</class>
+		<class>br.com.gvdexport.model.Cliente</class>
+		<class>br.com.gvdexport.model.InvoiceAmCf</class>
+		<class>br.com.gvdexport.model.ControleReferencia</class>
+		<class>br.com.gvdexport.model.TipoAgente</class>
+		<class>br.com.gvdexport.model.Pedido</class>
+		<class>br.com.gvdexport.model.ContratoFabrica</class>
+		<class>br.com.gvdexport.model.PedidoFinanceiro</class>
+		<class>br.com.gvdexport.model.GradeCorPedido</class>
+		<class>br.com.gvdexport.model.DistribuicaoPar</class>
+		<class>br.com.gvdexport.model.SubGradePedido</class>
+		<class>br.com.gvdexport.model.PrecoAmostra</class>
+		<class>br.com.gvdexport.model.Navio</class>
+		<class>br.com.gvdexport.model.FaturaFabrica</class>
+		<class>br.com.gvdexport.model.ItemFaturaFabrica</class>
+		<class>br.com.gvdexport.model.AutorizacaoEmbarque</class>
+		<class>br.com.gvdexport.model.RazaoImpressao</class>
+		<class>br.com.gvdexport.model.AutorizacaoReimpressao</class>
+		<class>br.com.gvdexport.model.FaturaFretePago</class>
+		<class>br.com.gvdexport.model.Claim</class>
+		<class>br.com.gvdexport.model.ItemClaim</class>
+		<class>br.com.gvdexport.model.Catalogo</class>
+		<class>br.com.gvdexport.model.ItemCatalogo</class>
+		<class>br.com.gvdexport.model.DistribuicaoInvoiceAmCf</class>
+		<class>br.com.gvdexport.model.ItemInvoiceAmCf</class>
+		<class>br.com.gvdexport.model.ControleProducao</class>
+		<class>br.com.gvdexport.model.ControleProducaoZ</class>
+		<class>br.com.gvdexport.model.ProgramacaoProducao</class>
+		<class>br.com.gvdexport.model.ReprogramacaoOrder</class>
+		<class>br.com.gvdexport.model.SubGradeAltPar</class>
+		<class>br.com.gvdexport.model.ItemAvisoRetorno</class>
+		<class>br.com.gvdexport.model.ParametroEmpresa</class>
+		<class>br.com.gvdexport.model.ParametroGVD</class>
+		<class>br.com.gvdexport.model.Empresa</class>
+		<class>br.com.gvdexport.model.EmpresaLogo</class>
+		<class>br.com.gvdexport.model.Usuario</class>
+		<class>br.com.gvdexport.model.UsuarioCliente</class>
+		<class>br.com.gvdexport.model.UsuarioMercado</class>
+		<class>br.com.gvdexport.model.DGASistema</class>
+		<class>br.com.gvdexport.model.DGAMenu</class>
+		<class>br.com.gvdexport.model.DGAImpressora</class>
+		<class>br.com.gvdexport.model.DGAModulo</class>
+		<class>br.com.gvdexport.model.DGAUsuario</class>
+		<class>br.com.gvdexport.model.DGAPrivilegio</class>
+		<class>br.com.gvdexport.model.DGAUsuarioNivel</class>
+		<class>br.com.gvdexport.model.DGAGlobal</class>
+		<class>br.com.gvdexport.model.Etiquetas</class>
+		<class>br.com.gvdexport.model.EtqDragDrop</class>
+		<class>br.com.gvdexport.model.Sequencial</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.max_fetch_depth" value="3" />
+			<property name="hibernate.listeners.envers.autoRegister" value="false" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/default" />
+		</properties>
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+		<style type="text/css">
+		
+		</style>
+		<h:form id="crudFormPrivilegio">
+			<pf:panel header="#{msg['dgaprivilegio.titulo']}">
+		    </pf:panel>
+		  <pf:growl id="messages" globalOnly="true"  />
+			<pf:dataTable value="#{privilegioController.usuarios}" var="_row" paginator="true" rows="16" paginatorPosition="bottom"  scrollHeight="800px">
+				<pf:column width="90">
+				    <c:set var="situationSent" value="${false}"/>
+					<pf:commandLink id="editarFormPrivilegio" action="#{privilegioController.prepareComplementacao(_row,situationSent)}"
+						update=":addEditFormPrivilegio" oncomplete="PF('addEditFormPrivilegioDlg').show()" title="#{msg['botao.edit']}" >
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{privilegioController.delete(_row)}"
+						update=":crudFormPrivilegio:messages" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						action="#{privilegioController.preparePrivilegio(_row,true)}" 
+						update=":crudFormPrivilegio:messages :addEditFormPrivilegio:pnlPrivilegio "
+						oncomplete="if(args.eValido == true){PF('addEditFormPrivilegioDlg').show()}"
+						title="#{msg['botao.key']}"  >
+						<i class="fa fa-fw fa-key"  />
+					</pf:commandLink>
+					<pf:commandLink action="#{privilegioController.visualizePermissoes(_row)}" 
+						update=":addEditFormPrivilegio:pnlPrivilegio"
+						oncomplete="PF('addFormPrivilegioDlg').show()"  title="#{msg['botao.view']}">
+						<i class="fa fa-fw fa-eye"/>
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.usuarioid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usuario.label.mercado']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.mercado}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					style="font-size:12px;" filterStyle="height:2.2em" sortBy="#{_row.nome}" filterBy="#{_row.nome}" filterMatchMode="contains">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usuario.label.usuario']}"
+					style="font-size:12px;" filterStyle="height:2.2em" sortBy="#{_row.usuario}" filterBy="#{_row.usuario}" filterMatchMode="contains">
+					<h:outputText value="#{_row.usuario}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usuario.label.grupo']}"
+					style="font-size:12px;" filterStyle="height:2.2em" sortBy="#{_row.grupo}" filterBy="#{_row.grupo}" filterMatchMode="contains">
+					<h:outputText value="#{_row.grupo}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usuario.label.email']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.email}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.situacao']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.situacao}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="Usuário - Privilégios"
+			widgetVar="addEditFormPrivilegioDlg" width="70%" height="400px"
+			resizable="false" position="center center" showEffect="clip"
+			onShow="PF('addEditFormPrivilegioDlg').show()" modal="false"
+			draggable="false">
+			<h:form id="addEditFormPrivilegio">
+				<pf:growl id="messages" globalOnly="true" />
+				<pf:panel id="pnlPrivilegio" header="#{privilegioController.usuario.nome}">
+					<pf:dataTable id="dtbPrivilegio"
+						value="#{privilegioController.todosPrivilegiosUsuario}" var="_rownext" 
+						scrollHeight="200px" sortBy="#{_rownext.ordem}" >
+						<pf:column headerText="#{msg['usocomum.label.id']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rownext.dgasistema.dgasistemaid}" />
+						</pf:column>
+						<pf:column headerText="#{msg['usocomum.label.nome']}"
+							style="font-size:12px;" >
+							<h:outputText value="#{_rownext.dgasistema.nome}" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgamenu.label.id']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rownext.dgamenu.dgamenuid}" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgamenu.label.nome']}"
+							style="font-size:12px;" width="12px">
+							<h:outputText value="#{_rownext.dgamenu.nome}" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgamodulo.label.id']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rownext.dgamoduloid}" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgamodulo.label.nome']}"
+							style="font-size:12px;" width="15px">
+							<h:outputText value="#{_rownext.dgamodulo.nome}" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgaprivilegio.label.inserir']}"
+							style="font-size:12px;">
+							<pf:selectBooleanCheckbox value="#{_rownext.privinsert}"
+								style="font-size:10px;" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgaprivilegio.label.alterar']}"
+							style="font-size:10px;">
+							<pf:selectBooleanCheckbox value="#{_rownext.privupdate}"
+								style="font-size:10px;" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgaprivilegio.label.deletar']}"
+							style="font-size:10px;">
+							<pf:selectBooleanCheckbox value="#{_rownext.privdelete}"
+								style="font-size:10px;" />
+						</pf:column>
+						<pf:column headerText="#{msg['dgaprivilegio.label.consultar']}"
+							style="font-size:10px;">
+							<pf:selectBooleanCheckbox value="#{_rownext.privselect}"
+								style="font-size:10px;" />
+						</pf:column>
+						<pf:summaryRow type="footer">
+							<pf:column colspan="1">
+								<h:outputText value="#{_rownext.dgasistema.nome}"
+									style="font-size:12px"  />
+							</pf:column>
+							<pf:column>
+								<h:outputText value="#{_rownext.dgamenu.nome}"
+									style="font-size:12px" />
+							</pf:column>
+						</pf:summaryRow>
+						
+					</pf:dataTable>
+				</pf:panel>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{privilegioController.save()}"
+						proccess="@form"
+						update=":addEditFormPrivilegio :crudFormPrivilegio"
+						oncomplete="if (!args.validationFailed) PF('addEditFormPrivilegioDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormProvilegioDlg').hide(); return false;" />
+			</h:panelGrid>
+				
+			</h:form>
+		</pf:dialog>
+	</ui:define>
+</ui:decorate>

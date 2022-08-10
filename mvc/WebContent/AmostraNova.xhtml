@@ -1,0 +1,1915 @@
+
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+	<style type="text/css">
+		.ui-fieldset-legend {
+			padding: 10px 10px !important;
+			height: 0.5em;
+			color: black;
+			font-size: 11px;
+			background-color: #7cdbfb !important;
+		}
+		
+		.TabelaAux thead th {
+			border: none !important;
+			background: none !important;
+			display: none !important;
+		}
+		
+		.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+			overflow: hidden;
+		}
+		
+		.hide-column-names table thead tr {
+			display: none;
+		}
+		
+		.ui-tabs.ui-tabs-top .ui-tabs-nav li {
+			height: 40px;
+			padding-right: 50px;
+			font-size: 10px;
+			color: black;
+			border: 1px;
+			border-top-right-radius: 15px;
+		}
+		/* Anothers cool css for p:tabview */
+		div.ui-tabs div.ui-tabs-panel {
+			padding: 8px 4px 2px;
+		}
+		
+		div.ui-tabs ul.ui-tabs-nav li {
+			background-color: #7ac4ec;
+			font-weight: bold;
+		}
+		
+		div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected {
+			padding-bottom: 0;
+			border-bottom: 1px solid #A8A8A8 !important;
+			background-color: #dbeff6;
+			box-shadow: 4px 4px 4px #191918;
+		}
+		
+		div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected.ui-state-hover {
+			background-color: #2dc4ef !important;
+		}
+		
+		.ui-tabs .ui-tabs-nav {
+			text-align: center;
+			align-content: center;
+		}
+		
+		.ui-tabs .ui-tabs-nav li {
+			float: none !important;
+			display: inline-block;
+		}
+		
+		.colspace1 {
+			padding-left: 20px;
+		}
+		
+		.colspace2 {
+			padding-right: 10px;
+		}
+		
+		.column1 {
+			width: 65%;
+			height: auto
+		}
+		
+		.column2 {
+			width: 35%;
+			height: auto
+		}
+		
+		.customPanelGrid .ui-panelgrid-content {
+			align-items: center;
+		}
+		
+		.column01 {
+			width: 50px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column02 {
+			width: 150px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column03 {
+			width: 10px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column04 {
+			width: 10px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column05 {
+			width: 150px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column06 {
+			width: 20px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column07 {
+			width: 150px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column08 {
+			width: 40px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column81 {
+			width: 40px;
+			height: auto;
+			text-align: center
+		}
+		
+		.column09 {
+			width: 40px;
+			height: auto;
+			text-align: center
+		}
+		
+		.panelgrlsb {
+			border: none;
+		}
+		
+		.pangrdicb .uipanelgrid {
+			border: 1px;
+		}
+		
+		.alturaLinha .ui-panelgrid {
+			padding: 2px 5px;
+		}
+		
+		.alinhamento {
+			horizontal-align: right;
+		}
+		.alinhaData {
+			horizontal-align: right;
+			font-size:14px;
+		}
+		.alinhaColunas {
+			text-align:center !important;
+		}
+	</style>
+		<h:form id="crudFormAmosPrimario">
+			<pf:panel styleClass="panelgrlsb"/>
+			<pf:growl id="priMessage" globalOnly="true" sticky="true"  />
+			<h:panelGroup id="accordionPanelGroup" >
+				<pf:accordionPanel dynamic="true" 
+				id="accordionPanel" 
+				activeIndex="#{amostraNovaController.activeIndexes}" 
+				multiple="true" cache="false" rendered="true">
+				        <pf:ajax event="tabChange" 
+				        listener="#{amostraNovaController.onTabChange}" 
+				        global="false" 
+				        update="@none"/>				
+					<pf:tab title="Filtros Amostras Novas">
+						<h:panelGrid lang="grid" columns="3">
+							<pf:column>
+								<pf:panel style="border-color:#35b3ee;">
+									<h:panelGrid columns="2">
+										<h:outputLabel value="#{msg['amostra.label.amostra']}" />
+										<pf:inputText
+											value="#{amostraNovaController.amostra.amostraId}" size="6"
+											style="font-size:12px;" />
+										<h:outputLabel value="#{msg['usocomum.label.tipoamostra']}" />
+										<pf:selectOneMenu
+											value="#{amostraNovaController.amostra.tipo}"
+											converter="omnifaces.SelectItemsConverter" filter="true"
+											filterMatchMode="contains"
+											style="vertical-align:middle;font-size:12px;">
+											<f:selectItem itemValue="#{null}"
+												itemLabel="#{msg['usuario.label.escolher']}" />
+											<f:selectItems value="#{amostraNovaController.tipoamostra}"
+												var="tpamostra" itemValue="#{tpamostra}"
+												itemLabel="#{tpamostra.label}" />
+											<pf:ajax process="@this" />
+										</pf:selectOneMenu>
+									</h:panelGrid>
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.nomecliente']}" />
+										<pf:inputText id="pnlCliente"
+											value="#{facadeView.informaCliente}" size="15" maxlength="15"
+											placeholder="Informe Cliente" style="font-size:12px;" />
+										<pf:commandLink action="#{facadeView.visaoCliente()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Cliente(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.clienteSelecionado()}"
+												process="@this" update="pnlCliente" />
+										</pf:commandLink>
+									</h:panelGrid>
+
+									<h:outputLabel value="#{msg['usocomum.label.mercado']}" />
+									<pf:selectOneMenu
+										value="#{amostraNovaController.amostra.mercado}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains"
+										style="vertical-align:middle;font-size:12px;">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}" />
+										<f:selectItems value="#{amostraNovaController.mercado}"
+											var="mercado" itemValue="#{mercado}"
+											itemLabel="#{mercado.name()}" />
+										<pf:ajax process="@this" />
+									</pf:selectOneMenu>
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.nomefabrica']}" />
+										<pf:inputText id="pnlFabrica"
+											value="#{facadeView.informaFabrica}" size="15" maxlength="15"
+											placeholder="Informe Fábrica" style="font-size:12px;" />
+										<pf:commandLink action="#{facadeView.visaoFabrica()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Fábrica(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.fabricaSelecionada()}"
+												process="@this" update="pnlFabrica" />
+										</pf:commandLink>
+									</h:panelGrid>
+									<h:panelGrid columns="6">
+										<h:outputLabel value="#{msg['usocomum.label.referencia']}" />
+										<pf:inputText
+											value="#{amostraNovaController.amostra.abreviacao}" size="3"
+											maxlength="3" style="font-size:12px;">
+										</pf:inputText>
+										<pf:inputText id="pnlreferencia"
+											value="#{facadeView.informaReferencia}" size="8"
+											maxlength="8" />
+										<pf:commandLink action="#{facadeView.visaoLivroReferencia()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Referência(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.referenciaSelecionada}"
+												process="@this" update="pnlreferencia" />
+										</pf:commandLink>
+										<h:outputLabel value="Versão:"
+											style="font-size:12px;height:0.7em;" />
+										<pf:inputText readonly="true"
+											value="#{amostraNovaController.amostra.livroReferencia.versaorefer}"
+											size="3" maxlength="3" />
+									</h:panelGrid>
+
+									<h:panelGrid columns="5">
+										<h:outputLabel value="#{msg['usocomum.label.construcao']}" />
+										<pf:inputText id="pnlconstrucao"
+											value="#{facadeView.informaConstrucao}" size="16"
+											maxlength="16" />
+										<pf:commandLink action="#{facadeView.visaoConstrucao()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.construcaoSelecionada()}"
+												process="@this" update="pnlForma">
+											</pf:ajax>
+										</pf:commandLink>
+										<h:outputLabel value="Versão:"
+											style="font-size:12px;height:0.7em;" />
+										<pf:inputText readonly="true"
+											value="#{amostraNovaController.amostra.livroReferencia.construcao.versao}"
+											style="font-size:12px; 
+									height:0.7em;" size="3"
+											maxlength="3" />
+									</h:panelGrid>
+								</pf:panel>
+							</pf:column>
+							<pf:column id="colu2">
+								<pf:panel style="border-color:#35b3ee;">
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.forma']}" />
+										<pf:inputText id="pnlForma" value="#{facadeView.informaForma}"
+											size="6" maxlength="6" />
+										<pf:commandLink action="#{facadeView.visaoForma()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.formaSelecionada()}"
+												process="@this">
+											</pf:ajax>
+										</pf:commandLink>
+									</h:panelGrid>
+	
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.modelo']}" />
+										<pf:inputText value="#{facadeView.informaModelo}" size="11"
+											maxlength="20" />
+										<pf:commandLink value="#{facadeView.visaoModelo()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.modeloSelecionada()}"
+												process="@this" />
+										</pf:commandLink>
+										<h:outputLabel value="#{msg['usocomum.label.produto']}" />
+										<pf:inputText value="#{facadeView.informaProduto}" size="30"
+											maxlength="30" />
+										<pf:commandLink action="#{facadeView.visaoComponente()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{amostraNovaController.produtoSelecionado()}"
+												process="@this" />
+										</pf:commandLink>
+									</h:panelGrid>
+									<h:panelGrid columns="2">
+										<h:outputLabel value="#{msg['usocomum.label.cor']}" />
+										<pf:inputText value="#{amostraNovaController.informaCor}"
+											size="45" maxlength="60" />
+										<h:outputLabel value="#{msg['usocomum.label.corp']}" />
+										<pf:inputText value="#{amostraNovaController.informaCorp}"
+											size="15" maxlength="15" />
+										<h:outputLabel value="#{msg['usocomum.label.prioridade']}" />
+										<pf:selectOneMenu
+											value="#{amostraNovaController.amostra.prioridaDeProducao}"
+											converter="omnifaces.SelectItemsConverter" filter="true"
+											filterMatchMode="contains"
+											style="vertical-align:middle;font-size:12px;">
+											<f:selectItem itemValue="#{null}"
+												itemLabel="#{msg['usuario.label.escolher']}" />
+											<f:selectItems value="#{amostraNovaController.prioridade}"
+												var="prioridade" itemValue="#{prioridade}"
+												itemLabel="#{prioridade.label}" />
+											<pf:ajax process="@this" />
+										</pf:selectOneMenu>
+									</h:panelGrid>
+								</pf:panel>
+							</pf:column>
+							<pf:column id="colu3">
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.solicitacao']}" 
+										             style="text-align:center;
+										             width:450px;
+										             border-color:#7ecff5;">
+									      <pf:column>
+											<h:outputLabel value="#{msg['usocomum.label.datainicio']}"/>
+										  </pf:column>
+										  <pf:column>	
+												<pf:datePicker value="#{amostraNovaController.amostra.dataSolicitacao}" 
+												    pattern="dd-MM-yyyy" 
+												    monthNavigator="true" 
+													size="9" 
+													style="text-align:left;">
+													<f:convertDateTime type="localDate" dateStyle="short"
+														pattern="dd-MM-yyyy" />
+													<pf:effect event="dbclick" type="slide"/>	
+												</pf:datePicker>
+											</pf:column>
+											<pf:column>
+											  <h:outputLabel value="#{msg['usocomum.label.datafinal']}"/>
+											</pf:column>
+											<pf:column>	
+											<pf:datePicker value="#{amostraNovaController.finSolicitacao}" 
+											    pattern="dd-MM-yyyy" 
+											    monthNavigator="true" 
+												size="9" 
+												style="text-align:left;">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+											</pf:column>
+										</pf:fieldset>
+									</pf:panelGrid>
+
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.amostrap']}"
+											style="text-align:center;width:450px;border-color:#7ecff5;">
+											<h:outputLabel value="#{msg['usocomum.label.datainicio']}"/>
+											<pf:datePicker value="#{amostraNovaController.iniamostrap}" 
+											pattern="dd-MM-yyyy" 
+											size="9" 
+											style="text-align:left;" monthNavigator="true" >
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short" 
+												pattern="dd-MM-yyyy"/>
+											    <pf:ajax update="@this"/>
+											</pf:datePicker>
+											<h:outputLabel value="#{msg['usocomum.label.datafinal']}"/>
+											<pf:datePicker pattern="dd-MM-yyyy" value="#{amostraNovaController.finamostrap}" 
+											size="9" 
+											style="text-align:left;" 
+											monthNavigator="true">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+										</pf:fieldset>
+									</pf:panelGrid>
+
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.fabricasaida']}"
+											style="text-align:center;width:450px;border-color:#7ecff5;">
+											<h:outputLabel value="#{msg['usocomum.label.datainicio']}"/>
+											<pf:datePicker  pattern="dd-MM-yyyy" 
+											value="#{amostraNovaController.inisaidaf}" 
+											size="9" monthNavigator="true" style="text-align:left;">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+												pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+											<h:outputLabel value="#{msg['usocomum.label.datafinal']}"/>
+											<pf:datePicker pattern="dd-MM-yyyy" 
+											value="#{amostraNovaController.finsaidaf}" 
+											size="9" 
+											monthNavigator="true" style="text-align:left;">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+										</pf:fieldset>
+
+									</pf:panelGrid>
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.liberap']}"
+											style="text-align:center;width:450px;border-color:#7ecff5;">
+											<h:outputLabel value="Inicio:" />
+											<pf:datePicker pattern="dd-MM-yyyy" 
+											value="#{amostraNovaController.iniliberap}" 
+											size="9" 
+											monthNavigator="true" style="text-align:left;">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+											<h:outputLabel value="Fim:"/>
+											<pf:datePicker pattern="dd-MM-yyyy" 
+											value="#{amostraNovaController.finliberap}" 
+											effect="explode" size="9" monthNavigator="true" style="text-align:left;">
+												<pf:effect event="dbclick" type="slide"/>	
+												<f:convertDateTime type="localDate" dateStyle="short"
+													pattern="dd-MM-yyyy" />
+												<pf:ajax update="@this"/>
+											</pf:datePicker>
+										</pf:fieldset>
+
+									</pf:panelGrid>
+							</pf:column>
+
+						</h:panelGrid>
+					</pf:tab>
+				</pf:accordionPanel>
+				<pf:commandButton id="closeAllButton" value="Fecha Filtros"
+					update="accordionPanel"
+					actionListener="#{amostraNovaController.inactiveAllIndexes}" />
+				<pf:commandButton value="Executar" update=":crudFormAmosPrimario">
+				</pf:commandButton>
+
+			</h:panelGroup>
+			<pf:panel header="#{msg['amostra.label.titulo']}">
+			</pf:panel>
+
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{amostraNovaController.add()}"
+				oncomplete="PF('addEditFormAmostraNovaDlg').show()"
+				update=":crudFormAmostraSecundario" style="font-size:12px;" />
+			<pf:dataTable id="tblFiltroAmostra"
+				value="#{dtlazyAmostraView.lazyModel}" var="_rowamostra"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				widgetVar="Table" lazy="true" style="text-align:center" scrollable="true" scrollHeight="400px;"  >
+
+				<pf:column width="80" headerText="Opções" style="text-align:center">
+
+					<pf:commandLink
+						actionListener="#{amostraNovaController.edit(_rowamostra)}"
+						onclick="PF('addEditFormAmostraNovaDlg').show()"
+						update=":crudFormAmostraSecundario :crudFormAmostraSecundario:tblCoresAmostra" title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o"
+							style="font-size: 1.3em; color: #9ecda2;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						actionListener="#{amostraNovaController.duplicaAmostra(_rowamostra)}" 
+						onclick="PF('addEditFormDuplicaDlg').show()" title="#{msg['botao.duplicar'] }" 
+						update=":dupFormAmostraNova :crudFormAmostraSecundario:tblCoresAmostra">
+						<i class="fa fa-clone" style="font-size: 1.2em; color: #ead73a;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{amostraNovaController.delete(_row)}"
+						update=":crudFormAmosPrimario" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o"
+							style="font-size: 1.3em; color: #f77e6b;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						action="#{amostraNovaController.imprimiAmostra(_rowamostra)}"
+						title="Imprimir">
+						<i class="fa fa-print" style="font-size: 1.3em; color: #59bf4c;" />
+					</pf:commandLink>
+
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.amostra']}"
+					filterStyle="height:2.2em;" filterBy="#{_rowamostra.amostraId}"
+					sortBy="#{_rowamostra.amostraId}" filterMatchMode="contains"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowamostra.amostraId}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.mercado']}"
+					filterStyle="height:2.2em;"
+					filterBy="#{_rowamostra.mercado.name()}"
+					sortBy="#{_rowamostra.mercado.name()}" filterMatchMode="contains"
+					style="font-size:11px;" width="65">
+					<h:outputText value="#{_rowamostra.mercado.name()}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.tipo']}" width="35">
+					<h:outputText value="#{_rowamostra.tipo.label}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.refer']}" 
+						   width="40" 
+						   filterBy="#{_rowamostra.livroReferencia.referencia}" 
+						   sortBy="#{_rowamostra.livroReferencia.referencia}" 
+						   filterMatchMode="contains">
+					<h:outputText value="#{_rowamostra.livroReferencia.referencia}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.vresumida']}" style="text-align:center;">
+					<h:outputText value="#{_rowamostra.livroReferencia.versaorefer}"
+						style="font-size:10x;text-align:center;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					width="65" 
+					filterBy="#{_rowamostra.livroReferencia.construcaonome}" 
+					sortBy="#{_rowamostra.livroReferencia.construcaonome}" 
+					filterMatchMode="contains">
+					<h:outputText value="#{_rowamostra.livroReferencia.construcaonome}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.vresumida']}">
+					<h:outputText value="#{_rowamostra.livroReferencia.versao}"
+						style="font-size:10x;"  />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.forma']}" width="30">
+					<h:outputText
+						value="#{_rowamostra.livroReferencia.referenciaforma}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nomecliente']}" width="70">
+					<h:outputText value="#{_rowamostra.cliente.sucinto}"
+						style="font-size:10x;"  />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nomefabrica']}" width="70">
+					<h:outputText value="#{_rowamostra.fabrica.sucinto}"
+						style="font-size:10x;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.Solicitacao']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.dataSolicitacao}"
+						style="font-size:10x;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.amostradata']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.dataEntrega}"
+						style="font-size:10x;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.amostrafabrica']}"
+					width="60">
+					<h:outputText value="#{_rowamostra.dataXfcFinal}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.prs']}" width="8">
+					<h:outputText value="#{_rowamostra.pares}" style="font-size:10x;" />
+				</pf:column>
+				<pf:column width="330" headerText="Materiais"
+					style="text-align:center;">
+					<pf:dataTable var="cor" value="#{_rowamostra.coresAmostra}"
+						styleClass="hide-column-names">
+						<pf:column style="font-size:9px;width:5px;" width="5px;" >
+							<h:outputText value="#{cor.desenvolveramostra}" />
+						</pf:column>
+						<pf:column style="font-size:9px;width:5px;">
+							<li style="color:#{(cor.producao ? 'green' : 'red')}" >
+								<h:outputText value="#{cor.marca}"/>
+							</li>
+						</pf:column>
+						<pf:column style="font-size:9px;width:90px;" >
+							<h:outputText value="#{cor.material}" style="font-size:9px;" />
+						</pf:column>
+						<pf:column style="font-size:9px;" width="70">
+							<h:outputText value="#{cor.corPrincipal }" style="font-size:9px;" />
+						</pf:column>
+						<pf:column style="font-size:9px;" width="20">
+							<h:outputText value="#{cor.totalPar}" style="font-size:9px;" />
+						</pf:column>
+						<pf:column style="font-size:9px;" width="20">
+							<h:outputText value="#{cor.sizeCor}" style="font-size:9px;" />
+						</pf:column>
+
+					</pf:dataTable>
+				</pf:column>
+			</pf:dataTable>
+
+		</h:form>
+		<!-- Amostra Nova Cadastro -->
+		<pf:dialog header="Cadastro de amostras Novas"
+			widgetVar="addEditFormAmostraNovaDlg" width="99%" resizable="false"
+			position="center top" showEffect="clip" modal="true"
+			draggable="false" closable="true" appendTo="@(body)">
+			<h:form id="crudFormAmostraSecundario">
+				<pf:growl id="amostraSecundario" globalOnly="true" />
+
+				<pf:panelGrid columns="3" layout="grid"
+					style="border-color:#35b3ee;">
+					<pf:column>
+						<pf:panel style="border-color:#35b3ee;">
+							<h:panelGrid columns="2">
+								<pf:outputLabel value="#{msg['usocomum.label.tipoamostra']}" />
+								<pf:selectOneMenu value="#{amostraNovaController.amostra.tipo}"
+									filter="true" filterMatchMode="contains"
+									style="vertical-align:middle;font-size:12px;">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems value="#{amostraNovaController.tipoamostra}"
+										var="tpamostra" itemValue="#{tpamostra}"
+										itemLabel="#{tpamostra.label}" />
+									<pf:ajax process="@this" />
+								</pf:selectOneMenu>
+							</h:panelGrid>
+							<h:panelGrid id="pnlMercado" columns="2">
+								<h:outputLabel value="#{msg['usocomum.label.mercado']}" />
+								<pf:selectOneMenu
+									value="#{amostraNovaController.amostra.mercado}" filter="true"
+									filterMatchMode="contains"
+									style="vertical-align:middle;font-size:12px;">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems value="#{amostraNovaController.mercado}"
+										var="mercado" itemValue="#{mercado}"
+										itemLabel="#{mercado.name()}" />
+									<pf:ajax process="@this" update="pnlMercado" />
+								</pf:selectOneMenu>
+							</h:panelGrid>
+
+							<h:panelGrid columns="3">
+
+								<pf:outputLabel value="#{msg['usocomum.label.nomecliente']}" />
+								<pf:inputText id="grpCliente"
+									value="#{facadeView.informaCliente}" size="15" maxlength="15"
+									placeholder="Informe Cliente" style="font-size:12px;">
+								</pf:inputText>
+								<pf:commandLink action="#{facadeView.visaoCliente()}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cliente(s)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.clienteSelecionado}"
+										process="@this" update="grpCliente pnlAttn" />
+								</pf:commandLink>
+							</h:panelGrid>
+							<h:panelGrid columns="3">
+								<pf:outputLabel value="#{msg['usocomum.label.nomefabrica']}" />
+								<pf:inputText id="grpFabrica"
+									value="#{facadeView.informaFabrica}" size="15" maxlength="15"
+									placeholder="Informe Fábrica" style="font-size:12px;" />
+								<pf:commandLink action="#{facadeView.visaoFabrica()}" update="amostraSecundario">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Fábrica(s)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.fabricaSelecionada}"
+										process="@this" update="grpFabrica" />
+								</pf:commandLink>
+							</h:panelGrid>
+							<h:panelGrid id="grdReferencia" columns="6">
+								<h:outputLabel value="#{msg['usocomum.label.referencia']}" />
+								<pf:inputText
+									value="#{amostraNovaController.amostra.abreviacao}" size="3"
+									maxlength="3" style="font-size:12px;">
+								</pf:inputText>
+								<pf:inputText id="l4" value="#{facadeView.informaReferencia}"
+									size="8" maxlength="8" placeholder="Referência">
+								</pf:inputText>
+								<pf:commandLink action="#{facadeView.visaoLivroReferencia()}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Referência(s)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.referenciaSelecionada}"
+										process="@this"
+										update="grdReferencia grdConstrucao grdForma pnlimagem" />
+								</pf:commandLink>
+								<h:outputLabel value="Versão:"
+									style="font-size:12px;height:0.7em;" />
+								<pf:inputText readonly="true"
+									value="#{amostraNovaController.amostra.livroReferencia.versaorefer}"
+									size="3" maxlength="3" />
+							</h:panelGrid>
+							<h:panelGrid id="grdConstrucao" columns="6">
+								<h:outputLabel value="#{msg['usocomum.label.construcao']}" />
+								<pf:inputText readonly="true"
+									value="#{amostraNovaController.amostra.construcaoNome}" />
+								<h:outputLabel value="#{msg['construcao.label.versao']}" />
+								<pf:inputText readonly="true"
+									value="#{amostraNovaController.amostra.versao}" size="3"
+									maxlength="3" />
+							</h:panelGrid>
+						</pf:panel>
+					</pf:column>
+					<pf:column id="col2Sec">
+						<pf:panel style="border-color:#35b3ee;">
+							<h:panelGroup id="grpSegundo">
+								<h:panelGrid columns="2">
+
+									<h:outputLabel for="ampara" value="#{msg['usocomum.label.amostrap']}" />
+									<pf:datePicker id="ampara" pattern="dd-MM-yyyy" 
+										value="#{amostraNovaController.amostra.dtxfct}"
+										size="10" monthNavigator="true"> 
+										<pf:effect event="dbclick" type="slide"/>	
+										<f:convertDateTime type="localDate" dateStyle="short"
+											pattern="dd-MM-yyyy" />
+										<pf:ajax process="@this"/>
+								    </pf:datePicker>
+														
+
+									<h:outputLabel for="amen" value="#{msg['usocomum.label.entrega']}" />
+									<pf:datePicker id="amen" 
+									pattern="dd-MM-yyyy" 
+									value="#{amostraNovaController.amostra.dataEntrega}" 
+									size="10" monthNavigator="true">
+										<pf:effect event="dbclick" type="slide"/>	
+										<f:convertDateTime type="localDate" dateStyle="short"
+											pattern="dd-MM-yyyy" />
+									</pf:datePicker>
+
+									<h:outputLabel value="#{msg['usocomum.label.solicitacao']}" />
+									<pf:datePicker readonlyInput="true" locale="pt" value="#{amostraNovaController.amostra.dataSolicitacao}">
+										<pf:effect event="dbclick" type="slide"/>	
+										<f:convertDateTime type="localDate" pattern="dd-MM-yyyy" dateStyle="short"/>
+									</pf:datePicker>
+								</h:panelGrid>
+
+								<h:panelGrid columns="3">
+									<h:outputLabel value="#{msg['usocomum.label.produto']}" />
+									<pf:inputText id="pnlSecProduto"
+										value="#{facadeView.informaProduto}" size="45" maxlength="60" />
+									<pf:commandLink action="#{facadeView.visaoComponente()}">
+										<i class="fa fa-search" style="font-size: 1.5em;"
+											title="Pesquisa Produto(s)" />
+										<pf:ajax event="dialogReturn"
+											listener="#{amostraNovaController.produtoSelecionado}"
+											process="@this" update="pnlSecProduto" />
+									</pf:commandLink>
+									<h:outputLabel value="#{msg['usocomum.label.marca']}" />
+									<pf:inputText id="pnlSecMarca"
+										value="#{facadeView.informaMarcaCliente}" />
+									<pf:commandLink action="#{facadeView.visaoMarcaCliente()}">
+										<i class="fa fa-search" style="font-size: 1.5em;"
+											title="Pesquisa Marca(s)" />
+										<pf:ajax event="dialogReturn"
+											listener="#{amostraNovaController.marcaSelecionada()}"
+											process="@this" update="pnlSecMarca" />
+									</pf:commandLink>
+
+								</h:panelGrid>
+								<h:panelGrid id="grdForma" columns="2">
+									<h:outputLabel value="#{msg['usocomum.label.forma']}" />
+									<pf:inputText readonly="true"
+										value="#{amostraNovaController.amostra.referenciaForma}"
+										size="7" maxlength="7" />
+								</h:panelGrid>
+							</h:panelGroup>
+						</pf:panel>
+					</pf:column>
+					<pf:column id="col3Sec">
+						<pf:panel style="border-color:#35b3ee;">
+							<h:panelGroup>
+								<h:panelGrid columns="2">
+
+									<h:outputLabel value="#{msg['usocomum.label.totalpares']}" />
+									<pf:inputText readonly="true"
+										value="#{amostraNovaController.amostra.pares}" size="3" />
+
+
+									<h:outputLabel value="#{msg['usocomum.label.paresgvd']}" />
+									<pf:inputText readonly="true"
+										value="#{amostraNovaController.amostra.pargvd }" size="3" />
+									<h:outputLabel value="#{msg['usocomum.label.prscancelados']}" />
+									<pf:inputText readonly="true"
+										value="#{amostraNovaController.amostra.parCancelado}" size="3" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<pf:outputLabel value="#{msg['usocomum.label.prioridade']}" />
+								<pf:selectOneMenu value="#{amostraNovaController.amostra.prioridaDeProducao}"
+									filter="true" filterMatchMode="contains"
+									style="vertical-align:middle;font-size:12px;">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems value="#{amostraNovaController.prioridade}"
+										var="prioridade" itemValue="#{prioridade}"
+										itemLabel="#{prioridade.label}" />
+									<pf:ajax process="@this" />
+								</pf:selectOneMenu>
+							</h:panelGrid>
+							<h:panelGrid columns="2" id="pnlDataLiberacao" styleClass="panelgrlsb">
+									<h:outputLabel value="#{msg['usocomum.label.liberap']}" />
+									<pf:datePicker readonlyInput="true"
+									value="#{amostraNovaController.amostra.dataLiberacaoProducao}" 
+									size="20">
+										<f:convertDateTime type="localDateTime" pattern="dd-MM-yyyy HH:mm:ss" dateStyle="long" />
+									</pf:datePicker>
+							</h:panelGrid>	
+							<h:panelGrid columns="3">
+									<h:outputLabel value="#{msg['usocomum.label.estacao']}" />
+									<pf:inputText id="pnlEstacao"
+										value="#{facadeView.informaEstacao}" />
+									<pf:commandLink action="#{facadeView.visaoEstacao()}">
+										<i class="fa fa-search" style="font-size: 1.5em;"
+											title="Pesquisa Estação(s)" />
+										<pf:ajax event="dialogReturn"
+											listener="#{amostraNovaController.estacaoSelecionada}"
+											process="@this" update="pnlEstacao" />
+									</pf:commandLink>
+								</h:panelGrid>
+
+							</h:panelGroup>
+						</pf:panel>
+					</pf:column>
+				</pf:panelGrid>
+				<pf:panelGrid columns="2" layout="grid"
+					columnClasses="column1,column2">
+					<pf:column width="100%">
+						<pf:panel style="border-color:#35b3ee;">
+
+							<pf:panelGrid id="pnlAttn" columns="2">
+								<pf:outputLabel value="#{msg['amostra.label.obsbase']}"
+									style="font-size:11px;height:0.7em;" />
+								<pf:inputText value="#{amostraNovaController.amostra.obsBase}"
+									size="100" />
+								<pf:outputLabel value="#{msg['amostra.label.obsamostra']}"
+									style="font-size:11px;height:0.7em;" />
+								<pf:inputTextarea cols="85" maxlength="935"
+									value="#{amostraNovaController.amostra.obs}"
+									style="font-size:13px;height:50%;" autoResize="false">
+								</pf:inputTextarea>
+								<h:outputLabel value="#{msg['amostra.label.ematencao']}" />
+								<pf:selectOneMenu
+									value="#{amostraNovaController.amostra.destinoAmCf}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains"
+									style="vertical-align:middle;font-size:12px;">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems
+										value="#{amostraNovaController.listaDestinoAmCf}"
+										var="destinoamcf" itemValue="#{destinoamcf}"
+										itemLabel="#{destinoamcf.destino}" />
+									<pf:ajax process="@this" />
+								</pf:selectOneMenu>
+							</pf:panelGrid>
+						</pf:panel>
+					</pf:column>
+					<pf:column>
+
+						<pf:panel id="pnlimagem" style="border-color:#35b3ee;">
+							<pf:panelGrid columns="1">
+								<pf:graphicImage value="#{amostraNovaController.imageResize}"
+									width="#{amostraNovaController.largura}"
+									height="#{amostraNovaController.altura}" cache="false">
+								</pf:graphicImage>
+
+							</pf:panelGrid>
+						</pf:panel>
+
+					</pf:column>
+
+				</pf:panelGrid>
+				<pf:panel>
+					<h:panelGrid id="btnSave" columns="3">
+						<pf:commandButton value="#{msg['botao.save']}"
+							actionListener="#{amostraNovaController.verificaAntesSave}"
+							proccess="@this" update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao" />
+					</h:panelGrid>
+				</pf:panel>
+				<pf:panel style="horizontal-align:center;">
+					
+					<h:panelGroup id="pnlGrpCor">
+						<pf:commandButton
+							disabled="#{amostraNovaController.parametros.abacor}"
+							value="#{msg['botao.addcor']}"
+							actionListener="#{amostraNovaController.inicializaCor()}"
+							update=":crudAmostraCor :crudAmostraCor:pnlgrpVisualizacao crudFormAmostraSecundario:amostraSecundario 
+							crudFormAmostraSecundario crudFormAmostraSecundario:pnlGrpCor" 
+							oncomplete="if (!args.validationFailed) PF('addEditFormAmostraCorDlg').show()"
+							style="font-size:12px;" />
+
+						<ui:include src="/dialog/dlgCorte.xhtml">
+							<ui:param name="controller" value="#{amostraNovaController}" />
+						</ui:include>
+
+						<pf:commandButton value="Corte" icon="fa fa-scissors"
+							style="font-size: 1.5em;background-color:#2eb3d9;"
+							actionListener="#{amostraNovaController.inicializaCorteAmostra}"
+							oncomplete="PF('dialogCorte').show()" update="crudFormAmostraSecundario amostraSecundario crudFormAmostraSecundario crudFormAmostraSecundario:tblCoresAmostra">
+						</pf:commandButton>
+
+						<ui:include src="/dialog/dlgCostura.xhtml">
+							<ui:param name="controller" value="#{amostraNovaController}" />
+						</ui:include>
+
+						<pf:commandButton value="Costura" icon="fa fa-sliders"
+							style="font-size: 1.5em;background-color:#c28104;"
+							actionListener="#{amostraNovaController.inicializaCosturaAmostra()}"
+							oncomplete="PF('dialogCostura').show()"
+							update="crudFormAmostraSecundario amostraSecundario crudFormAmostraSecundario crudFormAmostraSecundario:tblCoresAmostra">
+						</pf:commandButton>
+
+						<ui:include src="/dialog/dlgSolado.xhtml">
+							<ui:param name="controller" value="#{amostraNovaController}" />
+						</ui:include>
+
+						<pf:commandButton value="Solado" icon="fa fa-cubes"
+							style="font-size: 1.5em;background-color:#7bb03c"
+							actionListener="#{amostraNovaController.inicializaSoladoAmostra()}"
+							oncomplete="PF('dialogSolado').show()"
+							update="crudFormAmostraSecundario amostraSecundario crudFormAmostraSecundario crudFormAmostraSecundario:tblCoresAmostra">
+						</pf:commandButton>
+
+						<ui:include src="/dialog/dlgAcabamento.xhtml">
+							<ui:param name="controller" value="#{amostraNovaController}" />
+						</ui:include>
+
+
+						<pf:commandButton value="Acabamento" icon="fa fa-hourglass-end"
+							style="font-size: 1.5em;background-color:#cab734"
+							actionListener="#{amostraNovaController.inicializaAcabamentoAmostra()}"
+							oncomplete="PF('dialogAcabamento').show()"
+							update="crudFormAmostraSecundario amostraSecundario crudFormAmostraSecundario crudFormAmostraSecundario:tblCoresAmostra">
+						</pf:commandButton>
+
+						<pf:commandButton value="Fechar"
+							actionListener="#{amostraNovaController.inicializaVetorCores()}"
+							oncomplete="PF('addEditFormAmostraNovaDlg').hide()"
+							update=":crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra"
+							style="font-size: 1.5em;background-color:#ea1428">
+						</pf:commandButton>
+						<pf:dataTable id="tblCoresAmostra"
+							value="#{amostraNovaController.listaCoresCadastradas}"
+							var="_rowcoramostra" paginator="true" rows="10"
+							paginatorPosition="bottom"  widgetVar="Table"
+							lazy="true" style="text-align:center" scrollHeight="150px">
+							<pf:column width="60">
+								<pf:commandLink
+									action="#{amostraNovaController.editCorMulti(_rowcoramostra)}"
+									oncomplete="PF('addEditFormAmostraCorDlg').show()"
+									update=":crudAmostraCor" title="#{msg['botao.edit']}">
+									<i class="fa fa-fw fa-pencil-square-o"
+										style="font-size: 1.5em; color: #9ecda2;" />
+								</pf:commandLink>
+								<pf:commandLink
+									onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+									actionListener="#{amostraNovaController.deleteCor(_rowcoramostra)}"
+									update="crudFormAmostraSecundario crudFormAmostraSecundario:amostraSecundario crudFormAmostraSecundario:tblCoresAmostra " 
+									title="#{msg['botao.delete']}">
+									<i class="fa fa-fw fa-trash-o"
+										style="font-size: 1.5em; color: #f77e6b;" />
+								</pf:commandLink>
+								<pf:commandLink title="#{msg['amostra.label.corte']}"
+									actionListener="#{amostraNovaController.editCorteCorAmostra(_rowcoramostra)}"
+									oncomplete="PF('dialogCorte').show()"
+									update="crudFormAmostraSecundario crudFormAmostraSecundario:tblCoresAmostra">
+
+									<i class="fa fa-scissors"
+										style="font-size: 1.5em; color: #2eb3d9;" />
+								</pf:commandLink>
+								<pf:commandLink
+									onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+									update="tblCoresAmostra"
+									title="#{msg['amostra.label.costura']}">
+									<i class="fa fa-sliders"
+										style="font-size: 1.5em; color: #c28104;" />
+								</pf:commandLink>
+								<pf:commandLink
+									onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+									update="tblCoresAmostra" title="#{msg['amostra.label.sola']}">
+									<i class="fa fa-cubes"
+										style="font-size: 1.5em; color: #7bb03c;" />
+								</pf:commandLink>
+								<pf:commandLink
+									onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+									update="tblCoresAmostra"
+									title="#{msg['amostra.label.acabamento']}">
+									<i class="fa fa-hourglass-end"
+										style="font-size: 1.5em; color: #cab734;" />
+								</pf:commandLink>
+							</pf:column>
+							<pf:column headerText="#{msg['amostra.label.amostra']}" 
+								style="font-size:12px;" width="10">
+								<h:outputText value="#{_rowcoramostra.amostraId}" 
+								style="font-size:11px;" />
+							</pf:column>
+							<pf:column headerText="Seq Cor" style="font-size:12px;"
+								width="10">
+								<h:outputText value="#{_rowcoramostra.sequenciaCorAmostra}"
+									style="font-size:11px;" />
+							</pf:column>
+
+							<pf:column headerText="Produz" style="font-size:12px;" width="10">
+								<h:outputText value="#{_rowcoramostra.desenvolveramostra}"
+									style="font-size:11px;" />
+							</pf:column>
+
+							<pf:column headerText="Material" style="font-size:12px;"
+								width="100">
+								<h:outputText value="#{_rowcoramostra.material}"
+									style="font-size:11px;" />
+							</pf:column>
+
+							<pf:column headerText="Cor" style="font-size:12px;" width="150">
+								<h:outputText value="#{_rowcoramostra.cor}"
+									style="font-size:11px;" />
+							</pf:column>
+
+							<pf:column headerText="Prs" style="font-size:12px;" width="15">
+								<h:outputText value="#{_rowcoramostra.totalPar}"
+									style="font-size:11px;" />
+							</pf:column>
+
+							<pf:column headerText="Pé" style="font-size:12px;" width="15">
+								<h:outputText value="#{_rowcoramostra.pe}"
+									style="font-size:11px;" />
+							</pf:column>
+
+						</pf:dataTable>
+					</h:panelGroup>
+
+				</pf:panel>
+			</h:form>
+		</pf:dialog>
+
+		<pf:dialog header="Cadastro de Cores Novas Simples/Multi-(#{amostraNovaController.amostra.amostraId})"
+			appendTo="@(body)" widgetVar="addEditFormAmostraCorDlg" width="60%"
+			resizable="false" position="center top" showEffect="clip"
+			draggable="false" closable="false" modal="true">
+			<h:form id="crudAmostraCor">
+				<pf:growl id="corMensagem" globalOnly="true" />
+				<pf:panelGrid id="dadosCor" columns="2" layout="grid">
+					<pf:column>
+						<h:panelGrid columns="2">
+							<pf:outputLabel
+								value="#{msg['coramostra.label.DesenvolveAmostra']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:selectOneMenu
+								value="#{amostraNovaController.corAmostra.desenvolveramostra}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains"
+								style="vertical-align:middle;font-size:12px;">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{amostraNovaController.simNao}"
+									var="desenvam" itemValue="#{desenvam}"
+									itemLabel="#{desenvam.label}" />
+								<pf:ajax process="@this" />
+							</pf:selectOneMenu>
+
+							<pf:outputLabel value="#{msg['coramostra.label.obsmaterial']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputText
+								value="#{amostraNovaController.corAmostra.obsMaterial}"
+								size="30" maxlength="30" />
+
+							<pf:outputLabel value="#{msg['coramostra.label.tipomaterial']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:selectOneMenu
+								value="#{amostraNovaController.corAmostra.tipoMaterial}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains"
+								style="vertical-align:middle;font-size:12px;">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{amostraNovaController.tipoMaterial}"
+									var="tipomaterial" itemValue="#{tipomaterial}"
+									itemLabel="#{tipomaterial.label}" />
+								<pf:ajax process="@this" />
+							</pf:selectOneMenu>
+							<pf:outputLabel value="#{msg['coramostra.label.linha']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputText value="#{amostraNovaController.corAmostra.linha}" />
+
+							<pf:outputLabel value="#{msg['coramostra.label.size']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputText value="#{amostraNovaController.corAmostra.sizeCor}" />
+
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+
+							<pf:outputLabel value="#{msg['coramostra.label.totalpares']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputText
+								value="#{amostraNovaController.corAmostra.totalPar}" />
+
+							<pf:outputLabel value="#{msg['coramostra.label.pe']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:selectOneMenu value="#{amostraNovaController.corAmostra.pe}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains"
+								style="vertical-align:middle;font-size:12px;">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{amostraNovaController.direitoEsquerdo}"
+									var="pe" itemValue="#{pe}" itemLabel="#{pe.label}" />
+								<pf:ajax process="@this" />
+							</pf:selectOneMenu>
+
+							<pf:outputLabel value="#{msg['coramostra.label.paresgvd']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputText value="#{amostraNovaController.corAmostra.parGvd}" />
+
+							<pf:outputLabel
+								value="#{msg['coramostra.label.parescancelados']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputText
+								value="#{amostraNovaController.corAmostra.parCancelado}" />
+
+						</h:panelGrid>
+					</pf:column>
+
+				</pf:panelGrid>
+				<pf:panelGrid columns="1" layout="grid">
+					<pf:column>
+						<h:panelGrid>
+							<pf:outputLabel value="#{msg['coramostra.label.cabedal']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputTextarea cols="90" maxlength="270"
+								value="#{amostraNovaController.corCabedal.texto}"
+								style="font-size:13px;height:50%;" autoResize="false">
+							</pf:inputTextarea>
+
+						</h:panelGrid>
+
+					</pf:column>
+				</pf:panelGrid>
+				<pf:panelGrid columns="9" layout="grid" class="border-color:#35b3ee;">
+								<pf:outputLabel value="Local" />
+								<pf:outputLabel value="Material" />
+								<pf:outputLabel value="S" />
+								<pf:outputLabel value="Cor" />
+								<pf:outputLabel value="S" />
+								<pf:outputLabel value="Compl" />
+								<pf:outputLabel value="Cp" />
+								<pf:outputLabel value="Remove" />
+								<pf:outputLabel value="Cor+" />
+				</h:panelGrid>
+
+				<pf:panelGrid columns="9" layout="grid"
+					style="line-height:10px;border-color:#35b3ee;">
+					<pf:row>
+						<h:panelGrid id="grp0Panel" columns="9"
+							columnClasses="column01,column02,column04,column05,column06,column07,column08,column81,column09">
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									readonly="true" value="#{amostraNovaController.linha1+1}"
+									size="2" maxlength="3" />
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									id="inpMaterial1"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha1).matNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha1)}" >
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Material(1)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.materialSelecionado}"
+										process="@this" update="inpMaterial1" />
+								</pf:commandLink>
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									id="inpCor1"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha1).corNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									action="#{facadeView.visaoMultiCor(amostraNovaController.linha1)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cor(1)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.corSelecionada}"
+										process="@this" update="inpCor1" />
+								</pf:commandLink>
+
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha1).completaCor}"
+									size="10" maxlength="10" title="Complemento Cor" />
+							</pf:column>
+							<pf:column>
+								<pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.parametros.habilita1}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha1).corPrincipal}"
+									title="Selecione uma Cor Principal" />
+							</pf:column>
+							<pf:column>
+								<pf:commandButton id="lmp1"
+									rendered="#{amostraNovaController.parametros.btnlimpa1}"
+									title="Remover"
+									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha1)}"
+									icon="fa fa-eraser"
+									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									update="inpMaterial1 inpCor1 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel pnlgrpVisualizacao">
+								</pf:commandButton>
+							</pf:column>
+							<pf:column>
+								<pf:commandButton id="inpbot1"
+									rendered="#{amostraNovaController.parametros.botao1}"
+									title="Nova Posição"
+									actionListener="#{amostraNovaController.addCor}"
+									icon="fa fa-chevron-down"
+									style="text-align:center;width:15px;background-color:#bad9cb"
+									update="inpbot1 grp1Panel lmp2 corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+							</pf:column>
+						</h:panelGrid>
+
+					</pf:row>
+				</pf:panelGrid>
+
+				<pf:panelGrid columns="9" layout="grid"
+					style="line-height:10px;border-color:#35b3ee;">
+					<pf:row>
+						<h:panelGrid id="grp1Panel" columns="9"
+							columnClasses="column01,column02,column04,column05,column06,column07,column08,column81,column09">
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									readonly="true" value="#{amostraNovaController.linha2+1}"
+									size="2" maxlength="3" />
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									id="inpMaterial2"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).matNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha2)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Material(2)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.materialSelecionado}"
+										process="@this" update="inpMaterial2" />
+								</pf:commandLink>
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									id="inpCor2"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).corNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									action="#{facadeView.visaoMultiCor(amostraNovaController.linha2)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cor(2)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.corSelecionada}"
+										process="@this" update="inpCor2" />
+								</pf:commandLink>
+
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).completaCor}"
+									size="10" maxlength="10" />
+							</pf:column>
+							<pf:column>
+								<pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.parametros.habilita2}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).corPrincipal}"></pf:selectBooleanCheckbox>
+							</pf:column>
+							<pf:column>
+
+								<pf:commandButton id="lmp2"
+									rendered="#{amostraNovaController.parametros.btnlimpa2}"
+									title="Remover"
+									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha2)}"
+									icon="fa fa-eraser"
+									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									update="inpMaterial2 inpCor2 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+
+							</pf:column>
+
+							<pf:column>
+								<pf:commandButton id="inpbot2"
+									rendered="#{amostraNovaController.parametros.botao2}"
+									title="Nova Posição"
+									actionListener="#{amostraNovaController.addCor}"
+									icon="fa fa-chevron-down"
+									style="text-align:center;width:15px;background-color:#bad9cb"
+									update="inpbot2 grp2Panel lmp3 corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+							</pf:column>
+
+						</h:panelGrid>
+
+					</pf:row>
+				</pf:panelGrid>
+
+
+				<pf:panelGrid columns="9" layout="grid"
+					style="line-height:10px;border-color:#35b3ee;">
+					<pf:row>
+						<h:panelGrid id="grp2Panel" columns="9"
+							columnClasses="column01,column02,column04,column05,column06,column07,column08,column81,column09">
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									readonly="true" value="#{amostraNovaController.linha3+1}"
+									size="2" maxlength="3" />
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									id="inpMaterial3"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha3).matNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha3)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Material(3)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.materialSelecionado}"
+										process="@this" update="inpMaterial3" />
+								</pf:commandLink>
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									id="inpCor3"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha3).corNome}" />
+							</pf:column>
+
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									action="#{facadeView.visaoMultiCor(amostraNovaController.linha3)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cor(3)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.corSelecionada}"
+										process="@this" update="inpCor3" />
+								</pf:commandLink>
+
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha3).completaCor}"
+									size="10" maxlength="10" />
+							</pf:column>
+							<pf:column>
+								<pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.parametros.habilita3}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha3).corPrincipal}" />
+							</pf:column>
+
+							<pf:column>
+
+								<pf:commandButton id="lmp3"
+									rendered="#{amostraNovaController.parametros.btnlimpa3}"
+									title="Remover"
+									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha3)}"
+									icon="fa fa-eraser"
+									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									update="inpMaterial3 inpCor3 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+							</pf:column>
+
+							<pf:column>
+								<pf:commandButton id="inpbot3"
+									rendered="#{amostraNovaController.parametros.botao3}"
+									title="Nova Posição"
+									actionListener="#{amostraNovaController.addCor}"
+									icon="fa fa-chevron-down"
+									style="text-align:center;width:15px;background-color:#bad9cb"
+									update="inpbot3 grp3Panel lmp4 corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+							</pf:column>
+
+						</h:panelGrid>
+
+					</pf:row>
+				</pf:panelGrid>
+
+				<pf:panelGrid columns="9" layout="grid"
+					style="line-height:10px;border-color:#35b3ee;">
+					<pf:row>
+						<h:panelGrid id="grp3Panel" columns="9"
+							columnClasses="column01,column02,column04,column05,column06,column07,column08,column81,column09">
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									readonly="true" value="#{amostraNovaController.linha4+1}"
+									size="2" maxlength="3" />
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									id="inpMaterial4"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).matNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha4)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Material(4)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.materialSelecionado}"
+										process="@this" update="inpMaterial4" />
+								</pf:commandLink>
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									id="inpCor4"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).corNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									action="#{facadeView.visaoMultiCor(amostraNovaController.linha4)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cor(4)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.corSelecionada}"
+										process="@this" update="inpCor4" />
+								</pf:commandLink>
+
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).completaCor}"
+									size="7" maxlength="7" />
+							</pf:column>
+							<pf:column>
+								<pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.parametros.habilita4}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).corPrincipal}" />
+							</pf:column>
+							<pf:column>
+
+								<pf:commandButton id="lmp4"
+									rendered="#{amostraNovaController.parametros.btnlimpa4}"
+									title="Remover"
+									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha4)}"
+									icon="fa fa-eraser"
+									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									update="inpMaterial4 inpCor4 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+							</pf:column>
+
+							<pf:column>
+								<pf:commandButton id="inpbot4"
+									rendered="#{amostraNovaController.parametros.botao4}"
+									title="Nova Combinação"
+									actionListener="#{amostraNovaController.addCor}"
+									icon="fa fa-chevron-down"
+									style="text-align:center;width:15px;background-color:#bad9cb"
+									update="inpbot4 grp4Panel lmp5 corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+							</pf:column>
+						</h:panelGrid>
+
+					</pf:row>
+				</pf:panelGrid>
+				<pf:panelGrid columns="9" layout="grid"
+					style="line-height:10px;border-color:#35b3ee;">
+					<pf:row>
+						<h:panelGrid id="grp4Panel" columns="9"
+							columnClasses="column01,column02,column04,column05,column06,column07,column08,column81,column09">
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									readonly="true" value="#{amostraNovaController.linha5+1}"
+									size="2" maxlength="3" />
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									id="inpMaterial5"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).matNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha5)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Material(5)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.materialSelecionado}"
+										process="@this" update="inpMaterial5" />
+								</pf:commandLink>
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									id="inpCor5"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).corNome}" />
+							</pf:column>
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									action="#{facadeView.visaoMultiCor(amostraNovaController.linha5)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cor(5)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.corSelecionada}"
+										process="@this" update="inpCor5" />
+								</pf:commandLink>
+
+							</pf:column>
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).completaCor}"
+									size="10" maxlength="10" />
+							</pf:column>
+							<pf:column>
+								<pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.parametros.habilita5}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).corPrincipal}" />
+							</pf:column>
+							<pf:column>
+
+								<pf:commandButton id="lmp5"
+									rendered="#{amostraNovaController.parametros.btnlimpa5}"
+									title="Remover"
+									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha5)}"
+									icon="fa fa-eraser"
+									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									update="inpMaterial5 inpCor5 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem idCheck">
+								</pf:commandButton>
+
+
+							</pf:column>
+
+							<pf:column>
+								<pf:commandButton id="inpbot5"
+									rendered="#{amostraNovaController.parametros.botao5}"
+									title="Nova Combinação"
+									actionListener="#{amostraNovaController.addCor}"
+									icon="fa fa-chevron-down"
+									style="text-align:center;width:15px;background-color:#bad9cb"
+									update="inpbot5 grp5Panel lmp6 corMensagem idCheck">
+								</pf:commandButton>
+							</pf:column>
+
+						</h:panelGrid>
+
+					</pf:row>
+				</pf:panelGrid>
+				<pf:panelGrid columns="9" layout="grid"
+					style="line-height:10px;border-color:#35b3ee;">
+					<pf:row>
+						<h:panelGrid id="grp5Panel" columns="9"
+							columnClasses="column01,column02,column04,column05,column06,column07,column08,column81,column09">
+
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									readonly="true" value="#{amostraNovaController.linha6+1}"
+									size="2" maxlength="3" />
+							</pf:column>
+
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									id="inpMaterial6"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha6).matNome}" />
+							</pf:column>
+
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha6)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Material(6)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.materialSelecionado}"
+										process="@this" update="inpMaterial6" />
+								</pf:commandLink>
+							</pf:column>
+
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									id="inpCor6"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha6).corNome}" />
+							</pf:column>
+
+							<pf:column>
+								<pf:commandLink
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									action="#{facadeView.visaoMultiCor(amostraNovaController.linha6)}">
+									<i class="fa fa-search" style="font-size: 1.5em;"
+										title="Pesquisa Cor(6)" />
+									<pf:ajax event="dialogReturn"
+										listener="#{amostraNovaController.corSelecionada}"
+										process="@this" update="inpCor6" />
+								</pf:commandLink>
+
+							</pf:column>
+
+							<pf:column>
+								<pf:inputText
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha6).completaCor}"
+									size="7" maxlength="7" />
+							</pf:column>
+
+							<pf:column>
+								<pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.parametros.habilita6}"
+									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha6).corPrincipal}" />
+							</pf:column>
+							<pf:column>
+
+								<pf:commandButton id="lmp6"
+									rendered="#{amostraNovaController.parametros.btnlimpa6}"
+									title="Remover"
+									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha6)}"
+									icon="fa fa-eraser"
+									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									update="inpMaterial6 inpCor6 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
+								</pf:commandButton>
+
+
+							</pf:column>
+
+						</h:panelGrid>
+
+					</pf:row>
+				</pf:panelGrid>
+				<h:panelGrid id="pnlChecagem" columns="3">
+					<pf:commandButton id="idCheck"
+						rendered="#{amostraNovaController.parametros.btncheck}"
+						value="#{msg['botao.check']}" icon="fa fa-fw fa-check"
+						action="#{amostraNovaController.checagemPreVisualizacao}"
+						update="corMensagem crudAmostraCor:pnlgrpVisualizacao">
+						<pf:ajax immediate="true" process="@this"
+							update="crudAmostraCor:pnlgrpVisualizacao" />
+					</pf:commandButton>
+					<h:panelGroup id="pnlgrpVisualizacao">
+						<pf:commandButton rendered="#{amostraNovaController.btnVisao}"
+							value="#{msg['botao.view']}" icon="fa fa-eye"
+							actionListener="#{facadeView.ComporMulti}"
+							oncomplete="PF('ComporAmostraCorMultiDlg').show()"
+							process="@this" update=":FormAmostraCorMulti">
+						</pf:commandButton>
+						<pf:commandButton
+							rendered="#{amostraNovaController.parametros.btncheck}"
+							value="#{msg['botao.fechar']}" icon="fa fa-fw fa-close"
+							actionListener="#{amostraNovaController.liberaMultiCor}"
+							oncomplete="PF('addEditFormAmostraCorDlg').hide()"
+							update=":crudFormAmostraSecundario :crudFormAmostraSecundario">
+						</pf:commandButton>
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+		<pf:dialog header="Visualização Composição Simples/Multi"
+			widgetVar="ComporAmostraCorMultiDlg" width="47%" resizable="false"
+			position="right top" showEffect="clip" modal="true" draggable="true"
+			closable="true" appendTo="@(body)">
+			<h:form id="FormAmostraCorMulti">
+				<pf:growl globalOnly="true" sticky="true" />
+				<pf:panel style="border-color:#35b3ee;">
+					<h:panelGrid columns="1" styleClass="panelgrlsb">
+						<pf:fieldset legend="[Material/Cor Completo]"
+							style="border-color:#35b3ee;">
+
+							<pf:column>
+								<h:panelGrid columns="2" styleClass="panelgrlsb">
+									<h:outputLabel value="Material:" />
+									<pf:inputText readonly="true"
+										value="#{facadeView.posicaoMaterial}" style="color:#07222e"
+										size="70" />
+								</h:panelGrid>
+							</pf:column>
+							<pf:column>
+								<h:panelGrid columns="2" styleClass="panelgrlsb">
+									<h:outputLabel value="Cor:" />
+									<pf:inputText readonly="true" value="#{facadeView.corFinal}"
+										style="color:#07222e" size="70" />
+								</h:panelGrid>
+							</pf:column>
+						</pf:fieldset>
+						<pf:fieldset legend="[Material/Cor Resumido]"
+							style="border-color:#35b3ee;">
+							<pf:column>
+								<h:panelGrid columns="2" styleClass="panelgrlsb">
+									<h:outputLabel value="Material:" />
+									<pf:inputText readonly="true"
+										value="#{facadeView.posicaoMaterialRes}" style="color:#07222e"
+										size="70" />
+								</h:panelGrid>
+							</pf:column>
+							<pf:column>
+								<h:panelGrid columns="2" styleClass="panelgrlsb">
+									<h:outputLabel value="Cor:" />
+									<pf:inputText readonly="true" value="#{facadeView.corFinalRes}"
+										style="color:#07222e" size="70" />
+								</h:panelGrid>
+							</pf:column>
+
+						</pf:fieldset>
+						<pf:fieldset legend="[Cor Principal]"
+							style="border-color:#35b3ee;">
+							<pf:column>
+								<h:panelGrid columns="2" styleClass="panelgrlsb">
+									<h:outputLabel value="Cor:" />
+									<pf:inputText readonly="true"
+										value="#{facadeView.principalCor}" style="color:#07222e"
+										size="70" />
+								</h:panelGrid>
+							</pf:column>
+
+						</pf:fieldset>
+					</h:panelGrid>
+				</pf:panel>
+
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{amostraNovaController.saveCor}"
+						update=":crudAmostraCor :crudFormAmostraSecundario:col3Sec :crudFormAmostraSecundario:tblCoresAmostra" 
+						oncomplete="PF('ComporAmostraCorMultiDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.refaz']}"
+						actionListener="#{facadeView.RefazComporMulti}"
+						oncomplete="PF('ComporAmostraCorMultiDlg').hide()" process="@this"
+						update=":crudAmostraCor :crudAmostraCor:pnlgrpVisualizacao" />
+				</h:panelGrid>
+
+			</h:form>
+		</pf:dialog>
+
+		<!-- Dialogo para duplicacao Ficha Amostra Nova -->
+		<pf:dialog header="Duplicação Ficha Amostra Nova"
+			widgetVar="addEditFormDuplicaDlg" width="37%" height="300px" resizable="false"
+			position="center middle" showEffect="clip" modal="true" draggable="true"
+			closable="true" appendTo="@(body)">
+
+			<h:form id="dupFormAmostraNova">
+			<pf:growl id="dupMensagem" life="6000"/>
+			<h:panelGrid layout="grid" columns="2" styleClass="panelgrlsb" style="text-align:left;">
+				<h:outputLabel value="Ficha N°:" style="font-size:14px;" />
+				<pf:inputText readonly="true" value="#{amostraNovaController.amostraClone.amostraId}" size="6" style="color:blue;text-align:left;" />
+			</h:panelGrid>
+				<h:panelGrid id="dupReferencia" columns="6">
+					<h:outputLabel value="#{msg['usocomum.label.referencia']}" />
+					<pf:inputText
+						value="#{amostraNovaController.amostraClone.abreviacao}" size="3"
+						maxlength="3" style="font-size:12px;">
+					</pf:inputText>
+					<pf:inputText value="#{facadeView.informaReferencia}"
+						size="8" maxlength="8" placeholder="Referência">
+					</pf:inputText>
+					<pf:commandLink action="#{facadeView.visaoLivroReferencia()}">
+						<i class="fa fa-search" style="font-size: 1.5em;"
+							title="Pesquisa Referência(s)" />
+						<pf:ajax event="dialogReturn"
+							listener="#{amostraNovaController.referenciaSelecionada}"
+							process="@this"
+							update="dupReferencia dupConstrucao" />
+					</pf:commandLink>
+					<h:outputLabel value="Versão:"
+						style="font-size:12px;height:0.7em;" />
+					<pf:inputText readonly="true"
+						value="#{amostraNovaController.amostraClone.livroReferencia.versaorefer}"
+						size="3" maxlength="3" />
+				</h:panelGrid>
+				<h:panelGrid id="dupConstrucao" columns="6">
+					<h:outputLabel value="#{msg['usocomum.label.construcao']}" />
+					<pf:inputText readonly="true"
+						value="#{amostraNovaController.amostraClone.construcaoNome}" />
+					<h:outputLabel value="#{msg['construcao.label.versao']}" />
+					<pf:inputText readonly="true"
+						value="#{amostraNovaController.amostraClone.versao}" size="3"
+						maxlength="3" />
+					<h:outputLabel value="#{msg['forma.label.refforma']}" />
+					<pf:inputText readonly="true" value="#{amostraNovaController.amostraClone.construcao.forma.referenciafabrica}" size="6"/>
+				 </h:panelGrid>
+					
+				<h:panelGrid columns="2">
+
+					<h:outputLabel for="amso" value="#{msg['usocomum.label.solicitacao']}" />
+					<pf:datePicker id="amso" 
+					pattern="dd-MM-yyyy" 
+					value="#{amostraNovaController.amostraClone.dataSolicitacao}" 
+					size="10" 
+					monthNavigator="true" showButtonBar="true">
+						<pf:effect event="dbclick" type="slide"/>	
+						<f:convertDateTime 
+						type="localDate" 
+						dateStyle="short" 
+						pattern="dd-MM-yyyy" />
+						<pf:ajax update="@this"/>
+					</pf:datePicker>
+					<h:outputLabel for="ampa" value="#{msg['usocomum.label.amostrap']}" />
+					<pf:datePicker id="ampa" 
+					pattern="dd-MM-yyyy" 
+					value="#{amostraNovaController.amostraClone.dtxfct}" 
+					size="10" 
+					monthNavigator="true" 
+					showButtonBar="true" >
+						<pf:effect event="dbclick" type="slide"/>	
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+						<pf:ajax update="@this"/>
+					</pf:datePicker>
+				</h:panelGrid>	
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.duplicar']}"
+						actionListener="#{amostraNovaController.saveDuplicacao()}"
+						update="dupMensagem :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra duplica"/>
+					<pf:commandButton value="#{msg['botao.fechar']}" 
+					oncomplete="PF('addEditFormDuplicaDlg').hide()" 
+					process="@this"/>
+				</h:panelGrid>
+				<h:panelGrid id="duplica"  columns="2" styleClass="pangrdicb">
+					<h:outputLabel rendered="#{amostraNovaController.duplica}" value="N° Nova Amostra :" style="font-size:14px;"/>
+					<pf:inputText rendered="#{amostraNovaController.duplica}" 
+					readonly="true" 
+					value="#{amostraNovaController.auxAmostra.amostraId}" 
+					size="6" 
+					style="color:green;text-align:left;font-size:14px;"/>
+				</h:panelGrid>				
+			</h:form>			
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

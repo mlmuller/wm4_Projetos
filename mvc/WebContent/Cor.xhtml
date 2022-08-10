@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormCor">
+			<pf:panel header="#{msg['cores.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{corController.add()}" oncomplete="PF('addEditFormCorDlg').show()" 
+				update=":addEditFormCor"/>
+			<pf:dataTable id="tblLazyCor" value="#{dtlazyCorAmostraView.lazyModel}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" 
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+				{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+				style="text-align:center;width:60%">
+				<pf:column width="40">
+					<pf:commandLink action="#{corController.edit(_row)}"
+						update=":addEditFormCor"
+						oncomplete="PF('addEditFormCorDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{corController.delete(_row)}" update=":crudFormCor"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" style="font-size:12px;" width="15">
+					<h:outputText value="#{_row.corid}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					filterStyle="height:2.2em" style="font-size:12px;" 
+					sortBy="#{_row.nome}" filterBy="#{_row.nome}" 
+					filterMatchMode="contains" width="25" >
+					<h:outputText value="#{_row.nome}"  />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.resumido']}" 
+				filterStyle="height:2.2em" style="font-size:12px;" 
+				sortBy="#{_row.resumido}" filterBy="#{_row.resumido}" 
+				filterMatchMode="contains" width="25" >
+					<h:outputText value="#{_row.resumido}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['cores.label.ingles']}" 
+				filterStyle="height:2.2em" style="font-size:12px;" 
+				sortBy="#{_row.nomeingles}" filterBy="#{_row.nomeingles}" 
+				filterMatchMode="contains" width="25" >
+					<h:outputText value="#{_row.nomeingles}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['cores.label.espanol']}" 
+				filterStyle="height:2.2em" style="font-size:12px;" 
+				sortBy="#{_row.nomeespanhol}" filterBy="#{_row.nomeespanhol}" 
+				filterMatchMode="contains" width="25" >
+					<h:outputText value="#{_row.nomeespanhol}" />
+				</pf:column>
+				
+				<pf:column headerText="#{msg['usocomum.label.situacao']}" width="10" style="text-align:center">
+					<h:outputText value="#{_row.situacao}" />
+				</pf:column>
+
+		</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Cores" widgetVar="addEditFormCorDlg" width="450" height="250" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormCorDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormCor" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px">
+				<pf:outputLabel for="def" value="#{msg['usocomum.label.nome']}:"/> 
+				<pf:inputText id="def" value="#{corController.cor.nome}" 
+				required="true" requiredMessage="Preencha nome Cor!" size="15" maxlength="15"/>
+
+				<pf:outputLabel value="#{msg['cores.label.sucinto']}:"/> 
+				<pf:inputText value="#{corController.cor.resumido}" 
+				required="true" requiredMessage="Preencha nome Resumido para Cor!" size="7" maxlength="7"/>
+
+				<pf:outputLabel value="#{msg['cores.label.ingles']}:"/> 
+				<pf:inputText value="#{corController.cor.nomeingles}" size="15" maxlength="15"/>
+				
+				<pf:outputLabel value="#{msg['cores.label.espanol']}:"/> 
+				<pf:inputText value="#{corController.cor.nomeespanhol}" size="15" maxlength="15"/>
+				
+				<h:outputText value="#{msg['usocomum.label.situacao']}:"/> 
+				<pf:selectOneMenu value="#{corController.cor.situacao}" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{corController.ativoInativo}"
+						var="situacao" itemValue="#{situacao}"
+						itemLabel="#{situacao.label}" />
+			    </pf:selectOneMenu>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<pf:commandButton value="#{msg['botao.save']}"
+					actionListener="#{corController.save}" process="@form" 
+					update=":addEditFormCor :crudFormCor :crudFormCor:tblLazyCor"  
+					oncomplete="if (!args.validationFailed) PF('addEditFormCorDlg').hide()" />
+				<pf:commandButton value="#{msg['botao.cancel']}"
+					onclick="PF('addEditFormCorDlg').hide(); return false;" />
+			</h:panelGrid>
+
+		</h:form>
+
+	</pf:dialog>
+		
+	</ui:define>
+	
+
+</ui:decorate>

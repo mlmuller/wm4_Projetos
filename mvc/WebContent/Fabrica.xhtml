@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<style type="text/css">
+.panelgrlsb .ui-panelgrid {
+	border: none !important;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+</style>
+		<h:form id="crudFormFabrica">
+			<pf:panel header="#{msg['fabrica.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{fabricaController.add()}" update=":addEditFormFabrica"
+				oncomplete="PF('addEditFormFabricaDlg').show()"
+				style="font-size:11px;" />
+			<pf:dataTable value="#{fabricaController.listaFabricas}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center">
+				<pf:column width="50">
+					<pf:commandLink action="#{fabricaController.edit(_row)}"
+						update=":addEditFormFabrica"
+						oncomplete="PF('addEditFormFabricaDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;"/>
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{fabricaController.delete(_row)}"
+						update=":crudFormFabrica" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_row.fabricaid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nome}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.resumido']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.sucinto}"
+					sortBy="#{_row.sucinto}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabrica.label.grupofab'] }" 
+					filterStyle="height:2.2em;" filterBy="#{_row.grupofabrica.sucinto}" 
+					sortBy="#{_row.grupofabrica.sucinto}" filterMatchMode="contains" 
+					style="font-size:11px;">
+					<h:outputText value="#{_row.grupofabrica.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabrica.label.abreviado']}" 
+				filterStyle="height:2.2em;" filterBy="#{_row.abreviacao}" 
+				sortBy="#{_row.abreviacao }" filterMatchMode="contains" 
+				style="font-size:11px;"> 
+					<h:outputText value="#{_row.abreviacao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabrica.label.cnpj']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.cgc}"
+					sortBy="#{_row.cgc}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.cgc}" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabrica.label.cidade']}">
+					<h:outputText value="#{fabricaController.fabrica.nomecidade}" 
+					style="font-size:11px;" />
+				</pf:column>
+				<pf:column headerText="#{msg['fabrica.label.uf']}">
+					<h:outputText value="#{fabricaController.fabrica.uf}" 
+					style="font-size:11px;" />
+				</pf:column>
+				
+				<pf:column headerText="#{msg['fabrica.label.numcontrato']}">
+					<h:outputText value="#{fabricaController.fabrica.nrocontrato }" 
+					style="font-size:11px;" />
+				</pf:column>
+
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Cadastro de Fábricas"
+			widgetVar="addEditFormFabricaDlg" width="85%" draggable="false"
+			modal="false" position="top center" showEffect="flip"
+			onShow="PF('addEditFormFabricaDlg').initPosition()" resizable="false">
+			<h:form id="addEditFormFabrica">
+				<pf:growl id="mensagem" globalOnly="true" />
+				<pf:scrollPanel style="font-size:16px;" styleClass="panelgrlsb">
+					<pf:panelGrid layout="grid" columns="2" styleClass="panelgrlsb">
+						<pf:column>
+							<pf:panelGrid columns="2">
+								<pf:outputLabel value="#{msg['usocomum.label.nome']}"
+									style="font-size:11px;heigth:0.7em" />
+								<pf:inputText value="#{fabricaController.fabrica.nome}"
+									requiredMessage="Por favor , informe nome para a Fabrica !"
+									required="true"
+									style="text-align:left;height:0.7em;font-size:11px;" size="50"  maxlength="50"/>
+								<pf:outputLabel value="#{msg['usocomum.label.resumido']}"
+									style="font-size:11px;height:0.7em;" />
+								<pf:inputText value="#{fabricaController.fabrica.sucinto}"
+									style="font-size:11px; height:0.7em;" size="25" maxlength="25"/>
+								<pf:outputLabel value="#{msg['fabrica.label.grupofab']}"
+									style="font-size:11px;height:0.7px;" />
+								<pf:selectOneMenu
+									value="#{fabricaController.fabrica.grupofabrica}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}"
+										style="font-size:11px;height:0.7em;" />
+									<f:selectItems value="#{grupoFabricaController.listaGrupoFabrica}"
+										var="grpfabrica" itemValue="#{grpfabrica}"
+										itemLabel="#{grpfabrica.nome} - #{grpfabrica.sucinto} }" />
+								</pf:selectOneMenu>
+							</pf:panelGrid>
+							<pf:row>
+								<pf:panelGrid columns="2">
+									<pf:column>
+										<pf:outputLabel value="#{msg['fabrica.label.abreviado']}"
+											style="font-size:11px;height:0.7em;" />
+										<pf:inputText value="#{fabricaController.fabrica.abreviacao}" size="3" maxlength="3"
+											style="font-size:11px;height:08.em;" />
+									</pf:column>
+									<pf:column>
+										<pf:outputLabel value="#{msg['fabrica.label.codimp']}"
+											style="font-size:11px;height:0.7em;" />
+										<pf:inputText
+											value="#{fabricaController.fabrica.codigoimp}" size="5" maxlength="5"
+											style="font-size:11px;height:0.7em;" />
+									</pf:column>
+								</pf:panelGrid>
+							</pf:row>
+							<pf:column>
+								<pf:panelGrid columns="2" styleClass="panelgrlsb">
+									<pf:outputLabel value="#{msg['cliente.label.cnpjcpf'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputMask mask="99.999.999/9999-99" size="18" 
+									value="#{fabricaController.fabrica.cgc}" placeholder="CNPJ" 
+									style="font-size:11px;height:0.7em" maxlength="18" />
+									<pf:outputLabel value="#{msg['fabrica.label.inscricao'] }"
+										style="font-size:11px;height:0.7em;" />
+									<pf:inputText value="#{fabricaController.fabrica.inscricaoestadual}"
+										style="font-size:11px;height:0.7em" size="15" maxlength="15"/>
+									<pf:outputLabel value="#{msg['fabrica.label.endereco']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{fabricaController.fabrica.endereco}" size="40" maxlength="40"/>	
+									<pf:outputLabel value="#{msg['fabrica.label.cidade'] }"/>
+									<pf:selectOneMenu
+										value="#{fabricaController.fabrica.cidade}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems
+											value="#{fabricaController.listaCidades}"
+											var="fabcidade" itemValue="#{fabcidade}"
+											itemLabel="#{fabcidade.nome} #{fabcidade.estado.sigla}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['fabrica.label.cep'] }"
+										style="font-size:11px;height:10px;" />
+									<pf:inputText value="#{fabricaController.fabrica.cep}" size="10" maxlength="10"/>
+								</pf:panelGrid>
+							</pf:column>
+						</pf:column>
+						<pf:column>
+							<h:panelGrid columns="2">
+									<pf:outputLabel value="#{msg['fabrica.label.telefone']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{fabricaController.fabrica.telefone}"
+										style="font-size:11px;height:0.7em" maxlength="14" size="14" />
+
+									<pf:outputLabel value="#{msg['fabrica.label.numcontrato'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{fabricaController.fabrica.nrocontrato}" size="12" maxlength="12"/>
+
+									<pf:outputLabel value="#{msg['fabrica.label.contato']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputTextarea cols="50" rows="3" maxlength="150"
+										value="#{fabricaController.fabrica.contato}"
+										style="font-size:11px;">
+									</pf:inputTextarea>
+
+									<pf:outputLabel value="#{msg['fabrica.label.diretor']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputTextarea cols="50" rows="3" maxlength="150"
+										value="#{fabricaController.fabrica.diretor}"
+										style="font-size:11px;">
+									</pf:inputTextarea>
+
+									<pf:outputLabel value="#{msg['fabrica.label.observacao']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputTextarea cols="50" rows="4" maxlength="200"
+										value="#{fabricaController.fabrica.observacao}"
+										style="font-size:11px;">
+									</pf:inputTextarea>
+
+
+									<pf:outputLabel value="#{msg['fabrica.label.simnacional']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu value="#{fabricaController.fabrica.integrantesimplesnacional}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.simnao}"
+											var="simnao" itemValue="#{simnao}"
+											itemLabel="#{simnao.label}" />
+									</pf:selectOneMenu>
+
+									<pf:outputLabel value="#{msg['usocomum.label.situacao']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu value="#{fabricaController.fabrica.situacao}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.situacao}"
+											var="status" itemValue="#{status}"
+											itemLabel="#{status.label}" />
+									</pf:selectOneMenu>
+									
+									
+								</h:panelGrid>
+						</pf:column>
+					</pf:panelGrid>
+				</pf:scrollPanel>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{fabricaController.save()}" proccess="@form"
+						update=":addEditFormFabrica :crudFormFabrica"
+						oncomplete="if (!args.validationFailed) PF('addEditFormFabricaDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormFabricaDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+	</ui:define>
+</ui:decorate>

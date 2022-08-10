@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaAmostra" pageWidth="595" pageHeight="842" columnWidth="591" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" uuid="734a2bea-5719-4780-a7de-523e03d3ca5f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AdapterGVD"/>
+	<property name="com.jaspersoft.studio.unit." value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="mm"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT amos_pk,
+	amo.abreviacao,
+	amo.amostrasize,
+	amo.construcaonome,
+	amo.complementosolado,
+	amo.datcadcam,
+	amo.dataentrega,
+	amo.dataliberacaoproducao,
+	amo.datasolicitacao,
+	amo.dtxfct,
+	amo.linhaproducao,
+	amo.mercado,
+	amo.obs,
+	amo.obsbase,
+	amo.obssolado,
+	amo.parcancelado,
+	amo.pares,
+	amo.pargvd,
+	amo.prioridadeproducao,
+	amo.referencia,
+	amo.referenciaforma,
+	amo.succliente,
+	amo.sucfabrica,
+	amo.tipo,
+	amo.valornegocfabr,
+	amo.versao,
+	amo.versaorefer,
+	amo.cliente,
+	amo.componente,
+	amo.destinoamcf,
+	amo.estacao,
+	amo.fabrica,
+	amo.livroreferencia,
+	amo.marcacliente,
+	amo.personagem,
+	amo.construcao,
+	ima.imagem
+FROM amostra amo,imagemreferencia ima
+WHERE amo.livroreferencia = ima.imre_lire_fk]]>
+	</queryString>
+	<field name="amos_pk" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="amos_pk"/>
+		<property name="com.jaspersoft.studio.field.label" value="amos_pk"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="abreviacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="abreviacao"/>
+		<property name="com.jaspersoft.studio.field.label" value="abreviacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="amostrasize" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="amostrasize"/>
+		<property name="com.jaspersoft.studio.field.label" value="amostrasize"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="construcaonome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="construcaonome"/>
+		<property name="com.jaspersoft.studio.field.label" value="construcaonome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="complementosolado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="complementosolado"/>
+		<property name="com.jaspersoft.studio.field.label" value="complementosolado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="datcadcam" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="datcadcam"/>
+		<property name="com.jaspersoft.studio.field.label" value="datcadcam"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="dataentrega" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="dataentrega"/>
+		<property name="com.jaspersoft.studio.field.label" value="dataentrega"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="dataliberacaoproducao" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="dataliberacaoproducao"/>
+		<property name="com.jaspersoft.studio.field.label" value="dataliberacaoproducao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="datasolicitacao" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="datasolicitacao"/>
+		<property name="com.jaspersoft.studio.field.label" value="datasolicitacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="dtxfct" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="dtxfct"/>
+		<property name="com.jaspersoft.studio.field.label" value="dtxfct"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="linhaproducao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="linhaproducao"/>
+		<property name="com.jaspersoft.studio.field.label" value="linhaproducao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="mercado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="mercado"/>
+		<property name="com.jaspersoft.studio.field.label" value="mercado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="obs" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="obs"/>
+		<property name="com.jaspersoft.studio.field.label" value="obs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="obsbase" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="obsbase"/>
+		<property name="com.jaspersoft.studio.field.label" value="obsbase"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="obssolado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="obssolado"/>
+		<property name="com.jaspersoft.studio.field.label" value="obssolado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="parcancelado" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="parcancelado"/>
+		<property name="com.jaspersoft.studio.field.label" value="parcancelado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="pares" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="pares"/>
+		<property name="com.jaspersoft.studio.field.label" value="pares"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="pargvd" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="pargvd"/>
+		<property name="com.jaspersoft.studio.field.label" value="pargvd"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="prioridadeproducao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prioridadeproducao"/>
+		<property name="com.jaspersoft.studio.field.label" value="prioridadeproducao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="referencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="referenciaforma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="referenciaforma"/>
+		<property name="com.jaspersoft.studio.field.label" value="referenciaforma"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="succliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="succliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="succliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="sucfabrica" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sucfabrica"/>
+		<property name="com.jaspersoft.studio.field.label" value="sucfabrica"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+		<propertyExpression name="net.sf.jasperreports.sql.field.column.label"><![CDATA[]]></propertyExpression>
+	</field>
+	<field name="valornegocfabr" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valornegocfabr"/>
+		<property name="com.jaspersoft.studio.field.label" value="valornegocfabr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="versao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="versao"/>
+		<property name="com.jaspersoft.studio.field.label" value="versao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="versaorefer" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="versaorefer"/>
+		<property name="com.jaspersoft.studio.field.label" value="versaorefer"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="cliente" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="componente" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="componente"/>
+		<property name="com.jaspersoft.studio.field.label" value="componente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="destinoamcf" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="destinoamcf"/>
+		<property name="com.jaspersoft.studio.field.label" value="destinoamcf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="estacao" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="estacao"/>
+		<property name="com.jaspersoft.studio.field.label" value="estacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="fabrica" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="fabrica"/>
+		<property name="com.jaspersoft.studio.field.label" value="fabrica"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="livroreferencia" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="livroreferencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="livroreferencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="marcacliente" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="marcacliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="marcacliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="personagem" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="personagem"/>
+		<property name="com.jaspersoft.studio.field.label" value="personagem"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="construcao" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="construcao"/>
+		<property name="com.jaspersoft.studio.field.label" value="construcao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="amostra"/>
+	</field>
+	<field name="imagem" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="imagem"/>
+		<property name="com.jaspersoft.studio.field.label" value="imagem"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="imagemreferencia"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="169" y="0" width="120" height="30" uuid="7118426a-6780-4c83-ab66-020adcafd727"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FICHA  AMOSTRA N°:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="289" y="0" width="60" height="30" uuid="4952da4f-cd5d-4365-8d95-3d73dbe31c0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amos_pk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="4" width="100" height="30" uuid="46b41c32-db31-4509-834f-8639579c0d4a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{mercado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="490" y="0" width="100" height="30" uuid="41238be6-3338-4e89-a5d2-553db23f4bb5"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="40" width="100" height="30" uuid="5799a6ed-e307-463e-8986-8ebf292b96c9"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="130" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

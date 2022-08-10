@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+	<style type="text/css">
+			.ui-fieldset-legend {
+				padding: 10px 10px !important;
+				height: 0.5em;
+				color: black;
+				font-size: 11px;
+				background-color: #7cdbfb !important;
+			}
+			
+			.panelgrlsb {
+				border: none;
+			}
+			
+			.alinhaData {
+				horizontal-align: right;
+				font-size: 14px;
+			}
+			
+			.alinhaColunas {
+				text-align: center !important;
+			}
+
+			.ui-widget button{
+				border-top-right-radius: 15px;
+			
+			} 
+
+ 	</style>
+		<h:form id="crudFormManProducao">
+			<pf:panel styleClass="panelgrlsb" />
+			<pf:growl id="prodMessage" globalOnly="true" sticky="true" />
+			<h:panelGroup id="accordPnlGrpProd">
+				<pf:fieldset 
+				legend="[Filtros Manutenção Amostras de Produção]" 
+				toggleable="true" 
+				toggleSpeed="500" collapsed="true">
+					<pf:ajax event="toggle"
+						listener="#{producaoController.filtrosManuntencaoProducao}" update="prodMessage" />
+						<h:panelGrid columns="3">
+							<pf:column>
+								<pf:panel style="border-color:noborder;">
+									<h:panelGrid columns="2">
+										<h:outputLabel value="#{msg['amostra.label.amostra']}" />
+										<pf:inputText value="#{producaoController.amostra.tipo}"
+											size="6" style="font-size:12px;" />
+										<h:outputLabel value="#{msg['usocomum.label.tipoamostra']}" />
+										<pf:selectOneMenu value="#{producaoController.amostra.tipo}"
+											converter="omnifaces.SelectItemsConverter" filter="true"
+											filterMatchMode="contains"
+											style="vertical-align:middle;font-size:12px;">
+											<f:selectItem itemValue="#{null}"
+												itemLabel="#{msg['usuario.label.escolher']}" />
+											<f:selectItems value="#{producaoController.tipoamostra}"
+												var="tpamostra" itemValue="#{tpamostra}"
+												itemLabel="#{tpamostra.label}" />
+											<pf:ajax process="@this" />
+										</pf:selectOneMenu>
+										<h:outputLabel value="#{msg['usocomum.label.mercado']}" />
+										<pf:selectOneMenu
+											value="#{producaoController.amostra.mercado}"
+											converter="omnifaces.SelectItemsConverter" filter="true"
+											filterMatchMode="contains"
+											style="vertical-align:middle;font-size:12px;">
+											<f:selectItem itemValue="#{null}"
+												itemLabel="#{msg['usuario.label.escolher']}" />
+											<f:selectItems value="#{producaoController.mercado}"
+												var="mercado" itemValue="#{mercado}"
+												itemLabel="#{mercado.name()}" />
+											<pf:ajax process="@this" />
+										</pf:selectOneMenu>
+
+									</h:panelGrid>
+									<h:panelGrid columns="4">
+										<h:outputLabel value="#{msg['usocomum.label.estacao']}" />
+										<pf:inputText value="#{producaoController.amostra.estacao}"
+											size="3" maxlength="3" style="font-size:12px;">
+										</pf:inputText>
+										<pf:inputText id="pnlestacao"
+											value="#{facadeView.informaEstacao}" size="8" maxlength="8" />
+										<pf:commandLink action="#{facadeView.visaoEstacao()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa estação(ões)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{producaoController.estacaoSelecionada()}"
+												process="@this" update="pnlestacao" />
+										</pf:commandLink>
+									</h:panelGrid>
+
+								</pf:panel>
+							</pf:column>
+							<pf:column id="colu2">
+								<pf:panel style="border-color:#35b3ee;">
+									<h:panelGrid columns="6">
+										<h:outputLabel value="#{msg['usocomum.label.referencia']}" />
+										<pf:inputText value="#{producaoController.amostra.abreviacao}"
+											size="3" maxlength="3" style="font-size:12px;">
+										</pf:inputText>
+										<pf:inputText id="pnlreferencia"
+											value="#{facadeView.informaReferencia}" size="8"
+											maxlength="8" />
+										<pf:commandLink action="#{facadeView.visaoLivroReferencia()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Referência(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{producaoController.referenciaSelecionada}"
+												process="@this" update="pnlreferencia" />
+										</pf:commandLink>
+										<h:outputLabel value="Versão:"
+											style="font-size:12px;height:0.7em;" />
+										<pf:inputText readonly="true"
+											value="#{producaoController.amostra.livroReferencia.versaorefer}"
+											size="3" maxlength="3" />
+									</h:panelGrid>
+
+									<h:panelGrid columns="5">
+										<h:outputLabel value="#{msg['usocomum.label.construcao']}" />
+										<pf:inputText id="pnlconstrucao"
+											value="#{facadeView.informaConstrucao}" size="16"
+											maxlength="16" />
+										<pf:commandLink action="#{facadeView.visaoConstrucao()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{producaoController.construcaoSelecionada()}"
+												process="@this" update="pnlForma">
+											</pf:ajax>
+										</pf:commandLink>
+										<h:outputLabel value="Versão:"
+											style="font-size:12px;height:0.7em;" />
+										<pf:inputText readonly="true"
+											value="#{producaoController.amostra.livroReferencia.construcao.versao}"
+											style="font-size:12px; 
+									height:0.7em;" size="3"
+											maxlength="3" />
+									</h:panelGrid>
+									<h:panelGrid columns="3">
+										<h:outputLabel value="#{msg['usocomum.label.forma']}" />
+										<pf:inputText id="pnlForma" value="#{facadeView.informaForma}"
+											size="6" maxlength="6" />
+										<pf:commandLink action="#{facadeView.visaoForma()}">
+											<i class="fa fa-search" style="font-size: 1.5em;" />
+											<pf:ajax event="dialogReturn"
+												listener="#{producaoController.formaSelecionada()}"
+												process="@this">
+											</pf:ajax>
+										</pf:commandLink>
+									</h:panelGrid>
+
+									<h:panelGrid columns="4">
+										<h:outputLabel value="#{msg['usocomum.label.nomecliente']}" />
+										<pf:inputText value="#{producaoController.amostra.cliente}"
+											size="3" maxlength="3" style="font-size:12px;">
+										</pf:inputText>
+										<pf:inputText id="pnlcliente"
+											value="#{facadeView.informaCliente}" size="8" maxlength="8" />
+										<pf:commandLink action="#{facadeView.visaoCliente()}">
+											<i class="fa fa-search" style="font-size: 1.5em;"
+												title="Pesquisa Cliente(s)" />
+											<pf:ajax event="dialogReturn"
+												listener="#{producaoController.clienteSelecionado()}"
+												process="@this" update="pnlcliente" />
+										</pf:commandLink>
+									</h:panelGrid>
+
+								</pf:panel>
+							</pf:column>
+
+							<pf:column id="colu3">
+								<pf:panel style="border-color:#35b3ee;">
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData"
+										style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.amostrap']}"
+											style="text-align:center;
+										             width:450px;
+										             border-color:#7ecff5;">
+											<pf:column>
+												<h:outputLabel value="#{msg['usocomum.label.datainicio']}" />
+											</pf:column>
+											<pf:column>
+												<pf:datePicker value="#{producaoController.amostra.dtxfct}"
+													pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+													style="text-align:left;">
+													<f:convertDateTime type="localDate" dateStyle="short"
+														pattern="dd-MM-yyyy" />
+													<pf:effect event="dbclick" type="slide" />
+												</pf:datePicker>
+											</pf:column>
+											<pf:column>
+												<h:outputLabel value="#{msg['usocomum.label.datafinal']}" />
+											</pf:column>
+											<pf:column>
+												<pf:datePicker
+													value="#{producaoController.amostra.dataXfcFinal}"
+													pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+													style="text-align:left;">
+													<pf:effect event="dbclick" type="slide" />
+													<f:convertDateTime type="localDate" dateStyle="short"
+														pattern="dd-MM-yyyy" />
+													<pf:ajax update="@this" />
+												</pf:datePicker>
+											</pf:column>
+										</pf:fieldset>
+									</pf:panelGrid>
+
+									<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData"
+										style="border:none;">
+										<pf:fieldset legend="#{msg['usocomum.label.liberap']}"
+											style="text-align:center;
+										             width:450px;
+										             border-color:#7ecff5;">
+											<pf:column>
+												<h:outputLabel value="#{msg['usocomum.label.datainicio']}" />
+											</pf:column>
+											<pf:column>
+												<pf:datePicker
+													value="#{producaoController.amostra.dataLiberacaoProducao}"
+													pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+													style="text-align:left;">
+													<f:convertDateTime type="localDate" dateStyle="short"
+														pattern="dd-MM-yyyy" />
+													<pf:effect event="dbclick" type="slide" />
+												</pf:datePicker>
+											</pf:column>
+											<pf:column>
+												<h:outputLabel value="#{msg['usocomum.label.datafinal']}" />
+											</pf:column>
+											<pf:column>
+												<pf:datePicker
+													value="#{producaoController.amostra.dataLibPrdFinal}"
+													pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+													style="text-align:left;">
+													<pf:effect event="dbclick" type="slide" />
+													<f:convertDateTime type="localDate" dateStyle="short"
+														pattern="dd-MM-yyyy" />
+													<pf:ajax update="@this" />
+												</pf:datePicker>
+											</pf:column>
+										</pf:fieldset>
+									</pf:panelGrid>
+
+								</pf:panel>
+							</pf:column>
+
+						</h:panelGrid>
+				<pf:commandButton value="Executar" update="crudFormManProducao">
+				</pf:commandButton>
+
+			</pf:fieldset>
+			
+			</h:panelGroup>
+			<pf:panel header="#{msg['amostra.label.titulo']}">
+			</pf:panel>
+
+			<pf:dataTable id="tblFiltroManProducao"
+				value="#{dtlazyAmostraProducaoView.lazyModel}" var="_rowproducao"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				widgetVar="Table" style="text-align:center" scrollable="true"
+				scrollHeight="400px;" lazy="true">
+				<pf:column width="80" headerText="Opções" style="text-align:center">
+
+					<pf:commandLink
+						actionListener="#{producaoController.edit(_rowproducao)}"
+						onclick="PF('addEditFormManProdDlg').show()"
+						update=":ManFormAmostraProd" title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o"
+							style="font-size: 1.3em; color: #9ecda2;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{amostraNovaController.delete(_rowproducao)}"
+						update="tblFiltroManProducao" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o"
+							style="font-size: 1.3em; color: #f77e6b;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						action="#{producaoController.imprimiAmostraProd(_rowproducao)}"
+						title="Imprimir">
+						<i class="fa fa-print" style="font-size: 1.3em; color: #59bf4c;" />
+					</pf:commandLink>
+
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.fichaprod']}"
+					filterStyle="height:2.2em;"
+					filterBy="#{_rowproducao.fichaproducaoid}"
+					sortBy="#{_rowproducao.fichaproducaoid}" filterMatchMode="contains"
+					style="font-size:11px;text-align:center;" width="38">
+					<h:outputText value="#{_rowproducao.fichaproducaoid}"
+						style="font-size:10px;color:blue;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.entrada']}"
+					filterStyle="height:2.2em;" filterBy="#{_rowproducao.dataentrada}"
+					sortBy="#{_rowproducao.dataentrada}" filterMatchMode="contains"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.dataentrada}"
+						style="font-size:10x;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.tipo']}" width="20">
+					<h:outputText value="#{_rowproducao.amostra.tipo}"
+						style="font-size:10px;">
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['amostra.label.amostra']}"
+					filterStyle="height:2.2em;"
+					filterBy="#{_rowproducao.amostra.amostraId}"
+					sortBy="#{_rowproducao.amostra.amostraId}"
+					filterMatchMode="contains"
+					style="font-size:11px;text-align:center;" width="45">
+					<h:outputText value="#{_rowproducao.amostra.amostraId}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['coramostra.label.item']}" width="20">
+					<h:outputText
+						value="#{_rowproducao.coramostra.sequenciaCorAmostra}"
+						style="font-size:10px;">
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nomecliente']}"
+					width="70">
+					<h:outputText value="#{_rowamostra.cliente.sucinto}"
+						style="font-size:10px;" />
+				</pf:column>
+
+
+				<pf:column headerText="#{msg['livroreferencia.label.referencia']}"
+					width="60">
+					<h:outputText
+						value="#{_rowproducao.amostra.livroReferencia.referencia}-#{_rowproducao.amostra.livroReferencia.versaorefer}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					width="90">
+					<h:outputText
+						value="#{_rowproducao.amostra.livroReferencia.construcaonome}-#{_rowproducao.amostra.livroReferencia.versao}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.forma']}" width="30">
+					<h:outputText
+						value="#{_rowproducao.amostra.livroReferencia.referenciaforma}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['coramostra.label.corprincipal']}"
+					width="40">
+					<h:outputText value="#{_rowproducao.coramostra.corPrincipal}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['coramostra.label.material']}"
+					width="45">
+					<h:outputText value="#{_rowproducao.coramostra.material}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['coramostra.label.pe']}" width="15">
+					<h:outputText value="#{_rowproducao.coramostra.pe}"
+						style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.parproducao']}"
+					width="38">
+					<h:outputText value="#{_rowproducao.pares}" style="font-size:10px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtmodelagem']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.datamodelagem}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtalmoxarifado']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.dataalmoxarifado}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtalmoxarifadop']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.dataalmoxarifadopre}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtprefabricado']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.dataprefabricado}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtcorte']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.datacorte}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtcostura']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.datacostura}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtdistribuicao']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.datadistribuicao}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtmontagem']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.datamontagem}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.dtmodelagem']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText value="#{_rowproducao.datamodelagem}"
+						style="font-size:10px;">
+						<f:convertDateTime type="localDate" dateStyle="short"
+							pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="Manutenção Ficha Produção"
+			widgetVar="addEditFormManProdDlg" width="85%" height="700px"
+			resizable="false" position="center middle" showEffect="clip"
+			modal="true" draggable="true" closable="true" appendTo="@(body)">
+			<h:form id="ManFormAmostraProd">
+				<pf:growl id="manProdMensagem" life="6000" />
+				<pf:panelGrid columns="4" layout="grid"
+					style="border-color:#35b3ee;">
+
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Produção N°:" style="font-size:14px;" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.fichaproducaoid}"
+								size="6" style="color:blue;text-align:left;" />
+							<h:outputLabel value="Data Impressão:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.dataimpressao}"
+								style="font-size:12px;">
+								<f:convertDateTime type="localDate" dateStyle="long"
+									pattern="dd-MM-yyyy hh:mm" />
+							</pf:inputText>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Amostra N°:" style="font-size:14px;" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.amostraId}"
+								size="6" style="color:blue;text-align:left;" />
+							<h:outputLabel value="Data Entrada:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.dataentrada}"
+								style="font-size:12px;">
+								<f:convertDateTime type="localDate" dateStyle="long"
+									pattern="dd-MM-yyyy hh:mm" />
+							</pf:inputText>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Item:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.sequenciaCorAmostra}"
+								style="color:blue;" size="4" />
+							<h:outputLabel value="Data Liberação:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.dataLiberacaoProducao}"
+								style="font-size:12px;" size="16">
+								<f:convertDateTime type="localDate" dateStyle="long"
+									pattern="dd-MM-yyyy hh:mm" />
+							</pf:inputText>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<pf:outputLabel value="Mercado:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.mercado.name()}"
+								style="color:blue;" />
+							<h:outputLabel value="Amostra para:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.dtxfct}"
+								style="color:red" size="10">
+								<f:convertDateTime type="localDate" dateStyle="long"
+									pattern="dd-MM-yyyy" />
+							</pf:inputText>
+
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Cor Principal:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.corPrincipal}"
+								style="color:green;" />
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Cor:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.cor}"
+								size="60" style="color:green" />
+							<h:outputLabel value="Material:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.material}"
+								style="color:green;" size="60" />
+						</h:panelGrid>
+					</pf:column>
+				</pf:panelGrid>
+				<pf:panelGrid columns="3" layout="grid"
+					style="border-color:#35b3ee;">
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Cliente:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.sucCliente}"
+								style="color:blue" />
+							<h:outputLabel value="Construção:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.construcao.construcao}" />
+							<h:outputLabel value="Size:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.sizeCor}" />
+							<h:outputLabel value="Pares Item Amostra:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.pares}" />
+
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Referência:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.referencia}" />
+							<h:outputLabel value="Versão:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.versao}"
+								size="2" />
+
+							<h:outputLabel value="Localização:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.localizacao}" />
+							<h:outputLabel value="Pares:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.pares}"
+								style="color:blue" />
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="Versão:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.versaoRefer}"
+								size="2" />
+
+							<h:outputLabel value="Forma:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.amostra.construcao.forma.nrogvd}" />
+							<h:outputLabel value="Linha:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.linha}" />
+						</h:panelGrid>
+						<h:panelGrid columns="4">
+							<h:outputLabel value="Pares Atual Produzir:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.paresatual}"
+								style="color:red" size="3" />
+							<h:outputLabel value="Pé:" />
+							<pf:inputText readonly="true"
+								value="#{producaoController.fichaProducao.coramostra.pe}"
+								style="color:green" size="2" />
+						</h:panelGrid>
+					</pf:column>
+				</pf:panelGrid>
+				<pf:panelGrid columns="4" layout="grid"
+					style="border-color:#35b3ee;">
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel for="amp2"
+								value="#{msg['producao.lab.dtalmoxarifado']}" />
+							<pf:datePicker id="amp2" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.dataalmoxarifadopre}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+							<h:outputLabel for="amp6"
+								value="#{msg['producao.lab.dataalmoxarido']}" />
+							<pf:datePicker id="amp6" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.dataalmoxarifado}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+
+							<h:outputLabel for="amp9"
+								value="#{msg['producao.lab.datamontagem']}" />
+							<pf:datePicker id="amp9" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.datamontagem}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel for="amp1"
+								value="#{msg['producao.lab.datamodelagem']}" />
+							<pf:datePicker id="amp1" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.datamodelagem}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+							<h:outputLabel for="amp3"
+								value="#{msg['producao.lab.datacorte']}" />
+							<pf:datePicker id="amp3" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.datacorte}" size="10"
+								monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+							<h:outputLabel for="amp10"
+								value="#{msg['producao.lab.datacorrecao']}" />
+							<pf:datePicker id="amp10" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.datacorrecao}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel for="amp4"
+								value="#{msg['producao.lab.datadistribuicao']}" />
+							<pf:datePicker id="amp4" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.datadistribuicao}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+							<h:outputLabel for="amp5"
+								value="#{msg['producao.lab.dtacabamento']}" />
+							<pf:datePicker id="amp5" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.dataacabamento}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel for="amp7"
+								value="#{msg['producao.lab.dataprefabricado']}" />
+							<pf:datePicker id="amp7" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.dataprefabricado}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+							<h:outputLabel for="amp8"
+								value="#{msg['producao.lab.datacostura']}" />
+							<pf:datePicker id="amp8" pattern="dd-MM-yyyy"
+								value="#{producaoController.fichaProducao.datacostura}"
+								size="10" monthNavigator="true">
+								<pf:effect event="dbclick" type="slide" />
+								<f:convertDateTime type="localDate" dateStyle="short"
+									pattern="dd-MM-yyyy" />
+							</pf:datePicker>
+						</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="#{msg['producao.lab.situacao']}" />
+							<pf:selectOneMenu
+								value="#{producaoController.fichaProducao.situacao}"
+								filter="true" filterMatchMode="contains"
+								style="vertical-align:middle;font-size:12px;">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{producaoController.situacaoProducao}"
+									var="prodsituacao" itemValue="#{prodsituacao}"
+									itemLabel="#{prodsituacao.label}" />
+								<pf:ajax process="@this" />
+							</pf:selectOneMenu>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<pf:outputLabel value="#{msg['producao.lab.comentario']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputTextarea cols="90" maxlength="590"
+								value="#{producaoController.fichaProducao.comentario}"
+								style="font-size:13px;height:40%;" autoResize="false">
+							</pf:inputTextarea>
+						</h:panelGrid>
+					</pf:column>
+
+					<pf:column>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="#{msg['producao.lab.liberacao']}" />
+							<pf:selectOneMenu
+								value="#{producaoController.fichaProducao.liberadoalteraramostra}"
+								filter="true" filterMatchMode="contains"
+								style="vertical-align:middle;font-size:12px;">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{producaoController.emTransicao}"
+									var="prodLibera" itemValue="#{prodLibera}"
+									itemLabel="#{prodLibera.label}" />
+								<pf:ajax process="@this" />
+							</pf:selectOneMenu>
+						</h:panelGrid>
+					</pf:column>
+				</pf:panelGrid>
+				<pf:panelGrid layout="grid" columns="1"
+					style="border-color:#35b3ee;">
+					<pf:column>
+						<pf:commandButton value="#{msg['botao.save']}"
+							icon="fa fa-fw fa-save"  
+							actionListener="#{producaoController.salvaManProducao}"
+							update="ManFormAmostraProd ManFormAmostraProd:manProdMensagem :crudFormManProducao :crudFormManProducao:tblFiltroManProducao"/>
+						<pf:commandButton value="#{msg['botao.fechar']}"
+							icon="fa fa-fw fa-save" 
+							update=":crudFormManProducao :crudFormManProducao:tblFiltroManProducao"
+							oncomplete="PF('addEditFormManProdDlg').hide()" />
+					</pf:column>
+				</pf:panelGrid>
+				
+				<pf:panelGrid layout="grid" columns="2"
+					style="border-color:#35b3ee;">
+					<pf:column>
+				     <h:panelGrid columns="10">
+					
+					<pf:fieldset legend="[ Selecione para Imprimir ]"
+						style="font-size:12px;border-color:#35b3ee;text-align:center">
+						<pf:outputLabel value="Pré-Fabricado:" />
+						<pf:column headerText="" style="width:10%;text-align:center">
+							<pf:selectBooleanCheckbox value="#{producaoController.pf}" />
+						</pf:column>
+						<pf:outputLabel value="Corte:" />
+						<pf:column headerText="" style="width:10%;text-align:center">
+							<pf:selectBooleanCheckbox value="#{producaoController.ca}" />
+						</pf:column>
+						<pf:outputLabel value="Modelagem:" />
+						<pf:column headerText="" style="width:10%;text-align:center">
+							<pf:selectBooleanCheckbox value="#{producaoController.md}" />
+						</pf:column>
+						<pf:outputLabel value="Distribuição:" />
+						<pf:column headerText="" style="width:10%;text-align:center">
+							<pf:selectBooleanCheckbox value="#{producaoController.dt}" />
+						</pf:column>
+					</pf:fieldset>
+					</h:panelGrid>
+					</pf:column>
+					<pf:column>
+						<h:panelGrid columns="3">
+							<pf:fieldset legend="   [Opções]    " style="font-size:12px;border-color:#35b3ee;">
+							<pf:column>
+							<pf:commandLink
+								actionListener="#{producaoController.adicionaNovoProblema}" title="#{msg['botao.imprimir']}">
+								<i class="pi pi-print" style="font-size: 2.0em; color: #9ecda2;" />
+							</pf:commandLink>
+							</pf:column>
+							<pf:column>
+							<pf:commandLink
+								actionListener="#{producaoController.adicionaNovoProblema}" title="Inserir Problema">
+								<i class="pi pi-search-plus" style="font-size: 2.0em; color:#ead73a;" />
+							</pf:commandLink>
+							</pf:column>
+							<pf:column>
+							<pf:commandLink actionListener="#{producaoController.adicionaNovoProblema}" title="Histórico dos Problemas">
+								<i class="pi pi-info-circle" style="font-size: 2.0em; color: #f77e6b;" />
+							</pf:commandLink>
+							</pf:column>
+							
+						</pf:fieldset>
+						
+						</h:panelGrid>					
+					</pf:column>
+				</pf:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

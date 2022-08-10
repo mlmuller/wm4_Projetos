@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+	
+	<h:outputStylesheet name="css/geral.css"  />
+	<h:form id="crudFormPersonagem">
+		<pf:panel header="#{msg['personagem.label.titulo']}">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{personagemController.add()}"
+			update=":addEditFormPersonagem"
+			oncomplete="PF('addEditFormPersonagemDlg').show()"  />
+		<pf:dataTable value="#{personagemController.listaPersonagem}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" scrollHeight="800px" style="width:60%">
+			<pf:column width="50" >
+				<pf:commandLink action="#{personagemController.edit(_row)}"
+					update=":addEditFormPersonagem"
+					oncomplete="PF('addEditFormPersonagemDlg').show()" style="font-size:12px;"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o"/>
+				</pf:commandLink>
+				<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+					action="#{personagemController.delete(_row)}"
+					update=":crudFormPersonagem"
+					title="#{msg['botao.delete']}" style="font-size:12px;">
+					<i class="fa fa-fw fa-trash-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.id']}" styleClass="numeric" width="20" style="font-size:12px;" >
+				<h:outputText value="#{_row.personagemid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['personagem.label.nome']}" 
+			filterStyle="height:2.2em" 
+			filterBy="#{_row.nome}" 
+			sortBy="#{_row.nome}" filterMatchMode="contains" style="font-size:12px;width:40%" >
+				<h:outputText value="#{_row.nome}"  />
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Personagem" widgetVar="addEditFormPersonagemDlg" 
+	width="480" height="100" 
+	resizable="false" 
+	position="center center" showEffect="clip" 
+	onShow="PF('addEditFormPersonagemDlg').initPosition()" 
+	modal="false" 
+	draggable="false">
+		<h:form id="addEditFormPersonagem" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px">
+				<h:outputText value="#{msg['personagem.label.nome']}:"/> 
+				<pf:inputText value="#{personagemController.personagem.nome}" converter="upperCaseConverter" 
+				required="true" 
+				requiredMessage="Informe Nome para o Personagem !!" 
+				size="30" 
+				maxlength="30" 
+				style="font-size:12px;heigth:0.7em">
+				</pf:inputText>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{personagemController.save()}"
+						proccess="@form"
+						update=":addEditFormPersonagem :crudFormPersonagem"
+						oncomplete="if (!args.validationFailed) PF('addEditFormPersonagemDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormPersonagemDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

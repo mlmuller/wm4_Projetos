@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+	
+	<h:outputStylesheet name="css/geral.css"  />
+	<h:form id="crudFormRegiao">
+		<pf:panel header="#{msg['regiao.titulo']}">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{regiaoController.add()}"
+			update=":addEditFormRegiao"
+			oncomplete="PF('addEditFormRegiaoDlg').show()" style="font-size:12px;" />
+		<pf:dataTable value="#{regiaoController.listaRegioes}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" scrollHeight="800px">
+			
+			<pf:column width="50" >
+				<pf:commandLink action="#{regiaoController.edit(_row)}"
+					update=":addEditFormRegiao"
+					oncomplete="PF('addEditFormRegiaoDlg').show()"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o" />
+				</pf:commandLink>
+				<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+					action="#{regiaoController.delete(_row)}"
+					update=":crudFormRegiao"
+					title="#{msg['botao.delete']}">
+					<i class="fa fa-fw fa-trash-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.id']}" styleClass="numeric" width="20" style="font-size:12px;" >
+				<h:outputText value="#{_row.regiaoid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.nome']}" filterStyle="height:2.2em" filterBy="#{_row.nome}" sortBy="#{_row.nome}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.nome}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.usuario']}" filterStyle="height:2.2em" style="font-size:12px;">
+				<h:outputText value="#{_row.usuariostamp}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.datastamp']}" filterStyle="height:2.2em" >
+				<h:outputText value="#{_row.datastamp}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Regiões" widgetVar="addEditFormRegiaoDlg" width="480" height="70" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormRegiaoDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormRegiao" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px">
+				<h:outputText value="#{msg['usocomum.label.nome']}:"/> 
+				<h:inputText value="#{regiaoController.regiao.nome}" required="true" requiredMessage="Informe nome da Região!" />
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{regiaoController.save()}"
+						proccess="@form"
+						update=":addEditFormRegiao :crudFormRegiao"
+						oncomplete="if (!args.validationFailed) PF('addEditFormRegiaoDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormPaisDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

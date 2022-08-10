@@ -1,0 +1,1990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etqPortfiltros" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="10" uuid="76d8a332-f8ec-4758-b676-f8472feb12b5">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="etqGVD"/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<parameter name="PATH_LOGO" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT wm4_web_02.tbl_etqdragdrop.id_etqdragdrop,
+	wm4_web_02.tbl_etqdragdrop.aprovacao,
+	wm4_web_02.tbl_etqdragdrop.aprovacao1,
+	wm4_web_02.tbl_etqdragdrop.aprovacao2,
+	wm4_web_02.tbl_etqdragdrop.aprovacao3,
+	wm4_web_02.tbl_etqdragdrop.aprovacao4,
+	wm4_web_02.tbl_etqdragdrop.aprovacao5,
+	wm4_web_02.tbl_etqdragdrop.aprovacao6,
+	wm4_web_02.tbl_etqdragdrop.aprovacao7,
+	wm4_web_02.tbl_etqdragdrop.clientenome,
+	wm4_web_02.tbl_etqdragdrop.clientenome1,
+	wm4_web_02.tbl_etqdragdrop.clientenome2,
+	wm4_web_02.tbl_etqdragdrop.clientenome3,
+	wm4_web_02.tbl_etqdragdrop.clientenome4,
+	wm4_web_02.tbl_etqdragdrop.clientenome5,
+	wm4_web_02.tbl_etqdragdrop.clientenome6,
+	wm4_web_02.tbl_etqdragdrop.clientenome7,
+	wm4_web_02.tbl_etqdragdrop.cor,
+	wm4_web_02.tbl_etqdragdrop.cor1,
+	wm4_web_02.tbl_etqdragdrop.cor2,
+	wm4_web_02.tbl_etqdragdrop.cor3,
+	wm4_web_02.tbl_etqdragdrop.cor4,
+	wm4_web_02.tbl_etqdragdrop.cor5,
+	wm4_web_02.tbl_etqdragdrop.cor6,
+	wm4_web_02.tbl_etqdragdrop.cor7,
+	wm4_web_02.tbl_etqdragdrop.espessura,
+	wm4_web_02.tbl_etqdragdrop.espessura1,
+	wm4_web_02.tbl_etqdragdrop.espessura2,
+	wm4_web_02.tbl_etqdragdrop.espessura3,
+	wm4_web_02.tbl_etqdragdrop.espessura4,
+	wm4_web_02.tbl_etqdragdrop.espessura5,
+	wm4_web_02.tbl_etqdragdrop.espessura6,
+	wm4_web_02.tbl_etqdragdrop.espessura7,
+	wm4_web_02.tbl_etqdragdrop.etq_date,
+	wm4_web_02.tbl_etqdragdrop.etq_date1,
+	wm4_web_02.tbl_etqdragdrop.etq_date2,
+	wm4_web_02.tbl_etqdragdrop.etq_date3,
+	wm4_web_02.tbl_etqdragdrop.etq_date4,
+	wm4_web_02.tbl_etqdragdrop.etq_date5,
+	wm4_web_02.tbl_etqdragdrop.etq_date6,
+	wm4_web_02.tbl_etqdragdrop.etq_date7,
+	wm4_web_02.tbl_etqdragdrop.fabricanome,
+	wm4_web_02.tbl_etqdragdrop.fabricanome1,
+	wm4_web_02.tbl_etqdragdrop.fabricanome2,
+	wm4_web_02.tbl_etqdragdrop.fabricanome3,
+	wm4_web_02.tbl_etqdragdrop.fabricanome4,
+	wm4_web_02.tbl_etqdragdrop.fabricanome5,
+	wm4_web_02.tbl_etqdragdrop.fabricanome6,
+	wm4_web_02.tbl_etqdragdrop.fabricanome7,
+	wm4_web_02.tbl_etqdragdrop.material,
+	wm4_web_02.tbl_etqdragdrop.material1,
+	wm4_web_02.tbl_etqdragdrop.material2,
+	wm4_web_02.tbl_etqdragdrop.material3,
+	wm4_web_02.tbl_etqdragdrop.material4,
+	wm4_web_02.tbl_etqdragdrop.material5,
+	wm4_web_02.tbl_etqdragdrop.material6,
+	wm4_web_02.tbl_etqdragdrop.material7,
+	wm4_web_02.tbl_etqdragdrop.obs_1,
+	wm4_web_02.tbl_etqdragdrop.obs_11,
+	wm4_web_02.tbl_etqdragdrop.obs_12,
+	wm4_web_02.tbl_etqdragdrop.obs_13,
+	wm4_web_02.tbl_etqdragdrop.obs_14,
+	wm4_web_02.tbl_etqdragdrop.obs_15,
+	wm4_web_02.tbl_etqdragdrop.obs_16,
+	wm4_web_02.tbl_etqdragdrop.obs_17,
+	wm4_web_02.tbl_etqdragdrop.referencia,
+	wm4_web_02.tbl_etqdragdrop.referencia1,
+	wm4_web_02.tbl_etqdragdrop.referencia2,
+	wm4_web_02.tbl_etqdragdrop.referencia3,
+	wm4_web_02.tbl_etqdragdrop.referencia4,
+	wm4_web_02.tbl_etqdragdrop.referencia5,
+	wm4_web_02.tbl_etqdragdrop.referencia6,
+	wm4_web_02.tbl_etqdragdrop.referencia7,
+	wm4_web_02.tbl_etqdragdrop.toque,
+	wm4_web_02.tbl_etqdragdrop.toque1,
+	wm4_web_02.tbl_etqdragdrop.toque2,
+	wm4_web_02.tbl_etqdragdrop.toque3,
+	wm4_web_02.tbl_etqdragdrop.toque4,
+	wm4_web_02.tbl_etqdragdrop.toque5,
+	wm4_web_02.tbl_etqdragdrop.toque6,
+	wm4_web_02.tbl_etqdragdrop.toque7,
+	wm4_web_02.tbl_etqdragdrop.vazia1,
+	wm4_web_02.tbl_etqdragdrop.vazia2,
+	wm4_web_02.tbl_etqdragdrop.vazia3,
+	wm4_web_02.tbl_etqdragdrop.vazia4,
+	wm4_web_02.tbl_etqdragdrop.vazia5,
+	wm4_web_02.tbl_etqdragdrop.vazia6,
+	wm4_web_02.tbl_etqdragdrop.vazia7,
+	wm4_web_02.tbl_etqdragdrop.vazia8,
+	wm4_web_02.tbl_etqdragdrop.fk_etiquetas
+FROM wm4_web_02.tbl_etqdragdrop]]>
+	</queryString>
+	<field name="id_etqdragdrop" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id_etqdragdrop"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao1" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao2" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao3" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao4" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao5" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao6" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="aprovacao7" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="clientenome7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="clientenome7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="cor7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cor7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="espessura7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="espessura7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date1" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date2" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date3" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date4" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date5" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date6" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="etq_date7" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="etq_date7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fabricanome7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fabricanome7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="material7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="material7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_11" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_11"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_12" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_12"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_13" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_13"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_14" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_14"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_15" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_15"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_16" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_16"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="obs_17" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="obs_17"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="referencia7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="toque7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="toque7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia5"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia6"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia7"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="vazia8" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vazia8"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<field name="fk_etiquetas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="fk_etiquetas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbl_etqdragdrop"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="821" splitType="Stretch">
+			<textField pattern="d/M/yyyy">
+				<reportElement x="222" y="0" width="49" height="20" uuid="d2192657-c138-4aa6-ac8c-9fed7804c53c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao} == null ? "":$F{aprovacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="27" width="220" height="16" uuid="9d834ecb-821a-438a-9f0b-cc733d36ce80"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome}==null?"":$F{fabricanome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="43" width="105" height="16" uuid="441e4cfc-7d5d-4bad-b1dd-347e07def21e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material}==null?"":$F{material}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="43" width="47" height="16" uuid="1faf0a4a-34b9-4794-8cd4-579a403a8e48"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura}==null?"":$F{espessura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="59" width="131" height="16" uuid="e136aeec-1757-4ca4-92cb-f1496dbf766d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor}==null?"":$F{cor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="59" width="47" height="16" uuid="0fe462c2-73d0-4423-8583-63c2b70f2400"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque}==null?"":$F{toque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="75" width="220" height="16" uuid="f5332e44-493a-41b8-bb08-e89555e0f909"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome}==null?"":$F{clientenome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="91" width="220" height="16" uuid="632fbafb-9a51-4bdc-86ca-e649ec6ba8fb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia}==null?"":$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="107" width="220" height="16" uuid="48a31cb5-0c29-4d5c-9a28-ed46d1838ec8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_1}==null?"":$F{obs_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="223" y="204" width="47" height="20" uuid="5fa6a62f-6e53-4639-a1dc-b3440caf8baf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao2}==null?"":$F{aprovacao2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="231" width="220" height="16" uuid="abd2c0cc-58c1-4433-b4c0-65757850ffb6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome2}==null?"":$F{fabricanome2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="247" width="105" height="16" uuid="b2dd315a-bbd2-4bb2-8603-a1bb13f3822f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material2}==null?"":$F{material2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="247" width="47" height="16" uuid="10f524bc-461c-4627-866e-7071a0318e7a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura2}==null?"":$F{espessura2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="263" width="131" height="16" uuid="9e41e233-0010-4652-89a9-a72f317205e1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor2}==null?"":$F{cor2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="263" width="47" height="16" uuid="cc79c94a-9efe-4556-b96d-aba6824dfa04"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque2}==null?"":$F{toque2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="279" width="220" height="16" uuid="71563133-a0b3-4f0e-a45c-0089b6096730"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome2}==null?"":$F{clientenome2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="311" width="220" height="16" uuid="a300bb7e-bb8e-4374-8a39-014c43da7ea0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_12}==null?"":$F{obs_12}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="232" width="220" height="16" uuid="3f4ba206-7927-4187-8b7c-83e81f4fdd5f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome3}==null?"":$F{fabricanome3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="248" width="105" height="16" uuid="f4e5bae7-6a34-4322-869b-5eff58c2d4af"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material3}==null?"":$F{material3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="248" width="46" height="16" uuid="f1795d36-b9ce-4f26-a814-52310d472261"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura3}==null?"":$F{espessura3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="264" width="131" height="16" uuid="0057bd29-dedf-408f-9458-63b644555804"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor3}==null?"":$F{cor3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="264" width="46" height="16" uuid="ea1fc821-e53a-4240-83e2-80fdcf907d27"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque3}==null?"":$F{toque3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="280" width="220" height="16" uuid="29c66798-d58c-45c1-9134-b7d946f966f3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome3}==null?"":$F{clientenome3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="296" width="220" height="16" uuid="abe61eda-6a81-4d1a-877d-0b818b2e7716"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia3}==null?"":$F{referencia3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="312" width="220" height="16" uuid="963d3f00-9c6b-4c00-b965-3588b8198b76"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_13}==null?"":$F{obs_13}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="223" y="426" width="48" height="20" uuid="3ae25d35-52d8-4f8c-bc43-41f2d3846d0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao4}==null?"":$F{aprovacao4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="453" width="220" height="16" uuid="967ffe42-bb60-4038-8919-bbc5faaaddde"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome4}==null?"":$F{fabricanome4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="469" width="105" height="16" uuid="0a7864df-1457-47d4-9fcc-9bad6097ecc6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material4}==null?"":$F{material4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="469" width="47" height="16" uuid="4d5a252d-d5de-4852-801a-cf1c05a93aea"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura4}==null?"":$F{espessura4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="485" width="131" height="16" uuid="d710625c-a89e-4382-9844-f1fcbe5a8132"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor4}==null?"":$F{cor4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="485" width="47" height="16" uuid="c87f64d2-944b-4dd9-9824-a6595298d2f1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque4}==null?"":$F{toque4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="501" width="220" height="16" uuid="ccbd9a16-1d58-4163-a7fd-d88fe3325844"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome4}==null?"":$F{clientenome4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="517" width="220" height="16" uuid="3f4b23ea-0a94-483d-9dcb-f60d5eddd96b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia4}==null?"":$F{referencia4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="533" width="220" height="16" uuid="ac1511ac-964d-4eea-8ada-011afbcef8c5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_14}==null?"":$F{obs_14}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="507" y="427" width="47" height="20" uuid="e774f71c-0d05-4c36-9f3d-3596d9014f62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao5} == null ?"":$F{aprovacao5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="454" width="220" height="16" uuid="fbeead47-3f31-478f-94f0-fceb94a9335c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome5}==null?"":$F{fabricanome5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="470" width="105" height="16" uuid="1b7499ae-552f-4ddf-bf98-6e0606f13bca"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material5}==null?"":$F{material5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="470" width="46" height="16" uuid="80d4b43c-6aba-47dd-9064-f209757fc591"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura5}==null ?"":$F{espessura5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="486" width="131" height="16" uuid="e609d548-091b-415c-ba25-e7d6595c7fbb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor5}==null?"":$F{cor5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="486" width="46" height="16" uuid="40afa95d-c7da-4c26-b0af-36652d780ce9"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque5}==null?"":$F{toque5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="502" width="220" height="16" uuid="6809a9f2-8af1-4249-9512-fba73907b3e0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome5}==null?"":$F{clientenome5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="518" width="220" height="16" uuid="6ae850a3-4563-43bc-9779-9a3028be948d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia5}==null?"":$F{referencia5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="534" width="220" height="16" uuid="946b0744-ca63-4a29-8334-2ea07ccf66f1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_15}==null?"":$F{obs_15}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="223" y="635" width="47" height="20" uuid="4f57d9e8-e650-4ed9-b03d-76a474dbeb03"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao6}==null?"":$F{aprovacao6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="662" width="220" height="16" uuid="04fd4191-da7e-4898-8708-3d6f0b4a7309"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome6}==null?"":$F{fabricanome6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="678" width="105" height="16" uuid="14350698-fa12-4497-97f5-85e166854f0f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material6}==null?"":$F{material6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="679" width="47" height="16" uuid="8706f06e-2960-4970-acea-171441f51333"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura6}==null?"":$F{espessura6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="695" width="131" height="16" uuid="11fef96e-f813-4e16-b026-f907cff545db"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor6}==null ?"":$F{cor6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="695" width="47" height="16" uuid="f3e28ea9-e840-460e-9903-b097ca6ed8e6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque6}==null?"":$F{toque6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="711" width="220" height="16" uuid="76c97d8a-2b2d-4212-864f-cab25093862b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome6}==null?"":$F{clientenome6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="727" width="220" height="16" uuid="d9cb9f85-507a-4c20-b984-528e7bdd405e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia6}==null?"":$F{referencia6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="744" width="220" height="16" uuid="f51a6be5-d514-4899-930e-00d822e47db1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_16}==null?"":$F{obs_16}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="506" y="636" width="46" height="20" uuid="b202a305-14e0-4c42-a05a-b66164ba375a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao7}==null?"":$F{aprovacao7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="663" width="220" height="16" uuid="363bd601-e430-4f78-b04f-97c6d1b9de58"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome7}==null?"":$F{fabricanome7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="679" width="118" height="16" uuid="3c88d3f2-b5c3-4cc3-938a-ffbaf8f50afb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material7}==null?"":$F{material7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="506" y="679" width="46" height="16" uuid="9d13d6f7-0d30-459c-a729-a7c959800dae"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura7}==null?"":$F{espessura7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="695" width="131" height="16" uuid="c5517d04-7b18-4675-a385-4977fcbc042a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor7}==null?"":$F{cor7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="506" y="695" width="46" height="16" uuid="41ed67f0-256a-4d0b-8d68-50e9b709d6ea"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque7}==null?"":$F{toque7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="712" width="220" height="16" uuid="da2fb4f3-2495-47a1-99f6-166fb5fd57ed"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome7}==null?"":$F{clientenome7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="728" width="220" height="16" uuid="3ccb399a-8370-4415-b249-ec509306a038"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia7}==null?"":$F{referencia7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="744" width="220" height="16" uuid="5ba980e9-f346-4d4f-b047-13c4935b32d2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_17}==null?"":$F{obs_17}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="507" y="1" width="47" height="20" uuid="ee557e1b-0190-4389-ae0a-18d65b962b70"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao1}==null?"":$F{aprovacao1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="43" width="47" height="16" uuid="746aaa63-58c1-4ee4-81bd-df359ad18b11"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{espessura1}==null?"":$F{espessura1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="59" width="47" height="16" uuid="f0f9002e-34f2-431b-b566-ad288a6ec182"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{toque1}==null?"":$F{toque1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="75" width="220" height="16" uuid="66d3f8ce-4405-4425-b454-78055834d297"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clientenome1}==null?"":$F{clientenome1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="59" width="131" height="16" uuid="42ba040f-fee1-49ea-a1e9-57f4ddaab2d6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor1}==null?"":$F{cor1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="107" width="220" height="16" uuid="39b44344-2dce-4ee4-9450-044d2213ed55"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obs_11}==null?"":$F{obs_11}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="43" width="105" height="16" uuid="ee3fc633-64a0-4963-b9ef-d784f5818941"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material1}==null?"":$F{material1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="27" width="220" height="16" uuid="20fb434a-c0ce-42d4-86fd-5bc5929b136a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fabricanome1}==null?"":$F{fabricanome1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="91" width="220" height="16" uuid="ba1ae61a-cafc-4001-bf85-5950a2d36329"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia1}==null?"":$F{referencia1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="0" width="133" height="20" uuid="fc907696-6f05-41ea-b3c1-b8c2762db549"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="334" y="1" width="135" height="20" uuid="be67619c-0b59-4786-b5ce-884cfdee07b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="204" width="136" height="20" uuid="1c37a379-0d11-457c-9c2c-66367ac75470"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="205" width="136" height="20" uuid="dc7308db-cd1c-40dd-bc1d-aa41c5ca6934"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="426" width="135" height="20" uuid="129ba3f8-369d-4585-a1ed-abd15cecaa64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="427" width="137" height="20" uuid="d6856f2a-a804-44ce-8c34-2ca38c400547"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="635" width="134" height="20" uuid="931d694f-c8ac-4679-9908-922a3299810a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="636" width="136" height="20" uuid="a07c801f-2fc5-4c87-91cb-4701973626cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8} == null ? "" : "Cartela Couro"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="38" height="20" uuid="c4e65ee0-d699-478c-87a0-da129b3b2dd9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="1" width="38" height="20" uuid="2f33c880-8f6b-4bfe-b23f-b34bceb4be6c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="27" width="49" height="16" uuid="9ccb7d3d-a238-4ec4-ba80-65368b0c3981"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="43" width="49" height="16" uuid="27731beb-728a-45dd-a680-c8f15887414c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="59" width="49" height="16" uuid="9c597eeb-6eab-45a5-834c-360317872e56"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="75" width="49" height="16" uuid="6cc348be-e2a6-4875-aeef-ba702c45003a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="91" width="49" height="16" uuid="4b8e9403-30ea-43ca-b478-a6d5cf70f73b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="107" width="49" height="16" uuid="6c398d49-7d14-47dd-bf7f-5f2fd02ddbfb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="43" width="49" height="16" uuid="e67c1840-41c7-427f-90b1-3b8676a83dd8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="60" width="41" height="16" uuid="f1844ccd-77db-4e73-bbfb-aa028b7ac7c5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="27" width="49" height="16" uuid="f9462e83-33b4-4a4a-a874-640c72278b6a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="43" width="49" height="16" uuid="b2a4ff6b-3920-47e5-9180-e1d0f0abe239"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="59" width="49" height="16" uuid="d98fd5f8-d945-448f-9b24-c793f6f2ef74"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="75" width="49" height="16" uuid="38835750-f4f0-43d1-904b-166a06b4fdf3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="91" width="49" height="16" uuid="e572bf71-87fe-448e-a936-3bd1b264cc46"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="107" width="49" height="16" uuid="11e0096a-4a6d-4b5d-84c3-15a727490313"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="43" width="49" height="16" uuid="9dd51e6c-42fa-48db-b365-25439262449a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="60" width="41" height="16" uuid="c6b5b7ee-3d33-472b-bced-cd1b04997b39"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="138" width="270" height="14" uuid="08a20f03-9315-44aa-baf8-ad75d6a8519b"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="164" width="270" height="12" uuid="61a8d548-03b5-4e13-8276-3e525f8dd89d"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="152" width="270" height="12" uuid="8325dd5d-b18b-4f8b-b6cd-2cee52fc49e7"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia1}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="139" width="270" height="14" uuid="94cb5735-b981-4a8c-a993-d8ccf5756f82"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="153" width="270" height="12" uuid="78cac19d-1ade-4b62-8b97-67f2ea16701b"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="165" width="270" height="12" uuid="447e3910-3e83-4c18-9388-ec0a26426fd0"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia2}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="204" width="38" height="20" uuid="92204938-9617-41b1-b0c1-3e1adb263362"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="231" width="49" height="16" uuid="b6e065ab-ff75-4741-87ad-a0a4616f2787"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="247" width="49" height="16" uuid="36386487-5dbd-4a90-b788-16414fbba4c8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="263" width="49" height="16" uuid="07d13a90-3f3e-4d70-b75f-35d0afbc4c45"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="279" width="49" height="16" uuid="d5364c9d-25df-498f-be57-266a891f0560"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="295" width="49" height="16" uuid="4aaaab9f-be8d-4f4f-adf9-cded117b9914"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="311" width="49" height="16" uuid="eb310f0c-9362-4c92-93e5-f18ed97d5dc2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="347" width="270" height="14" uuid="e2471be3-a846-4639-bcdb-c09a7f7e2d84"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="361" width="270" height="12" uuid="d1928165-6390-4cd6-9b10-0494cedcc688"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="373" width="270" height="12" uuid="6d25c0d3-54cc-4554-8d5a-2e9d0f08ee1e"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="247" width="49" height="16" uuid="9519753b-907f-4154-9a8e-eaa4cdf4d103"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="263" width="41" height="16" uuid="91911460-466e-4ec4-a521-e5260010ce32"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia3}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="205" width="38" height="20" uuid="21cabaf8-61e9-43ca-96e7-4ac28c4f57ec"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="507" y="205" width="46" height="20" uuid="2797174f-be78-4803-91ed-053c9b3cfebb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aprovacao3}==null?"":$F{aprovacao3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="232" width="49" height="16" uuid="c844411e-e0c6-40f1-9db1-8f5e0e3e98d3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="248" width="49" height="16" uuid="e077390a-ab6e-423b-b44c-ef8d005d4c10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="264" width="49" height="16" uuid="8c9b2902-1f3f-4493-be2b-467208beed2f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="280" width="49" height="16" uuid="70bb8ff7-1ff2-4791-9fae-07a0c852c190"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="296" width="49" height="16" uuid="ffd659e1-f7b6-4ebd-9d07-5c1ec124bb03"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="312" width="49" height="16" uuid="1eaa7009-bc08-4057-8e97-c768d0aca876"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="248" width="49" height="16" uuid="9339b0d2-0b01-4726-853f-7385c960c15a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="264" width="41" height="16" uuid="97e39874-9f98-4ab1-b5d4-0c1258e123f2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="347" width="270" height="14" uuid="843b8b38-c10b-4875-96ef-26001901db4e"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="361" width="270" height="12" uuid="12381bff-452c-49c0-afb3-8b28d5240559"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="373" width="270" height="12" uuid="1d2fa7bc-38aa-45ab-91d6-c8c8766a7793"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia4}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="426" width="38" height="20" uuid="5c7fbcfb-9b32-4a2d-9c0f-ed6e26440b02"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="453" width="49" height="16" uuid="fb732167-752d-4cf8-8fb9-4a07e9e5d9cb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="469" width="49" height="16" uuid="7cce04bf-b278-4f6b-a5eb-be043bc60e97"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="485" width="49" height="16" uuid="1397a463-fcdf-404a-acfb-d663402f8109"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="501" width="49" height="16" uuid="bf9c7269-a306-4b05-98b8-2dfcc8100951"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="517" width="49" height="16" uuid="e1491caf-5a9f-4e51-b02d-23851c8020ab"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="533" width="49" height="16" uuid="5ba56a4b-dec8-4042-b941-4570279d2f8e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="469" width="49" height="16" uuid="eb5d824f-9be2-4ee6-9d47-ad29d5eb880a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="485" width="41" height="16" uuid="258cda0f-0d67-46f6-aac9-5b4e9981af5f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="590" width="270" height="12" uuid="37d1d71d-525a-4d4f-a139-1d64ef4b096d"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="578" width="270" height="12" uuid="9280506d-2f95-4224-b69f-91f4b24cdb6f"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="564" width="270" height="14" uuid="ae47e2c9-54f7-4e42-8838-fcec4544e90b"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia5}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="427" width="38" height="20" uuid="af7694a8-a642-4799-a395-a8cdbefeee59"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="454" width="49" height="16" uuid="d1893631-f210-4f17-81b0-b5352026f310"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="470" width="49" height="16" uuid="0316dd55-9827-42ea-a336-8e5d7ca0491e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="486" width="49" height="16" uuid="1e90d16a-bc69-4d6c-8882-f7470b26a21d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="502" width="49" height="16" uuid="98b835d2-4dff-4019-820c-6f2c15ffd925"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="518" width="49" height="16" uuid="736b1394-536f-4562-87b4-152057eb3fb8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="534" width="49" height="16" uuid="e9b7b39c-0acf-4d09-a80d-3dfacb51c9eb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="562" width="270" height="14" uuid="2d701e58-0e38-4804-a930-2c2447ba8968"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="576" width="270" height="12" uuid="1ad1477e-50d8-4384-83ee-d00eb49a7056"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="588" width="270" height="12" uuid="e6742686-c7af-45f1-98d1-5ceae7286b8c"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="470" width="49" height="16" uuid="0f6ba040-d80a-451e-bbc9-7d21f616ead3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="486" width="41" height="16" uuid="d25454b0-7b51-48d3-b981-8fee6725b10f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia6}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="635" width="38" height="20" uuid="95c38090-995b-4982-819b-8b243ba2728b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="662" width="49" height="16" uuid="b1e29e67-8501-45c2-bfe6-8f6e91b4221f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="678" width="49" height="16" uuid="45d9fa7f-b75b-44dd-836f-8574b2813ce3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="695" width="49" height="16" uuid="1297d8ef-bc38-4da9-8c22-849679eb4853"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="711" width="49" height="16" uuid="70148957-9ce3-4ac8-baca-b9646192d16d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="727" width="49" height="16" uuid="67eb17d0-5e27-4236-b45e-9be74d4bd7c0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="744" width="49" height="16" uuid="4f072386-c7dc-40a2-9f0c-19db9e098321"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="679" width="49" height="16" uuid="c3e09d4c-b80e-4baf-9c27-1f23cf6d8922"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="695" width="41" height="16" uuid="ae0483e6-1bbc-4c65-bb3c-9df8152ae595"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="468" y="636" width="38" height="20" uuid="56bcd477-00b0-4aea-859d-fed26f4e87c2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Aprov:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="663" width="49" height="16" uuid="bedfd1eb-c494-4eee-ac72-99118fd5ca3a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Fábrica:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="711" width="49" height="16" uuid="11840c9b-3060-45db-a540-4ea710da04f0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Cliente:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="696" width="49" height="16" uuid="399c4e09-f646-4d18-9c7f-1f8c1000bb6c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Cor:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="744" width="49" height="16" uuid="133984d0-c90d-4538-8e8c-c28bc4da2673"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "OBS:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="679" width="49" height="16" uuid="c58067cb-ce1f-413f-b3ca-ef6e6dc99cf5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Material:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="728" width="49" height="16" uuid="d5293d48-b11e-41f7-8d62-dc91d7c7eabe"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Referência:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="679" width="49" height="16" uuid="477c0599-f078-480b-8ae8-3f492db0183a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Espessura:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="695" width="41" height="16" uuid="0851cebb-ec21-4aab-9cc5-70d358089305"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null ? "" : "Toque:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="782" width="270" height="14" uuid="2e377201-ff87-4f96-84e3-f6640eeae94a"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="796" width="270" height="12" uuid="d5b9cb8a-f788-49fe-931b-fe1a8fa42ef3"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="808" width="270" height="12" uuid="15cb4d47-fda2-4d9e-8807-09017f7796d5"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia7}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="782" width="270" height="14" uuid="25678e72-6793-4d0d-9d77-9def5a520bb4"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null?"":"Atenção:Só será válida com Carimbo e Assinatura da GVD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="796" width="270" height="12" uuid="44919926-609d-4b36-9086-73c8e634f3cf"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null?"":"Observar Pelaria,Toque e espessura do Couro."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="808" width="270" height="12" uuid="d45c9aee-f5e8-4ad8-8397-4d01cc0bb01c"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vazia8}==null?"":"*Demais observações de produção,verificar ficha técnica."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="295" width="220" height="16" uuid="2fad42da-b29d-4576-8f5b-946f3b5bacfe"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{referencia2}==null?"":$F{referencia2}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="204" width="49" height="27" uuid="bef45964-1d9d-4fdc-ac18-8a4214d22491">
+					<printWhenExpression><![CDATA[$F{vazia3} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="283" y="205" width="50" height="26" uuid="e74fff15-7bfa-47ec-b16d-3d5670b781c9">
+					<printWhenExpression><![CDATA[$F{vazia4} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="283" y="427" width="49" height="27" uuid="abecc087-92c0-418c-af26-3e0614ad7636">
+					<printWhenExpression><![CDATA[$F{vazia6} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="426" width="50" height="26" uuid="a8513fb4-0f8b-4547-9f8e-9b48391e9407">
+					<printWhenExpression><![CDATA[$F{vazia5} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="635" width="49" height="27" uuid="ce2bcc75-b413-4c97-bc5d-6368f6459cf7">
+					<printWhenExpression><![CDATA[$F{vazia7} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="282" y="636" width="49" height="27" uuid="5ef5bf50-b5a5-4463-9617-25e2784910f4">
+					<printWhenExpression><![CDATA[$F{vazia8} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="284" y="0" width="49" height="27" uuid="5a8c8b08-6a3a-49c5-92d2-035b86f15765">
+					<printWhenExpression><![CDATA[$F{vazia2} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+			<image hAlign="Left">
+				<reportElement x="1" y="0" width="49" height="27" uuid="b08712d1-8c51-4e0e-bc16-5fa8c3a9810f">
+					<printWhenExpression><![CDATA[$F{vazia1} != null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{PATH_LOGO}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

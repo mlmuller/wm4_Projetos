@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml" >
+	<ui:define name="corpo">
+	<h:outputStylesheet name="css/geral.css"/>	
+	<h:form id="crudFormUsuario" >
+			<pf:panel header="#{msg['usuario.title']}">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{usuarioController.add()}"
+			update=":addEditFormUsuario"
+			oncomplete="PF('addEditFormUsuarioDlg').show()" style="font-size:12px;" />
+		<pf:dataTable id="fouc" value="#{usuarioController.usuarios}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" scrollHeight="800px" styleClass="no-fouc"  >
+			
+			<pf:column width="50" >
+				<pf:commandLink action="#{usuarioController.edit(_row)}"
+					update=":addEditFormUsuario"
+					oncomplete="PF('addEditFormUsuarioDlg').show()"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o" />
+				</pf:commandLink>
+				<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+					action="#{usuarioController.delete(_row)}"
+					update=":crudFormUsuario"
+					title="#{msg['botao.delete']}">
+					<i class="fa fa-fw fa-trash-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.id']}" styleClass="numeric" width="20" style="font-size:12px;">
+				<h:outputText value="#{_row.usuarioid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.nome']}" style="font-size:12px;" filterStyle="height:2.2em"  
+					   filterBy="#{_row.nome}" sortBy="#{_row.nome}" filterMatchMode="contains">
+				<h:outputText value="#{_row.nome}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usuario.label.usuario']}" style="font-size:12px;" filterStyle="height:2.2em" 
+					   filterBy="#{_row.nome}" sortBy="#{_row.usuario}" filterMatchMode="contains">
+				<h:outputText value="#{_row.usuario}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usuario.label.email']}" style="font-size:12px;" >
+				<h:outputText value="#{_row.email}">
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['usuario.label.grupo']}" style="font-size:12px;">
+				<h:outputText value="#{_row.grupo}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usuario.label.mercado']}" style="font-size:12px;">
+				<h:outputText value="#{_row.mercado}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.situacao']}" style="font-size:12px;">
+				<h:outputText value="#{_row.situacao}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usuario.label.libera']}" style="font-size:12px;">
+				<h:outputText value="#{_row.liberafinanceiro}" />
+			</pf:column>
+				<pf:column headerText="#{msg['usuario.label.idioma']}" style="font-size:12px;">
+			<h:outputText value="#{_row.idioma}" />
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Usuários" widgetVar="addEditFormUsuarioDlg" width="480" height="350" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormUsuarioDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormUsuario" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px">
+				<h:outputText value="#{msg['usocomum.label.nome']}:"/> 
+				<h:inputText value="#{usuarioController.usuario.nome}" size="30" required="true" requiredMessage="Informe nome do Usuário!"/>
+				<h:outputText value="#{msg['usuario.label.usuario']}:"/> 
+				<h:inputText value="#{usuarioController.usuario.usuario}" size="10" required="true" requiredMessage="Informe Usuario no maximo 10 Caracters!!!" />
+				<h:outputText value="#{msg['usuario.label.senha']}:" /> 
+				<h:inputSecret value="#{usuarioController.usuario.senha}" size="32" maxlength="12" required="true" requiredMessage="Informe Senha !!!" />
+				<h:outputText value="#{msg['usuario.label.grupo']}" /> 
+				<pf:selectOneMenu value="#{usuarioController.usuario.grupo}" 
+				required="true" requiredMessage="Escolha um Grupo !" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"  >
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{usuarioController.listaGrupos}"
+						var="grupos" itemValue="#{grupos}"
+						itemLabel="#{grupos.label}" />
+			    </pf:selectOneMenu>
+				<h:outputText value="#{msg['usuario.label.mercado']}" />
+				<pf:selectOneMenu value="#{usuarioController.usuario.mercado}" 
+				required="true" requiredMessage="Escolha um Mercado !" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{usuarioController.listaMercados}"
+						var="mercados" itemValue="#{mercados}"
+						itemLabel="#{mercados.name()}" />
+			    </pf:selectOneMenu>
+				<h:outputText value="#{msg['usocomum.label.situacao']}" /> 
+				<pf:selectOneMenu value="#{usuarioController.usuario.situacao}" 
+				required="true" requiredMessage="Escolha Ativo/Inativo Situacao !" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{usuarioController.listaSituacao}"
+						var="situacao" itemValue="#{situacao}"
+						itemLabel="#{situacao.label}" />
+			    </pf:selectOneMenu>
+				<h:outputText value="#{msg['usuario.label.libera']}" /> 
+				<pf:selectOneMenu value="#{usuarioController.usuario.liberafinanceiro}" 
+				required="true" requiredMessage="Opção Sim/Nao!" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{usuarioController.listaSimNao}"
+						var="situacao" itemValue="#{situacao}"
+						itemLabel="#{situacao.label}" />
+			    </pf:selectOneMenu>
+				<h:outputText value="#{msg['usuario.label.idioma']}" /> 
+				<pf:selectOneMenu value="#{usuarioController.usuario.idioma}" 
+				required="true" requiredMessage="Escolha um Idioma !" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px" >
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{usuarioController.listaIdiomas}"
+						var="linguagem" itemValue="#{linguagem}"
+						itemLabel="#{linguagem.label}" />
+			    </pf:selectOneMenu>
+			    
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<pf:commandButton value="#{msg['botao.save']}"
+					actionListener="#{usuarioController.save()}"
+					proccess="@form"
+					update=":addEditFormUsuario :crudFormUsuario"
+					oncomplete="if (!args.validationFailed) PF('addEditFormUsuarioDlg').hide()" />
+				<pf:commandButton value="#{msg['botao.cancel']}"
+					onclick="PF('addEditFormDlg').hide(); return false;" />
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

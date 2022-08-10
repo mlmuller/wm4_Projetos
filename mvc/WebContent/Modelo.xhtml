@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+
+	<ui:define name="corpo">
+		<style type="text/css">
+		.panelgrlsb .ui-panelgrid {
+			border: none !important;
+		}
+		
+		.pangrdicb .uipanelgrid {
+			border: 1px;
+		}
+		
+		.ui-fieldset-legend {
+			padding: 10px 10px !important;
+			height: 0.5em;
+			background: #dae8ef;
+			color: black;
+			font-size: 11px;
+		}
+		
+		.ui-growl-message {
+			width: 250px;
+			height: 30px;
+		}
+		</style>
+		<h:form id="crudFormModelo">
+			<pf:panel header="#{msg['modelo.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{modeloController.add()}"
+				update=":addEditFormModelo"
+				oncomplete="PF('addEditFormModeloDlg').show()"
+				style="font-size:11px;" />
+
+			<pf:dataTable id="tblLazyModelo"
+				value="#{modeloController.model}" lazy="true" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+			{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				style="text-align:center" >
+				<pf:column width="50">
+					<pf:commandLink action="#{modeloController.edit(_row)}"
+						title="#{msg['botao.edit']}" update=":addEditFormModelo"
+						oncomplete="PF('addEditFormModeloDlg').show()"
+						style="font-size:11px;">
+						<i class="fa fa-fw fa-edit" style="font-size: 1.5em;" />
+					</pf:commandLink>
+
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;" 
+						action="#{modeloController.delete(_row)}" 
+						title="#{msg['botao.delete']}" update=":crudFormModelo" >
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_row.modeloid}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.abreviacao']}"
+					filterStyle="height:2.2em;" style="font-size:12px;">
+					<h:outputText value="#{_row.livroreferencia.abreviacao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.referencia']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.referencia}"
+					sortBy="#{_row.referencia}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.referencia}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.versao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.versaorefer}"
+					sortBy="#{_row.versaorefer}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.versaorefer}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['forma.label.refforma']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.referenciaforma}"
+					sortBy="#{_row.referenciaforma}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.referenciaforma}" />
+				</pf:column>
+
+
+				<pf:column headerText="#{msg['cliente.label.nome']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.sucinto}"
+					sortBy="#{_row.sucinto}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.sucinto}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['modelo.label.estacao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nomeestacao}"
+					sortBy="#{_row.nomeestacao}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.nomeestacao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nome}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.situacao']}">
+					<h:outputText value="#{_row.situacao.name()}" style="font-size:12px;"/>
+				</pf:column>
+
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="#{msg['modelo.label.titulo']}"
+			widgetVar="addEditFormModeloDlg" width="40%"
+			draggable="false" modal="false" position="left center"
+			showEffect="flip"
+			onShow="PF('addEditFormModeloDlg').initPosition()"
+			resizable="false">
+			<h:form id="addEditFormModelo">
+				<pf:growl id="mensagem" globalOnly="true" />
+				<h:panelGrid style="font-size:12px;" styleClass="panelgrlsb">
+
+					<pf:row>
+						<h:panelGrid id="grdReferencia" columns="5" styleClass="panelgrlsb">
+							<pf:outputLabel value="Versão:"/>
+							<pf:inputText readonly="true" value="#{modeloController.modelo.livroreferencia.versaorefer}" 
+							size="3" maxlength="3"/>
+							<pf:outputLabel value="Referência:"/>
+							<pf:inputText value="#{facadeView.informaReferencia}" placeholder="Informe Referência"/> 
+							<pf:commandLink actionListener="#{facadeView.visaoLivroReferencia}">
+								<i class="fa fa-search" style="font-size:1.5em;" title="Pesquisa Referência"/>
+								<pf:ajax event="dialogReturn"  listener="#{modeloController.referenciaSelecionada}" 
+								         process="@this" update="mensagem addEditFormModelo grdReferencia grdConstrucao"/>
+							</pf:commandLink>		 
+						</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid id="grdConstrucao" columns="6" styleClass="panelgrlsb">
+							<h:outputLabel value="Construcao:"
+								style="font-size:12px;heigth:0.6em" />
+							<pf:inputText readonly="true" 
+							value="#{modeloController.modelo.livroreferencia.construcaonome}" 
+							size="16" maxlength="20" style="font-size:11px;"/>
+							<h:outputLabel value="Versão:"
+								style="font-size:12px;heigth:0.6em" />
+							<pf:inputText readonly="true" 
+							value="#{modeloController.modelo.livroreferencia.versao}" size="3"/>
+							<h:outputLabel value="Forma:"
+								style="font-size:12px;heigth:0.6em" />
+							<pf:inputText readonly="true" 
+							value="#{modeloController.modelo.livroreferencia.referenciaforma}" 
+							size="7"/>
+					</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid columns="5" styleClass="panelgrlsb">
+							<pf:outputLabel value="Cliente:"/>
+							<pf:inputText id="iptCliente" value="#{facadeView.informaCliente}" 
+							size="15" maxlength="15" placeholder="Informe Cliente" /> 
+							<pf:commandLink
+								action="#{facadeView.visaoCliente()}">
+								<i class="fa fa-search" style="font-size: 1.5em;"
+									 title="Pesquisa Cliente(s)" />
+								<pf:ajax event="dialogReturn"  listener="#{modeloController.clienteSelecionado}" 
+							         process="@this" update="mensagem iptCliente"/>
+							</pf:commandLink>
+						</h:panelGrid>
+					</pf:row>
+				<pf:row>
+						<h:panelGrid columns="5" styleClass="panelgrlsb">
+							<pf:outputLabel value="Estação"/>
+							<pf:inputText id="iptEstacao" value="#{facadeView.informaEstacao}" 
+							size="4" placeholder="((X-99))" /> 
+							<pf:commandLink action="#{facadeView.visaoEstacao()}">
+								<i class="fa fa-search" style="font-size: 1.5em;"
+									 title="Pesquisa Estação(s)" />
+							    <pf:ajax event="dialogReturn" listener="#{modeloController.estacaoSelecionado}" 
+							    process="@this" update="mensagem iptEstacao"/>
+							</pf:commandLink>
+						</h:panelGrid>
+					</pf:row>
+					<pf:row>
+						<h:panelGrid columns="2" styleClass="panelgrlsb">
+							<pf:outputLabel value="Nome"/>
+							<pf:inputText value="#{modeloController.modelo.nome}" 
+							size="20" maxlength="20" converter="upperCaseConverter">
+							<pf:ajax event="blur" update="@this"/>
+							</pf:inputText>
+							
+							<pf:outputLabel value="#{msg['usocomum.label.situacao']}"/>
+							<pf:selectOneMenu
+								value="#{modeloController.modelo.situacao}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}"
+									style="font-size:12px;height:0.7em;text-align:left;" />
+								<f:selectItems value="#{modeloController.ativoInativo}"
+									var="situacao" itemValue="#{situacao}"
+									itemLabel="#{situacao.label}" />
+							</pf:selectOneMenu>
+							
+						</h:panelGrid>
+					</pf:row>
+					
+							<h:panelGrid id="btnSave" columns="2">
+								<pf:commandButton value="#{msg['botao.save']}"
+									actionListener="#{modeloController.save()}" 
+									update="addEditFormModelo :crudFormModelo :crudFormModelo:tblLazyModelo" oncomplete="if (!args.validationFailed) PF('addEditFormModeloDlg').hide()"  />
+								<pf:commandButton value="#{msg['botao.cancel']}" actionListener="#{modeloController.cancelaOperacao()}"
+									onclick="PF('addEditFormModeloDlg').hide();"/>
+							</h:panelGrid>
+					</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+</ui:decorate>

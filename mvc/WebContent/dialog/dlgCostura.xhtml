@@ -1,0 +1,1247 @@
+
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:o="http://xmlns.omnifaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" >
+<h:body>
+ <style type="text/css" >
+ 
+
+.CosturaC .ui-panel-titlebar .ui-panel-title {
+	color: white;
+	font-size: 12px;
+}
+.Costura .ui-panel-titlebar .ui-panel-title {
+	color: black;
+	font-size: 14px;
+}
+.Cabecalho .ui-panel .ui-panel-titlebar{
+	background-color: #c28104 !important;
+} 
+.Costuraheaders {
+	color: white;
+	background-color: #c28104 !important;
+	font-size: 12px;
+}
+
+.TabelaAux thead th {
+	border: none !important;
+	background: none !important;
+	display: none !important;
+}
+
+.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+	overflow: hidden;
+}
+
+.hide-column-names table thead tr {
+	display: none;
+}
+
+.colspace1 {
+	padding-left: 20px;
+}
+
+.colspace2 {
+	padding-right: 10px;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}
+
+
+.panelgrlsb {
+	border: none;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+
+.alturaLinha .ui-panelgrid {
+	padding: 2px 5px;
+}
+
+.dialogueCostura .ui-dialog-titlebar {
+	background-color: #c28104 !important;
+	color: white;
+	font-size: 12px;
+}
+
+.alinhamento {
+	horizontal-align: right;
+}
+.ui-scrollpanel {
+    height: 650px;
+    width: 100%;
+}
+
+</style>
+</h:body>
+ 		<pf:dialog header="Cadastrar Costura" widgetVar="dialogCostura" resizable="false" 
+		position="right top" showEffect="slide" hideEffect="slide" modal="true" 
+		draggable="true" closable="false" appendTo="@(body)" width="100%"
+			dynamic="true" styleClass="dialogueCostura" style="color-font:white;">
+			<h:form id="frmCosturaAmostra" >
+			  <pf:growl id="mensagemCostura" globalOnly="true" />
+				<pf:scrollPanel mode="native" style="font-size:12px;">
+<!-- Borda -->
+				 <pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104">				
+						
+						<pf:column>
+						
+							<pf:panel header="#{msg['costura.label.borda']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="2" styleClass="panelgrlsb">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.borda}"
+											size="38" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.bordatipo}"
+											size="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.borda']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{controller.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).borda}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).borda}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).borda}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).borda}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+									
+							</pf:panel>
+
+						</pf:column>
+						
+						
+					</pf:panelGrid>
+
+<!-- Linha (1) -->
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.linha1']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="4">
+											<h:outputText value="#{msg['usocomum.label.descricao']}" />
+											<h:outputText value="#{msg['usocomum.label.espessura']}" />
+											<h:outputText value="#{msg['costura.label.ptocm']}" />
+											<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+											
+											<pf:inputText
+												value="#{controller.costuraAmostra.linha1}"
+												size="17" maxlength="10" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.linhaespessura}"
+												size="10" maxlength="10" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.linhapto}"
+												size="10" maxlength="10" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.linhafornecedor}"
+												size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.linha1']}" styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).linha1}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).linha1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).linha1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).linha1}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>	
+					 
+<!-- Linha 2 -->				
+					 <pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104;">				
+						
+						<pf:column>
+						
+							<pf:panel header="#{msg['costura.label.linha2']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="4" styleClass="panelgrlsb">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['costura.label.ptocm']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.linha2}"
+											size="17" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.linha2espessura}"
+											size="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.linha2pto}"
+											size="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.linha2fornecedor}"
+											size="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.linha2']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).linha2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).linha2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).linha2}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).linha2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+
+<!-- Linha 3 -->	
+									
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.linha3']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										
+										<pf:inputText
+											value="#{controller.costuraAmostra.linha3}"
+											size="45" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.linha3']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).linha3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).linha3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).linha3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;text-align:left;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).linha3}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+
+						</pf:column>
+					</pf:panelGrid>
+
+<!-- Velcro -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.velcro']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.velcro}"
+											size="45" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.velcro']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).velcro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).velcro}"
+												size="16" maxlength="16" />
+												
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).velcro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).velcro}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+															
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+
+
+<!-- Fio Seleiro -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.fioseleiro']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.espessura']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fioceleiro}"
+											size="17" maxlength="17"  />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fioceleiroespessura}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fioceleiroreferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fioceleirofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.fioseleiro']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).fioceleiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).fioceleiro}"
+												size="16" maxlength="16" />
+												
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).fioceleiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).fioceleiro}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>									
+					
+
+<!-- Fivela -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.fivela']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fivelatipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fivelareferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.fivelafornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.fivela']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).fivela}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).fivela}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).fivela}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).fivela}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+															
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+					
+<!-- Rebite -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.rebite']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.rebitereferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.rebitefornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.rebite']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).rebite}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).rebite}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).rebite}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).rebite}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+									</pf:panelGrid>
+									
+								</pf:row>
+															
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+					
+
+<!-- Ilhós -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.ilhos']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.ilhosreferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.ilhosfornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.ilhos']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).ilhos}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).ilhos}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).ilhos}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).ilhos}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+
+<!-- Ornamento -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.ornamento']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="3">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.referencia']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.ornamento}"
+											size="18" maxlength="18" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.ornamentoreferencia}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.ornamentofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.contrafortea']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).ornamento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).ornamento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).ornamento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).ornamento}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+
+<!-- Bielastico-->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.bielastico']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.largura']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.bielastico}"
+											size="18" maxlength="18" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.bielasticotipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.bielasticolargura}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.bielasticofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.bielastico']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).bileastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).bileastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).bileastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).bileastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+
+
+<!-- Elástico -->
+
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.elastico']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.largura']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.elastico}"
+											size="18" maxlength="18" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.elasticotipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.elasticolargura}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.elasticofornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.couracab']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).elastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).elastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).elastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).elastico}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+					
+<!-- Zipper-->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;" >
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.zipper']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="4" >
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<h:outputText value="#{msg['usocomum.label.tipo']}" />
+										<h:outputText value="#{msg['usocomum.label.material']}" />
+										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
+										
+										<pf:inputText
+											value="#{controller.costuraAmostra.zipper}"
+											size="18" maxlength="18" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.zippertipo}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.zippermaterial}"
+											size="10" maxlength="10" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.zipperfornecedor}"
+											size="10" maxlength="10" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.zipper']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).zipper}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).zipper}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).zipper}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).zipper}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+			
+
+<!-- Costura Label 1  -->
+
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['usocomum.label.label1']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<pf:column>
+											<h:outputText value="#{msg['usocomum.label.label1']}" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.labeldescricao1}"
+												size="20" />
+										</pf:column>
+										<pf:column>
+											<h:outputText value="#{msg['usocomum.label.descricao']}" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.descricao1}"
+												size="48" />
+										</pf:column>
+									</h:panelGrid>
+								</pf:row>
+ 						    </pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.labela']}" styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).descricao1}"
+												size="16" maxlength="16" />
+
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).descricao1}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>
+
+<!-- Costura Label 2 -->
+
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['usocomum.label.label2']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<pf:column>
+											<h:outputText value="#{msg['usocomum.label.label2']}" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.labeldescricao2}"
+												size="20" />
+										</pf:column>
+										<pf:column>
+											<h:outputText value="#{msg['usocomum.label.descricao']}" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.descricao2}"
+												size="48" />
+										</pf:column>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['corte.cor.labelb']}" styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).descricao2}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>
+
+
+<!-- Costura Label 3 -->
+
+					<pf:panelGrid layout="grid" columns="2" styleClass="alinhamento" style="border-color:#c28104;">
+						<pf:column>
+							<pf:panel header="#{msg['usocomum.label.label3']}"
+								styleClass="Costura">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<pf:column>
+											<h:outputText value="#{msg['usocomum.label.descricao']}" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.labeldescricao3}"
+												size="20" />
+										</pf:column>
+										<pf:column>
+											<h:outputText value="#{msg['usocomum.label.descricao']}" />
+											<pf:inputText
+												value="#{controller.costuraAmostra.descricao3}"
+												size="48" />
+										</pf:column>
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.labelc']}" styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(1).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).descricao3}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					 </pf:panelGrid>
+
+
+<!-- Complemento Corte -->
+
+					<pf:panelGrid layout="grid" columns="2" style="border-color:#c28104;" >
+						<pf:column>
+							<pf:panel header="#{msg['costura.label.cplcostura']}"
+								styleClass="Costura" style="align-text:right;">
+								<pf:row>
+									<h:panelGrid columns="2">
+										<h:outputText value="#{msg['usocomum.label.descricao']}" />
+										<pf:inputText
+											value="#{controller.costuraAmostra.complemento}"
+											size="60" maxlength="60" />
+									</h:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+						<pf:column>
+							<pf:panel header="#{msg['costura.cor.cplcostura']}"
+								styleClass="Costura">
+								<pf:row>
+									<pf:panelGrid layout="grid" columns="4" styleClass="panelgrlsb">
+										<pf:column rendered="#{amostraNovaController.parametros.pricorb}">
+											<h:outputLabel value="#{controller.listaCorCosturaAmostra.get(0).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(0).complemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.segcorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(1).coramostra.corPrincipal}"
+												style="color:#c28104;"/>
+												<pf:inputText value="#{controller.listaCorCosturaAmostra.get(1).complemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.tercorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(2).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+												<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(2).complemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+										<pf:column rendered="#{amostraNovaController.parametros.quacorb}">
+											<h:outputLabel
+												value="#{controller.listaCorCosturaAmostra.get(3).coramostra.corPrincipal}"
+												style="color:#c28104;" />
+											<pf:inputText
+												value="#{controller.listaCorCosturaAmostra.get(3).complemento}"
+												size="16" maxlength="16" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:panel>
+						</pf:column>
+					</pf:panelGrid>
+				</pf:scrollPanel>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{controller.saveCostura}" process="@form"  oncomplete="PF('dialogCostura').hide()" 
+						update="crudFormAmostraSecundario crudFormAmostraSecundario:pnlGrpCor "/>
+					<pf:commandButton value="#{msg['botao.fechar']}" oncomplete="PF('dialogCostura').hide();"/>
+				</h:panelGrid>
+				
+				</h:form>
+				</pf:dialog>
+</ui:composition>

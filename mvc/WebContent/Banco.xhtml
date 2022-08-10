@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui"
+	template="template.xhtml">
+	<ui:define name="corpo">
+	
+	<h:outputStylesheet name="css/geral.css"  />
+	<h:form id="crudFormBanco">
+		<pf:panel header="#{msg['banco.label.titulo']}">
+		</pf:panel>
+		<pf:commandButton value="#{msg['botao.add']}"
+			action="#{bancoController.add()}"
+			update=":addEditFormBanco"
+			oncomplete="PF('addEditFormBancoDlg').show()" style="font-size:12px;" />
+		<pf:dataTable value="#{bancoController.listaBancos}"
+			var="_row"
+			paginator="true"
+			rows="10"
+			paginatorPosition="bottom" scrollHeight="800px">
+			
+			<pf:column width="50" >
+				<pf:commandLink action="#{bancoController.edit(_row)}"
+					update=":addEditFormBanco"
+					oncomplete="PF('addEditFormBancoDlg').show()"
+					title="#{msg['botao.edit']}">
+					<i class="fa fa-fw fa-pencil-square-o" />
+				</pf:commandLink>
+				<pf:commandLink onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+					action="#{bancoController.delete(_row)}"
+					update=":crudFormBanco"
+					title="#{msg['botao.delete']}">
+					<i class="fa fa-fw fa-trash-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.id']}" styleClass="numeric" width="20" style="font-size:12px;" >
+				<h:outputText value="#{_row.bancoid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.nome']}" filterStyle="height:2.2em;" filterBy="#{_row.nome}" sortBy="#{_row.nome}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.nome}" />
+			</pf:column>
+			<pf:column headerText="#{msg['usocomum.label.resumido']}" filterStyle="height:2.2em;" filterBy="#{_row.sucinto}" sortBy="#{_row.sucinto}" filterMatchMode="contains" style="font-size:12px;">
+				<h:outputText value="#{_row.sucinto}" />
+			</pf:column>
+			<pf:column headerText="#{msg['banco.label.agencia']}" filterStyle="height:2.2em;" style="font-size:12px;">
+				<h:outputText value="#{_row.agencia}">
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['banco.label.cnpj']}" style="font-size:12px;"  filterStyle="height:2.2em;" filterBy="#{_row.cgc}" sortBy="#{_row.cgc}" filterMatchMode="contains">
+				<h:outputText value="#{_row.cgc}">
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['banco.label.endereco']}" style="font-size:12px;">
+				<h:outputText value="#{_row.endereco}">
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['banco.label.email']}"  >
+				<h:outputText value="#{_row.email}" style="font-size:12px;">
+				</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['banco.label.telefone']}" >
+				<h:outputText value="#{_row.telefone}" style="font-size:12px;">
+			</h:outputText>
+			</pf:column>
+			<pf:column headerText="#{msg['banco.label.tipoBanco']}" filterStyle="height:2.2em;" filterBy="#{_row.tipobanco}" sortBy="#{_row.tipobanco}" filterMatchMode="contains" >
+				<h:outputText value="#{_row.tipobanco}" style="font-size:12px;">
+				</h:outputText>
+			</pf:column>
+		</pf:dataTable>
+	</h:form>
+	
+	<pf:dialog header="Bancos" widgetVar="addEditFormBancoDlg" width="650" height="380" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormBancoDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormBanco" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px;text-align:left" >
+				<h:outputText value="#{msg['usocomum.label.nome']}:" /> 
+				<h:inputText value="#{bancoController.banco.nome}" required="true" requiredMessage="Informe nome do Banco!" />
+				<h:outputText value="#{msg['usocomum.label.resumido']}:"/> 
+				<h:inputText value="#{bancoController.banco.sucinto}" required="true" requiredMessage="Informe Nome Resumido do Banco!" />
+				<h:outputText value="#{msg['banco.label.agencia']}:"/> 
+				<h:inputText value="#{bancoController.banco.agencia}" required="true" requiredMessage="Informe Codigo da Banco/Agencia!" />
+				<h:outputText  value="#{msg['banco.label.cnpj']}:" /> 
+				<pf:inputMask mask="99.999.999/9999-99" id="cnpj" style="font-size:11px;" value="#{bancoController.banco.cgc}" 
+					required="true" requiredMessage="Informe CNPJ do Banco/Agencia!" />
+				<h:outputText value="#{msg['banco.label.telefone']}:"/> 
+				<pf:inputMask mask="(99)-999-9-9999-9999" id="fone" style="font-size:11px;" value="#{bancoController.banco.telefone}" 
+					required="true" requiredMessage="Informe Telefone do Banco/Agencia!" />
+				<h:outputText value="#{msg['banco.label.fax']}:"/> 
+				<h:inputText value="#{bancoController.banco.fax}" />
+				<h:outputText value="#{msg['banco.label.endereco']}:"/> 
+				<h:inputText value="#{bancoController.banco.endereco}" size="40" required="true" requiredMessage="Informe Endereço do Banco/Agencia!" />
+				<h:outputText value="#{msg['banco.label.email']}:"/> 
+				<h:inputText value="#{bancoController.banco.email}"/>
+				<h:outputText value="#{msg['banco.label.enderecocompl']}:"/> 
+				<pf:column>
+				<pf:inputTextarea cols="55" rows="5" maxlength="290" style="font-size:11px;" 
+					value="#{bancoController.banco.enderecocomplementar}"  >
+				</pf:inputTextarea>
+				</pf:column>
+				<h:outputLabel value="#{msg['banco.label.tipoBanco']}" />
+				  <h:selectOneMenu value="#{bancoController.banco.tipobanco}" 
+				  converter="omnifaces.SelectItemsConverter" required="true" 
+				  requiredMessage="Escolha Tipo Banco!" filter="true" 
+				  filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{bancoController.tipoBanco}" var="tipobanco" 
+					itemValue="#{tipobanco}" itemLabel="#{tipobanco.label}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{msg['usocomum.label.situacao']}" />
+					<h:selectOneMenu value="#{bancoController.banco.situacao}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="Escolha Ativo/Inativo!" filter="true"
+						filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{bancoController.ativoInativo}"
+							var="atividade" itemValue="#{atividade}"
+							itemLabel="#{atividade.label}" />
+				</h:selectOneMenu>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{bancoController.save()}"
+						proccess="@form"
+						update=":addEditFormBanco :crudFormBanco"
+						oncomplete="if (!args.validationFailed) PF('addEditFormBancoDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormBancoDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+	</ui:define>	
+	
+</ui:decorate>

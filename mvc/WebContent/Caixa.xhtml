@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormCaixa">
+			<f:metadata>
+				<c:set var="grupo" value="I"/>
+				<f:viewAction action="#{componenteController.inicializaGrupo(grupo)}"/>
+			</f:metadata>			
+			<pf:panel header="#{msg['caixa.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{componenteController.add()}" oncomplete="PF('addEditFormCaixaDlg').show()" 
+				update=":addEditFormCaixa"/>
+			<pf:dataTable value="#{componenteController.listaComponentes}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px">
+				<pf:column width="50">
+					<pf:commandLink action="#{componenteController.edit(_row)}"
+						update=":addEditFormCaixa"
+						oncomplete="PF('addEditFormCaixaDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{componenteController.delete(_row)}" update=":crudFormCaixa"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" style="font-size:12px;" width="10">
+					<h:outputText value="#{_row.componenteid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['produto.label.grupo']}"
+					filterStyle="height:2.2em" style="font-size:12px;" 
+					sortBy="#{_row.grupocomponente}" filterBy="#{_row.grupocomponente}" 
+					filterMatchMode="contains" width="50" >
+					<h:outputText value="#{_row.grupocomponente}"  />
+				</pf:column>
+				<pf:column headerText="#{msg['produto.label.definicao']}" 
+				filterStyle="height:2.2em" style="font-size:12px;" 
+				sortBy="#{_row.def1}" filterBy="#{_row.def1}" 
+				filterMatchMode="contains" width="300" >
+					<h:outputText value="#{_row.def1}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.situacao']}" width="120" style="text-align:center">
+					<h:outputText value="#{_row.situacao}" />
+				</pf:column>
+		</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Caixas" widgetVar="addEditFormCaixaDlg" width="600" height="150" resizable="false" position="center center" showEffect="clip" 
+	onShow="PF('addEditFormCaixaDlg').initPosition()" modal="false" draggable="false">
+		<h:form id="addEditFormCaixa" >
+			<pf:growl id="messages" globalOnly="true" />
+			<h:panelGrid columns="2" style="font-size:12px">
+				<pf:outputLabel for="def" value="#{msg['produto.label.definicao']}:"/> 
+				<pf:inputText id="def" value="#{componenteController.componente.def1}" 
+				required="true" requiredMessage="Preencha Definição para Caixa!" size="60"/>
+				<h:outputText value="#{msg['usocomum.label.situacao']}:"/> 
+				<pf:selectOneMenu value="#{componenteController.componente.situacao}" 
+				converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" style="font-size:12px">
+					<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{componenteController.ativoInativo}"
+						var="situacao" itemValue="#{situacao}"
+						itemLabel="#{situacao.label}" />
+			    </pf:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<pf:commandButton value="#{msg['botao.save']}"
+					actionListener="#{componenteController.saveProduto}" proccess="@form" 
+					update=":addEditFormCaixa :crudFormCaixa" 
+					oncomplete="if (!args.validationFailed) PF('addEditFormCaixaDlg').hide()" />
+				<pf:commandButton value="#{msg['botao.cancel']}"
+					onclick="PF('addEditFormCaixaDlg').hide(); return false;" />
+			</h:panelGrid>
+		</h:form>
+	</pf:dialog>
+		
+	</ui:define>
+	
+
+</ui:decorate>

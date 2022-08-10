@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+
+	<ui:define name="corpo">
+		<style type="text/css">
+		.panelgrlsb .ui-panelgrid {
+			border: none !important;
+		}
+		
+		.pangrdicb .uipanelgrid {
+			border: 1px;
+		}
+		.alinhamento {
+			text-align: center;
+		}
+		.ui-fieldset-legend {
+			padding: 10px 10px !important;
+			height: 0.5em;
+			background: #dae8ef;
+			color: black;
+			font-size: 11px;
+		}
+		
+		.ui-growl-message {
+			width: 250px;
+			height: 30px;
+		}
+		</style>
+		<h:form id="crudFormImagemLivroReferencia">
+			<pf:panel header="#{msg['imagem.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{imagemLivroReferenciaController.add()}"
+				update=":addEditFormImagemLivroReferencia"
+				oncomplete="PF('addEditFormImagemLivroReferenciaDlg').show()"
+				style="font-size:11px;" />
+			<pf:dataTable id="tblLazyImagemLivroReferencia"
+				value="#{dtlazyLivroImagemView.lazyModel}" 
+				var="_row" paginator="true" rows="3" paginatorPosition="bottom"
+				scrollHeight="800px"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
+			{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				style="text-align:center">
+				<pf:column width="70">
+					<pf:commandLink
+						action="#{imagemLivroReferenciaController.edit(_row)}"
+						title="#{msg['botao.edit']}"
+						update=":addEditFormImagemLivroReferencia :addEditFormImagemLivroReferencia:pnlFormas 
+						:addEditFormImagemLivroReferencia:grdConstrucao :addEditFormImagemLivroReferencia:grdReferencia"
+						oncomplete="PF('addEditFormImagemLivroReferenciaDlg').show()"
+						style="font-size:11px;">
+						<i class="fa fa-fw fa-edit" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					<pf:commandLink
+						action="#{imagemLivroReferenciaController.carregaCarrocel(_row)}"
+						title="Ver Fotos Refer/Versão(ões)"
+						update=":showCarrocel"
+						oncomplete="PF('showFormImagemCarrocelDlg').show()"
+						style="font-size:11px;">
+						<i class="fa fa-fw fa-image" style="font-size: 1.5em;" />
+					</pf:commandLink>
+	
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						process="@this" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_row.imagemlivroreferenciaid}" />
+				</pf:column>
+
+				<pf:column headerText="Tipo" width="70px;">
+					<h:outputText value="#{_row.tipoimagem.label}" 
+					style="font-size:12px;"/>
+				</pf:column>
+
+			 	<pf:column headerText="Imagem">	
+					<pf:graphicImage value="#{imagemLivroReferenciaController.imagem}" 
+					width="#{_row.imwidth}" 
+					height="#{_row.imheight}" cache="false">
+						<f:param name="idimagem" value="#{_row.imagemlivroreferenciaid}"/>
+					</pf:graphicImage>
+				</pf:column>
+				<pf:column	headerText="Zoom">
+					<h:outputLink id="ZoomImagem" value="#">
+						<i class="fa fa-fw fa-search-plus" style="font-size:18px;" />
+					</h:outputLink>
+					<pf:tooltip id="toolTipContent" for="ZoomImagem" 
+					showEffect="clip" 
+					hideEffect="slide" position="bottom" style="background:#74acc6" >
+						<pf:graphicImage value="#{imagemLivroReferenciaController.imagem}" 
+					width="100%" height="100%" style="border:0;" cache="false">
+							<f:param name="idimagem" value="#{_row.imagemlivroreferenciaid}"/>
+						</pf:graphicImage>
+					<h:outputText value="Sem Imagem" rendered="#{imagemLivroReferenciaController.imagem == null}" />
+					</pf:tooltip>				
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.abreviacao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.abreviacao}"
+					sortBy="#{_row.abreviacao}" filterMatchMode="contains"
+					style="font-size:12px;" width="60px;" >
+					<h:outputText value="#{_row.abreviacao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.referencia']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.referencia}"
+					sortBy="#{_row.referencia}" filterMatchMode="contains"
+					style="font-size:12px;" width="80px;" >
+					<h:outputText value="#{_row.referencia}" />
+				</pf:column>
+				<pf:column headerText="#{msg['livroreferencia.label.versao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.versaorefer}"
+					sortBy="#{_row.versaorefer}" filterMatchMode="contains"
+					style="font-size:12px;" width="60px;">
+					<h:outputText value="#{_row.versaorefer}"  />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.construcao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.construcaonome}"
+					sortBy="#{_row.construcaonome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.construcaonome}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.versao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.versao}"
+					sortBy="#{_row.versao}" filterMatchMode="contains"
+					style="font-size:12px;" width="60px;">
+					<h:outputText value="#{_row.versao}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['construcao.label.forma']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.referenciaforma}"
+					sortBy="#{_row.referenciaforma}" filterMatchMode="contains"
+					style="font-size:12px;" width="60px;">
+					<h:outputText value="#{_row.referenciaforma}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['livroreferencia.label.usuario']}" width="70px;">
+					<h:outputText value="#{_row.usuariostamp}" style="font-size:12px;" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['usocomum.label.datastamp']}" width="70px;">
+					<h:outputText value="#{_row.datastamp}" style="font-size:12px;">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</pf:column>
+
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="#{msg['imagem.label.titulo']}"
+			widgetVar="addEditFormImagemLivroReferenciaDlg" width="65%" height="500px;"
+			draggable="true" modal="false" position="top center"
+			showEffect="flip"
+			onShow="PF('addEditFormImagemLivroReferenciaDlg').initPosition()"
+			resizable="false">
+			<h:form id="addEditFormImagemLivroReferencia" enctype="multipart/form-data">
+				<pf:growl id="mensagem" globalOnly="true" />
+				<h:panelGrid style="font-size:12px;" styleClass="panelgrlsb">
+				  <h:panelGrid columns="2" styleClass="panelgrlsb">	
+				  	<pf:column>
+				  		<pf:row>
+				  			<pf:outputLabel value="Tipo Imagem :"/>
+							<pf:selectOneMenu
+								value="#{imagemLivroReferenciaController.imagemReferencia.tipoimagem}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains" required="true" requiredMessage="Por favor, informe Tipo de Imagem !" >
+								<f:selectItem itemValue="#{null}"
+									itemLabel="Tipo Imagem"
+									style="font-size:12px;height:0.7em;text-align:left;width:200px;" />
+								<f:selectItems
+									value="#{imagemLivroReferenciaController.tipoimagem}"
+									var="tipoimagem" itemValue="#{tipoimagem}"
+									itemLabel="#{tipoimagem.label}"/>
+							</pf:selectOneMenu>
+				  		</pf:row>
+				  	</pf:column>
+				  	<pf:column>
+				  		<pf:row>
+				  			<pf:outputLabel value="Tipo Produto :"/>
+							<pf:selectOneMenu
+								value="#{imagemLivroReferenciaController.imagemReferencia.tipogrupoimagem}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains" required="true" requiredMessage="Por favor, informe Grupo Produto Imagem !" >
+								<f:selectItem itemValue="#{null}"
+									itemLabel="Grupo Imagem"
+									style="font-size:12px;height:0.7em;text-align:left;width:200px;" />
+								<f:selectItems
+									value="#{imagemLivroReferenciaController.tipogrupoimagem}"
+									var="tipogimagem" itemValue="#{tipogimagem}"
+									itemLabel="#{tipogimagem.label}"/>
+							</pf:selectOneMenu>
+				  		</pf:row>
+				  	</pf:column>
+				  </h:panelGrid>	
+				  <h:panelGrid id="grdReferencia" columns="6" styleClass="panelgrlsb">
+				  	<pf:column>
+				  		<pf:row>
+				  			<pf:outputLabel value="Referência:"/>
+
+				  			<pf:inputText value="#{imagemLivroReferenciaController.informaReferencia}"
+								requiredMessage="Por favor , informe Referência !"
+								required="true" 
+								style="height:0.7em;font-size:12px;" size="7" maxlength="7">
+							</pf:inputText>
+
+							<pf:commandLink
+								action="#{imagemLivroReferenciaController.buscaReferencia}"
+								update="addEditFormImagemLivroReferencia">
+								<i class="fa fa-search" style="font-size: 1.5em;"
+									title="Pesquisa Referência" />
+							</pf:commandLink>
+				  		
+							<pf:selectOneMenu
+								value="#{imagemLivroReferenciaController.imagemReferencia.livroreferencia}"
+								converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="Referencia/Versão"
+									style="font-size:12px;height:0.7em;text-align:left;width:200px;" />
+								<f:selectItems
+									value="#{imagemLivroReferenciaController.listaLivroReferencia}"
+									var="livroreferencia" itemValue="#{livroreferencia}"
+									itemLabel="#{livroreferencia.abreviacao} #{livroreferencia.referencia}|#{livroreferencia.versaorefer}|#{livroreferencia.construcaonome}|#{livroreferencia.versao}"/>
+									<pf:ajax update="grdReferencia grdConstrucao pnlFormas addEditFormImagemLivroReferencia btnSave" event="change"
+									listener="#{imagemLivroReferenciaController.complementaImagemLivroReferencia()}" process="@this" />
+								
+							</pf:selectOneMenu>
+							<pf:outputLabel value="Versão:"/>
+							<pf:inputText readonly="true" value="#{imagemLivroReferenciaController.imagemReferencia.versaorefer}" size="3" maxlength="3"/>
+
+				  		</pf:row>
+				  	</pf:column>
+				  </h:panelGrid>
+				  <h:panelGrid id="grdConstrucao" columns="4" styleClass="panelgrlsb">
+				  	<pf:column>
+				  		<pf:row>
+							<pf:outputLabel value="Construção :"/>
+							<pf:inputText readonly="true" value="#{imagemLivroReferenciaController.imagemReferencia.construcaonome}" />
+							<pf:outputLabel value="Versão:"/>
+							<pf:inputText readonly="true" value="#{imagemLivroReferenciaController.imagemReferencia.versao}" size="3" maxlength="3"/>
+				  		</pf:row>
+				  	</pf:column>
+				  </h:panelGrid>
+				  <h:panelGrid id="pnlFormas" columns="2" styleClass="panelgrlsb">
+				  	<pf:column>
+				  		<pf:row>
+	 						<pf:outputLabel value="Forma:"/>
+							<pf:inputText readonly="true" value="#{imagemLivroReferenciaController.imagemReferencia.referenciaforma}"/>
+				  		</pf:row>
+				  	</pf:column>
+				  	
+				  </h:panelGrid>
+					<pf:outputLabel for="uploadFile" value="Imagem:"/>
+					<pf:fileUpload id="uploadFile"  label="Escolher"  uploadLabel="UpLoad" cancelLabel="Cancelar" listener="#{imagemLivroReferenciaController.upload}"  mode="advanced" 
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+					invalidFileMessage="É permitido apenas as Extensões: jpeg,jpg,gif e png" 
+					sizeLimit="100000" fileLimit="1" update="btnSave mensagem" >
+					</pf:fileUpload>
+				</h:panelGrid>
+				<h:panelGrid id="btnSave" columns="2">
+					<pf:commandButton rendered="#{imagemLivroReferenciaController.mstatus}"  value="#{msg['botao.save']}"
+						actionListener="#{imagemLivroReferenciaController.save()}"
+						update="addEditFormImagemLivroReferencia :crudFormImagemLivroReferencia :crudFormImagemLivroReferencia:tblLazyImagemLivroReferencia" 
+						oncomplete="PF('addEditFormImagemLivroReferenciaDlg').hide();" process="@this" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormImagemLivroReferenciaDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+		<pf:dialog header="Referencia e suas Versôes" widgetVar="showFormImagemCarrocelDlg"
+			draggable="true" modal="false" position="top top"
+			showEffect="flip"
+			onShow="PF('showFormImagemCarrocelDlg').initPosition()"
+			resizable="false" width="60%" >
+			<h:form id="showCarrocel">
+				<pf:galleria value="#{imagemLivroReferenciaController.listaImagemReferencia}" var="imagem" 
+				panelHeight="700" 
+				panelWidth="700" effect="clip" 
+				styleClass="alinhamento" 
+				frameHeight="80" frameWidth="40" >
+					<pf:graphicImage value="#{imagemLivroReferenciaController.image}" 
+					showCaption="true" styleClass="alinhamento" cache="false">
+					<pf:outputLabel value="#{imagem.referencia} | #{imagem.versaorefer} - #{imagem.construcaonome} | #{imagem.versao}"/>
+						<f:param name="id_imagem" 
+						value="#{imagem.imagemlivroreferenciaid}"/>
+						 <div hidden="true" class="caption">#{imagem}</div>
+					</pf:graphicImage>
+				</pf:galleria>
+		  </h:form>	
+		</pf:dialog>
+
+	</ui:define>
+</ui:decorate>

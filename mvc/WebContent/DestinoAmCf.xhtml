@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormGrpInvoiceDestino">
+			<pf:panel header="#{msg['destino.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{destinoAmCfController.add()}" update=":addEditFormGrpInvoiceDestino"
+				oncomplete="PF('addEditFormGrpInvoiceDestinoDlg').show()" />
+			<pf:dataTable value="#{destinoAmCfController.listaDestinoAmCf}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center;">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{destinoAmCfController.edit(_row)}"
+						update=":addEditFormGrpInvoiceDestino"
+						oncomplete="PF('addEditFormGrpInvoiceDestinoDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{destinoAmCfController.delete(_row)}" update=":crudFormGrpInvoiceDestino"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['destino.label.grpinvoice']}" style="font-size:12px;" 
+				filterMatchMode="contains" sortBy="#{_row.gruposclientesinvoices.nome}" filterBy="#{_row.gruposclientesinvoices.nome}">
+					<h:outputText value="#{_row.gruposclientesinvoices.nome}"/>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.destinoamcfid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['destino.label.nome']}"
+					style="font-size:12px;" sortBy="#{_row.destino}" filterMatchMode="contains" filterBy="#{_row.destino}">
+					<h:outputText value="#{_row.destino}" />
+				</pf:column>
+				
+				<pf:column headerText="#{msg['dgaglobal.label.status']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.situacao.label}" />
+				</pf:column>
+				
+			</pf:dataTable>
+		</h:form>
+
+		<pf:dialog header="Destinos Grupos Clientes Invoice" widgetVar="addEditFormGrpInvoiceDestinoDlg"
+			width="560" height="160" resizable="false" position="center center"
+			showEffect="clip" onShow="PF('addEditFormGrpInvoiceDestinoDlg').initPosition()"
+			modal="false" draggable="false">
+			<h:form id="addEditFormGrpInvoiceDestino">
+				<pf:growl id="messages" globalOnly="true" />
+				<h:panelGrid columns="2" style="font-size:12px">
+					<h:outputLabel value="#{msg['destino.label.nome']}:" />
+					<pf:inputText value="#{destinoAmCfController.destinoamcf.destino}" size="60"
+						required="true" requiredMessage="Informe nome para Destino,Grupo Invoice Cliente !" converter="upperCaseConverter">
+						<pf:ajax event="blur" update="@this" />
+					</pf:inputText>
+					<h:outputLabel value="#{msg['destino.label.grpinvoice']}" />
+					<pf:selectOneMenu value="#{destinoAmCfController.destinoamcf.gruposclientesinvoices}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="Por favor Selecione a qual Grupo pertence o Destino!" filter="true"
+						filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{destinoAmCfController.listaGrupoClienteInvoice}" var="clienteinvoice"
+							itemValue="#{clienteinvoice}" itemLabel="#{clienteinvoice.nome}" />
+					</pf:selectOneMenu>
+					<h:outputLabel value="#{msg['usocomum.label.situacao']}" />
+					<pf:selectOneMenu value="#{destinoAmCfController.destinoamcf.situacao}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="Status deste Destino,selecione !!" filter="true"
+						filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemValue="#{null}"
+							itemLabel="#{msg['usuario.label.escolher']}" />
+						<f:selectItems value="#{destinoAmCfController.ativoInativo}" var="ativoinativo"
+							itemValue="#{ativoinativo}" itemLabel="#{ativoinativo.label}" />
+					</pf:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{destinoAmCfController.save()}" process="@form"
+						update=":addEditFormGrpInvoiceDestino :crudFormGrpInvoiceDestino"
+						oncomplete="if (!args.validationFailed) PF('addEditFormGrpInvoiceDestinoDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormGrpInvoiceDestinoDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+		
+		</ui:define>
+	
+
+</ui:decorate>

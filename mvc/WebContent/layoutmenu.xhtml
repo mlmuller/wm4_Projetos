@@ -1,0 +1,264 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<style>
+			* {
+				font-size: 11px;
+				font-family:'latobold';
+				line-height: 1.0;
+				text-align:left;
+			  }
+			  .ui-menu-item  {
+			    width: auto; !important;
+			    
+			  }
+			  .ui-menuitem .ui-menuitem-link {
+			  	width: 150px; !important;
+			    white-space: nowrap;
+
+			  }
+			  .ui-menuitem-text{
+			  	width:100px;
+			  }
+			  .CorFonte {
+			  	color: red;
+			  }
+		</style>
+		<!-- 
+			<script type="text/javascript">
+				document.getElementById("fouc").style.display="block";
+	      	</script>
+      	 -->
+	</h:head>
+	<h:form>
+		  <!-- 
+
+		  <p:megaMenu model="#{usuarioController.modeloMenu}" autoDisplay="false" />
+		  -->
+		  <p:megaMenu orientation="horizontal" autoDisplay="false" style="background-color:#bad9cb;">
+            <p:submenu label="Cadastros" icon="fa fa-address-book">
+                <p:column >
+                    <p:submenu label="Acessos" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Usuários" url="usuarios.jsf" />
+                        <p:menuitem value="Sistemas" url="dgaSistema.jsf"/>
+                        <p:menuitem value="Menus" url="dgaMenu.jsf"  />
+                        <p:menuitem value="Modulos" url="dgaModulo.jsf"/>
+                        <p:menuitem value="Privilégios" url="dgaPrivilegio.jsf"/>
+                        <p:menuitem value="Usuário Cliente" url="#" />
+                        <p:menuitem value="Usuario Mercado"   url="#"/>
+                        <p:menuitem value="Sequencial" url="Sequencial.jsf"/>
+                        <p:menuitem value="Globais" url="#"/>
+                    </p:submenu>
+               </p:column>
+               <p:column>     
+                    <p:submenu label="Financeiro" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Bancos" url="Banco.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Prazos" url="PrazoPagamento.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Moedas" url="Moeda.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Cotações" url="Cotacao.jsf" style="text-align:left;"/>
+                    </p:submenu>
+                    <p:submenu label="Geral" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Navios" url="Navio.jsf" style="text-align:left;"/>
+                        <p:menuitem value="NBM" url="Nbm.jsf" style="text-align:left;"/>
+                        <p:menuitem value="HTS" url="Hts.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Endereço Clientes" url="EnderecoCliente.jsf" style="text-align:left;width:60px;"/>
+                        <p:menuitem value="Destinos Amostra" url="DestinoAmCf.jsf" style="text-align:left;"/>
+                        
+                    </p:submenu>
+                    <p:submenu label="Pessoas" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Despachante" url="Despachante.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Importador" url="Importador.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Fábrica" url="Fabrica.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Transportadora" url="Transportadora.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Cliente" url="Cliente.jsf" style="text-align:left;"/>
+
+                    </p:submenu>
+				</p:column>
+  				<p:column>                  
+                    <p:submenu label="Justificativa" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Razão Alteração" url="#" style="text-align:left;"/>
+                    </p:submenu>
+                    <p:submenu label="Grupos" style="height:20px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Clientes" url="GrupoCliente.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Fábricas" url="GrupoFabrica.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Cliente Projeção" url="#" style="text-align:left;" />
+                        <p:menuitem value="Cliente Invoice" url="#" style="text-align:left;"/>
+
+                    </p:submenu>
+                    <p:submenu label="Local" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Região" url="regiao.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Pais" url="Pais.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Estado" url="Estado.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Cidade" url="Cidade.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Estação" url="Estacao.jsf" style="text-align:left;"/>
+                    </p:submenu>
+                </p:column>
+ 				<p:column>
+                   <p:submenu label="Componentes" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Caixas" url="Caixa.jsf" style="text-align:left;" />
+                        <p:menuitem value="Carimbos" url="Carimbo.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Tipos Produto" url="TipoCalcado.jsf" style="text-align:left;width:95%;"/>
+                        <p:menuitem value="Produtos" url="Produtos.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Numerações" url="Numeracao.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Conversão Sizes" url="Conversao.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Cores" url="Cor.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Materiais" url="Material.jsf" style="text-align:left;"/>
+                        
+                    </p:submenu>
+                    <p:submenu label="Composição" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Construções" url="Construcao.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Formas" url="Forma.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Reserva Referência" url="LivroReferencia.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Imagens" url="ImagemReferencia.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Modelos" url="Modelo.jsf" style="text-align:left;"/>
+                        
+                    </p:submenu>
+ 				</p:column>               
+            </p:submenu>
+
+            <p:submenu label="Desenvolvimento" icon="fa fa-university" style="color:black;text-align:center;" >
+
+                <p:column>
+                    <p:submenu label="Amostras Novas" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Amostras " url="AmostraTeste.jsf" />
+                        <p:menuitem value="Novas 2.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Etiquetas" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Inserir" url="jretiqueta.jsf"/>
+                        <p:menuitem value="Print" url="etiquetasPrint.jsf"/>
+                    </p:submenu>
+                    <p:submenu label="Cadastros" style="height:15px;background-color:#bad9cb;color:black;text-align:left">
+                        <p:menuitem value="Livro Referencia" url="LivroReferencia.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Imagens" url="ImagemReferencia.jsf" style="text-align:left;"/>
+                        <p:menuitem value="construção" url="Construcao.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Modelo" url="Modelo.jsf" style="text-align:left;"/>
+
+                    </p:submenu>
+                </p:column>
+
+ 				<p:column>
+                    <p:submenu label="Opçao 4" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Novas 4.1" url="#"/>
+                        <p:menuitem value="Novas 4.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Opçao 5" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Novas 5.1" url="#"/>
+                        <p:menuitem value="Novas 5.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Opçao 6" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Novas 6.1" url="#"/>
+                        <p:menuitem value="Novas 6.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+            </p:submenu>
+
+            <p:submenu label="Atelier" icon="fa fa-picture-o" style="color:black;">
+                <p:column>
+                    <p:submenu label="Cadastros" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Motivo" url="#"/>
+                        <p:menuitem value="Setor" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Produção" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                  	    <p:menuitem value="Nova Produção" url="AmostraProducao.jsf">
+                  	      <p:badge value="#{prodIntermController.qtdFichas}" styleClass="CorFonte" severity="danger" >
+                  	      <i class="pi pi-bell" style="font-size: 1.5rem;" title="Novas fichas a Produzir"/>
+                  	      </p:badge>
+                  	    </p:menuitem>
+                        <p:menuitem value="Manutenção" url="ManutencaoProducao.jsf"/>
+                        <p:menuitem value="A Liberar" url="FichasALiberar.jsf">
+                        </p:menuitem>
+                    </p:submenu>
+                </p:column>
+                <p:column>
+                    <p:submenu label="Relatório" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Etiqueta" url="#"/>
+                        <p:menuitem value="Atelier 3.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+                <p:column>
+                    <p:submenu label="View" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Atelier 4.1" url="#"/>
+                        <p:menuitem value="Atelier 4.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+
+            </p:submenu>
+
+            <p:submenu label="Confirmação" icon="fa fa-check-square-o" style="color:black;">
+                <p:column>
+                    <p:submenu label="Confirmação" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Conf 1.1" url="#"/>
+                        <p:menuitem value="Conf 1.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Confirmação" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Conf 2.1" url="#"/>
+                        <p:menuitem value="Conf 2.2" url="#"/>
+                    </p:submenu>
+                    
+                    <p:submenu label="Confirmação" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Conf 3.1" url="#"/>
+                        <p:menuitem value="Conf 3.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+
+                <p:column>
+                    <p:submenu label="Confirmação" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Conf 4.1" url="#"/>
+                        <p:menuitem value="Conf 4.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+            </p:submenu>
+    		<p:submenu label="Comercial" icon="fa fa-comments" style="color:black;">
+                <p:column>
+                    <p:submenu label="Comercial" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Com 1.1" url="#"/>
+                        <p:menuitem value="Com 1.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Comercial" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Com 2.1" url="#"/>
+                        <p:menuitem value="Com 2.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="Comercial" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Com 3.1" url="#"/>
+                        <p:menuitem value="Com 3.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+
+                <p:column>
+                    <p:submenu label="Comercial" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="Com 4.1" url="#"/>
+                        <p:menuitem value="Com 4.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+            </p:submenu>
+  
+            <p:submenu label="Trafego" icon="fa fa-plane" style="color:black;font-size:1.5em;">
+                <p:column>
+                    <p:submenu label="Trafego" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="traf 1.1" url="#"/>
+                        <p:menuitem value="traf 1.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="trafego" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="traf 2.1" url="#"/>
+                        <p:menuitem value="traf 2.2" url="#"/>
+                    </p:submenu>
+                    <p:submenu label="trafego" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="traf 3.1" url="#"/>
+                        <p:menuitem value="traf 3.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+                <p:column>
+                    <p:submenu label="trafego" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
+                        <p:menuitem value="traf 4.1" url="#"/>
+                        <p:menuitem value="traf 4.2" url="#"/>
+                    </p:submenu>
+                </p:column>
+            </p:submenu>
+            
+            
+          </p:megaMenu>
+		</h:form>
+	</ui:composition>

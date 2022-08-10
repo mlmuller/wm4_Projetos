@@ -1,0 +1,117 @@
+package br.com.gvdexport.model;
+
+import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
+@StaticMetamodel(CosturaConfirmacao.class)
+public abstract class CosturaConfirmacao_ {
+
+	public static volatile SingularAttribute<CosturaConfirmacao, String> observacao;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fioceleiroref;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> ilhosforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> zippermat;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> complemento;
+	public static volatile SingularAttribute<CosturaConfirmacao, Long> confirmacaoid;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fivelatipo;
+	public static volatile SingularAttribute<CosturaConfirmacao, Long> id;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> borda;
+	public static volatile SingularAttribute<CosturaConfirmacao, Confirmacao> confirmacao;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha2forn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> ornamentoref;
+	public static volatile SingularAttribute<CosturaConfirmacao, Date> datastamp;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> ornamentoforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> elasticoforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fivelaforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha2espess;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> ornamento;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> elastico;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> elasticotipo;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fivelaref;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> bielasticotipo;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> zippertipo;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> bielastico;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> rebiteref;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> bordatipo;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> bielasticoforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> velcro;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> zipperforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> usuariostamp;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha1espess;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha2pto;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> elasticolargura;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> labeldescricao3;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> labeldescricao2;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> labeldescricao1;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha1forn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> descricao3;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> descricao1;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> descricao2;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fioceleiroespes;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha1;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fioceleiroforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> fioceleiro;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha1pto;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> ilhosref;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha2;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> linha3;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> rebiteforn;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> zipper;
+	public static volatile SingularAttribute<CosturaConfirmacao, String> bielasticolargura;
+
+	public static final String OBSERVACAO = "observacao";
+	public static final String FIOCELEIROREF = "fioceleiroref";
+	public static final String ILHOSFORN = "ilhosforn";
+	public static final String ZIPPERMAT = "zippermat";
+	public static final String COMPLEMENTO = "complemento";
+	public static final String CONFIRMACAOID = "confirmacaoid";
+	public static final String FIVELATIPO = "fivelatipo";
+	public static final String ID = "id";
+	public static final String BORDA = "borda";
+	public static final String CONFIRMACAO = "confirmacao";
+	public static final String LINHA2FORN = "linha2forn";
+	public static final String ORNAMENTOREF = "ornamentoref";
+	public static final String DATASTAMP = "datastamp";
+	public static final String ORNAMENTOFORN = "ornamentoforn";
+	public static final String ELASTICOFORN = "elasticoforn";
+	public static final String FIVELAFORN = "fivelaforn";
+	public static final String LINHA2ESPESS = "linha2espess";
+	public static final String ORNAMENTO = "ornamento";
+	public static final String ELASTICO = "elastico";
+	public static final String ELASTICOTIPO = "elasticotipo";
+	public static final String FIVELAREF = "fivelaref";
+	public static final String BIELASTICOTIPO = "bielasticotipo";
+	public static final String ZIPPERTIPO = "zippertipo";
+	public static final String BIELASTICO = "bielastico";
+	public static final String REBITEREF = "rebiteref";
+	public static final String BORDATIPO = "bordatipo";
+	public static final String BIELASTICOFORN = "bielasticoforn";
+	public static final String VELCRO = "velcro";
+	public static final String ZIPPERFORN = "zipperforn";
+	public static final String USUARIOSTAMP = "usuariostamp";
+	public static final String LINHA1ESPESS = "linha1espess";
+	public static final String LINHA2PTO = "linha2pto";
+	public static final String ELASTICOLARGURA = "elasticolargura";
+	public static final String LABELDESCRICAO3 = "labeldescricao3";
+	public static final String LABELDESCRICAO2 = "labeldescricao2";
+	public static final String LABELDESCRICAO1 = "labeldescricao1";
+	public static final String LINHA1FORN = "linha1forn";
+	public static final String DESCRICAO3 = "descricao3";
+	public static final String DESCRICAO1 = "descricao1";
+	public static final String DESCRICAO2 = "descricao2";
+	public static final String FIOCELEIROESPES = "fioceleiroespes";
+	public static final String LINHA1 = "linha1";
+	public static final String FIOCELEIROFORN = "fioceleiroforn";
+	public static final String FIOCELEIRO = "fioceleiro";
+	public static final String LINHA1PTO = "linha1pto";
+	public static final String ILHOSREF = "ilhosref";
+	public static final String LINHA2 = "linha2";
+	public static final String LINHA3 = "linha3";
+	public static final String REBITEFORN = "rebiteforn";
+	public static final String ZIPPER = "zipper";
+	public static final String BIELASTICOLARGURA = "bielasticolargura";
+
+}
+

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<style type="text/css">
+.panelgrlsb .ui-panelgrid {
+	border: none !important;
+}
+
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+</style>
+		<h:form id="crudFormCliente">
+			<pf:panel header="#{msg['cliente.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{clienteController.add()}" update=":addEditFormCliente"
+				oncomplete="PF('addEditFormClienteDlg').show()"
+				style="font-size:11px;" />
+			<pf:dataTable value="#{clienteController.listaClientes}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px">
+				<pf:column width="50">
+					<pf:commandLink action="#{clienteController.edit(_row)}"
+						update=":addEditFormCliente"
+						oncomplete="PF('addEditFormClienteDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{clienteController.delete(_row)}"
+						update=":crudFormCliente" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:11px;">
+					<h:outputText value="#{_row.clienteid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.nome']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nome}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.resumido']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.sucinto}"
+					sortBy="#{_row.sucinto}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.sucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cliente.label.grupo']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.grupoclientes.nome}"
+					sortBy="#{_row.grupoclientes.nome}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.grupoclientes.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cliente.label.nil']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nilreturn}"
+					sortBy="#{_row.nilreturn}" filterMatchMode="contains"
+					style="font-size:11px;">
+					<h:outputText value="#{_row.nilreturn}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Cadastro de Clientes"
+			widgetVar="addEditFormClienteDlg" width="85%" draggable="false"
+			modal="false" position="top center" showEffect="flip"
+			onShow="PF('addEditFormCLienteDlg').initPosition()" resizable="false">
+			<h:form id="addEditFormCliente">
+				<pf:growl id="mensagem" globalOnly="true" />
+				<pf:scrollPanel style="font-size:16px;" styleClass="panelgrlsb">
+					<pf:panelGrid layout="grid" columns="2" styleClass="panelgrlsb">
+						<pf:column>
+							<pf:panelGrid columns="2">
+								<pf:outputLabel value="#{msg['cliente.label.nome']}"
+									style="font-size:11px;heigth:0.7em" />
+								<pf:inputText value="#{clienteController.cliente.nome}"
+									requiredMessage="Por favor , informe nome para o Cliente !"
+									required="true"
+									style="text-align:left;height:0.7em;font-size:11px;" size="30"  maxlength="30"/>
+								<pf:outputLabel value="#{msg['cliente.label.sucinto']}"
+									style="font-size:11px;height:0.7em;" />
+								<pf:inputText value="#{clienteController.cliente.sucinto}"
+									style="font-size:11px; height:0.7em;" maxlength="15"/>
+								<pf:outputLabel value="#{msg['cliente.label.negociacao']}"
+									style="font-size:11px;height:0.7px;" />
+								<pf:selectOneMenu
+									value="#{clienteController.cliente.tiponegociacao}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}"
+										style="font-size:11px;height:0.7em;" />
+									<f:selectItems value="#{clienteController.tiponegociacao}"
+										var="tiponegociacao" itemValue="#{tiponegociacao}"
+										itemLabel="#{tiponegociacao.label}" />
+								</pf:selectOneMenu>
+								<pf:outputLabel value="#{msg['cliente.label.importador']}"
+									style="font-size:11px;height:0.7em;" />
+								<pf:selectOneMenu
+									value="#{clienteController.cliente.importadores}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}"
+										style="font-size:11px;height:0.7em;" />
+									<f:selectItems value="#{clienteController.listaImportadores}"
+										var="importador" itemValue="#{importador}"
+										itemLabel="#{importador.nome}" />
+								</pf:selectOneMenu>
+							</pf:panelGrid>
+							<pf:row>
+								<pf:panelGrid columns="2">
+									<pf:column>
+										<pf:outputLabel value="#{msg['cliente.label.nil']}"
+											style="font-size:11px;height:0.7em;" />
+										<pf:inputText value="#{clienteController.cliente.nilreturn}"
+											placeholder="(%)-Percentual" size="6" maxlength="5"
+											style="font-size:11px;height:08.em;" />
+									</pf:column>
+									<pf:column>
+										<pf:outputLabel value="#{msg['cliente.label.desconto']}"
+											style="font-size:11px;height:0.7em;" />
+										<pf:inputText
+											value="#{clienteController.cliente.descdiversos}"
+											placeholder="(%)-Percentual" size="8" maxlength="8"
+											style="font-size:11px;height:0.7em;" />
+									</pf:column>
+								</pf:panelGrid>
+							</pf:row>
+							<pf:column>
+								<pf:panelGrid columns="2" styleClass="panelgrlsb">
+									<pf:outputLabel value="#{msg['cliente.label.mercado'] }"
+										style="font-size:11px;height:0.7em;" />
+									<pf:selectOneMenu value="#{clienteController.cliente.mercado}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains" required="true"
+										requiredMessage="Por favor, Selecione um Mercado !">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em;" />
+										<f:selectItems value="#{clienteController.mercados}"
+											var="mercados" itemValue="#{mercados}"
+											itemLabel="#{mercados.name()}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.grupo'] }"
+										style="font-size:11px;height:0.7em;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.grupoclientes}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains" required="true" requiredMessage="`Por Favor,informe Grupo pertencente Cliente !">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listagrpClientes}"
+											var="grpclientes" itemValue="#{grpclientes}"
+											itemLabel="#{grpclientes.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.divisao'] }"
+										style="font-size:11px;height:0.7em;" />
+									<pf:inputText value="#{clienteController.cliente.divisao}"
+										style="font-size:11px;height:0.7em" maxlength="30"/>
+									<pf:outputLabel value="#{msg['cliente.label.imprimictrlfab']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.imprimicontratofabrica}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems
+											value="#{clienteController.imprimicontratofabrica}"
+											var="impcontratofab" itemValue="#{impcontratofab}"
+											itemLabel="#{impcontratofab.label}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.imprimietqpalm'] }"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.imprimepalmilhaEtiqueta}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.simnao}"
+											var="simnao" itemValue="#{simnao}"
+											itemLabel="#{simnao.label}" />
+									</pf:selectOneMenu>
+								</pf:panelGrid>
+								<pf:column>
+									<pf:row>
+										<pf:panelGrid columns="3">
+											<pf:column>
+												<pf:outputLabel value="#{msg['cliente.label.abreamo']}"
+													style="font-size:11px;height:0.7em" />
+												<pf:inputText
+													value="#{clienteController.cliente.abramostra}" size="5"
+													maxlength="5" style="font-size:11px;height:0.7em"  />
+											</pf:column>
+											<pf:column>
+												<pf:outputLabel value="#{msg['cliente.label.abrfin']}"
+													style="font-size:11px;height:0.7em" />
+												<pf:inputText value="#{clienteController.cliente.abrfin}"
+													size="15" maxlength="15"
+													style="font-size:11px;height:0.7em" />
+											</pf:column>
+											<pf:column>
+												<pf:outputLabel value="#{msg['cliente.label.prior'] }"
+													style="font-size:11px;height:0.7em" />
+												<pf:inputText
+													value="#{clienteController.cliente.prioridade }" size="3"
+													maxlength="3" style="font-size:11px;height:0.7em" />
+											</pf:column>
+										</pf:panelGrid>
+									</pf:row>
+								</pf:column>
+							</pf:column>
+							<pf:column>
+								<pf:panelGrid columns="2" styleClass="panelgrlsb">
+									<pf:outputLabel value="#{msg['cliente.label.sigla'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{clienteController.cliente.sigla}"
+										style="font-size:11px;height:0.7em" maxlength="3"/>
+									<pf:outputLabel value="#{msg['cliente.label.codimport'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText
+										value="#{clienteController.cliente.codimp}"
+										style="font-size:11px;height:0.7em" maxlength="5" />
+									<pf:outputLabel value="#{msg['cliente.label.endereco'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{clienteController.cliente.endereco }"
+										size="40" maxlength="40" style="font-size:11px;height:0.7em" />
+								</pf:panelGrid>
+							</pf:column>
+							<pf:column>
+								<pf:row>
+									<pf:panelGrid columns="2">
+										<pf:column>
+											<pf:outputLabel value="#{msg['cliente.label.bairro']}"
+												style="font-size:11px;height:0.7em" />
+											<pf:inputText value="#{clienteController.cliente.bairro}"
+												size="30" maxlength="30" style="font-size:11px;height:0.7em" />
+										</pf:column>
+										<pf:column>
+											<pf:outputLabel value="#{msg['cliente.label.cep']}"
+												style="font-size:11px;height:0.7em" />
+											<pf:inputText value="#{clienteController.cliente.cep}"
+												size="10" maxlength="10" style="font-size:11px;height:0.7em" />
+										</pf:column>
+									</pf:panelGrid>
+								</pf:row>
+							</pf:column>
+							<pf:column>
+							  <pf:panelGrid columns="2">
+								<pf:outputLabel value="#{msg['cliente.label.cidade'] }"
+									style="font-size:11px;height:0.7em" />
+								<pf:selectOneMenu
+									value="#{clienteController.cliente.cidades}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems value="#{clienteController.listaCidades}"
+										var="listacidade" itemValue="#{listacidade}"
+										itemLabel="#{listacidade.nome} - #{listacidade.estado.pais.nome}"
+										style="font-size:11px;height:0.7em" />
+								</pf:selectOneMenu>
+								<pf:outputLabel value="#{msg['cliente.label.lingua'] }"
+									style="font-size:11px;height:0.7em" />
+								<pf:inputText value="#{clienteController.cliente.lingua}"
+									style="font-size:11px;height:0.7em" maxlength="15" size="15"/>
+							</pf:panelGrid>	
+							</pf:column>
+						</pf:column>
+						<pf:column>
+								<h:panelGrid columns="2">
+									<pf:outputLabel value="#{msg['cliente.label.tipopessoa'] }"
+									style="font-size:11px;height:0.7em" />
+								<pf:selectOneMenu
+									value="#{clienteController.cliente.tipopessoa}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}"
+										style="font-size:11px;height:0.7em" />
+									<f:selectItems value="#{clienteController.tipopessoa}"
+										var="tipopessoa" itemValue="#{tipopessoa}"
+										itemLabel="#{tipopessoa.label}" />
+									<pf:ajax update="pnlCliente" immediate="true" />
+								</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.cnpjcpf'] }"
+										style="font-size:11px;height:0.7em" />
+									<h:panelGroup id="pnlCliente">
+										<pf:inputMask
+											rendered="#{clienteController.cliente.tipopessoa.name()  == 'J'}"
+											mask="99.999.999/9999-99" size="20"
+											value="#{clienteController.cliente.cnpjcpf}"
+											placeholder="CNPJ" style="font-size:11px;height:0.7em" maxlength="20" />
+										<pf:inputMask
+											rendered="#{clienteController.cliente.tipopessoa.name() == 'F'}"
+											mask="999.999.999-99" size="15"
+											value="#{clienteController.cliente.cnpjcpf}"
+											placeholder="CPF" style="font-size:11px;height:0.7em" maxlength="15" />
+									</h:panelGroup>
+									<pf:outputLabel value="#{msg['cliente.label.inscricao'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText
+										value="#{clienteController.cliente.inscricaoestadual}"
+										style="font-size:11px;height:0.7em" maxlength="16" size="16"/>
+									<pf:outputLabel value="#{msg['cliente.label.telefone']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{clienteController.cliente.telefone}"
+										style="font-size:11px;height:0.7em" maxlength="30" size="30" />
+									<pf:outputLabel value="#{msg['cliente.label.despachantea'] }"
+										style="font-size:11px;height:0.7em" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.despachantes1}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaDespachante}"
+											var="despachante1" itemValue="#{despachante1}"
+											itemLabel="#{despachante1.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.despachanteb'] }"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.despachantes2}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaDespachante}"
+											var="despachante2" itemValue="#{despachante2}"
+											itemLabel="#{despachante2.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.transportadora1']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.transportadoras1}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaTransportador}"
+											var="transportador1" itemValue="#{transportador1}"
+											itemLabel="#{transportador1.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.transportadora2']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.transportadoras2}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaTransportador}"
+											var="transportador2" itemValue="#{transportador2}"
+											itemLabel="#{transportador2.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.grpclienteinv']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.grpclienteinvoice}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaGrpCliInvoice}"
+											var="clienteinvoice" itemValue="#{clienteinvoice}"
+											itemLabel="#{clienteinvoice.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.grpclienteprj']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.clientesprojecoes}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems
+											value="#{clienteController.listaGrpCliProjecao}"
+											var="clienteprojecao" itemValue="#{clienteprojecao}"
+											itemLabel="#{clienteprojecao.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.layoutinvped']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.layoutinvoicetrading}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.layoutinvtrading}"
+											var="clientelayout" itemValue="#{clientelayout}"
+											itemLabel="#{clientelayout.label}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.banco']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu value="#{clienteController.cliente.bancos}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaBancos}"
+											var="banco" itemValue="#{banco}" itemLabel="#{banco.nome}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['cliente.label.contacorrente']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputText value="#{clienteController.cliente.contacorente}"
+										style="font-size:11px;height:0.7em" />
+									<pf:outputLabel value="#{msg['cliente.label.dadosremessa']}"
+										style="font-size:11px;height:0.7em" />
+									<pf:inputTextarea cols="55" rows="8" maxlength="500"
+										value="#{clienteController.cliente.remessaaomostra}"
+										style="font-size:11px;">
+									</pf:inputTextarea>
+									<pf:outputLabel value="#{msg['cliente.label.prazocliente'] }"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu
+										value="#{clienteController.cliente.prazopagamentos}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.listaPrzPagamento}"
+											var="przpgto" itemValue="#{przpgto}"
+											itemLabel="#{przpgto.descricao} - #{przpgto.prazo}" />
+									</pf:selectOneMenu>
+									<pf:outputLabel value="#{msg['usocomum.label.situacao']}"
+										style="font-size:11px;height:10px;" />
+									<pf:selectOneMenu value="#{clienteController.cliente.situacao}"
+										converter="omnifaces.SelectItemsConverter" filter="true"
+										filterMatchMode="contains">
+										<f:selectItem itemValue="#{null}"
+											itemLabel="#{msg['usuario.label.escolher']}"
+											style="font-size:11px;height:0.7em" />
+										<f:selectItems value="#{clienteController.situacao}"
+											var="status" itemValue="#{status}"
+											itemLabel="#{status.label}" />
+									</pf:selectOneMenu>
+								</h:panelGrid>
+						</pf:column>
+					</pf:panelGrid>
+				</pf:scrollPanel>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{clienteController.save()}" proccess="@form"
+						update="addEditFormCliente addEditFormCliente:mensagem  :crudFormCliente"
+						oncomplete="if (!args.validationFailed) PF('addEditFormClienteDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormClienteDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+	</ui:define>
+</ui:decorate>

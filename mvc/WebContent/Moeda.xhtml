@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+
+		<h:outputStylesheet name="css/geral.css" />
+		<h:form id="crudFormMoeda">
+			<pf:panel header="#{msg['moeda.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{moedaController.add()}" update=":addEditFormMoeda"
+				oncomplete="PF('addEditFormMoedaDlg').show()"
+				style="font-size:12px;" />
+			<pf:dataTable value="#{moedaController.listaMoedas}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{moedaController.edit(_row)}"
+						update=":addEditFormMoeda"
+						oncomplete="PF('addEditFormMoedaDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{moedaController.delete(_row)}" update=":crudFormMoeda"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['usocomum.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.moedaid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['moeda.label.descricao']}" width="80px;"
+					filterStyle="height:2.2em" filterBy="#{_row.descricao}"
+					sortBy="#{_row.descricao}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.descricao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['moeda.label.sigla']}" width="60px;"
+					filterStyle="height:2.2em" filterBy="#{_row.sigla}"  style="font-size:12px;"
+					sortBy="#{_row.sigla}" filterMatchMode="contains">
+					<h:outputText value="#{_row.sigla}" />
+				</pf:column>
+				<pf:column headerText="#{msg['moeda.label.movimento']}" width="60px;"
+					filterStyle="height:2.2em" filterBy="#{_row.moedamovimento}"
+					sortBy="#{_row.moedamovimento}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.moedamovimento}" />
+				</pf:column>
+				<pf:column headerText="#{msg['moeda.label.codigomoeda']}" width="60px;"
+					filterStyle="height:2.2em" filterBy="#{_row.codigomoeda}"
+					sortBy="#{_row.moedamovimento}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.codigomoeda}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Moedas" widgetVar="addEditFormMoedaDlg"
+			width="480" height="150" resizable="false" position="center center"
+			showEffect="clip" onShow="PF('addEditFormMoedaDlg').initPosition()"
+			modal="false" draggable="false">
+			<h:form id="addEditFormMoeda">
+				<pf:row id="messages" globalOnly="true" />
+				<h:panelGrid columns="2" style="font-size:12px;">
+					<h:outputLabel value="#{msg['moeda.label.sigla']}:" />
+					<h:inputText value="#{moedaController.moeda.sigla}" size="10"
+						required="true" requiredMessage="Informe Sigla Da Moeda!" converter="upperCaseConverter">
+						<pf:ajax event="blur" update="@this"/>
+					</h:inputText>	
+					<h:outputLabel value="#{msg['moeda.label.descricao']}:" />
+					<h:inputText value="#{moedaController.moeda.descricao}" size="20"
+						required="true" requiredMessage="Informe Descricao da Moeda!"
+						converter="upperCaseConverter" >
+						<pf:ajax event="blur" update="@this" />
+					</h:inputText>
+						<h:outputLabel value="#{msg['moeda.label.movimento']}" />
+							<pf:selectOneMenu value="#{moedaController.moeda.moedamovimento}" required="true" requiredMessage="Informe Movimento !" converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains" styleClass="MyOneMenu">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{moedaController.simnao}"
+									var="moeda" itemValue="#{moeda}" itemLabel="#{moeda.label}" />
+							</pf:selectOneMenu>
+					<h:outputLabel value="#{msg['moeda.label.codigomoeda']}:" />
+					<h:inputText value="#{moedaController.moeda.codigomoeda}" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{moedaController.save()}" proccess="@form"
+						update=":addEditFormMoeda :crudFormMoeda"
+						oncomplete="if (!args.validationFailed) PF('addEditFormMoedaDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormMoedaDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>
