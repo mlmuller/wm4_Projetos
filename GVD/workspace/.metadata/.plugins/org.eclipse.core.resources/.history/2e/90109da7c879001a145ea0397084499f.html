@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+
+		<h:outputStylesheet name="css/geral.css" />
+		<h:form id="crudFormImportador">
+			<pf:panel header="#{msg['cidade.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{cidadeController.add()}" update=":addEditFormCidade"
+				oncomplete="PF('addEditFormCidadeDlg').show()"
+				style="font-size:12px;" />
+			<pf:dataTable value="#{cidadeController.listaCidades}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{cidadeController.edit(_row)}"
+						update=":addEditFormCidade"
+						oncomplete="PF('addEditFormCidadeDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{cidadeController.delete(_row)}" update=":crudFormCidade"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['cidade.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.cidadeid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cidade.label.nome']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.nome}"
+					sortBy="#{_row.nome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['estado.label.sigla']}"
+					filterStyle="height:2.2em;" style="font-size:12px;" filterBy="#{_row.estado.sigla}"
+					sortBy="#{_row.estado.sigla}" filterMatchMode="contains">
+					<h:outputText value="#{_row.estado.sigla}" />
+				</pf:column>
+				<pf:column headerText="#{msg['estado.label.regiao']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.estado.pais.nome}"
+					sortBy="#{_row.estado.pais.nomecontinente}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.estado.pais.nomecontinente}" />
+				</pf:column>
+				<pf:column headerText="#{msg['estado.label.pais']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.estado.pais.nome}"
+					sortBy="#{_row.estado.pais.nome}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.estado.pais.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cidade.label.ibge']}"
+					filterStyle="height:2.2em;" filterBy="#{_row.codigoibge}"
+					sortBy="#{_row.codigoibge}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.codigoibge}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Cidades" widgetVar="addEditFormCidadeDlg"
+			width="480" height="150" resizable="false" position="center center"
+			showEffect="clip" onShow="PF('addEditFormCidadeDlg').initPosition()"
+			modal="false" draggable="false">
+			<h:form id="addEditFormCidade">
+				<pf:row id="messages" globalOnly="true" />
+				<h:panelGrid columns="2" style="font-size:12px;">
+					<h:outputLabel value="#{msg['cidade.label.nome']}:" />
+					<h:inputText value="#{cidadeController.cidade.nome}" size="25"
+						required="true" requiredMessage="Informe Nome da Cidade!" />
+						<h:outputLabel value="#{msg['estado.label.nome']}" />
+							<h:selectOneMenu value="#{cidadeController.cidade.estado}" required="true" requiredMessage="Informe Estado !" converter="omnifaces.SelectItemsConverter" filter="true"
+								filterMatchMode="contains" styleClass="MyOneMenu">
+								<f:selectItem itemValue="#{null}"
+									itemLabel="#{msg['usuario.label.escolher']}" />
+								<f:selectItems value="#{cidadeController.listaEstados}"
+									var="estados" itemValue="#{estados}" itemLabel="#{estados.nome}" />
+							</h:selectOneMenu>
+					<h:outputText value="#{msg['cidade.label.ibge']}" />
+					<h:inputText value="#{cidadeController.cidade.codigoibge}"
+						required="true" requiredMessage="Informe Codgio IBGE Cidade!" 
+						converter="upperCaseConverter" size="7">
+						<pf:ajax event="blur" update="@this" />
+					</h:inputText>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{cidadeController.save()}" proccess="@form"
+						update=":addEditFormCidade :crudFormCidade"
+						oncomplete="if (!args.validationFailed) PF('addEditFormCidadeDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormCidadeDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

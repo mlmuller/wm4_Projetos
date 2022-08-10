@@ -1,0 +1,316 @@
+package br.com.gvdexport.facade;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
+
+import br.com.gvdexport.model.Banco;
+import br.com.gvdexport.model.Cidade;
+import br.com.gvdexport.model.Componente;
+import br.com.gvdexport.model.Conversao;
+import br.com.gvdexport.model.Cotacao;
+import br.com.gvdexport.model.DGAGlobal;
+import br.com.gvdexport.model.Despachante;
+import br.com.gvdexport.model.Estado;
+import br.com.gvdexport.model.GrupoCliente;
+import br.com.gvdexport.model.Hts;
+import br.com.gvdexport.model.Moeda;
+import br.com.gvdexport.model.Navio;
+import br.com.gvdexport.model.Nbm;
+import br.com.gvdexport.model.Pais;
+import br.com.gvdexport.model.RazaoAlteracao;
+import br.com.gvdexport.model.Regiao;
+import br.com.gvdexport.model.TipoCalcado;
+
+@Named
+@SessionScoped
+public class FacadeAcesso implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private EntityManager em;
+
+	//Retorna Acesso/Pais ja estiver cadastrado
+	public List<Pais> existePais(String nomepais,String abreviacao) {
+		try {
+			TypedQuery<Pais> q = em.createQuery("SELECT p " + 
+					   "FROM Pais p " +
+					   "WHERE p.nome = : nomePais or p.sigla = :abrPais",Pais.class);
+						q.setParameter("nomePais",nomepais);
+						q.setParameter("abrPais",abreviacao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Retorna Acesso/Pais ja estiver cadastrado
+	public List<Regiao> existeRegiao(String nomeregiao) {
+		try {
+			TypedQuery<Regiao> q = em.createQuery("SELECT r " + 
+					   "FROM Regiao r " +
+					   "WHERE r.nome = : nomeRegiao",Regiao.class);
+						q.setParameter("nomeRegiao",nomeregiao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Retorna Acesso/Pais ja estiver cadastrado
+	public List<Estado> existeEstado(String nomeEstado,String abreviacao) {
+		try {
+			TypedQuery<Estado> q = em.createQuery("SELECT e " + 
+					   "FROM Estado e " +
+					   "WHERE e.nome = : nomeEstado or e.sigla = :abrEstado",Estado.class);
+						q.setParameter("nomeEstado",nomeEstado);
+						q.setParameter("abrEstado",abreviacao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Retorna Acesso Cidade ja estiver cadastrado
+	public List<Cidade> existeCidade(String nomecidade) {
+		try {
+			TypedQuery<Cidade> q = em.createQuery("SELECT c " + 
+					   "FROM Cidade c " +
+					   "WHERE c.nome = : nomeCidade",Cidade.class);
+						q.setParameter("nomeCidade",nomecidade);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Retorna Acesso Despachante ja estiver cadastrado
+	public List<Despachante> existeDespachante(String nomedespachante) {
+		try {
+			TypedQuery<Despachante> q = em.createQuery("SELECT d " + 
+					   "FROM Despachante d " +
+					   "WHERE d.nome = : nomeDespachante",Despachante.class);
+						q.setParameter("nomeDespachante",nomedespachante);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+
+	//Retorna Acesso Navio ja estiver cadastrado
+	public List<Navio> existeNavio(String nomenavio) {
+		try {
+			TypedQuery<Navio> q = em.createQuery("SELECT n " + 
+					   "FROM Navio n " +
+					   "WHERE n.nome = : nomeNavio",Navio.class);
+						q.setParameter("nomeNavio",nomenavio);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	public List<Nbm> existeNBM(String nbm) {
+		try {
+			TypedQuery<Nbm> q = em.createQuery("SELECT n " + 
+					   "FROM Nbm n " +
+					   "WHERE n.nbm = : Nbm",Nbm.class);
+						q.setParameter("Nbm",nbm);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+
+	public List<Hts> existeHTS(String hts) {
+		try {
+			TypedQuery<Hts> q = em.createQuery("SELECT h " + 
+					   "FROM Hts h " +
+					   "WHERE h.hts = : Hts",Hts.class);
+						q.setParameter("Hts",hts);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+
+	public List<Banco> existeBanco(String nomebanco) {
+		try {
+			TypedQuery<Banco> q = em.createQuery("SELECT b " + 
+					   "FROM Banco b " +
+					   "WHERE b.nome = : nomeBanco",Banco.class);
+						q.setParameter("nomeBanco",nomebanco);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	public List<RazaoAlteracao> existeRazaoAlteracao(String nomeRazao) {
+		try {
+			TypedQuery<RazaoAlteracao> q = em.createQuery("SELECT r " + 
+					   "FROM RazaoAlteracao r " +
+					   "WHERE r.descricao = : nomerazao",RazaoAlteracao.class);
+						q.setParameter("nomerazao",nomeRazao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	public List<TipoCalcado> existeTipoCalcado(String nomePortugues) {
+		try {
+			TypedQuery<TipoCalcado> q = em.createQuery("SELECT t " + 
+					   "FROM TipoCalcado t " +
+					   "WHERE t.nomeport = : nomePort",TipoCalcado.class);
+						q.setParameter("nomePort",nomePortugues);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Pesquisar se existe Cadastro Grupo Cliente
+	public List<GrupoCliente> existeGrupoCliente(String nome) {
+		try {
+			TypedQuery<GrupoCliente> q = em.createQuery("SELECT g " + 
+					   "FROM GrupoCliente g " +
+					   "WHERE g.nome = : nome",GrupoCliente.class);
+						q.setParameter("nome",nome);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Pesquisar se existe Sigla moeda 
+	public List<Moeda> existeMoeda(String nomesigla) {
+		try {
+			TypedQuery<Moeda> q = em.createQuery("SELECT m " + 
+					   "FROM Moeda m " +
+					   "WHERE m.sigla = : nomeMoeda",Moeda.class);
+						q.setParameter("nomeMoeda",nomesigla);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	
+	//Pesquisar se existe data cotacao e moeda
+	public List<Cotacao> existeCotacao(Date datacotacao, String moeda) {
+		try {
+			TypedQuery<Cotacao> q = em.createQuery("SELECT c " + 
+					   "FROM Cotacao c " +
+					   "WHERE c.datacotacao =: dataCompara and c.moedas.descricao =: Moeda",Cotacao.class);
+						q.setParameter("dataCompara", datacotacao, TemporalType.DATE);
+						q.setParameter("Moeda", moeda);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	
+	public List<Cotacao> ultimoLancamentoCotacao() {
+		try {
+			TypedQuery<Cotacao> q = em.createQuery("SELECT c " + 
+					   "FROM Cotacao c  ORDER BY c.datacotacao DESC,c.moedas DESC" ,Cotacao.class);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Pesquisar se existe unica cotacao
+	public Cotacao existeUnicoDiaCotacao(Date datacotacao, String moeda) {
+		try {
+			TypedQuery<Cotacao> q = em.createQuery("SELECT c " + 
+					   "FROM Cotacao c " +
+					   "WHERE c.datacotacao =: dataCompara and c.moedas.sigla =: Moeda",Cotacao.class);
+						q.setParameter("dataCompara", datacotacao, TemporalType.DATE);
+						q.setParameter("Moeda", moeda);
+						return q.getSingleResult();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+
+	public List<Cotacao> anoLancamentoCotacao(Integer mano) {
+		try {
+			TypedQuery<Cotacao> q = em.createQuery("SELECT c " + 
+					   "FROM Cotacao c WHERE c.ano =: Ano  ORDER BY c.datacotacao DESC,c.mesnumeral DESC,c.moedas DESC" ,Cotacao.class);
+					    q.setParameter("Ano", mano);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	//Retorna Componente ja estiver cadastrado
+	public List<Componente> existeComponente(String grupo,String definicao) {
+		try {
+			TypedQuery<Componente> q = em.createQuery("SELECT c " + 
+					   "FROM Componente c " +
+					   "WHERE c.grupocomponente = : Grupo and trim(c.def1) = :Definicao",Componente.class);
+						q.setParameter("Grupo",grupo);
+						q.setParameter("Definicao",definicao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+
+	//Retorna Grupo Componente
+	public List<Componente> buscaComponente(String grupo) {
+		try {
+			TypedQuery<Componente> q = em.createQuery("SELECT c " + 
+					   "FROM Componente c " +
+					   "WHERE c.grupocomponente = : Grupo",Componente.class);
+						q.setParameter("Grupo",grupo);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+
+	//Retorna Parametro ja estiver cadastrado
+	public List<DGAGlobal> existeGlobalParametro(String parametro) {
+		try {
+			TypedQuery<DGAGlobal> q = em.createQuery("SELECT g " + 
+					   "FROM DGAGlobal g " +
+					   "WHERE g.parametro = : Parametro",DGAGlobal.class);
+						q.setParameter("Parametro",parametro);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	public List<Conversao> existeConversaoNome(String nomeconversao) {
+		try {
+			TypedQuery<Conversao> q = em.createQuery("SELECT c " + 
+					   "FROM Conversao c " +
+					   "WHERE c.nome = : nomeConversao",Conversao.class);
+						q.setParameter("nomeConversao",nomeconversao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	public List<Componente> existeNumeracaoProduz(String nomesucinto,String nomeconversao) {
+		try {
+			TypedQuery<Componente> q = em.createQuery("SELECT c " + 
+					   "FROM Componente c " +
+					   "WHERE c.nomesucinto = : nomeSucinto and c.nomeconversao = :nomeConversao",Componente.class);
+						q.setParameter("nomeSucinto", nomesucinto);
+						q.setParameter("nomeConversao",nomeconversao);
+						return q.getResultList();
+		} catch (NoResultException ne) {
+			return null;
+		}
+	}
+	public Timestamp gettimeStamp(){
+		return new Timestamp(System.currentTimeMillis());
+	}
+
+}

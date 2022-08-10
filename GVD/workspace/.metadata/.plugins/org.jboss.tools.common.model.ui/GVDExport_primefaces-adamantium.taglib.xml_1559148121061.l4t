@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Layout resource="/GVDExport/WebContent/WEB-INF/primefaces-adamantium.taglib.xml">
+ <TreeFormPage>
+  <Memento type="FileFaceletTaglib20">
+   <Memento type="Facelet-Taglib"/>
+   <Memento type="Advanced"/>
+  </Memento>
+ </TreeFormPage>
+</Layout>

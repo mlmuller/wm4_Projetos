@@ -1,0 +1,804 @@
+package br.com.gvdexport.controller;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.omnifaces.util.Messages;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.UploadedFile;
+
+import br.com.gvdexport.dao.CotacaoDao;
+import br.com.gvdexport.dao.CrudDao;
+import br.com.gvdexport.facade.DGAFacadeCompKey;
+import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.model.Banco;
+import br.com.gvdexport.model.Cotacao;
+import br.com.gvdexport.model.IdentificadorCotacao;
+import br.com.gvdexport.model.Meses;
+import br.com.gvdexport.model.Moeda;
+import br.com.gvdexpt.util.TimeLookUp;
+import lombok.Getter;
+import lombok.Setter;
+
+@SessionScoped
+@Named
+public class CotacoesController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Getter @Setter
+	private Cotacao cotacao;
+	@Getter @Setter
+	private Moeda moedaaux;
+	@Getter @Setter
+	private Cotacao cotacaomesnovo;
+	@Getter @Setter
+	private Cotacao cotacaoClone;
+	@Getter @Setter
+	private List<Cotacao> listaCotacoes;
+	@Getter @Setter
+	private List<Cotacao> listaClonecotacoes;
+	@Getter @Setter
+	private List<Moeda> listaMoedas;
+	@Getter @Setter
+	private List<Cotacao> listaAuxMoedas;
+	@Getter @Setter
+	private List<Cotacao> listaPeriodoCriado;
+	@Getter @Setter
+	private List<Cotacao> listaAuxPeriodo;
+	@Getter @Setter
+	private List<Banco> listaBancos;
+	@Getter @Setter
+	private List<IdentificadorCotacao> identificador = Arrays.asList(IdentificadorCotacao.values());
+	@Getter @Setter
+	private List<Meses> meses = Arrays.asList(Meses.values());
+	@Getter @Setter
+	private Date dataInicial;
+	@Getter @Setter
+	private Date dataFinal;
+	@Getter @Setter
+	private Integer ano;
+	@Getter @Setter
+	private Integer mAno;
+	@Getter @Setter
+	private Integer anoSelecionado;
+	@Getter @Setter
+	private Integer escolhaMoeda;
+	@Getter @Setter
+	private Integer tipoOperacao;
+	@Getter @Setter
+	private Integer DiasdoMes;
+	@Getter @Setter
+	private String[] moeda;
+	@Getter @Setter
+	private Integer mNumeral;
+	@Inject
+	private FacadeAcesso facadeAcesso;
+	@Inject
+	private DGAFacadeCompKey facadeCompKey;
+	@Inject
+	private UsuarioLogadoController logadoController;
+	@Inject
+	private CrudDao<Cotacao,Long> cotacaoDao;
+	@Inject
+	private CotacaoDao cotacaoEspecialDao;
+	@Inject
+	private CrudDao<Banco, Long> bancoDao;
+	@Inject
+	private CrudDao<Moeda, Long> moedaDao;
+	@Inject
+	private TimeLookUp sincronizaTempo;
+	@PostConstruct
+	public void init() {
+		listaMoedas = new ArrayList<>();
+		listaBancos = new ArrayList<>();
+		listaCotacoes = new ArrayList<>();
+		cotacao = new Cotacao();
+		cotacaoClone = new Cotacao();
+		Calendar hoje = Calendar.getInstance();
+		Integer mAno = hoje.get(Calendar.YEAR);
+		ano = 0;
+		DiasdoMes = 0;
+		anoSelecionado = 0;
+		escolhaMoeda = 0;
+		tipoOperacao = 0;
+		refresh();
+	}
+	public void add() {
+		this.cotacao = new Cotacao() ;
+		tipoOperacao = 0;
+	}
+	public void edit(Cotacao cotacao) throws CloneNotSupportedException {
+		tipoOperacao = 1;
+		this.cotacao = cotacao;
+		this.cotacaoClone = (Cotacao) cotacao.clone();
+	}
+
+	public void save() {
+		try {
+			cotacao.setDatastamp(facadeAcesso.gettimeStamp());
+			cotacao.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+			if (tipoOperacao == 1) {
+				if((cotacao.getDatacotacao().getTime() != cotacaoClone.getDatacotacao().getTime())&&(cotacao.getMoedas().getMoedaid().equals(cotacaoClone.getMoedas().getMoedaid()))) {
+					
+					List<Cotacao> aux = facadeAcesso.existeCotacao(cotacao.getDatacotacao(),cotacao.getMoedas().getDescricao());
+					if (aux.size() != 0 ) {
+				        cotacao.setDatacotacao(cotacaoClone.getDatacotacao());
+				        cotacao.setValorcompra(cotacaoClone.getValorcompra());
+				        cotacao.setValorvenda(cotacaoClone.getValorvenda());
+				        cotacao.setBancos(cotacaoClone.getBancos());
+				        cotacao.setMoedas(cotacaoClone.getMoedas());
+				        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Data/Moeda já está Cadastrada!",""));
+				        return;
+					}
+				}
+			}
+			adjustDate(cotacao);
+			cotacao.setSigla(cotacao.getMoedas().getSigla());
+			cotacao.setIdentificadorcotacao(IdentificadorCotacao.A);
+			cotacaoDao.update(cotacao);
+			refresh();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cotacao salva com Sucesso!"));
+		} catch (RuntimeException ex) {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Não foi possivel,executar Processo!",""));
+			ex.printStackTrace();
+		}
+	
+	}
+	public void delete(Cotacao cotacao) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			cotacaoDao.delete(cotacao.getCotacaoid());
+			refresh();
+			context.addMessage(null, new FacesMessage("Cotacao Cancelada com Sucesso!"));
+		} catch (RuntimeException ex) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Não foi possivel Cancelar Cotação!",""));
+			ex.printStackTrace();
+		}
+
+	}
+	public void refresh() {
+	  listaCotacoes = facadeAcesso.ultimoLancamentoCotacao();
+	  if (listaBancos.size() == 0) {
+		  listaBancos = bancoDao.findAll();
+	  }
+	  listaMoedas = moedaDao.findAll();
+	}
+	public void localizaCotacao() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		//consistencias de filtros
+		//moeda,mes,ano
+		
+		if(((!cotacao.getMoedas().equals(null)) && (cotacao.getAno() == 0))) {
+			context.addMessage(null, new FacesMessage("Moeda Selecionada,selecione também o Ano!"));
+			return;
+		}
+		if(((!cotacao.getMoedas().equals(null)) && (cotacao.getAno() != 0)) && (cotacao.getMes() == null)) {
+			context.addMessage(null, new FacesMessage("Moeda Selecionada,Ano selecionado,Selecione também Mês!"));
+			return;
+		}
+		if((cotacao.getMoedas().equals(null)) && ((cotacao.getAno() != 0) || (cotacao.getMes() == null))) {
+			context.addMessage(null, new FacesMessage("Ano selecionado,Mês selecionado,Selecione Moeda!"));
+			return;
+		}
+		if(((ano !=0) || meses != null) && ((dataInicial != null) ||(dataFinal != null))) {
+			context.addMessage(null, new FacesMessage("Ano selecionado,Mês selecionado,Não Selecione Intervalo!"));
+			return;
+		}
+		if((dataInicial != null) && (dataFinal != null) && cotacao.getMoedas().equals(null)) {
+			context.addMessage(null, new FacesMessage("Selecionado intervalo,Por favor , Selecione Moeda!"));
+			return;
+		}
+		listaCotacoes =  new ArrayList<>();
+		listaCotacoes=facadeCompKey.getBuscaTaxa(cotacao.getMoedas().getSigla().trim(), cotacao.getAno(), cotacao.getMes().trim(), dataInicial, dataFinal);
+		if(listaCotacoes.size() == 0) {
+			context.addMessage(null, new FacesMessage("Cotações não encontradas,Verifique informações passadas na consulta!"));
+			listaCotacoes = cotacaoDao.findAll();
+		return;
+		}
+	}
+	public Integer verificaDataSistema() {
+		//Busca time da rede
+		Long dataSincronizada=sincronizaTempo.buscatempo();
+		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String dataOnLine = sdf.format(dataSincronizada);
+		Date dataSistemaLocal=facadeAcesso.gettimeStamp();
+		String dataCorrente = sdf.format(dataSistemaLocal.getTime());
+		if(!dataOnLine.equals(dataCorrente)) {
+			return null;
+		}else {
+			Calendar hoje = Calendar.getInstance();
+			Integer mAno = hoje.get(Calendar.YEAR);
+			return mAno;
+		}
+	}
+
+	public void preparaAdicaoCorrente() {
+		//Pegar data corrente para comparar ano e ver quantos meses ja estao preenchidos
+		FacesContext context = FacesContext.getCurrentInstance();
+		Integer mAno=verificaDataSistema();
+		if (mAno == null) {
+			context.addMessage(null, new FacesMessage("Por favor,ajuste imediatamente data do seu computador!"));
+			return;
+		}
+		listaPeriodoCriado = new ArrayList<>();
+		listaPeriodoCriado = facadeAcesso.anoLancamentoCotacao(mAno);
+		listaAuxMoedas = new ArrayList<>();
+		cotacaomesnovo = new Cotacao();
+		escolhaMoeda = 0;
+		cotacaomesnovo.setAno(mAno);
+		moedaaux = new Moeda();
+		//Ordenar Vetor 
+		Boolean[] mesCriado = new Boolean[13];
+		for (int i = 0; i < listaMoedas.size(); i++) {
+			Arrays.fill(mesCriado, false);
+			for (int j = 0; j < mesCriado.length; j++) {
+				for (int k = 0; k < listaPeriodoCriado.size(); k++) {
+					if ((listaMoedas.get(i).getMoedaid().equals(listaPeriodoCriado.get(k).getMoedas().getMoedaid()) && 
+							(listaPeriodoCriado.get(k).getMesnumeral().equals(j)))) {
+						mesCriado[j]= true;
+						break;
+					}
+				}
+			}
+			listaMoedas.get(i).setJaneiro(mesCriado[1]);
+			listaMoedas.get(i).setFevereiro(mesCriado[2]);
+			listaMoedas.get(i).setMarco(mesCriado[3]);
+			listaMoedas.get(i).setAbril(mesCriado[4]);
+			listaMoedas.get(i).setMaio(mesCriado[5]);
+			listaMoedas.get(i).setJunho(mesCriado[6]);
+			listaMoedas.get(i).setJulho(mesCriado[7]);
+			listaMoedas.get(i).setAgosto(mesCriado[8]);
+			listaMoedas.get(i).setSetembro(mesCriado[9]);
+			listaMoedas.get(i).setOutubro(mesCriado[10]);
+			listaMoedas.get(i).setNovembro(mesCriado[11]);
+			listaMoedas.get(i).setDezembro(mesCriado[12]);
+		}
+	}
+	public void preparaAdicaoAnterior() {
+		listaPeriodoCriado = new ArrayList<>();
+		Integer mAno=verificaDataSistema();
+		mAno=mAno-1;
+		listaPeriodoCriado = facadeAcesso.anoLancamentoCotacao(mAno);
+		listaAuxMoedas = new ArrayList<>();
+		//Pegar data corrente para comparar ano e ver quantos meses ja estao preenchidos
+		cotacaomesnovo = new Cotacao();
+		escolhaMoeda = 0;
+		cotacaomesnovo.setAno(mAno);
+		//Ordenar Vetor 
+		Boolean[] mesCriado = new Boolean[13];
+		for (int i = 0; i < listaMoedas.size(); i++) {
+			Arrays.fill(mesCriado, false);
+			for (int j = 0; j < mesCriado.length; j++) {
+				for (int k = 0; k < listaPeriodoCriado.size(); k++) {
+					if ((listaMoedas.get(i).getMoedaid().equals(listaPeriodoCriado.get(k).getMoedas().getMoedaid()) && 
+							(listaPeriodoCriado.get(k).getMesnumeral().equals(j)))) {
+						mesCriado[j]= true;
+						break;
+					}
+				}
+			}
+			listaMoedas.get(i).setJaneiro(mesCriado[1]);
+			listaMoedas.get(i).setFevereiro(mesCriado[2]);
+			listaMoedas.get(i).setMarco(mesCriado[3]);
+			listaMoedas.get(i).setAbril(mesCriado[4]);
+			listaMoedas.get(i).setMaio(mesCriado[5]);
+			listaMoedas.get(i).setJunho(mesCriado[6]);
+			listaMoedas.get(i).setJulho(mesCriado[7]);
+			listaMoedas.get(i).setAgosto(mesCriado[8]);
+			listaMoedas.get(i).setSetembro(mesCriado[9]);
+			listaMoedas.get(i).setOutubro(mesCriado[10]);
+			listaMoedas.get(i).setNovembro(mesCriado[11]);
+			listaMoedas.get(i).setDezembro(mesCriado[12]);
+		}
+
+	}
+	public void encontraUltimoMes() {
+		//Inicar Vetor Auxiliar para receber total mes
+		mAno=cotacaomesnovo.getAno();
+		//Verificacao dos dados informados
+		if(((cotacaomesnovo.getAno().equals(null)) || (cotacaomesnovo.getAno().equals(0))) || 
+				(cotacaomesnovo.getMoedas().equals(null))) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(":frmAddNovoPeriodo:idMoeda", new FacesMessage("Informe Moeda Geração do Próximo Mês!"));
+			return;
+		}
+		mNumeral = 0;
+		for (int i = 0; i < listaMoedas.size(); i++) {
+			if(listaMoedas.get(i).getMoedaid().equals(cotacaomesnovo.getMoedas().getMoedaid())) {
+				if(listaMoedas.get(i).getJaneiro().equals(false)) {
+				   mNumeral = 1;
+				   break;
+				}
+				if(listaMoedas.get(i).getFevereiro().equals(false)) {
+					   mNumeral = 2;
+					   break;
+				}
+				if(listaMoedas.get(i).getMarco().equals(false)) {
+					   mNumeral = 3;
+					   break;
+				}
+				if(listaMoedas.get(i).getAbril().equals(false)) {
+					   mNumeral = 4;
+					   break;
+				}
+				if(listaMoedas.get(i).getMaio().equals(false)) {
+					   mNumeral = 5;
+					   break;
+				}
+				if(listaMoedas.get(i).getJunho().equals(false)) {
+					   mNumeral = 6;
+					   break;
+				}
+				if(listaMoedas.get(i).getJulho().equals(false)) {
+					   mNumeral = 7;
+					   break;
+				}
+				if(listaMoedas.get(i).getAgosto().equals(false)) {
+					   mNumeral = 8;
+					   break;
+				}
+				if(listaMoedas.get(i).getSetembro().equals(false)) {
+					   mNumeral = 9;
+					   break;
+				}
+				if(listaMoedas.get(i).getOutubro().equals(false)) {
+					   mNumeral = 10;
+					   break;
+				}
+				if(listaMoedas.get(i).getNovembro().equals(false)) {
+					   mNumeral = 11;
+					   break;
+				}
+				if(listaMoedas.get(i).getDezembro().equals(false)) {
+					   mNumeral = 12;
+					   break;
+				}
+			}
+		}
+	
+	}
+	@SuppressWarnings({ "static-access", "unchecked" })
+	public void preparaVetorAtualizacao() throws ParseException, CloneNotSupportedException {
+		//
+		encontraUltimoMes();
+		listaAuxPeriodo = new ArrayList<>();
+		//Encontra ultima compra lancada-sera usado como base de repeticao para o mes criado
+		BigDecimal mVlrCompra = new BigDecimal("0.0000");
+		Date auxDate = new Date();
+		Integer  mesNovo = 0;
+		if(listaPeriodoCriado.size() > 0) {
+			if(listaPeriodoCriado.get(0).getMoedas().getMoedaid().equals(cotacaomesnovo.getMoedas().getMoedaid())) {
+				mVlrCompra = listaPeriodoCriado.get(0).getValorcompra();
+				auxDate=listaPeriodoCriado.get(0).getDatacotacao();
+			}else {
+				mesNovo = 1;
+				for (int i = 0; i < listaPeriodoCriado.size(); i++) {
+					if(listaPeriodoCriado.get(i).getMoedas().getMoedaid().equals(cotacaomesnovo.getMoedas().getMoedaid())) {
+					   mVlrCompra = listaPeriodoCriado.get(i).getValorcompra();
+					   auxDate=listaPeriodoCriado.get(i).getDatacotacao(); //Ultima data do mes
+					   mesNovo = 0;
+					   break;
+					}
+				}
+			}
+		}else {
+			mesNovo = 1; 
+		}
+		// Ja existe uma moeda cadastrada
+		if (mesNovo==1) {
+			mVlrCompra = new BigDecimal("1.0000");
+			mNumeral = 1;
+			String dateAux=Integer.toString(cotacaomesnovo.getAno())+"/"+"01"+"/"+"01";
+			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+			auxDate=format.parse(dateAux);
+		}
+	    // Regra para Bissexto
+		Integer mBissexto = 0;
+        if(mAno % 400 == 0){
+        	mBissexto =1;
+        } else if((mAno % 4 == 0) && (mAno % 100 != 0)){
+        	mBissexto = 1;
+        } 
+        Calendar auxCal = Calendar.getInstance();
+        auxCal.setTime(auxDate);
+		if(mNumeral == 12) {
+			auxCal.set(mAno+1, 1, 1);
+			auxDate = auxCal.getTime();
+			mNumeral = 1; 
+		}else {
+			if (mNumeral != 1) {
+			auxCal.set(mAno, (mNumeral-1), 1); //mNumeral-1,trabalha como vetor,iniciando na posicao 0
+			auxDate = auxCal.getTime();
+			}else {
+				auxDate = auxCal.getTime();
+			}
+		}
+		Cotacao auxCotacao = new Cotacao();
+        if ((mNumeral == 1)||(mNumeral == 3)||(mNumeral == 5)||(mNumeral == 7)||(mNumeral == 8)||(mNumeral == 10)||(mNumeral == 12)) {
+        	//Meses com 31 dias
+        	DiasdoMes = 31;
+			auxCal.setTime(auxDate);
+			auxDate = auxCal.getTime();
+			auxCotacao.setDatacotacao(auxDate);
+			for (int j = 1; j < (DiasdoMes+1) ; j++) {
+				auxCotacao.setMoedas(cotacaomesnovo.getMoedas());
+				auxCotacao.setDatastamp(facadeAcesso.gettimeStamp());
+				auxCotacao.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+				auxCotacao.setIdentificadorcotacao(IdentificadorCotacao.P);
+				auxCotacao.setSigla(cotacaomesnovo.getMoedas().getSigla());
+				auxCotacao.setMesnumeral(mNumeral);
+				if (listaPeriodoCriado.size() > 0) {
+					auxCotacao.setValorcompra(listaPeriodoCriado.get(0).getValorcompra());
+				}else {
+					auxCotacao.setValorcompra(mVlrCompra);
+				}
+				adjustDate(auxCotacao);
+				listaAuxPeriodo.add(auxCotacao);
+				auxCotacao = new Cotacao();
+				auxCal.setTime(auxDate);
+				auxCal.add(Calendar.DATE, +1);
+				auxDate= auxCal.getTime();
+				auxCotacao.setDatacotacao(auxDate);
+			}
+        }
+        if ((mNumeral == 4) || (mNumeral == 6) || (mNumeral == 9) || (mNumeral == 11)) {
+        	//Meses com 30 dias
+        	DiasdoMes = 30;
+        	//Primeiro registro
+			auxCal.setTime(auxDate);
+			auxDate = auxCal.getTime();
+			auxCotacao.setDatacotacao(auxDate);
+			for (int j = 1; j < (DiasdoMes+1) ; j++) {
+				// Obter a data em sequencia
+				auxCotacao.setMoedas(cotacaomesnovo.getMoedas());
+				auxCotacao.setDatastamp(facadeAcesso.gettimeStamp());
+				auxCotacao.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+				auxCotacao.setIdentificadorcotacao(IdentificadorCotacao.P);
+				auxCotacao.setSigla(cotacaomesnovo.getMoedas().getSigla());
+				auxCotacao.setMesnumeral(mNumeral);
+				if (listaPeriodoCriado.size() > 0) {
+					auxCotacao.setValorcompra(listaPeriodoCriado.get(0).getValorcompra());
+				}else {
+					auxCotacao.setValorcompra(mVlrCompra);
+				}
+				adjustDate(auxCotacao);
+				listaAuxPeriodo.add(auxCotacao);
+				auxCotacao = new Cotacao();
+				auxCal.setTime(auxDate);
+				auxCal.add(auxCal.DATE, +1);
+				auxDate= auxCal.getTime();
+				auxCotacao.setDatacotacao(auxDate);
+
+			}
+        }
+        //Regra para ano bissexto
+        if(mNumeral == 2) {
+        	if (mBissexto == 1) {
+        		DiasdoMes = 29;
+        		//29 dias
+        	}else {
+        		DiasdoMes = 28;
+        		//28 dias
+        	}
+        	//Primeiro registro
+			auxCal.setTime(auxDate);
+			auxDate = auxCal.getTime();
+			auxCotacao.setDatacotacao(auxDate);
+			for (int j = 1; j < (DiasdoMes+1) ; j++) {
+				// Obter a data em sequencia
+				auxCotacao.setMoedas(cotacaomesnovo.getMoedas());
+				auxCotacao.setDatastamp(facadeAcesso.gettimeStamp());
+				auxCotacao.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+				auxCotacao.setIdentificadorcotacao(IdentificadorCotacao.P);
+				auxCotacao.setSigla(cotacaomesnovo.getMoedas().getSigla());
+				auxCotacao.setMesnumeral(mNumeral);
+				if (listaPeriodoCriado.size() > 0) {
+					auxCotacao.setValorcompra(listaPeriodoCriado.get(0).getValorcompra());
+				}else {
+					auxCotacao.setValorcompra(mVlrCompra);
+				}
+				adjustDate(auxCotacao);
+				listaAuxPeriodo.add(auxCotacao);
+				auxCotacao = new Cotacao();
+				auxCal.add(auxCal.DATE, +1);
+				auxDate= auxCal.getTime();
+				auxCotacao.setDatacotacao(auxDate);
+			}
+        }
+        //Gravar Banco de dados
+		FacesContext context = FacesContext.getCurrentInstance();
+        try {
+        	Cotacao aux = new Cotacao();
+        	if (listaAuxPeriodo.size() > 0 ) {
+        		cotacaoEspecialDao.saveVetorCotacao(listaAuxPeriodo);
+        		listaClonecotacoes = new ArrayList<>();
+        		for (int i = 0; i < listaAuxPeriodo.size(); i++) {
+					aux = listaAuxPeriodo.get(i);
+					listaClonecotacoes.add((Cotacao) aux.clone());
+					aux=new Cotacao();
+				}
+        		cotacaoEspecialDao.saveVetorCotacao(listaAuxPeriodo);
+    			context.addMessage("",new FacesMessage("Cotações inseridas com Sucesso!"));
+        	}
+	        refresh();
+		} catch (RuntimeException ex) {
+			context.addMessage(null,new FacesMessage("Não foi possivel inserir mes solicitado!",""));
+			ex.printStackTrace();
+		}
+	}
+	public void atualizaVetorCotacoes() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			for (int i = 0; i < listaAuxPeriodo.size(); i++) {
+				if(!listaAuxPeriodo.get(i).getValorcompra().equals(listaClonecotacoes.get(i).getValorcompra())) {
+					listaAuxPeriodo.get(i).setIdentificadorcotacao(IdentificadorCotacao.A);
+					if ((listaAuxPeriodo.get(i).getValorvenda().equals(BigDecimal.ZERO))|| (listaAuxPeriodo.get(i).getValorvenda().equals(null))) {
+						listaAuxPeriodo.get(i).setValorvenda(listaAuxPeriodo.get(i).getValorcompra());
+					}
+				}
+			}
+			cotacaoEspecialDao.saveVetorCotacao(listaAuxPeriodo);
+			refresh();
+		} catch (RuntimeException ex) {
+			context.addMessage(null,new FacesMessage("Não foi possivel inserir mes solicitado!",""));
+			ex.printStackTrace();
+		}
+	}
+	public void adjustDate(Cotacao cotacao) {
+		Calendar mCalendar = Calendar.getInstance();
+		DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		format.format(cotacao.getDatacotacao());
+		mCalendar = format.getCalendar();
+		String nomedia= "";
+		cotacao.setAno(mCalendar.get(Calendar.YEAR));
+		cotacao.setMesnumeral((mCalendar.get(Calendar.MONTH)+1));
+		cotacao.setAtualiza(true);
+		if ((mCalendar.get(Calendar.DAY_OF_WEEK) ) == 7) {
+			nomedia = "Sábado";
+			cotacao.setAtualiza(false);
+		}
+		if (mCalendar.get(Calendar.DAY_OF_WEEK) == 1) {
+			nomedia = "Domingo";
+			cotacao.setAtualiza(false);
+		}
+		if(mCalendar.get(Calendar.DAY_OF_WEEK)== 2) {
+			nomedia = "Segunda";
+		}
+		if(mCalendar.get(Calendar.DAY_OF_WEEK)== 3) {
+			nomedia = "Terca";
+		}
+		if(mCalendar.get(Calendar.DAY_OF_WEEK)== 4) {
+			nomedia = "Quarta";
+		}
+		if(mCalendar.get(Calendar.DAY_OF_WEEK)== 5) {
+			nomedia = "Quinta";
+		}
+		if(mCalendar.get(Calendar.DAY_OF_WEEK)== 6) {
+			nomedia = "Sexta";
+		}
+		cotacao.setNomedia(nomedia);
+		//define nome do mes Portugues
+		String mes = Integer.toString(cotacao.getMesnumeral());
+		switch (mes) {
+		case "1":
+			cotacao.setMes("Janeiro");
+			break;
+		case "2":
+			cotacao.setMes("Fevereiro");
+			break;
+		case "3":
+			cotacao.setMes("Março");
+			break;
+		case "4":
+			cotacao.setMes("Abril");
+			break;
+		case "5":
+			cotacao.setMes("Maio");
+			break;
+		case "6":
+			cotacao.setMes("Junho");
+			break;
+		case "7":
+			cotacao.setMes("Julho");
+			break;
+		case "8":
+			cotacao.setMes("Agosto");
+			break;
+		case "9":
+			cotacao.setMes("Setembro");
+			break;
+		case "10":
+			cotacao.setMes("Outubro");
+			break;
+		case "11":
+			cotacao.setMes("Novembro");
+			break;
+		case "12":
+			cotacao.setMes("Dezembro");
+			break;
+		}
+
+		//
+		cotacao.setMesnumeral(cotacao.getMesnumeral());
+		//linha 513,retirado +1 do numeral
+	}
+
+	public void preparaVetorCSV() {
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			//FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
+			//		"Old: " + oldValue + ", New:" + newValue);
+			//FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
+	public void sortePorAnoMes(List<Cotacao> cotacaoList) {
+		Collections.sort(cotacaoList, Comparator.comparing(Cotacao::getAno)
+                                 .thenComparingInt(Cotacao::getMesnumeral)
+                                 .thenComparing(Cotacao::getSigla));
+	}
+    public void upload(FileUploadEvent evento)  {
+		try {
+			UploadedFile arquivo = evento.getFile();
+			Path arquivoTemp = Files.createTempFile(null, null);
+			Files.copy(arquivo.getInputstream(), arquivoTemp,StandardCopyOption.REPLACE_EXISTING);
+			cotacaomesnovo.setCaminho(arquivoTemp.toString());
+			File arquivoCSV = new File(arquivoTemp.toString());
+			encontraUltimoMes();
+			//Leitura do CSV ou txt
+			lerCSV(arquivoCSV);
+			for (int i = 0; i < listaAuxPeriodo.size(); i++) {
+				Locale.setDefault(new Locale("pt", "BR"));
+				Calendar mCalendar = Calendar.getInstance();
+				String pattern;
+				DateTimeFormatter formato = DateTimeFormatter.ofPattern(pattern); 
+				
+			}
+		} catch (IOException | ParseException ex) {
+			Messages.addGlobalInfo("Não foi possivel criar Arquivo Temporário !");
+			ex.printStackTrace();
+		}
+	}
+    public void lerCSV(File arquivoCSV) {
+		String linha = new String();
+		String csvSeparador = "\\;";
+		listaAuxPeriodo = new ArrayList<>();
+		Cotacao aux = new Cotacao();
+		Integer umavez =0;
+		Integer mesExistente = 0;
+		try {
+			Scanner leitor = new Scanner(arquivoCSV);
+			encontraUltimoMes();
+			while (leitor.hasNext()) {
+				try {
+				  linha = leitor.nextLine();
+				  moeda = linha.split(csvSeparador);
+				  String sigla = moeda[3].trim();
+				  if((sigla.equals("EUR"))&& (umavez == 0)) {
+					 sigla = sigla+"O"; 
+				  }
+				  Integer comprimentoString = 0;
+				  comprimentoString = ((cotacaomesnovo.getMoedas().getSigla()).trim().length());
+				  //ok
+				  if(umavez == 0) {
+					  if((cotacaomesnovo.getMoedas().getSigla().substring(0, comprimentoString).equals(sigla))) {
+						 umavez = 1; 
+					  }else{
+						  Messages.addGlobalError("Moeda Selecionada não é a mesma do arquivo a importar!","");
+						  return;
+					  }
+				  }
+				  aux.setMoedas(cotacaomesnovo.getMoedas());
+				  aux.setSigla(cotacaomesnovo.getMoedas().getSigla());
+				  String dataAuxDia = moeda[0].substring(0, 2);
+				  String dataAuxMes = moeda[0].substring(2, 4);
+				  mesExistente = Integer.parseInt(dataAuxMes);
+				  if ((mesExistente > mNumeral) && (mesExistente-mNumeral)> 1)  {
+					  Messages.addGlobalError("Moeda/Mês,arquivo importe, pode ter um Mês de cada vez,Verifique Tabela!", "");
+					  return;
+				  }
+				  //ok
+				  String dataAuxano = moeda[0].substring(4, 8);
+				  if(!cotacaomesnovo.getAno().equals(Integer.parseInt(dataAuxano))) {
+					  Messages.addGlobalError("Ano/Moeda Selecionado não é a mesmo do arquivo a importar!","");
+					  return;
+				  }
+				  String auxData=(dataAuxano+"-"+dataAuxMes+"-"+dataAuxDia).trim();
+				  SimpleDateFormat isoFormato = new SimpleDateFormat("yyyy-MM-dd");
+				  isoFormato.setTimeZone(TimeZone.getTimeZone("UTC"));
+				  Date dataLida = (isoFormato.parse(auxData));
+				  aux.setDatacotacao(dataLida);
+				  String valor1 = moeda[4];
+				  valor1 = valor1.replace(',','.');
+				  String valor2 = moeda[5];
+				  valor2 = valor2.replace(',', '.');
+				  String valor3 = moeda[6];
+				  valor3 = valor3.replace(',', '.');
+				  String valor4 = moeda[7];
+				  valor4 = valor4.replace(',', '.');
+				  BigDecimal vlr1=new BigDecimal(valor1);
+				  BigDecimal vlr2=new BigDecimal(valor2);
+				  BigDecimal vlr3=new BigDecimal(valor3);
+				  BigDecimal vlr4=new BigDecimal(valor4);
+				  aux.setVlrcomprareais(vlr1);
+				  aux.setVlrvendareais(vlr2);
+				  aux.setValorcompra(vlr3);
+				  aux.setValorvenda(vlr4);
+				  aux.setIdentificadorcotacao(IdentificadorCotacao.A);
+				  aux.setDatastamp(facadeAcesso.gettimeStamp());
+				  aux.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+				  aux.setAno(Integer.parseInt(dataAuxano));
+				  aux.setMesnumeral(Integer.parseInt(dataAuxMes));
+				  adjustDate(aux);
+				  listaAuxPeriodo.add(aux);
+				  aux=new Cotacao();
+					
+				} catch (RuntimeException e) {
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+			}
+			leitor.close();
+			  if (mNumeral >= mesExistente) {
+//				  Messages.addGlobalInfo("Moeda/Mês Selecionado já estão Cadastrados!","");
+//				  Messages.addGlobalWarn("Verificando Mês e se necessario será completado !", "");
+//				  cotacaoEspecialDao.saveCompletaMes(listaAuxPeriodo);
+//				  Messages.addGlobalWarn("Fim Verificação!", "");
+//				  return;
+			  }
+		}
+		catch (ArrayIndexOutOfBoundsException | FileNotFoundException ex) {
+		Messages.addGlobalInfo("Erro I/O arquivo CSV !"+ex.getMessage());
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+		}
+    }
+    public void testeDeObjeto() {
+    	System.out.println("ObjetoSelecionado :"+cotacaomesnovo.getMoedas());
+    }
+}

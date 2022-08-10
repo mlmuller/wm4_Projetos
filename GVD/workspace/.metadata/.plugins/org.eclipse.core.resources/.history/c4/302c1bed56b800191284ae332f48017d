@@ -1,0 +1,17 @@
+package br.com.gvdexport.dao;
+
+import java.io.Serializable;
+
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
+
+import br.com.gvdexport.model.DGAUsuarioNivel;
+@Stateless
+public class DGANivelPermissaoDao extends CrudDao<DGAUsuarioNivel, Long> implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+}

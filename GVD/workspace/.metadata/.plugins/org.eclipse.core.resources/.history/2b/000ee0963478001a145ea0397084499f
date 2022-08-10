@@ -1,0 +1,234 @@
+app.email=ti@gvdintl.com.br
+app.name=Patterns
+
+usuario.title=Type User
+usuario.label.id=Id
+usuario.label.nome=Name
+usuario.label.usuario=User Stamp
+usuario.label.data=Date Stamp
+usuario.label.senha=Password
+usuario.label.mercado=Division
+usuario.label.grupo=Group
+usuario.label.situacao=Situation
+usuario.label.email=E-mail
+usuario.label.libera=Financial
+usuario.label.idioma=Language
+usuario.label.escolher=Choice
+usuario.label.nomeBloco=User
+dgamenu.label.id=Id
+dgamenu.label.nome=MenuBar
+dgamenu.label.ordem=Index
+
+dgaglobal.label.id=Id
+dgaglobal.label.titulo=Globals Parameters
+dgaglobal.label.parametro=Parameter Name
+dgaglobal.label.valor=Value
+dgaglobal.label.status=Status
+
+dgamenu.titulo=Register Sub-Menus
+dgamenu.label.id=Id
+dgamenu.label.nome=System
+dgamenu.label.ordem=Index
+dgamenu.label.nomeBloco=Menu
+dgamenu.label.estilo=Style
+
+dgamodulo.titulo=Register Modules
+dgamodulo.label.id=Id
+dgamodulo.label.nome=SubMenu
+dgamodulo.label.ordem=Index
+dgamodulo.label.programa=Class
+dgamodulo.label.menu=MenuBar
+dgamodulo.label.monousuario=Monouser
+dgamodulo.label.situacao=Situation
+dgamodulo.label.url=Root
+dgamodulo.label.nomebloco=Module
+dgamodulo.label.grupo=Group Component
+
+dgaprivilegio.titulo=Register Privilegies
+dgaprivilegio.label.id=Id
+dgaprivilegio.label.usuario=User
+dgaprivilegio.label.modulo=Module
+dgaprivilegio.label.inserir=Insert
+dgaprivilegio.label.alterar=Update
+dgaprivilegio.label.deletar=Delete
+dgaprivilegio.label.Consultar=View
+dgaprivilegio.label.where=Where
+dgaprivilegio.label.nomeBloco=Permission
+
+dgasistema.titulo=Register Menu Bar
+dgasistema.label.id=Id
+dgasistema.label.nome=MenuBar
+dgasistema.label.estilo=Style
+dgasistema.label.icone=Icon
+
+pais.label.titulo=Register Countries
+pais.label.id=Id
+pais.label.sigla=Initial
+pais.label.nomepais=Country Name
+pais.label.nomeingles=English Name
+pais.label.codigopais=Country Code
+pais.label.continente=Continent Name
+pais.label.codecontinente=Code Continent
+
+regiao.titulo=Register Region
+regiao.label.id=Id
+regiao.label.nomeregiao=Name Region
+regiao.label.usuario=User
+regiao.label.data=Date Stamp
+
+estado.label.titulo=Register State
+estado.label.id=Id
+estado.label.nome=State Name
+estado.label.sigla=Initials
+estado.label.pais=Country
+estado.label.regiao=Region
+estado.label.ibge=IBGE Code
+
+cidade.label.titulo=Register City
+cidade.label.id=Id
+cidade.label.nome=City Name
+cidade.label.ibge=IBGE Code
+
+despachante.label.titulo=Register Forwarding Agent
+despachante.label.id=Id
+despachante.label.nome=Name
+despachante.label.fantasia=Fantasy Name
+despachante.label.endereco=Address
+despachante.label.cep=Zip code
+despachante.label.cnpj=CNPJ
+despachante.label.inscricao=State Registration
+despachante.label.situacao=Status
+
+filtros.label.ano=Year
+filtros.label.mes=Mounth
+filtros.label.moeda=Currency
+filtros.label.datainicial=Initial Date
+filtros.label.datafinal=Final Date
+
+navio.label.titulo=Register Boat
+navio.label.id=Id
+navio.label.nome=Boat Name 
+navio.label.situacao=Situation
+navio.label.usuario= User Stamp
+navio.label.data=Date Stamp
+
+nbm.label.titulo=Register NBM
+nbm.label.id=Id
+nbm.label.descricao=Description
+nbm.label.nala=Nala
+nbm.label.nbm=NBM
+nbm.label.usuario= User Stamp
+nbm.label.data=Date Stamp
+nbm.label.percentual=Percent IPI
+
+banco.label.titulo=Register Bank
+banco.label.id=Id
+banco.label.nome=Bank Name
+banco.label.situacao=Situation
+banco.label.cnpj=CNPJ
+banco.label.email=e-Mail
+banco.label.endereco=Address
+banco.label.enderecocompl=Complement
+banco.label.sucinto=Fantasy
+banco.label.telefone=Phone
+banco.label.fax=Fax
+banco.label.tipoBanco=Type
+banco.label.agencia=Agency
+
+moeda.label.titulo=Register currency
+moeda.label.id=Id
+moeda.label.codigomoeda=Moeda Code
+moeda.label.descricao=Description
+moeda.label.movimento=Movement
+moeda.label.sigla=Initials
+
+cotacao.label.titulo=Register Currencies Quotes
+cotacao.label.id=Id
+cotacao.label.qualmoeda=Code Currency
+cotacao.label.qualbanco=Bank
+cotacao.label.movimento=Date 
+cotacao.label.compra=Buy
+cotacao.label.venda=Sale
+cotacao.label.mes=Month
+cotacao.label.ano=Year Actual
+cotacao.label.Diasemana=Day of Week
+cotacao.label.anterior=Year Previous
+cotacao.label.status=Status
+
+razaoalteracao.label.titulo=Register Reasons for Changes
+razaoalteracao.label.id=Id
+razaoalteracao.label.definicao=Definition
+razaoalteracao.label.tipo=Type
+
+tipocalcado.label.titulo=Register Product Types
+tipocalcado.label.id=Id
+tipocalcado.label.defineportugues=Portuguese
+tipocalcado.label.definieingles=Inglish
+tipocalcado.label.taxafrete=Freight
+tipocalcado.label.precoamostra=Customer Sample Price
+tipocalcado.label.status=Status
+tipocalcado.label.identifca=Product
+
+hts.label.titulo=Register Hts
+hts.label.id=Id
+hts.label.descricao=Description
+hts.label.taxa=Duty
+hts.label.hts=HTS
+
+caixa.label.titulo=Cases
+carimbo.label.titulo=Stamp
+numeracao.label.titulo=Sizes
+cabedal.label.titulo=Leather
+cor.label.titulo=Color
+componente.label.id=Id
+componente.label.situacao=Status
+produto.label.titulo=Products
+produto.label.definicao=Description
+produto.label.deffaturamento=Description of Invoice 
+produto.label.grupo=Group
+produto.label.cabedal=Leather
+produto.label.solado=Sole
+produto.label.origem=Product Origin
+produto.label.nbm=NBM
+produto.label.hts=HTS
+produto.label.tipoproduto=Type Product
+produto.label.destaquencm=Contrast NCM
+
+conversao.label.id=Id
+conversao.label.nome=Conversion Name
+conversão.label.genero=Gender
+conversao.label.titulo=Conversion Standard
+conversao.label.resumido=Fantasy
+conversao.label.abreviado=Abrev
+conversao.label.size1=T1
+conversao.label.size2=T2
+conversao.label.size3=T3
+conversao.label.size4=T4
+conversao.label.size5=T5
+conversao.label.size6=T6
+conversao.label.size7=T7
+conversao.label.size8=T8
+conversao.label.size9=T9
+conversao.label.size10=T10
+conversao.label.size11=T11
+conversao.label.size12=T12
+conversao.label.size13=T13
+conversao.label.size14=T14
+conversao.label.size15=T15
+
+botao.add=Add
+botao.edit=Edit
+botao.editar=Edit Permission
+botao.delete=Delete
+botao.save=Salve
+botao.cancel=Cancel
+botao.confirm=Confirm?
+botao.key=Create Permission
+botao.view=View
+botao.bloco=Check Block
+botao.todos=Check All
+botao.execucao=Execute
+botao.geracao=Generate
+botao.importar=Import
+botao.atualizar=Update
+botao.fechar=Close

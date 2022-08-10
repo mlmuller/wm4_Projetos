@@ -1,0 +1,228 @@
+package br.com.gvdexport.model;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name="InvoiceAmCf",uniqueConstraints=@UniqueConstraint(columnNames="invamcfid_grpcliinv_fk,numeroinvoice,mercado",name="invamcf_uk"),
+								    indexes={@Index(columnList="invamcfid_grpcliinv_fk,invamcfend_grpcliinv_fk",name="invamcf_grpinseq_ifk",unique=false),
+								    		 @Index(columnList="invamcfid_grpcliinv_fk",name="invamcf_grpinv_ifk",unique=false)})
+
+public class InvoiceAmCf implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "invoiceamcfSeq")
+	@SequenceGenerator(name = "invoiceamcfSeq", sequenceName = "s_invoiceamcf", allocationSize = 1)
+	@Column(name="invoiceamcf_pk",updatable=false,nullable=false)
+	private Long invoiceamcfid;
+
+	@Column(length=10,nullable=false)
+	private Integer numeroinvoice;
+	
+	@Temporal(value = TemporalType.DATE)
+	@Column(nullable = true)
+	private Date datainvoice;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length=1,nullable=false)
+	private Mercado mercado;
+	
+	@Column(length=2000,nullable=true)
+	private String descricaopares;
+	
+	@Column(length=500,nullable=true)
+	private String descricaocaixas;
+	
+	@Column(precision=10,scale=2,nullable=true)
+	private BigDecimal precototal;
+	
+	@Column(length=50,nullable=true)
+	private String complementonotify;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length=1,nullable=true)
+	private Situacao situacao;
+	
+	@Column(precision=10,scale=2,nullable=true)
+	private BigDecimal preco;
+	
+	@Column(length = 10, nullable = false)
+	private String usuariostamp;
+	
+	@Temporal(value = TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+	private Date datastamp;
+
+	//endereco e Sequencia
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="invamcfid_grpcliinv_fk",referencedColumnName="grpcliinv_fk",nullable=false,foreignKey=@ForeignKey(name="invamcfid_grpcliinv_fk"))
+	private EnderecoCliente enderecocliente;
+
+//	//endereco e Sequencia
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumns(value={@JoinColumn(name="grpcliinv_fk",referencedColumnName="grupoclienteinvoice",nullable=false),@JoinColumn(name="invamcfseq_grpcliinv_fk",referencedColumnName="sequenciaendereco",nullable=false)},foreignKey=@ForeignKey(name="invamcfid_endseq_fk"))
+	private EnderecoCliente sequenciaendereco;
+
+	public Long getInvoiceamcfid() {
+		return invoiceamcfid;
+	}
+
+	public void setInvoiceamcfid(Long invoiceamcfid) {
+		this.invoiceamcfid = invoiceamcfid;
+	}
+
+	public Integer getNumeroinvoice() {
+		return numeroinvoice;
+	}
+
+	public void setNumeroinvoice(Integer numeroinvoice) {
+		this.numeroinvoice = numeroinvoice;
+	}
+
+	public Date getDatainvoice() {
+		return datainvoice;
+	}
+
+	public void setDatainvoice(Date datainvoice) {
+		this.datainvoice = datainvoice;
+	}
+
+	public Mercado getMercado() {
+		return mercado;
+	}
+
+	public void setMercado(Mercado mercado) {
+		this.mercado = mercado;
+	}
+
+	public String getDescricaopares() {
+		return descricaopares;
+	}
+
+	public void setDescricaopares(String descricaopares) {
+		this.descricaopares = descricaopares;
+	}
+
+	public String getDescricaocaixas() {
+		return descricaocaixas;
+	}
+
+	public void setDescricaocaixas(String descricaocaixas) {
+		this.descricaocaixas = descricaocaixas;
+	}
+
+	public BigDecimal getPrecototal() {
+		return precototal;
+	}
+
+	public void setPrecototal(BigDecimal precototal) {
+		this.precototal = precototal;
+	}
+
+	public String getComplementonotify() {
+		return complementonotify;
+	}
+
+	public void setComplementonotify(String complementonotify) {
+		this.complementonotify = complementonotify;
+	}
+
+	public Situacao getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Situacao situacao) {
+		this.situacao = situacao;
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	public String getUsuariostamp() {
+		return usuariostamp;
+	}
+
+	public void setUsuariostamp(String usuariostamp) {
+		this.usuariostamp = usuariostamp;
+	}
+
+	public Date getDatastamp() {
+		return datastamp;
+	}
+
+	public void setDatastamp(Date datastamp) {
+		this.datastamp = datastamp;
+	}
+
+	public EnderecoCliente getEnderecocliente() {
+		return enderecocliente;
+	}
+
+	public void setEnderecocliente(EnderecoCliente enderecocliente) {
+		this.enderecocliente = enderecocliente;
+	}
+
+	public EnderecoCliente getSequenciaendereco() {
+		return sequenciaendereco;
+	}
+
+	public void setSequenciaendereco(EnderecoCliente sequenciaendereco) {
+		this.sequenciaendereco = sequenciaendereco;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((invoiceamcfid == null) ? 0 : invoiceamcfid.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InvoiceAmCf other = (InvoiceAmCf) obj;
+		if (invoiceamcfid == null) {
+			if (other.invoiceamcfid != null)
+				return false;
+		} else if (!invoiceamcfid.equals(other.invoiceamcfid))
+			return false;
+		return true;
+	}
+	
+}

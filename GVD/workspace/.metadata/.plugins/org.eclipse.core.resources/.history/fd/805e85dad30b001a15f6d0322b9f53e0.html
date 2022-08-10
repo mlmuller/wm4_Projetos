@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormCotacao">
+		  <pf:growl id="messagesInit" showDetail="true"/>	
+			<pf:accordionPanel activeIndex="-1">
+				<pf:tab title="Filtros">
+					<h:panelGrid columns="2" lang="grid">
+						<pf:column>
+							<h:panelGrid columns="2" styleClass="withoutBorder">
+								<h:outputLabel value="#{msg['filtros.label.moeda']}" />
+								<pf:selectOneMenu value="#{cotacoesController.cotacao.moedas}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains" style="font-size:12px">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems value="#{cotacoesController.listaMoedas}"
+										var="moedas" itemValue="#{moedas}" itemLabel="#{moedas.sigla}" />
+									<pf:ajax immediate="@this"/>
+								</pf:selectOneMenu>
+								<h:outputLabel value="#{msg['filtros.label.mes']}" />
+								<pf:selectOneMenu value="#{cotacoesController.cotacao.mes}"
+									converter="omnifaces.SelectItemsConverter" filter="true"
+									filterMatchMode="contains" style="font-size:12px">
+									<f:selectItem itemValue="#{null}"
+										itemLabel="#{msg['usuario.label.escolher']}" />
+									<f:selectItems value="#{cotacoesController.meses}" var="meses"
+										itemValue="#{meses.label1}" itemLabel="#{meses.label1}" />
+										<pf:ajax immediate="@this"/>
+								</pf:selectOneMenu>
+								<h:outputLabel value="#{msg['filtros.label.ano']}" />
+								<pf:selectOneMenu value="#{cotacoesController.cotacao.ano }"
+									filterMatchMode="contains" style="font-size:12px">
+									<f:selectItem itemLabel="#{msg['usuario.label.escolher']}"
+										itemValue="#{null}" />
+									<f:selectItem itemLabel="2017" itemValue="2017" />
+									<f:selectItem itemLabel="2018" itemValue="2018" />
+									<f:selectItem itemLabel="2019" itemValue="2019" />
+									<f:selectItem itemLabel="2020" itemValue="2020" />
+									<f:selectItem itemLabel="2021" itemValue="2021" />
+									<f:selectItem itemLabel="2022" itemValue="2022" />
+									<pf:ajax immediate="@this"/>
+								</pf:selectOneMenu>
+							</h:panelGrid>
+						</pf:column>
+						<pf:column>
+							<h:panelGrid columns="4" styleClass="withoutBorder">
+								<h:outputLabel value="#{msg['filtros.label.datainicial']}" />
+								<pf:calendar showMinute="true" showSecond="true"
+									showTodayButton="true" showWeek="true" navigator="true"
+									pattern="dd-MM-yyyy" mask="true"
+									value="#{cotacoesController.dataInicial}" showOn="button"
+									effect="explode">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</pf:calendar>
+								<h:outputLabel value="#{msg['filtros.label.datafinal']}" />
+								<pf:calendar showTodayButton="true" showWeek="true"
+									showMinute="true" showSecond="true" navigator="true"
+									pattern="dd-MM-yyyy" mask="true"
+									value="#{cotacoesController.dataFinal}" showOn="button"
+									effect="explode">
+								</pf:calendar>
+							</h:panelGrid>
+						</pf:column>
+						<pf:column>
+							<h:panelGrid>
+								<pf:commandButton value="#{msg['botao.execucao']}"
+									action="#{cotacoesController.localizaCotacao}"
+									style="font-size:12px;" update=":crudFormCotacao:tblCotacoes :crudFormCotacao:messagesInit " />
+							</h:panelGrid>
+						</pf:column>
+					</h:panelGrid>
+				</pf:tab>
+			</pf:accordionPanel>
+			<pf:panel header="#{msg['cotacao.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{cotacoesController.add()}" update=":addEditFormCotacao"
+				oncomplete="PF('addEditFormCotacaoDlg').show()"
+				style="font-size:12px;" />
+			<pf:button readonly="true" value="#{msg['botao.addmes']}"
+				icon="ui-icon-arrowthick-1-e" iconPos="right"
+				style="font-size:12px;">
+			</pf:button>
+			<pf:commandButton value="#{msg['cotacao.label.anocorrente']}"
+				action="#{cotacoesController.preparaAdicaoCorrente()}"
+				update=":frmAddNovoPeriodo :frmAddNovoPeriodo:tblCotMoedas" 
+				oncomplete="PF('adicionarNovoPeriododlg').show()"
+				style="font-size:12px;" />
+			<pf:commandButton value="#{msg['cotacao.label.anterior']}"
+				action="#{cotacoesController.preparaAdicaoAnterior()}"
+				update=":addEditFormCotacao"
+				oncomplete="PF('addEditFormCotacaoDlg').show()"
+				style="font-size:12px;" />
+			<pf:dataTable id="tblCotacoes"
+				value="#{cotacoesController.listaCotacoes}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" widgetVar="Table">
+
+				<pf:column width="50">
+					<pf:commandLink action="#{cotacoesController.edit(_row)}"
+						update=":addEditFormCotacao"
+						oncomplete="PF('addEditFormCotacaoDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{cotacoesController.delete(_row)}"
+						update=":crudFormCotacao" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;text-align:center">
+					<h:outputText value="#{_row.cotacaoid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.qualbanco']}" filterStyle="height:2.2em"
+				filterBy="#{_row.bancos.nome}" sortBy="#{_row.bancos.nome}" filterMatchMode="contains" 
+				style="font-size:12px;text-align:center">
+					<h:outputText value="#{_row.bancos.nome}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.movimento']}" 
+				filterBy="#{_row.datacotacao}" filterStyle="height:2.2em"
+				style="font-size:12px;text-align:center" sortBy="#{_row.datacotacao}" 
+				filterMatchMode="contains" >
+				<f:facet name="filter">
+            		<pf:calendar pattern="dd/MM/yyyy" style="font-size:14px;text-align:center">
+               			<pf:ajax event="dateSelect" oncomplete="PF('Table').filter()" update="tblCotacoes" />
+               			<pf:ajax event="change" execute="@this" oncomplete="PF('Table').filter()" update="tblCotacoes"/>
+            		</pf:calendar>
+         		</f:facet>
+				<h:outputText value="#{_row.datacotacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.qualmoeda']}"
+					filterBy="#{_row.moedas.sigla}" filterStyle="height:2.2em"
+					sortBy="#{_row.moedas.sigla}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.moedas.sigla}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.Diasemana']}" 
+				style="font-size:12px;">
+					<h:outputText value="#{_row.nomedia}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.mes']}"
+					filterBy="#{_row.mes}" filterStyle="height:2.2em"
+					sortBy="#{_row.mes}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.mes}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.ano']}"
+					filterBy="#{_row.ano}" filterStyle="height:2.2em"
+					sortBy="#{_row.ano}" filterMatchMode="contains"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.ano}" />
+				</pf:column>
+				<pf:column  headerText="#{msg['cotacao.label.status']}" 
+				filterStyle="height:2.2em" filterBy="#{_row.identificadorcotacao}" 
+				sortBy="#{_row.identificadorcotacao}" 
+				filterMatchMode="contains" 
+				style="font-size:12px;">
+					<h:outputText value="#{_row.identificadorcotacao}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.compra']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.valorcompra}" />
+				</pf:column>
+				<pf:column headerText="#{msg['cotacao.label.venda']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.valorvenda}" />
+				</pf:column>
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="Cotações-Individual"
+			widgetVar="addEditFormCotacaoDlg" width="480" height="230"
+			resizable="false" position="center center" showEffect="clip"
+			onShow="PF('addEditFormCotacaoDlg').initPosition()" modal="false"
+			draggable="false">
+			<h:form id="addEditFormCotacao">
+				<pf:growl id="messages" globalOnly="true"/>
+					<h:panelGrid columns="2" style="font-size:12px;">
+						<pf:outputLabel value="#{msg['cotacao.label.qualbanco']}:" />
+						<pf:selectOneMenu value="#{cotacoesController.cotacao.bancos}"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{cotacoesController.listaBancos}"
+								var="bancos" itemValue="#{bancos}" itemLabel="#{bancos.nome}"   />
+						</pf:selectOneMenu>
+						<pf:outputLabel value="#{msg['cotacao.label.qualmoeda']}" />
+						<pf:selectOneMenu value="#{cotacoesController.cotacao.moedas}"
+							required="true" requiredMessage="Informe Qual Moeda !"
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="contains">
+							<f:selectItem itemValue="#{null}"
+								itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{cotacoesController.listaMoedas}"
+								var="moedas" itemValue="#{moedas}" itemLabel="#{moedas.sigla}" />
+						</pf:selectOneMenu>
+						<pf:outputLabel value="#{msg['cotacao.label.movimento']}" />
+						<pf:calendar showTodayButton="true" showWeek="true" locale="pt"
+							navigator="true" pattern="dd-MM-yyyy" mask="99-99-9999"
+							value="#{cotacoesController.cotacao.datacotacao}" required="true"
+							requiredMessage="Por favor informe Data Cotação !"
+							showOn="button" effect="explode">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</pf:calendar>
+						<pf:outputLabel value="#{msg['cotacao.label.compra']}" />
+						<pf:inputMask mask="9.9999"
+							value="#{cotacoesController.cotacao.valorcompra}" required="true"
+							requiredMessage="Informe Cotacao de Compra !" />
+						<pf:outputLabel value="#{msg['cotacao.label.venda']}" />
+						<pf:inputMask mask="9.9999"
+							value="#{cotacoesController.cotacao.valorvenda}">
+						</pf:inputMask>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<pf:commandButton value="#{msg['botao.save']}"
+							actionListener="#{cotacoesController.save()}" 
+							update=":addEditFormCotacao :crudFormCotacao" 
+							oncomplete="if (!args.validationFailed) PF('addEditFormCotacaoDlg').hide()" />
+						<pf:commandButton value="#{msg['botao.cancel']}"
+							onclick="PF('addEditFormCotacaoDlg').hide(); return false;" />
+					</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+
+		<pf:dialog header="Geração novo Mês"
+			widgetVar="adicionarNovoPeriododlg" width="950" resizable="false" position="center center" showEffect="clip" 
+			onShow="PF('adicionarNovoPeriododlg').initPosition()" modal="false"
+			draggable="false" >
+			<h:form id="frmAddNovoPeriodo" enctype="multipart/form-data" >
+				<pf:growl id="messages" />
+				<pf:dataTable id="tblCotMoedas"
+					value="#{cotacoesController.listaMoedas}" var="_rowm"
+					paginator="true" rows="5" paginatorPosition="bottom"
+					scrollHeight="250px">
+					<pf:column headerText="Moeda" width="25" style="font-size:12px;">
+						<h:outputText value="#{_rowm.sigla}" />
+					</pf:column>
+					<pf:column headerText="Janeiro" width="25"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.janeiro.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Fevereiro" width="30"
+						style="text-align:center;font-size:12px;">
+						<h:outputText
+							value="#{_rowm.fevereiro.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Março" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.marco.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Abril" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.abril.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Maio" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.maio.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Junho" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.junho.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Julho" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.julho.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Agosto" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.agosto.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Setembro" width="30"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.setembro.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Outubro" width="20"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.outubro.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Novembro" width="30"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.novembro.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+					<pf:column headerText="Dezembro" width="30"
+						style="text-align:center;font-size:12px;">
+						<h:outputText value="#{_rowm.dezembro.equals(true) ?  '√' : 'x' }"
+							style="font-weight:bold;color:#4ab50f;font-style:italic" />
+					</pf:column>
+				</pf:dataTable>
+				<h:panelGroup id="pngrpcot">
+				<pf:panelGrid columns="2" style="font-size:12px;">
+				<pf:outputLabel value="#{msg['cotacao.label.qualmoeda']}" />
+					<pf:selectOneMenu value="#{cotacoesController.cotacaomesnovo.moedas}" 
+					required="true" requiredMessage="Escolha Moeda para Importar !" converter="omnifaces.SelectItemsConverter" 
+					filter="true" filterMatchMode="contains"  >
+					<f:selectItem itemValue="" itemLabel="#{msg['usuario.label.escolher']}" />
+					<f:selectItems value="#{cotacoesController.listaMoedas}"
+						var="moeda" itemValue="#{moeda}"
+						itemLabel="#{moeda.sigla}" />
+						<pf:ajax immediate="@this"/>
+				    </pf:selectOneMenu>
+				    <pf:outputLabel for="idAno" value="#{msg['filtros.label.ano']}" />
+					<pf:selectOneMenu id="idAno" value="#{cotacoesController.cotacaomesnovo.ano }"
+						filterMatchMode="contains" style="font-size:12px">
+						<f:selectItem itemLabel="#{msg['usuario.label.escolher']}"
+							itemValue="#{null}" />
+						<f:selectItem itemLabel="2017" itemValue="2017" />
+						<f:selectItem itemLabel="2018" itemValue="2018" />
+						<f:selectItem itemLabel="2019" itemValue="2019" />
+						<f:selectItem itemLabel="2020" itemValue="2020" />
+						<f:selectItem itemLabel="2021" itemValue="2021" />
+						<f:selectItem itemLabel="2022" itemValue="2022" />
+						<pf:ajax immediate="@this"/>
+					</pf:selectOneMenu>
+				</pf:panelGrid>
+				</h:panelGroup>
+				<pf:panelGrid columns="5" layout="grid" >
+					<pf:column>
+						<pf:commandButton value="#{msg['botao.geracao']}"
+							action="#{cotacoesController.preparaVetorAtualizacao}"
+							style="font-size:12px;width:100px" 
+							oncomplete="PF('dlgVetorCotacaoMes').show();PF('adicionarNovoPeriododlg').hide()"
+							update=":crudFormCotacao:tblCotacoes :frmMesCotacao" />
+						</pf:column>
+						   <pf:fileUpload label="Importar"  mode="advanced" fileUploadListener="#{cotacoesController.upload}" 
+						   allowTypes="/(\.|\/)(gif|jpe?g|png|csv|txt|pdf)$/" update="messages" />
+				</pf:panelGrid>
+			  </h:form>
+	    </pf:dialog>
+
+		<pf:dialog id="dlgVetorCotacaoMes" header="Atualizaçao Mês"
+			widgetVar="dlgVetorCotacaoMes" closable="true" showEffect="clip"
+			hideEffect="clip" onShow="PF('dlgVetorCotacaoMes').initPosition()"
+			modal="false" draggable="false" width="850" height="450">
+			<h:form id="frmMesCotacao" >
+				<pf:growl id="mensagemCotacaoMes" globalOnly="true" />
+				<pf:panel>
+					<pf:dataTable
+						rendered="#{cotacoesController.listaAuxPeriodo != null}"
+						id="dtbMesCotacoes" var="_rowcotacao"
+						value="#{cotacoesController.listaAuxPeriodo}"
+						emptyMessage="Não há um Mês para atualizar !"
+						scrollable="true" scrollHeight="400px"
+						editable="true" editMode="cell" rowIndexVar="cVetor">
+						<pf:ajax event="cellEdit"
+							listener="#{cotacoesController.onCellEdit}"
+							update=":frmMesCotacao:mensagemCotacaoMes" />
+						<pf:column headerText="Data" style="width:20%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).datacotacao}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputText readonly="true"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).datacotacao}"
+										label="Data" style="width:96%">
+										<f:convertDateTime pattern="dd//MM/yyyy" />
+									</pf:inputText>
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="DiaSem" style="width:15%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).nomedia}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputText readonly="true"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).nomedia}"
+										label="Nomedia" style="width:96%">
+									</pf:inputText>
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="Mês" style="width:15%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).mes}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputText readonly="true"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).mes}"
+										label="Mês" style="width:96%">
+									</pf:inputText>
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="Status" style="width:10%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).identificadorcotacao}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputText readonly="true"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).identificadorcotacao}"
+										label="Identificador" style="width:96%">
+									</pf:inputText>
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="Compra US$" style="width:15%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText 
+									  value="#{cotacoesController.listaAuxPeriodo.get(cVetor).valorcompra}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputMask  mask="9.9999"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).valorcompra}"
+										label="Compra" style="width:96%" />
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="Venda US$" style="width:15%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).valorvenda}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputMask mask="9.9999"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).valorvenda}" />
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="Compra R$" style="width:15%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText 
+									  value="#{cotacoesController.listaAuxPeriodo.get(cVetor).vlrcomprareais}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputMask  mask="9.9999"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).vlrcomprareais}"
+										label="Compra" style="width:96%" />
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						<pf:column headerText="Venda R$" style="width:15%">
+							<pf:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).vlrvendareais}">
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<pf:inputMask mask="9.9999"
+										value="#{cotacoesController.listaAuxPeriodo.get(cVetor).vlrvendareais}" />
+								</f:facet>
+							</pf:cellEditor>
+						</pf:column>
+						
+					</pf:dataTable>
+				</pf:panel>
+			</h:form>
+
+		</pf:dialog>
+
+	</ui:define>
+
+</ui:decorate>

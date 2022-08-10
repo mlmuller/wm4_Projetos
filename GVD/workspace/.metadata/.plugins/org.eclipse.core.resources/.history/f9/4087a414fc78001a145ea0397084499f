@@ -1,0 +1,97 @@
+package br.com.gvdexport.controller;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import br.com.gvdexport.dao.CrudDao;
+import br.com.gvdexport.facade.DGAFacadeCompKey;
+import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.model.Navio;
+import br.com.gvdexport.model.Situacao;
+import lombok.Getter;
+import lombok.Setter;
+
+@Named
+@SessionScoped
+public class grpClienteController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Getter @Setter
+	private Navio navio;
+	@Getter @Setter
+	private List<Navio> listaNavio;
+	private Integer tipoOperacao;
+	@Getter @Setter
+	private List<Situacao> ativoInativo = Arrays.asList(Situacao.values());
+	@Inject
+	private CrudDao<Navio, Long> navioDao;
+	@Inject
+	private FacadeAcesso facadeAcesso;
+	@Inject
+	private DGAFacadeCompKey dgaFacade;
+	@Inject
+	private UsuarioLogadoController logadoController;
+	@PostConstruct
+	public void init() {
+		tipoOperacao = 0;
+		refresh();
+	}
+	public void add() {
+		this.navio = new Navio() ;
+		  listaNavio = navioDao.findAll();
+	}
+
+	public void edit(Navio navio) {
+		this.navio = navio;
+		tipoOperacao = 1;
+	}
+	
+	public void save() {
+		List<Navio> aux = facadeAcesso.existeNavio(navio.getNome());
+		if (tipoOperacao == 0) {
+			if (aux.size() != 0) {
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Navio Existente,Verique!"));
+	    		return;
+			}
+		}
+		try {
+			navio.setDatastamp(dgaFacade.gettimeStamp());
+			navio.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+			navioDao.update(navio);
+			refresh();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Navio salvo com Sucesso!"));
+		} catch (RuntimeException ex) {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não foi possivel,executar Processo!"));
+			ex.printStackTrace();
+		}
+	}
+	public void delete(Navio navio) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			navioDao.delete(navio.getNavioid());
+			refresh();
+			context.addMessage(null, new FacesMessage("Navio Cancelado com Sucesso!"));
+		} catch (RuntimeException ex) {
+			context.addMessage(null, new FacesMessage("Não foi possivel Cancelar Navio!"));
+			ex.printStackTrace();
+		}
+	}
+
+	private void refresh() {
+		  listaNavio = navioDao.findAll();
+	}
+
+
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormConversao">
+			<pf:panel header="#{msg['conversao.label.titulo']}">
+			</pf:panel>
+			<pf:commandButton value="#{msg['botao.add']}"
+				action="#{conversaoController.add()}" update=":addEditFormConversao"
+				oncomplete="PF('addEditFormConversaoDlg').show()" />
+			<pf:dataTable value="#{conversaoController.listaConversoes}" var="_row"
+				paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center;">
+				<pf:column width="50">
+					<pf:commandLink action="#{conversaoController.edit(_row)}"
+						update=":addEditFormConversao"
+						oncomplete="PF('addEditFormConversaoDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{conversaoController.delete(_row)}" update=":crudFormConversao"
+						title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+				</pf:commandLink>
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+				<h:outputText value="#{_row.conversaoid}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.nome']}"
+					style="font-size:12px;width:120px;">
+				<h:outputText value="#{_row.nome}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size1']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.t1}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size2']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t2}" />
+			</pf:column>
+				
+			<pf:column headerText="#{msg['conversao.label.size3']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t3}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size4']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t4}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size5']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t5}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size6']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t6}" />
+			</pf:column>
+				
+			<pf:column headerText="#{msg['conversao.label.size7']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t7}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size8']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t8}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size9']}"
+					style="font-size:12px;">
+					<h:outputText value="#{_row.t9}" />
+				</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size10']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t10}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size11']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t11}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size12']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t12}" />
+			</pf:column>
+			
+			<pf:column headerText="#{msg['conversao.label.size13']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t13}" />
+			</pf:column>
+			<pf:column headerText="#{msg['conversao.label.size14']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t14}" />
+			</pf:column>
+				
+			<pf:column headerText="#{msg['conversao.label.size15']}"
+					style="font-size:12px;">
+				<h:outputText value="#{_row.t15}" />
+			</pf:column>
+			</pf:dataTable>
+		</h:form>
+		<pf:dialog header="conversões Sizes" widgetVar="addEditFormConversaoDlg"
+			width="50%" height="30%" resizable="false" position="center center"
+			showEffect="clip" onShow="PF('addEditFormConversaoDlg').initPosition()"
+			modal="false" draggable="false">
+			<h:form id="addEditFormConversao">
+				<pf:growl id="messages" globalOnly="true" />
+				<pf:column colspan="16">
+					<h:panelGrid style="font-size:12px">
+						<h:outputLabel value="#{msg['conversao.label.genero']}" />
+						<pf:selectOneMenu value="#{conversaoController.conversao.genero}" 
+						required="true" requiredMessage="Informe Genero para esta Conversão!" filter="true" 
+						filterMatchMode="contains" converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{conversaoController.genero}"
+								var="genero" itemValue="#{genero}" itemLabel="#{genero.label}"/>
+						</pf:selectOneMenu>
+						<h:outputLabel value="#{msg['conversao.label.nome']}" />
+						<pf:selectOneMenu value="#{conversaoController.conversao.tiposize}" 
+						required="true" requiredMessage="Informe Descrição para esta Conversão!" filter="true" 
+						filterMatchMode="contains" converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{conversaoController.tiposize}"
+								var="tiposize" itemValue="#{tipsize}" itemLabel="#{tiposize.label}"/>
+						</pf:selectOneMenu>
+						<h:outputLabel value="Tipo" />
+						<pf:selectOneMenu value="#{conversaoController.conversao.padraoespecial}" required="true" 
+						requiredMessage="Informe se Padrao ou Especial !" filter="true" 
+						filterMatchMode="contains" converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemValue="#{null}" itemLabel="#{msg['usuario.label.escolher']}" />
+							<f:selectItems value="#{conversaoController.padraoespecial}" 
+							var="padesp" itemValue="#{padesp}" itemLabel="#{padesp.label}"/>
+							<pf:ajax update="pnlEspecial" immediate="true"/>
+						</pf:selectOneMenu>
+						<pf:outputLabel value="Resumido:"/>
+						<pf:inputText value="#{conversaoController.conversao.nomesucinto}"/>
+						<pf:outputLabel value="Abreviado:"/>
+						<pf:inputText value="#{conversaoController.conversao.nomeabreviado}"/>
+						<pf:panel id="pnlEspecial" style="botder:none">
+							<pf:outputLabel rendered="#{conversaoController.conversao.padraoespecial == 'E'}" value="Nome Especial:" />
+							<pf:inputText rendered="#{conversaoController.conversao.padraoespecial == 'E'}" value="#{conversaoController.conversao.nomeespecial}"/>
+						</pf:panel>
+						<pf:panel>
+						<pf:row>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t1}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t2}" style="width:30px;;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t3}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t4}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t5}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t6}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t7}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t8}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<br> </br>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t9}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t10}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t11}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t12}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t13}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t14}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+							<pf:column>
+								<pf:inputText value="#{conversaoController.conversao.t15}" style="width:30px;margin-right:15px;"/>
+							</pf:column>
+						</pf:row>
+						</pf:panel>
+					</h:panelGrid>
+				</pf:column>
+				<h:panelGrid columns="2">
+					<pf:commandButton value="#{msg['botao.save']}"
+						actionListener="#{conversaoController.save()}" process="@form"
+						update=":addEditFormConversao :crudFormConversao"
+						oncomplete="if (!args.validationFailed) PF('addEditFormConversaoDlg').hide()" />
+					<pf:commandButton value="#{msg['botao.cancel']}"
+						onclick="PF('addEditFormConversaoDlg').hide(); return false;" />
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+		
+		</ui:define>
+	
+
+</ui:decorate>

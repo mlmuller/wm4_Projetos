@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+org.jboss.tools.cdi.core.validator.problem.illegalTypeInBeansXml=ignore
+org.jboss.tools.cdi.core.validator.problem.unsatisfiedInjectionPoints=ignore
+org.jboss.tools.common.validator.problem.wrongBuilderOrder=ignore

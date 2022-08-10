@@ -1,0 +1,100 @@
+package br.com.gvdexport.controller;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import br.com.gvdexport.dao.CrudDao;
+import br.com.gvdexport.facade.DGAFacadeCompKey;
+import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.model.GrupoCliente;
+import br.com.gvdexport.model.Navio;
+import br.com.gvdexport.model.SimNao;
+import br.com.gvdexport.model.Situacao;
+import lombok.Getter;
+import lombok.Setter;
+
+@Named
+@SessionScoped
+public class GrupoClienteController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Getter @Setter
+	private GrupoCliente grupocliente;
+	@Getter @Setter
+	private List<GrupoCliente> listaGrupocliente;
+	private Integer tipoOperacao;
+	@Getter @Setter
+	private List<Situacao> ativoInativo = Arrays.asList(Situacao.values());
+	@Getter @Setter
+	private List<SimNao> simnao = Arrays.asList(SimNao.values());
+	@Inject
+	private CrudDao<GrupoCliente, Long> grpClienteDao;
+	@Inject
+	private FacadeAcesso facadeAcesso;
+
+	@Inject
+	private UsuarioLogadoController logadoController;
+	@PostConstruct
+	public void init() {
+		tipoOperacao = 0;
+		refresh();
+	}
+	public void add() {
+		this.grupocliente = new GrupoCliente() ;
+		  listaGrupocliente = grpClienteDao.findAll();
+	}
+
+	public void edit(GrupoCliente grupocliente) {
+		this.grupocliente = grupocliente;
+		tipoOperacao = 1;
+	}
+	
+	public void save() {
+		List<GrupoCliente> aux = facadeAcesso.existeGrupoCliente(grupoCliente.getNome());
+		if (tipoOperacao == 0) {
+			if (aux.size() != 0) {
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Grupo Cliente Existente,Verique!"));
+	    		return;
+			}
+		}
+		try {
+			grupocliente.setDatastamp(facadeAcesso.gettimeStamp());
+			navio.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
+			navioDao.update(navio);
+			refresh();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Navio salvo com Sucesso!"));
+		} catch (RuntimeException ex) {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não foi possivel,executar Processo!"));
+			ex.printStackTrace();
+		}
+	}
+	public void delete(Navio navio) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			navioDao.delete(navio.getNavioid());
+			refresh();
+			context.addMessage(null, new FacesMessage("Navio Cancelado com Sucesso!"));
+		} catch (RuntimeException ex) {
+			context.addMessage(null, new FacesMessage("Não foi possivel Cancelar Navio!"));
+			ex.printStackTrace();
+		}
+	}
+
+	private void refresh() {
+		  listaNavio = navioDao.findAll();
+	}
+
+
+}

@@ -1,0 +1,72 @@
+package br.com.gvdexport.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
+public class EnderecoClienteId implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @Column(precision=10,nullable=false,name="grupoclienteinvoice")
+	private GrupoClienteInvoice grupoclienteinvoice;
+	
+	@Column(precision=2,nullable=false)
+	private Long sequenciaendereco;
+
+	public Long getSequenciaendereco() {
+		return sequenciaendereco;
+	}
+
+	public void setSequenciaendereco(Long sequenciaendereco) {
+		this.sequenciaendereco = sequenciaendereco;
+	}
+
+	public GrupoClienteInvoice getGrupoclienteinvoice() {
+		return grupoclienteinvoice;
+	}
+
+	public void setGrupoclienteinvoice(GrupoClienteInvoice grupoclienteinvoice) {
+		this.grupoclienteinvoice = grupoclienteinvoice;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((grupoclienteinvoice == null) ? 0 : grupoclienteinvoice.hashCode());
+		result = prime * result + ((sequenciaendereco == null) ? 0 : sequenciaendereco.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnderecoClienteId other = (EnderecoClienteId) obj;
+		if (grupoclienteinvoice == null) {
+			if (other.grupoclienteinvoice != null)
+				return false;
+		} else if (!grupoclienteinvoice.equals(other.grupoclienteinvoice))
+			return false;
+		if (sequenciaendereco == null) {
+			if (other.sequenciaendereco != null)
+				return false;
+		} else if (!sequenciaendereco.equals(other.sequenciaendereco))
+			return false;
+		return true;
+	}
+
+	
+
+}

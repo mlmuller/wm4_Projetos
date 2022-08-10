@@ -1,0 +1,15 @@
+1561999105771	Move 'dgaMenu.xhtml' to 'pages'
+1561999127344	Move 'dgaModulo.xhtml' to 'pages'
+1561999131781	Move 'dgaPrivilegio.xhtml' to 'pages'
+1561999137400	Move 'dgaSistema.xhtml' to 'pages'
+1561999143539	Move 'authenticate.xhtml' to 'pages'
+1561999151496	Move 'usuarios.xhtml' to 'pages'
+1562096472336	Move 'usuarios.xhtml' to 'WebContent'
+1562096513483	Move 'dgaModulo.xhtml' to 'WebContent'
+1562096518596	Move 'dgaPrivilegio.xhtml' to 'WebContent'
+1562096523422	Move 'dgaMenu.xhtml' to 'WebContent'
+1562096527657	Move 'authenticate.xhtml' to 'WebContent'
+1562096531732	Move 'dgaSistema.xhtml' to 'WebContent'
+1562165042432	Delete element
+1562183659831	Delete element
+1562351583196	Rename type 'DGAUsuarioNivel'

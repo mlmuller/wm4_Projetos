@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="crudFormNumeracao">
+			<pf:growl id="msg" />
+			<f:metadata>
+				<c:set var="grupo" value="L" />
+				<f:viewAction
+					action="#{componenteController.inicializaGrupo(grupo)}" />
+			</f:metadata>
+			<pf:panel header="#{msg['conversao.label.titulo']}">
+			</pf:panel>
+
+			<pf:dataTable value="#{componenteController.listaComponentes}"
+				var="_row" paginator="true" rows="10" paginatorPosition="bottom"
+				scrollHeight="800px" style="text-align:center;">
+
+				<f:facet name="footer">
+					<pf:panelGrid columns="2">
+						<pf:column>
+							<pf:commandButton value="#{msg['botao.add']}"
+								actionListener="#{componenteController.add()}"
+								update=":addEditFormNumeracao:tblConversoes"
+								oncomplete="PF('addEditFormNumeracaoDlg').show()" />
+						</pf:column>
+					</pf:panelGrid>
+				</f:facet>
+				<pf:column width="50">
+					<pf:commandLink action="#{componenteController.edit(_row)}"
+						update=":addEditFormNumeracao:tblConversoes"
+						oncomplete="PF('addEditFormNumeracaoDlg').show()"
+						title="#{msg['botao.edit']}">
+						<i class="fa fa-fw fa-pencil-square-o" />
+					</pf:commandLink>
+					<pf:commandLink
+						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
+						action="#{componenteController.delete(_row)}"
+						update=":crudFormNumeracao" title="#{msg['botao.delete']}">
+						<i class="fa fa-fw fa-trash-o" />
+					</pf:commandLink>
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.id']}"
+					styleClass="numeric" width="20" style="font-size:12px;">
+					<h:outputText value="#{_row.componenteid}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.resumido']}"
+					style="font-size:12px;width:95x;" filterMatchMode="contains"
+					filterBy="#{conversaoController.conversao.nomesucinto}">
+					<h:outputText value="#{_row.conversao.nomesucinto}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.abreviado']}"
+					style="font-size:12px;width:40x;">
+					<h:outputText value="#{_row.conversao.nomeabreviado}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size1']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t1}"  />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size2']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t2}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['conversao.label.size3']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t3}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size4']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t4}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size5']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t5}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size6']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t6}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['conversao.label.size7']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t7}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size8']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t8}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size9']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t9}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size10']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t10}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size11']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t11}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size12']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t12}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['conversao.label.size13']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t13}" />
+				</pf:column>
+				<pf:column headerText="#{msg['conversao.label.size14']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t14}" />
+				</pf:column>
+
+				<pf:column headerText="#{msg['conversao.label.size15']}"
+					style="font-size:12px;" width="35px;">
+					<h:outputText value="#{_row.t15}" />
+				</pf:column>
+
+			</pf:dataTable>
+
+		</h:form>
+		<pf:dialog header="Padrões-Numerações"
+			widgetVar="addEditFormNumeracaoDlg" width="90%" height="40%"
+			resizable="false" position="top top" showEffect="clip"
+			onShow="PF('addEditFormNumeracaoDlg').initPosition()" modal="false"
+			draggable="false">
+			<h:form id="addEditFormNumeracao">
+				<pf:growl id="messages" globalOnly="true" />
+				<h:panelGrid style="font-size:12px">
+					<pf:dataTable id="tblConversoes"
+						value="#{componenteController.listaConversoes}" var="_rowc"
+						paginator="true" rows="10" paginatorPosition="bottom"
+						selection="#{componenteController.selecionadaConversao}"
+						rowKey="#{_rowc.conversaoid}" style="text-align:center">
+						<pf:column selectionMode="single" />
+						<pf:column headerText="#{msg['conversao.label.id']}"
+							styleClass="numeric" width="20" style="font-size:12px;">
+							<h:outputText value="#{_rowc.conversaoid}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.nome']}"
+							style="font-size:12px;width:120px;">
+							<h:outputText value="#{_rowc.nome}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size1']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t1}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size2']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t2}" />
+						</pf:column>
+
+						<pf:column headerText="#{msg['conversao.label.size3']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t3}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size4']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t4}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size5']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t5}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size6']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t6}" />
+						</pf:column>
+
+						<pf:column headerText="#{msg['conversao.label.size7']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t7}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size8']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t8}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size9']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t9}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size10']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t10}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size11']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t11}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size12']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t12}" />
+						</pf:column>
+
+						<pf:column headerText="#{msg['conversao.label.size13']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t13}" />
+						</pf:column>
+						<pf:column headerText="#{msg['conversao.label.size14']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t14}" />
+						</pf:column>
+
+						<pf:column headerText="#{msg['conversao.label.size15']}"
+							style="font-size:12px;">
+							<h:outputText value="#{_rowc.t15}" />
+						</pf:column>
+						<f:facet name="footer">
+							<pf:panelGrid columns="2">
+								<pf:column>
+									<pf:commandButton value="#{msg['botao.execucao']}"
+										actionListener="#{componenteController.carregaConversao}"
+										update=":addNumeracaoProduz"
+										oncomplete="PF('numeracaoProduzDlg').show()" />
+								</pf:column>
+							</pf:panelGrid>
+						</f:facet>
+
+					</pf:dataTable>
+				</h:panelGrid>
+			</h:form>
+		</pf:dialog>
+		<h:panelGrid>
+			<pf:dialog widgetVar="numeracaoProduzDlg" resizable="false"
+				showEffect="clip" modal="false" draggable="true"
+				position="center center" positionType="init.position()" width="90%"
+				height="60%">
+				<h:form id="addNumeracaoProduz">
+					<h:panelGrid>
+						<pf:panelGrid layout="grid" columns="15">
+							<pf:row>
+								<pf:outputLabel value="Produz:" />
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t1}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t2}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t3}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t4}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t5}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t6}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t7}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t8}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t9}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t10}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t11}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t12}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t13}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t14}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText readonly="true"
+										value="#{componenteController.selecionadaConversao.t15}"
+										style="width:30px;margin-right:15px;color: blue;text-align:center" />
+								</pf:column>
+							</pf:row>
+						</pf:panelGrid>
+						<pf:panelGrid layout="grid" columns="15">
+							<pf:row>
+								<pf:outputLabel value="Marcar:" />
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t1}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t2}"
+										style="width:30px;;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t3}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t4}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t5}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t6}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t7}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t8}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t9}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t10}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t11}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t12}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t13}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t14}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+								<pf:column>
+									<pf:inputText value="#{componenteController.componente.t15}"
+										style="width:30px;margin-right:15px;text-align:center" />
+								</pf:column>
+							</pf:row>
+							<pf:row>
+								<pf:column>
+									<pf:outputLabel value="Nome Numeração:"
+										style="text-align:bottom;" />
+									<pf:inputText readonly="true"
+										value="#{componenteController.componente.nomeconversao}" />
+								</pf:column>
+							</pf:row>
+							<pf:row>
+								<pf:column>
+									<pf:outputLabel value="Nome Sucinto:" />
+									<pf:inputText
+										value="#{componenteController.componente.nomesucinto}"
+										requiredMessage="true"
+										required="Pro favor, Preencha nome suncto para Esta Marcação !" />
+								</pf:column>
+							</pf:row>
+						</pf:panelGrid>
+						<pf:panelGrid columns="2">
+							<pf:commandButton value="#{msg['botao.save']}"
+								actionListener="#{componenteController.saveProduto()}"
+								update=":addNumeracaoProduz :addEditFormNumeracao :crudFormNumeracao"
+								oncomplete="if (!args.validationFailed) PF('numeracaoProduzDlg').hide();PF('addEditFormNumeracaoDlg').hide()" />
+						</pf:panelGrid>
+					</h:panelGrid>
+				</h:form>
+
+
+			</pf:dialog>
+		</h:panelGrid>
+	</ui:define>
+
+
+</ui:decorate>

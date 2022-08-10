@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-time="1" hostname="localhost" id="WildFly 131535546474112" name="WildFly 13" org.jboss.ide.eclipse.as.core.server.EXPOSE_MANAGEMENT_SERVICE="true" org.jboss.ide.eclipse.as.core.server.IGNORE_LAUNCH_COMMANDS="false" org.jboss.ide.eclipse.as.core.server.as7.managementPort="9990" org.jboss.ide.eclipse.as.core.server.as7.managementPortAutoDetect="true" org.jboss.ide.eclipse.as.core.server.as7.managementPortAutoDetect.XPath="Ports/JBoss Management" org.jboss.ide.eclipse.as.core.server.attributes.shutdownPollerKey="org.jboss.ide.eclipse.as.core.runtime.server.WebPoller" org.jboss.ide.eclipse.as.core.server.attributes.startupPollerKey="org.jboss.ide.eclipse.as.core.runtime.server.WebPoller" org.jboss.ide.eclipse.as.core.server.deployDirectoryType="server" org.jboss.ide.eclipse.as.core.server.serverMode="local" runtime-id="WildFly 13.0 Runtime" server-type="org.jboss.ide.eclipse.as.wildfly.130" server-type-id="org.jboss.ide.eclipse.as.wildfly.130" start-timeout="450" stop-timeout="450" timestamp="24">
+    <list key="modules" value0="GVDExport::org.eclipse.jst.jee.server:GVDExport::jst.web::3.1"/>
+  </server>
+</servers>

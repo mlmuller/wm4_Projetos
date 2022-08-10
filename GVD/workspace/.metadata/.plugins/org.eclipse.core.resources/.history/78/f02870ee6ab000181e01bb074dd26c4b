@@ -1,0 +1,122 @@
+package ch.interk.export.bean;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.omnifaces.util.Faces;
+import org.omnifaces.util.Messages;
+
+import ch.interk.export.dao.UsuarioDao;
+import ch.interk.export.modelo.Usuarios;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@SessionScoped //create session and this lost when time out or out system
+public class AuthenticateBean implements Serializable {
+	private Usuarios users;
+	private Usuarios usuarioCadastro;
+	private String nameUser;
+	private Usuarios userReturn;
+	private Usuarios loginuser;
+	private List<Usuarios> listUsers;
+	private Integer mCounter;
+	
+	public Usuarios getUsuarioCadastro() {
+		return usuarioCadastro;
+	}
+	public void setUsuarioCadastro(Usuarios usuarioCadastro) {
+		this.usuarioCadastro = usuarioCadastro;
+	}
+	public List<Usuarios> getListUsers() {
+		return listUsers;
+	}
+	
+	public void setListUsers(List<Usuarios> listUsers) {
+		this.listUsers = listUsers;
+	}
+	
+	public Usuarios getLoginuser() {
+		return loginuser;
+	}
+	
+	public void setLoginuser(Usuarios loginuser) {
+		this.loginuser = loginuser;
+	}
+	
+    public Usuarios getUserReturn() {
+		return userReturn;
+	}
+    
+	public void setUserReturn(Usuarios userReturn) {
+		this.userReturn = userReturn;
+	}
+	
+	public Integer getmCounter() {
+		return mCounter;
+	}
+	
+	public void setmCounter(Integer mCounter) {
+		this.mCounter = mCounter;
+	}
+	
+	public String getNameUser() {
+		return nameUser;
+	}   
+	
+	public void setNameUser(String nameUser) {
+		this.nameUser = nameUser;
+	}
+	
+	public Usuarios getUsers() {
+		return users;
+	}
+	
+	public void setUsers(Usuarios users) {
+		this.users = users;
+	}
+	
+	@PostConstruct
+	public void startAuthenticate(){
+		users = new Usuarios();
+		mCounter = 0;
+	}
+	
+	public void authenticate(){
+	    try{
+	    	usuarioCadastro = new Usuarios();
+	    	UsuarioDao userDao = new UsuarioDao();
+			listUsers = userDao.list();
+			if (!listUsers.isEmpty() ){
+		    	Usuarios userReturn = userDao.checkAuthentique(users.getUsuusuario(), users.getUsusenha());
+		    	if (userReturn != null){
+		    		loginuser = userReturn;
+		    		Faces.redirect("./pages/principal.xhtml");
+		    	}
+			}else{
+				usuarioCadastro.setUsuType("ADMINISTRATOR");
+				usuarioCadastro.setUsuusuario("mlmuller");
+				usuarioCadastro.setUsuemail("MLMULLER67@GMAIL.COM");
+				usuarioCadastro.setUsunome("MAURO MULLER");
+				usuarioCadastro.setUsusituation("ENABLE");
+				usuarioCadastro.setUsusenha("355193");
+				usuarioCadastro.setUsusenhaconf("355193");
+				SimpleHash passHash = new SimpleHash("md5",usuarioCadastro.getUsusenha());
+				usuarioCadastro.setUsusenha(passHash.toHex());
+				userDao.salvar(usuarioCadastro);
+				Messages.addGlobalInfo("User successfully Added !");
+				usuarioCadastro = new Usuarios();
+		    	Faces.redirect("./pages/principal.xhtml");
+			}
+	    }catch(IOException ex){
+	    	Messages.addGlobalFatal("Page Could not be Redirected !!! - "+ex );
+	    	ex.printStackTrace();
+	    }
+	}
+	
+}

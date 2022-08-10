@@ -1,0 +1,27 @@
+1558369850805	Move 'Usuarios.xhtml' to 'paginas'
+1558375186765	Move 'Usuarios.xhtml' to 'WebContent'
+1558375196460	Move 'authenticate.xhtml' to 'WebContent'
+1558375620674	Move 'template.xhtml' to 'WebContent'
+1558375627520	Move 'footer.xhtml' to 'WebContent'
+1558375633099	Move 'layoutmenu.xhtml' to 'WebContent'
+1558375637447	Move 'topo.xhtml' to 'WebContent'
+1558375652435	Move 'book.xhtml' to 'paginas'
+1558375661101	Move 'menu.xhtml' to 'paginas'
+1558375846846	Delete elements
+1558444535399	Move 'geral.css' to 'css'
+1558544593367	Rename resource 'NewFile.xhtml'
+1558544657227	Rename type 'menuController'
+1558548840310	Rename resource 'menu.xhtml'
+1558548877242	Rename resource 'Usuarios.xhtml'
+1558619889804	Copy compilation unit
+1558620043821	Delete element
+1558620142149	Delete element
+1558620161829	Delete element
+1558620224169	Move compilation unit
+1558620252416	Rename type 'GlobalFacade'
+1558628658493	Rename type 'usuarioDao'
+1558635569252	Delete element
+1558637116127	Rename package 'br.com.gvexport.GenericoDao'
+1558639820062	Delete element
+1558717058216	Rename type 'SimplesCriterioConstrucao'
+1558721684830	Delete element

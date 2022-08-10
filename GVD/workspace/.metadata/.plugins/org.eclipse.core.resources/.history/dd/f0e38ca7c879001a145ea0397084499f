@@ -1,0 +1,260 @@
+app.email=ti@gvdintl.com.br
+app.name=Patterns
+
+usuario.title=Tipo Usuário
+usuario.label.id=Id
+usuario.label.nome=Nome
+usuario.label.usuario=Usuário Stamp
+usuario.label.data=Data Stamp
+usuario.label.senha=Senha
+usuario.label.mercado=Mercado
+usuario.label.grupo=Grupo
+usuario.label.situacao=Situação
+usuario.label.email=E-mail
+usuario.label.libera=Financeiro
+usuario.label.idioma=Linguagem
+usuario.label.escolher=Escolha
+usuario.label.nomeBloco="Usuário
+
+dgaglobal.label.id=Id
+dgaglobal.label.titulo=Parâmetros Globais
+dgaglobal.label.parametro=Nome Parâmetro
+dgaglobal.label.valor=Valor
+dgaglobal.label.status=Situação
+
+dgamenu.titulo=Cadastro Sub-Menus
+dgamenu.label.id=Id
+dgamenu.label.nome=Processo
+dgamenu.label.ordem=Ordem
+dgamenu.label.estilo=Estilo
+
+dgasistema.titulo=Cadastro Barra Menus
+dgasistema.label.id=Id
+dgasistema.label.nome=Sistema
+dgasistema.label.ordem=Ordem
+dgasistema.label.nomeBloco=Sistema
+dgasistema.label.icone=Icone
+dgasistema.label.estilo=Estilo
+
+dgamodulo.titulo=Cadastro Módulos
+dgamodulo.label.id=Id
+dgamodulo.label.nome=SubMenu
+dgamodulo.label.ordem=Ordem
+dgamodulo.label.programa=Classe
+dgamodulo.label.menu=MenuBar
+dgamodulo.label.monousuario=Monousuário
+dgamodulo.label.situacao=Habilitar
+dgamodulo.label.url=Url
+dgamodulo.label.nomeBloco=Módulo
+dgamodulo.label.grupo=Grupo Componente
+
+dgaprivilegio.titulo=Cadastro Privilégios
+dgaprivilegio.label.id=Id
+dgaprivilegio.label.usuario=Usuário
+dgaprivilegio.label.modulo=Módulo
+dgaprivilegio.label.inserir=Inserir
+dgaprivilegio.label.alterar=Alterar
+dgaprivilegio.label.deletar=Deletar
+dgaprivilegio.label.consultar=Visualizar
+dgaprivilegio.label.where=Onde
+dgaprivilegio.label.nomeBloco=Permissões
+
+dgasistema.label.id=Id
+dgasistema.label.nome=Barra
+
+pais.titulo=Cadastro País
+pais.label.id=Id
+pais.label.sigla=Sigla
+pais.label.nomepais=Nome País
+pais.label.nomeingles=Nome Inglês
+pais.label.codigopais=Código País
+pais.label.continente=Nome Continente
+pais.label.codecontinente=Código Continente
+
+regiao.titulo=Cadastro Região
+regiao.label.id=Id
+regiao.label.nomeregiao=Nome Região
+regiao.label.usuario=Usuário
+regiao.label.data=Data Stamp
+
+estado.label.titulo=Cadastro Estado
+estado.label.id=Id
+estado.label.nome=Nome Estado
+estado.label.sigla=Sigla
+estado.label.pais=País  
+estado.label.regiao=Região  
+estado.label.ibge=Código IBGE
+
+cidade.label.titulo=Cadastro Cidade
+cidade.label.id=Id
+cidade.label.nome=Nome Cidade
+cidade.label.ibge=Código IBGE
+
+despachante.label.titulo=Cadastro Despachante
+despachante.label.id=Id
+despachante.label.nome=Nome
+despachante.label.fantasia=Sucinto
+despachante.label.endereco=Endereço
+despachante.label.cep=CEP
+despachante.label.cnpj=CNPJ
+despachante.label.inscricao=Inscrição Estadual
+despachante.label.situacao=Situação
+
+filtros.label.ano=Ano
+filtros.label.mes=Mês
+filtros.label.moeda=Moeda
+filtros.label.datainicial=Data Inicial
+filtros.label.datafinal=Data Final
+
+navio.label.titulo=Cadastro Navio
+navio.label.id=Id
+navio.label.nome=Nome Navio
+navio.label.situacao=Situação
+navio.label.usuario= Usuário Stamp
+navio.label.data=Data Stamp
+
+nbm.label.titulo=Cadastro NBM
+nbm.label.id=Id
+nbm.label.descricao=Descrição
+nbm.label.nala=Nala
+nbm.label.nbm=NBM
+nbm.label.usuario= Usuário Stamp
+nbm.label.data=Data Stamp
+nbm.label.percentual=Percentual IPI
+
+banco.label.titulo=Cadastro Banco
+banco.label.id=Id
+banco.label.nome=Nome Banco
+banco.label.situacao=Situação
+banco.label.cnpj=CNPJ
+banco.label.email=e-Mail
+banco.label.endereco=Endereço
+banco.label.enderecocompl=Complemento
+banco.label.sucinto=Sucinto
+banco.label.telefone=Telefone
+banco.label.fax=Fax
+banco.label.tipoBanco=Tipo
+banco.label.agencia=Agência
+
+moeda.label.titulo=Cadastro Moeda
+moeda.label.id=Id
+moeda.label.codigomoeda=Código Moeda
+moeda.label.descricao=Descrição
+moeda.label.movimento=Movimento 
+moeda.label.sigla=Sigla
+
+cotacao.label.titulo=Cadastro Cotação
+cotacao.label.id=Id
+cotacao.label.qualmoeda=Código Moeda
+cotacao.label.qualbanco=Banco
+cotacao.label.movimento=Data Movimento 
+cotacao.label.compra=Valor Compra
+cotacao.label.venda=Valor Venda
+cotacao.label.mes=Mês
+cotacao.label.ano=Ano
+cotacao.label.anocorrente=Ano Atual
+cotacao.label.Diasemana=Dia Semana
+cotacao.label.anterior=Ano Anterior
+cotacao.label.status=Status
+
+razaoalteracao.label.titulo=Cadastro de Razão Alterações
+razaoalteracao.label.id=Id
+razaoalteracao.label.definicao=Definição
+razaoalteracao.label.tipo=Tipo
+
+tipocalcado.label.titulo=Cadastro de Tipos de Calçados
+tipocalcado.label.id=Id
+tipocalcado.label.defineportugues=Em Português
+tipocalcado.label.definieingles=Em Inglês
+tipocalcado.label.taxafrete=Frete
+tipocalcado.label.precoamostra=Preço Amostra Cliente
+tipocalcado.label.status=Status
+tipocalcado.label.identifca=Produto
+
+hts.label.titulo=Cadastro de Hts
+hts.label.id=Id
+hts.label.descricao=Descrição
+hts.label.taxa=Duty
+hts.label.hts=HTS
+
+caixa.label.titulo=Caixas
+carimbo.label.titulo=Carimbo
+numeracao.label.titulo=Numerações
+cabedal.label.titulo=Cabedais
+cor.label.titulo=Cores
+componente.label.id=Id
+componente.label.situacao=Situação
+produto.label.titulo=Produtos
+produto.label.definicao=Descrição
+produto.label.deffaturamento=Descrição Faturamento
+produto.label.grupo=Grupo
+produto.label.cabedal=Cabedal
+produto.label.solado=Solado
+produto.label.origem=Origem Produto
+produto.label.nbm=NBM
+produto.label.hts=HTS
+produto.label.tipoproduto=Tipo Produto
+produto.label.destaquencm=Destaque NCM
+
+conversao.label.id=Id
+conversao.label.nome=Nome Conversão
+conversao.label.genero=Gênero Pessoa
+conversao.label.titulo=Produção-Padrão Numerações
+conversao.label.resumido=Sucinto
+conversao.label.abreviado=Abrev
+conversao.label.size1=T1
+conversao.label.size2=T2
+conversao.label.size3=T3
+conversao.label.size4=T4
+conversao.label.size5=T5
+conversao.label.size6=T6
+conversao.label.size7=T7
+conversao.label.size8=T8
+conversao.label.size9=T9
+conversao.label.size10=T10
+conversao.label.size11=T11
+conversao.label.size12=T12
+conversao.label.size13=T13
+conversao.label.size14=T14
+conversao.label.size15=T15
+conversao.label.size16=T16
+conversao.label.size17=T17
+conversao.label.size18=T18
+conversao.label.size19=T19
+conversao.label.size20=T20
+
+grpcliente.label.id=Id
+grpcliente.label.nome=Nome
+grpcliente.label.mostraversao=Versão 0/1
+grpcliente.label.mostrapreco=Mostra Consulta Prc Fábrica
+grpcliente.label.imprformaetqeur=Imprimi Forma Europa
+
+importador.label.titulo=Importadores
+importador.label.id=Id
+importador.label.nome=Nome
+importador.label.cidade=Cidade
+importador.label.cnpjcpf=CNPJ/CPF
+importador.label.inscricao=Inscrição Estadual
+importador.label.bairro=Bairro
+importador.label.cep=CEP
+importador.label.sucinto=Sucinto
+importador.label.telefone=Telefone
+importador.label.tipopessoa=Tipo
+
+botao.add=Adicionar
+botao.addmes=Mês(+)Selecione Ano
+botao.edit=Editar
+botao.editar=Editar Permissões
+botao.delete=Deletar
+botao.save=Salvar
+botao.cancel=Cancelar
+botao.confirm=Confirma Cancelamento?
+botao.key=Criar Permissões
+botao.view=Visualizar
+botao.bloco=Marcar Bloco
+botao.todos=Marcar Todos
+botao.execucao=Execute
+botao.geracao=Gerar
+botao.importar=Importar
+botao.atualizar=Atualizar
+botao.fechar=Fechar

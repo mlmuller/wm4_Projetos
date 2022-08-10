@@ -1,0 +1,221 @@
+package br.com.gvdexport.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="EnderecoCliente",indexes=@Index(columnList="endcli_grpcliinv_fk",name="endcli_grpcliinv_ifk",unique=false))
+@IdClass(EnderecoClienteId.class)
+public class EnderecoCliente implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name="grupoclienteinvoice")
+	private GrupoClienteInvoice grupoclienteinvoice;
+	
+	@Id
+	private Long sequenciaendereco;
+	
+	@Column(length=300,nullable=true)
+	private String address;
+	
+	@Column(length=300,nullable=true)
+	private String notify1;
+
+	@Column(length=300,nullable=true)
+	private String notify2;
+
+	@Column(length=300,nullable=true)
+	private String consignee1;
+
+	@Column(length=300,nullable=true)
+	private String consignee2;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length=1,nullable=true)
+	private DestinoInvoice destinoinvoice;
+
+	@Column(length = 10, nullable = false)
+	private String usuariostamp;
+	
+	@Temporal(value = TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+	private Date datastamp;
+
+	@Column(length=5,nullable=true)
+	private String ediinterkommerznotify;
+	
+	@Column(length=5,nullable=true)
+	private String ediinterkommerznotify2;
+
+	@Column(length=150,nullable=true)
+	private String complementoaddress;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="endcli_grpcliinv_fk",referencedColumnName="grupoclienteinvoice",nullable=false,foreignKey=@ForeignKey(name="endcli_grpcliinv_fk"))
+	private EnderecoCliente enderecocliente;
+
+
+	public Long getSequenciaendereco() {
+		return sequenciaendereco;
+	}
+
+	public void setSequenciaendereco(Long sequenciaendereco) {
+		this.sequenciaendereco = sequenciaendereco;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getNotify1() {
+		return notify1;
+	}
+
+	public void setNotify1(String notify1) {
+		this.notify1 = notify1;
+	}
+
+	public String getNotify2() {
+		return notify2;
+	}
+
+	public void setNotify2(String notify2) {
+		this.notify2 = notify2;
+	}
+
+	public String getConsignee1() {
+		return consignee1;
+	}
+
+	public void setConsignee1(String consignee1) {
+		this.consignee1 = consignee1;
+	}
+
+	public String getConsignee2() {
+		return consignee2;
+	}
+
+	public void setConsignee2(String consignee2) {
+		this.consignee2 = consignee2;
+	}
+
+	public DestinoInvoice getDestinoinvoice() {
+		return destinoinvoice;
+	}
+
+	public void setDestinoinvoice(DestinoInvoice destinoinvoice) {
+		this.destinoinvoice = destinoinvoice;
+	}
+
+	public String getUsuariostamp() {
+		return usuariostamp;
+	}
+
+	public void setUsuariostamp(String usuariostamp) {
+		this.usuariostamp = usuariostamp;
+	}
+
+	public Date getDatastamp() {
+		return datastamp;
+	}
+
+	public void setDatastamp(Date datastamp) {
+		this.datastamp = datastamp;
+	}
+
+	public String getEdiinterkommerznotify() {
+		return ediinterkommerznotify;
+	}
+
+	public void setEdiinterkommerznotify(String ediinterkommerznotify) {
+		this.ediinterkommerznotify = ediinterkommerznotify;
+	}
+
+	public String getEdiinterkommerznotify2() {
+		return ediinterkommerznotify2;
+	}
+
+	public void setEdiinterkommerznotify2(String ediinterkommerznotify2) {
+		this.ediinterkommerznotify2 = ediinterkommerznotify2;
+	}
+
+	public String getComplementoaddress() {
+		return complementoaddress;
+	}
+
+	public void setComplementoaddress(String complementoaddress) {
+		this.complementoaddress = complementoaddress;
+	}
+
+	public EnderecoCliente getEnderecocliente() {
+		return enderecocliente;
+	}
+
+	public void setEnderecocliente(EnderecoCliente enderecocliente) {
+		this.enderecocliente = enderecocliente;
+	}
+
+	public GrupoClienteInvoice getGrupoclienteinvoice() {
+		return grupoclienteinvoice;
+	}
+
+	public void setGrupoclienteinvoice(GrupoClienteInvoice grupoclienteinvoice) {
+		this.grupoclienteinvoice = grupoclienteinvoice;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((grupoclienteinvoice == null) ? 0 : grupoclienteinvoice.hashCode());
+		result = prime * result + ((sequenciaendereco == null) ? 0 : sequenciaendereco.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnderecoCliente other = (EnderecoCliente) obj;
+		if (grupoclienteinvoice == null) {
+			if (other.grupoclienteinvoice != null)
+				return false;
+		} else if (!grupoclienteinvoice.equals(other.grupoclienteinvoice))
+			return false;
+		if (sequenciaendereco == null) {
+			if (other.sequenciaendereco != null)
+				return false;
+		} else if (!sequenciaendereco.equals(other.sequenciaendereco))
+			return false;
+		return true;
+	}
+
+}
