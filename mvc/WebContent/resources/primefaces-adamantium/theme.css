@@ -4237,7 +4237,7 @@ hr.ui-widget-header {
   background-size: 100%;
   background-position: center;
 }
-/*Style For UI Growl Item ------------------------------------------------------------------------------------- */
+/*Style For UI Growl Item -------------------------------------------------------------------------------------*/
 .ui-growl {
   right: 12px !important;
   top: 85px !important;
@@ -4301,6 +4301,8 @@ hr.ui-widget-header {
 .ui-growl-image-fatal + .ui-growl-message {
   color: #f55151 !important;
 }
+
+
 /*Style For UI Log ------------------------------------------------------------------------------------- */
 .ui-log {
   padding: 2px !important;

@@ -755,7 +755,6 @@ public class AmostraNovaController implements Serializable {
 			try {
 				corCorteAmClone = (CorCorteAm) listaAux.get(0).clone();
 			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else {
@@ -1118,6 +1117,8 @@ public class AmostraNovaController implements Serializable {
 			// Duplica ficha
 			amostraClone.setAmostraId(null);
 			auxAmostra = amostraClone;
+			auxAmostra.setPrioridaDeProducao(PrioridadeProducao.X);
+			auxAmostra.setDataLiberacaoProducao(null);
 			auxAmostra = amostraDao.update(auxAmostra);
 			// Duplica Cores Ficha
 			List<CorAmostra> auxCores = facadeAcesso.getBuscaCoresAmostra(amostra.getAmostraId());
@@ -1473,10 +1474,19 @@ public class AmostraNovaController implements Serializable {
 			if ((operacao == 2) || (operacao == 1)) {
 				// Verificacao da Prioridade , se for primeira alteracao da Prioridae guarda
 				// data Stamp - Liberacao Producao
+				
 				if (((amostra.getPrioridaDeProducao().name().equals("N")
 						|| ((amostra.getPrioridaDeProducao().name().equals("U"))))
 						&& (amostraClone.getPrioridaDeProducao().name().equals("X")))) {
+					if (amostra.getCoresAmostra().size() == 0) {
+			    		addMessage(FacesMessage.SEVERITY_INFO, "Não é possivel Alterar, pois não há Cor(es) Cadastrada(s)!", "");
+						//						Messages.addGlobalWarn("");
+						amostra.setPrioridaDeProducao(amostraClone.getPrioridaDeProducao());
+						return;	
+					}
+					
 					amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
+					
 				}
 				if (!amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
 					//
@@ -2678,7 +2688,7 @@ public class AmostraNovaController implements Serializable {
     	if (temMarca) {
     		addMessage(FacesMessage.SEVERITY_INFO, "Fichas enviadas para Liberação !", "");
     	}else {
-    		addMessage(FacesMessage.SEVERITY_WARN, "Não foi selecinada Ficha para Desbloqueio !", "");
+    		addMessage(FacesMessage.SEVERITY_WARN, "Não foi selecionada,Ficha para Desbloqueio !", "");
     	}
     }
 

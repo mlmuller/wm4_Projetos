@@ -4143,14 +4143,16 @@ hr.ui-widget-header {
   background-size: 100%;
   background-position: center;
 }
-/*Style For UI Growl Item ------------------------------------------------------------------------------------- */
+/*Style For UI Growl Item -------------------------------------------------------------------------------------
+background-color:altera fundo do Grow..
+ */
 .ui-growl {
   right: 12px !important;
   top: 85px !important;
 }
 .ui-growl-item {
   padding: 20px 20px !important;
-  background-color: #ffffff;
+  background-color: #d2f3dd;
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
