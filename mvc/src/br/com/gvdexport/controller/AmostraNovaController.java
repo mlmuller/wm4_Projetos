@@ -22,6 +22,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.MessagingException;
 
 import org.omnifaces.util.Messages;
 import org.primefaces.PrimeFaces;
@@ -67,6 +68,7 @@ import br.com.gvdexport.model.PrioridadeProducao;
 import br.com.gvdexport.model.SimNao;
 import br.com.gvdexport.model.Tipo;
 import br.com.gvdexport.model.TipoMaterial;
+import br.com.gvdexport.util.EnviadorEmail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -350,6 +352,9 @@ public class AmostraNovaController implements Serializable {
 	@Inject
 	private CrudDao<FichaProducao, Long> fichaProducaoDao;
 	
+	@Inject
+	private EnviadorEmail enviadorEmail;
+	
 	@PostConstruct
 	public void init(){
 		amostra = new Amostra();
@@ -414,7 +419,9 @@ public class AmostraNovaController implements Serializable {
 		umaCorPrincipal = 0;
 		parametros.setPrioridade(true);
 		parametros.setBtncheck(true);
-//		parametros.setBtnvisao(true); comentado em 26/01
+		parametros.setSaveTransicao(true);
+		parametros.setFechaTransicao(true);
+		//		parametros.setBtnvisao(true); comentado em 26/01
 		setBtnVisao(false);
 		listaCoresComposicao = new ArrayList<>();
 		linha1 = 0;
@@ -1431,35 +1438,31 @@ public class AmostraNovaController implements Serializable {
 			if (operacao == 0) {
 				// consistencia Dados Capa Amostra
 				if (amostra.getTipo() == null) {
-					Messages.addGlobalError("Por favor, informe Tipo de amostra !");
+					Messages.addGlobalError("Informe Tipo de amostra !");
 					erro = false;
 				}
 				if (amostra.getCliente() == null) {
-					Messages.addGlobalError("Por Favor, Selecione Cliente!");
+					Messages.addGlobalError("Selecione Cliente!");
 					erro = false;
 				}
 				if (amostra.getFabrica() == null) {
-					Messages.addGlobalFatal("Por Favor, Selecione Fábrica!");
+					Messages.addGlobalFatal("Selecione Fábrica!");
 					erro = false;
 				}
 				if (amostra.getReferencia() == null) {
-					Messages.addGlobalError("Por Favor, Selecione Referência!");
+					Messages.addGlobalError("Selecione Referência!");
 					erro = false;
 				}
 				if (amostra.getDtxfct() == null) {
 					Messages.addGlobalError("Amostra Para:, Deve ser informado uma Data!");
 					erro = false;
 				}
-//				if (amostra.getDataEntrega() == null) {
-//					Messages.addGlobalError("Data Entrega:, Deve ser informado uma Data!");
-//					erro = false;
-//				}
 				if (amostra.getComponente() == null) {
-					Messages.addGlobalError("Por favor, Selecione Produto !");
+					Messages.addGlobalError("Selecione Produto !");
 					erro = false;
 				}
 				if (amostra.getEstacao() == null) {
-					Messages.addGlobalError("Por favor, Selecione Estação !");
+					Messages.addGlobalError("Selecione Estação !");
 					erro = false;
 				}
 				if (!erro) {
@@ -1484,17 +1487,22 @@ public class AmostraNovaController implements Serializable {
 						amostra.setPrioridaDeProducao(amostraClone.getPrioridaDeProducao());
 						return;	
 					}
-					
-					amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
-					
+					if (amostra.getDataLiberacaoProducao() == null) {
+						amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
+					}
+				}
+				if ((amostra.getPrioridaDeProducao().equals(PrioridadeProducao.N) || amostra.getPrioridaDeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridaDeProducao().equals(PrioridadeProducao.N))) {
+					amostra.setPrioridaDeProducao(amostraClone.getPrioridaDeProducao());
+					if (listaFichasProducao.size() == 0){
+						addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha já foi liberada", "");
+					}else {
+						
+					}
 				}
 				if (!amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
-					//
-					// Verficar a opcao U = Urgente
-					// Aqui verificar na tabela de producao se ja foi liberada ou ainda
-					// Falta gerar....por enqanto mensagem bloqueada
-//					Messages.addGlobalError("Ficha não pode ser alterada,Possui Solicitação de Produção !");
-//					return;
+					addMessage(FacesMessage.SEVERITY_WARN, "Qual o motivo para esta alteraçao?fale com Administrador!", "");
+					return;
+					//Se a mudança for de Normal para Urgente, ver qual a melhor situacao.
 				}
 			}
 
@@ -2677,12 +2685,18 @@ public class AmostraNovaController implements Serializable {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity,summary,detail));
     }
-    public void executaDesbloqueio() {
+    public void executaDesbloqueio() throws MessagingException {
+    	String msgAgrupa = "";
+    	String msgRec = "";
+    	String msg = "Olá, Por favor liberar as seguintes Fichas em Produção:";
     	Boolean temMarca = false;
     	for (FichaProducao fichaProducao : listaFichasProducao) {
 			if (fichaProducao.getAliberar()) {
 				fichaProducaoDao.update(fichaProducao);
 				temMarca = true;
+				msgRec=Long.toString(fichaProducao.getFichaproducaoid()).trim();
+				msgAgrupa +=msgRec+",";
+				msgRec = "";
 			}
 		}
     	if (temMarca) {
@@ -2690,7 +2704,14 @@ public class AmostraNovaController implements Serializable {
     	}else {
     		addMessage(FacesMessage.SEVERITY_WARN, "Não foi selecionada,Ficha para Desbloqueio !", "");
     	}
-    }
+    	msgAgrupa="Ficha(s) : "+msgAgrupa;
+    	msg+=System.lineSeparator()+msgAgrupa;
+    	String remetente = "calceb@gvdintl.com.br";
+    	String senha = "Lom57544";
+    	String destinatario = "ti@gvdintl.com.br";
+    	String assunto = "Solicitação liberacao Fichas em Produção";
+    	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
+   }
 
     public List<String> ajustaCronometro(FichaProducao fichaProducao) {
     	eventos = new ArrayList<>();

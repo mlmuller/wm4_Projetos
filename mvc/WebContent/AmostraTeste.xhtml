@@ -30,6 +30,7 @@
 	.ui-widget,
 	.ui-widget .ui-widget {
 	    font-size: 12px !important;
+
 	}
 	</style>
 			<h:form id="crudFormAmosPrimario">
@@ -497,7 +498,7 @@
 					</pf:panelGrid>
 					<pf:panel>
 						<h:panelGrid id="btnSave" columns="3">
-							<pf:commandButton value="#{msg['botao.save']}"
+							<pf:commandButton value="#{msg['botao.save']}" rendered="#{amostraNovaController.parametros.saveTransicao}"
 								actionListener="#{amostraNovaController.verificaAntesSave}"
 								proccess="@this"
 								update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao" />
@@ -563,7 +564,7 @@
 							</pf:commandButton>
 
 
-							<pf:commandButton value="Fechar"
+							<pf:commandButton value="Fechar" rendered="#{amostraNovaController.parametros.fechaTransicao}"
 								icon="fa fa-fw fa-times-circle-o"
 								actionListener="#{amostraNovaController.inicializaVetorCores()}"
 								oncomplete="PF('addEditFormAmostraNovaDlg').hide()"
@@ -1759,14 +1760,14 @@
 						</h:outputText>
 					</pf:column>
 					
-					<pf:column id="teste" headerText="Almoxarifado/Corte/Costura/Acabamento" style="text-align:center;">
+					<pf:column id="teste" headerText="Almoxarifado_______________Corte______________________Costura________________Acabamento" style="text-align:left;">
 					    <pf:chronoline value="#{amostraNovaController.ajustaCronometro(_rowemProducao)}" var="eventos" layout="horizontal" align="top">
 					        #{eventos}
 					    </pf:chronoline>
 					  
 					</pf:column>
 			     </pf:dataTable>
-				<pf:commandButton value="#{msg['botao.execucao']}"
+				<pf:commandButton value="#{msg['botao.execucao']}" title="Execute para solicitar Liberação"
 					actionListener="#{amostraNovaController.executaDesbloqueio()}"
 					update="emProducaox emProducaox:tblAmostraemProd fichaDesbloqueiox"  style="font-size:12px;">
 				</pf:commandButton >
