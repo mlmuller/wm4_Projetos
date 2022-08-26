@@ -8,7 +8,8 @@
 	xmlns:pe="http://primefaces/ui/extesions"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml" >
 	<ui:define name="corpo">
-	<link type="text/css" rel="stylesheet" href="../resources/adamantium-layout/css/theme.css" />
+	<link type="text/css" rel="stylesheet" href="resources/adamantium-layout/css/theme.css" />
+	
 	<style type="text/css">
 	
 	.customDialogx .ui-dialog-titlebar.ui-widget-header {
@@ -30,9 +31,10 @@
 	.ui-widget,
 	.ui-widget .ui-widget {
 	    font-size: 12px !important;
+  }
 
-	}
-	</style>
+
+</style>
 			<h:form id="crudFormAmosPrimario">
 				<pf:panel header="#{msg['amostra.label.titulo']}"
 					styleClass="panelgrlsb" />
@@ -51,7 +53,9 @@
 						<pf:commandLink
 							actionListener="#{amostraNovaController.edit(_rowamostra)}"
 							title="#{msg['botao.edit']}"  
-							update=":crudFormAmostraSecundario :emProducaox :emProducaox:tblAmostraemProd :emProducaox:tblAmostraemProd:teste" immediate="true">
+							update=":crudFormAmostraSecundario 
+							:crudFormAmostraSecundario:btnSave :crudFormAmostraSecundario:btnFechar 
+							:emProducaox :emProducaox:tblAmostraemProd :emProducaox:tblAmostraemProd:teste" immediate="true">
 							<i class="fa fa-pencil" style="font-size: 1.5em; color: #06aa0e;" />
 
 						</pf:commandLink>
@@ -497,8 +501,8 @@
 
 					</pf:panelGrid>
 					<pf:panel>
-						<h:panelGrid id="btnSave" columns="3">
-							<pf:commandButton value="#{msg['botao.save']}" rendered="#{amostraNovaController.parametros.saveTransicao}"
+						<h:panelGrid id="btnSave" columns="3" rendered="#{amostraNovaController.parametros.saveTransicao}" >
+							<pf:commandButton value="#{msg['botao.save']}" 
 								actionListener="#{amostraNovaController.verificaAntesSave}"
 								proccess="@this"
 								update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao" />
@@ -564,8 +568,7 @@
 							</pf:commandButton>
 
 
-							<pf:commandButton value="Fechar" rendered="#{amostraNovaController.parametros.fechaTransicao}"
-								icon="fa fa-fw fa-times-circle-o"
+							<pf:commandButton id="btnFechar" rendered="#{amostraNovaController.parametros.fechaTransicao}" value="Fechar" icon="fa fa-fw fa-times-circle-o"
 								actionListener="#{amostraNovaController.inicializaVetorCores()}"
 								oncomplete="PF('addEditFormAmostraNovaDlg').hide()"
 								update=":crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra"
@@ -620,6 +623,7 @@
 										<i class="fa fa-fw fa-circle-o-notch"
 											style="font-size: 1.5em; color: #cab734;" />
 									</pf:commandLink>
+
 								</pf:column>
 								<pf:column headerText="#{msg['amostra.label.amostra']}"
 									style="font-size:12px;" width="10">

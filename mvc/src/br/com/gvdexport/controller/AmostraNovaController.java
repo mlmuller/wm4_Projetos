@@ -171,6 +171,23 @@ public class AmostraNovaController implements Serializable {
 	private Integer Number1;
 	@Getter @Setter
 	private Integer Number2;
+
+	//Estas variaveis definirao se houverão alterações nas etapas em relacao aos clones
+	
+	@Getter @Setter
+	private Boolean fase1;
+	
+	@Getter @Setter
+	private Boolean fase2;
+	
+	@Getter @Setter
+	private Boolean fase3;
+	
+	@Getter @Setter
+	private Boolean fase4;
+	
+	@Getter @Setter
+	private Boolean fase5;
 	
 	// Esta variavel,deve ser tambem relacionada com o tipo de usuario
 
@@ -358,6 +375,7 @@ public class AmostraNovaController implements Serializable {
 	@PostConstruct
 	public void init(){
 		amostra = new Amostra();
+		parametros = new ParametrosTransientes();
 		listaLivroReferencia = new ArrayList<LivroReferencia>();
 		listaFiltroAmostras = new ArrayList<Amostra>();
 		listaCoresCadastradas = new ArrayList<>();
@@ -413,14 +431,15 @@ public class AmostraNovaController implements Serializable {
 		amostra.setPares(BigDecimal.ZERO);
 		amostra.setPargvd(BigDecimal.ZERO);
 		amostra.setTemcor(false);
+		amostra.setLog(false);
 		// alterado para 1 , antes 0 , em 14/04;
 		operacaoPosterior = 1;
 		sequencialCor = 0;
 		umaCorPrincipal = 0;
 		parametros.setPrioridade(true);
 		parametros.setBtncheck(true);
-		parametros.setSaveTransicao(true);
-		parametros.setFechaTransicao(true);
+		parametros.setSaveTransicao(false);
+		parametros.setFechaTransicao(false);
 		//		parametros.setBtnvisao(true); comentado em 26/01
 		setBtnVisao(false);
 		listaCoresComposicao = new ArrayList<>();
@@ -437,7 +456,6 @@ public class AmostraNovaController implements Serializable {
 
 	// Inicaliza parametros de mostragem das abas, em modo true
 	public void inicializaParametros() {
-		parametros = new ParametrosTransientes();
 		parametros.setAbacor(true);
 		parametros.setAbacorte(true);
 		parametros.setAbacostura(true);
@@ -660,6 +678,8 @@ public class AmostraNovaController implements Serializable {
 		parametros.setBtnlimpa6(false);
 		parametros.setBtncheck(true);
 		parametros.setAbacor(false);
+		parametros.setSaveTransicao(true);
+		parametros.setFechaTransicao(true);
 		setBtnVisao(false);
 		// Libera campo para alteracao
 		// Aqui devera aparecer verificacao se possui fichas em producao
@@ -884,7 +904,7 @@ public class AmostraNovaController implements Serializable {
 			}
 		}
 
-		//Cor especifica Costura
+		//Cor especifica Acabamento
 		listaCorAcabamentoAmostra = new ArrayList<CorAcabamentoAm>();
 		List<CorAcabamentoAm> listaAux = facadeAcesso.getBuscaUmaCorAcabamentoAmostra(corAmostra.getId());
 		CorAcabamentoAm corAcabamentoAmClone = new CorAcabamentoAm();
@@ -2762,5 +2782,9 @@ public class AmostraNovaController implements Serializable {
     	nomeEventos.add("Corte");
     	nomeEventos.add("Costura");
     	nomeEventos.add("Acabamento");
+    }
+    
+    public void CheckSeHouveAlteração() {
+    	
     }
 }

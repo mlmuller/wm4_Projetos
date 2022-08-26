@@ -24,7 +24,6 @@ import org.primefaces.component.tabview.Tab;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 
 import br.com.gvdexport.dao.CrudDao;
@@ -338,7 +337,6 @@ public class CriaFichaProducaoController implements Serializable {
 		informaCorp = "";
 		largura = "";
 		altura = "";
-//		listaAmostras = amostraDao.findAll();
 		inicializaParametros();
 		inicializaConsulta();
 		iniciaTransCores();

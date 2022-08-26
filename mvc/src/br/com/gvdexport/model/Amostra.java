@@ -71,9 +71,11 @@ public class Amostra implements Serializable,Cloneable {
 	@Column(length=1,nullable=false)
 	private Tipo tipo;
 
+	@Column(length = 1,nullable=false)
+	private Boolean log;
+	
 	@Column(nullable = false)
 	private LocalDate dataSolicitacao;
-
 	
 	@Transient
 	@Column(nullable = true)
@@ -122,7 +124,10 @@ public class Amostra implements Serializable,Cloneable {
 	
 	@Column(nullable = true)
 	private LocalDateTime dataLiberacaoProducao;
-	
+
+	@Column(nullable = true)
+	private LocalDateTime dataLiberadaAltProducao;
+
 	@Transient
 	private LocalDate dataLibPrdFinal;
 	

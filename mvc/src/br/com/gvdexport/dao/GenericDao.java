@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import br.com.gvdexport.core.Transactional;
+import br.com.gvdexport.model.Amostra;
 import br.com.gvdexport.model.CorAcabamentoAm;
 import br.com.gvdexport.model.CorAmostra;
 import br.com.gvdexport.model.CorAmostraMulti;
@@ -21,6 +22,7 @@ import br.com.gvdexport.model.CorConstrucaoAm;
 import br.com.gvdexport.model.CorCorteAm;
 import br.com.gvdexport.model.CorCosturaAm;
 import br.com.gvdexport.model.EnderecoCliente;
+import br.com.gvdexport.model.FichaProducao;
 
 @Dependent
 @Named("baseDao")
@@ -119,6 +121,15 @@ public class GenericDao<T,ID> implements Serializable {
 		return (CorAmostraMulti) this.em.merge(corMulti);
     }
     
+    @Transactional
+    public FichaProducao updateLiberaFichaProducao(FichaProducao fichaProducao) {
+		return (FichaProducao) this.em.merge(fichaProducao);
+    }
+
+    @Transactional
+    public Amostra updateLiberaAmostra(Amostra fichaAmostra) {
+		return (Amostra) this.em.merge(fichaAmostra);
+    }
 
 	// Etapas Producao Amostras Novas
 	//Corte

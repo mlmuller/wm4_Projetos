@@ -18,7 +18,10 @@ import br.com.gvdexport.model.CorCabedalAm;
 import br.com.gvdexport.model.CorConstrucaoAm;
 import br.com.gvdexport.model.CorCorteAm;
 import br.com.gvdexport.model.CorCosturaAm;
+import br.com.gvdexport.model.EmTransicao;
 import br.com.gvdexport.model.EnderecoCliente;
+import br.com.gvdexport.model.FichaProducao;
+import br.com.gvdexport.model.SimNao;
 
 @Named("crudDao")
 public class CrudDao<T,ID> implements Serializable{
@@ -187,6 +190,16 @@ public class CrudDao<T,ID> implements Serializable{
 	    	
 	    }
 
+	    //Salvar Parametro para desbloquear e permitir alteracao da amostra Producao
+	    public void updateAlteraLiberacao(List<FichaProducao> listaFichaProducao) {
+	    	
+	    	for (FichaProducao fichaProducao : listaFichaProducao) {
+	    		fichaProducao.setLiberadoalteraramostra(EmTransicao.T);
+	    		dao.updateLiberaFichaProducao(fichaProducao);
+	    	}
+	    	
+	    }
+	    
 	    
 	    public List<T> findAll(){
 	        return dao.findAll(getEntityClass());

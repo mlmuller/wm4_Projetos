@@ -9,6 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Usuario.class)
 public abstract class Usuario_ {
 
+	public static volatile SingularAttribute<Usuario, String> mailpassword;
 	public static volatile SingularAttribute<Usuario, String> usuariostamp;
 	public static volatile SingularAttribute<Usuario, Situacao> situacao;
 	public static volatile SingularAttribute<Usuario, String> senhaconversao;
@@ -21,9 +22,11 @@ public abstract class Usuario_ {
 	public static volatile SingularAttribute<Usuario, Cliente> cliente;
 	public static volatile SingularAttribute<Usuario, SimNao> liberafinanceiro;
 	public static volatile SingularAttribute<Usuario, Mercado> mercado;
+	public static volatile SingularAttribute<Usuario, String> mailgvd;
 	public static volatile SingularAttribute<Usuario, String> usuario;
 	public static volatile SingularAttribute<Usuario, String> email;
 
+	public static final String MAILPASSWORD = "mailpassword";
 	public static final String USUARIOSTAMP = "usuariostamp";
 	public static final String SITUACAO = "situacao";
 	public static final String SENHACONVERSAO = "senhaconversao";
@@ -36,6 +39,7 @@ public abstract class Usuario_ {
 	public static final String CLIENTE = "cliente";
 	public static final String LIBERAFINANCEIRO = "liberafinanceiro";
 	public static final String MERCADO = "mercado";
+	public static final String MAILGVD = "mailgvd";
 	public static final String USUARIO = "usuario";
 	public static final String EMAIL = "email";
 

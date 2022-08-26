@@ -18,6 +18,7 @@ public abstract class Amostra_ {
 	public static volatile SingularAttribute<Amostra, String> obs;
 	public static volatile SingularAttribute<Amostra, Tipo> tipo;
 	public static volatile SingularAttribute<Amostra, String> construcaoNome;
+	public static volatile SingularAttribute<Amostra, Boolean> log;
 	public static volatile SingularAttribute<Amostra, LocalDateTime> dataLiberacaoProducao;
 	public static volatile SingularAttribute<Amostra, String> complementoSolado;
 	public static volatile SingularAttribute<Amostra, Boolean> gerada;
@@ -50,6 +51,7 @@ public abstract class Amostra_ {
 	public static volatile SingularAttribute<Amostra, LocalDate> dataEntrega;
 	public static volatile SingularAttribute<Amostra, Long> amostraId;
 	public static volatile SingularAttribute<Amostra, LivroReferencia> livroReferencia;
+	public static volatile SingularAttribute<Amostra, LocalDateTime> dataLiberadaAltProducao;
 	public static volatile SingularAttribute<Amostra, Integer> referencia;
 	public static volatile SingularAttribute<Amostra, Integer> versao;
 	public static volatile SingularAttribute<Amostra, BigDecimal> pargvd;
@@ -61,6 +63,7 @@ public abstract class Amostra_ {
 	public static final String OBS = "obs";
 	public static final String TIPO = "tipo";
 	public static final String CONSTRUCAO_NOME = "construcaoNome";
+	public static final String LOG = "log";
 	public static final String DATA_LIBERACAO_PRODUCAO = "dataLiberacaoProducao";
 	public static final String COMPLEMENTO_SOLADO = "complementoSolado";
 	public static final String GERADA = "gerada";
@@ -93,6 +96,7 @@ public abstract class Amostra_ {
 	public static final String DATA_ENTREGA = "dataEntrega";
 	public static final String AMOSTRA_ID = "amostraId";
 	public static final String LIVRO_REFERENCIA = "livroReferencia";
+	public static final String DATA_LIBERADA_ALT_PRODUCAO = "dataLiberadaAltProducao";
 	public static final String REFERENCIA = "referencia";
 	public static final String VERSAO = "versao";
 	public static final String PARGVD = "pargvd";

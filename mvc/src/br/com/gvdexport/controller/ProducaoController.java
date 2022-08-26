@@ -41,6 +41,7 @@ import br.com.gvdexport.model.PrioridadeProducao;
 import br.com.gvdexport.model.SimNao;
 import br.com.gvdexport.model.SituacaoProducao;
 import br.com.gvdexport.model.Tipo;
+import br.com.gvdexport.util.EnviadorEmail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -154,17 +155,20 @@ public class ProducaoController implements Serializable {
 	@Getter	@Setter
 	private Integer ultimaSequencia;
 
-//	@Inject
-//	private CrudDao<Amostra, Long> amostraDao;
 	@Inject
 	private FacadeAcesso facadeAcesso;
+
 	@Inject
 	private CrudDao<CorAmostra, Long> corAmostraNovaDao;
+
 	@Inject
 	private CrudDao<FichaProducao, Long> fichaProducaoDao;
+
 	@Inject
 	private UsuarioLogadoController usuarioLogado;
 
+	@Inject
+	private EnviadorEmail enviadorEmail;
 //	LazyProducaoAmostraDataModel dataModel = new LazyProducaoAmostraDataModel();
 //	public LazyDataModel<FichaProducao> getModel() {
 //		return dataModel;
@@ -191,7 +195,25 @@ public class ProducaoController implements Serializable {
 		dt = false;
 	}
 	public void ExecuteLiberar() {
+	   	String msgAgrupa = "";
+    	String msgRec = "";
+    	String msg = "Olá, Fichas em Produção Liberadas cfe Solicitação:";
+		for (FichaProducao fichaProducaoALiberar:listaAmostraALiberar ) {
+			fichaProducaoALiberar.setLiberadoalteraramostra(EmTransicao.T);
+			fichaProducaoALiberar.setDatacorrecao(fichaProducaoDao.getDateLocalTime());
+			fichaProducaoDao.update(fichaProducaoALiberar);
+			msgRec=Long.toString(fichaProducao.getAmostra().getAmostraId()).trim();
+			msgAgrupa +=msgRec+",";
+			msgRec = "";
+		}
+ 
 		
+		msg+=System.lineSeparator()+msgAgrupa;
+    	String remetente = "almoxarifado2@gvdintl.com.br";
+    	String senha = "Vav91126";
+    	String destinatario = "ti@gvdintl.com.br";
+    	String assunto = "Confirmação, liberada(s) Ficha(s) em Produção";
+    	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
 	}
 	//Metodo auxiliar para gravacao das cores selecionadas
 	public void gerarFichaProdCor(Amostra amostraFichaProduzir) {
