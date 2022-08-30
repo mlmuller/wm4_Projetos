@@ -164,6 +164,20 @@ public class UsuarioController implements Serializable {
 		dgaPrivilegios = dgaFacade.getPrivilegios();
 	}
 
+	public void inicializaSessao() {
+		add();
+		FacesContext context = FacesContext.getCurrentInstance();
+		Faces.redirect("template.jsf");
+		context.addMessage(null, new FacesMessage("Bem Vindo usuário, "+usuarioLogado.getUsuariologado().getNome()));
+	}
+
+	public void finalizaSessao() {
+		add();
+		FacesContext context = FacesContext.getCurrentInstance();
+		Faces.redirect("template.jsf");
+		context.addMessage(null, new FacesMessage("Até mais..., "+usuarioLogado.getUsuariologado().getNome()));
+	}
+
 	public void validaUsuario() throws IOException {
     	FacesContext context = FacesContext.getCurrentInstance();
 		if (!usuarios.isEmpty()) {

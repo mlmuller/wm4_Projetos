@@ -127,6 +127,8 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>br.com.gvdexport.model.Etiquetas</class>
 		<class>br.com.gvdexport.model.EtqDragDrop</class>
 		<class>br.com.gvdexport.model.Sequencial</class>
+		<class>br.com.gvdexport.model.LogAmostrasNovas</class>
+
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.max_fetch_depth" value="3" />

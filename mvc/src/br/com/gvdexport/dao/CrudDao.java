@@ -21,7 +21,7 @@ import br.com.gvdexport.model.CorCosturaAm;
 import br.com.gvdexport.model.EmTransicao;
 import br.com.gvdexport.model.EnderecoCliente;
 import br.com.gvdexport.model.FichaProducao;
-import br.com.gvdexport.model.SimNao;
+import br.com.gvdexport.model.LogAmostrasNovas;
 
 @Named("crudDao")
 public class CrudDao<T,ID> implements Serializable{
@@ -223,5 +223,13 @@ public class CrudDao<T,ID> implements Serializable{
 			LocalDate localDate = LocalDate.now();
 			return localDate;
 		}
+		//Logs - salvar multiplos itens
+	    public void updateLogAmostraNova(List<LogAmostrasNovas> listaLogAmostraNova) {
+	    	
+	    	for (LogAmostrasNovas logAmostraNova : listaLogAmostraNova) {
+	    		dao.updateLogAmostraNova(logAmostraNova);
+	    	}
+	    	
+	    }
 
 }		

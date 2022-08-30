@@ -263,7 +263,7 @@ public class logsControllerAmostras implements Serializable {
 						logAmostraAux.add(logAmostrasNovas);
 					}
 					if (logAmostraAux.size() != 0) {
-						//criar metodo facade para salvar lista
+						logAmostrasNovasdao.updateLogAmostraNova(logAmostraAux);
 					}
 				}
 			} catch (CloneNotSupportedException | UnknownHostException e) {

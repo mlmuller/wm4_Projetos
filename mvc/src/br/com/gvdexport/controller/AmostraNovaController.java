@@ -34,8 +34,10 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import br.com.gvdexport.dao.CrudDao;
+import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.facade.FacadeAcesso;
 import br.com.gvdexport.facade.FacadeView;
+import br.com.gvdexport.logs.logsControllerAmostras;
 import br.com.gvdexport.model.AcabamentoAmostra;
 import br.com.gvdexport.model.Amostra;
 import br.com.gvdexport.model.Cliente;
@@ -59,6 +61,7 @@ import br.com.gvdexport.model.FichaProducao;
 import br.com.gvdexport.model.Forma;
 import br.com.gvdexport.model.ImagemReferencia;
 import br.com.gvdexport.model.LivroReferencia;
+import br.com.gvdexport.model.LogAmostrasNovas;
 import br.com.gvdexport.model.MarcaCliente;
 import br.com.gvdexport.model.Material;
 import br.com.gvdexport.model.Mercado;
@@ -371,6 +374,12 @@ public class AmostraNovaController implements Serializable {
 	
 	@Inject
 	private EnviadorEmail enviadorEmail;
+	
+	@Inject
+	private logsControllerAmostras logsControllerAmostrasNovas;
+
+	@Inject
+	private LogAmostrasNovasDao logAmostraNovaDao;
 	
 	@PostConstruct
 	public void init(){
@@ -1563,6 +1572,11 @@ public class AmostraNovaController implements Serializable {
 			amostra.setUsuarioStamp(usuarioLogado.getUsuariologado().getUsuario());
 			amostra.setDataStamp(amostraDao.getDateLocalTime());
 			amostra.setMercado(amostra.getMercado());
+			Boolean mAux = false;
+			if ((amostra != amostraClone) && (operacao == 1))  {
+				mAux = logsControllerAmostrasNovas.logAmostrasNovasEdicao(amostra, amostraClone);
+			}
+			amostra.setLog(mAux);
 			amostra = amostraDao.update(amostra);
 			Messages.addGlobalInfo("Ficha adicionada com Sucesso !");
 			parametros.setAbacor(false);

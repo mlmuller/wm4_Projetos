@@ -71,7 +71,7 @@ public class Amostra implements Serializable,Cloneable {
 	@Column(length=1,nullable=false)
 	private Tipo tipo;
 
-	@Column(length = 1,nullable=false)
+	@Column(length = 1,nullable=true)
 	private Boolean log;
 	
 	@Column(nullable = false)
