@@ -8,7 +8,6 @@
 	xmlns:pe="http://primefaces/ui/extesions"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml" >
 	<ui:define name="corpo">
-	<link type="text/css" rel="stylesheet" href="resources/adamantium-layout/css/theme.css" />
 	
 	<style type="text/css">
 	
@@ -20,17 +19,21 @@
 	.ui-datatable thead th {background-color: #c1dbcf !important;
 	    color: black !important;
 		border-color: #abb5b1 !important;
-	}	// alterado cor do cabecalho
+	}	
 
     .ui-datatable tbody tr.ui-state-highlight td{
-     background:#c1dbcf !important;}
-     
-	.ui-datatable-odd { background:#f0f0f0 !important; } // light silver alternar linhas
+     background:#c1dbcf !important;azimuth: 
+     }    
+	.ui-datatable-odd { background:#f0f0f0 !important;} // light silver alternar linhas
 	.ui-datatable-even { background:#ffffff !important; } // white
 
 	.ui-widget,
 	.ui-widget .ui-widget {
 	    font-size: 12px !important;
+	 }   
+	.alturalinhaDatatable .ui-datatable-data{
+		height: 20px;		
+	}
   }
 
 
@@ -186,14 +189,15 @@
 								pattern="dd-MM-yyyy" />
 						</h:outputText>
 					</pf:column>
+
 					<pf:column headerText="#{msg['usocomum.label.prs']}" width="8">
 						<h:outputText value="#{_rowamostra.pares}" style="font-size:10x;" />
 					</pf:column>
 					<pf:column width="335" headerText="Materiais"
 						style="text-align:center;">
 						<pf:dataTable var="cor" value="#{_rowamostra.coresAmostra}"
-							styleClass="hide-column-names">
-							<pf:column style="font-size:9px;width:5px;" width="5px;">
+							styleClass="hide-column-names alturalinhaDatatable">
+							<pf:column style="font-size:9px;width=5px;">
 								<h:outputText value="#{cor.desenvolveramostra}" />
 							</pf:column>
 							<pf:column style="font-size:9px;width:5px;">
@@ -201,7 +205,7 @@
 										value="#{cor.marca}" /></li>
 							</pf:column>
 							<pf:column style="font-size:9px;width:90px;">
-								<h:outputText value="#{cor.material}" style="font-size:9px;" />
+								<h:outputText value="#{cor.material}" style="font-size:9px;white-space:normal;" />
 							</pf:column>
 							<pf:column style="font-size:9px;" width="70">
 								<h:outputText value="#{cor.corPrincipal }"
@@ -234,7 +238,7 @@
 						style="border-color:#35b3ee;">
 						<pf:column>
 							<pf:panel style="border-color:#35b3ee;">
-								<h:panelGrid columns="2">
+								<h:panelGrid columns="3">
 									<pf:outputLabel value="#{msg['usocomum.label.tipoamostra']}" />
 									<pf:selectOneMenu value="#{amostraNovaController.amostra.tipo}"
 										filter="true" filterMatchMode="contains"
@@ -246,6 +250,10 @@
 											itemLabel="#{tpamostra.label}" />
 										<pf:ajax process="@this" />
 									</pf:selectOneMenu>
+									<pf:commandLink>
+										<i class="fa fa-folder-open" style="font-size: 1.5em; color: #ddd507;" />
+									
+									</pf:commandLink>
 								</h:panelGrid>
 								<h:panelGrid id="pnlMercado" columns="2">
 									<h:outputLabel value="#{msg['usocomum.label.mercado']}" />

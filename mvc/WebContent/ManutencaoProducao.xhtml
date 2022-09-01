@@ -8,16 +8,16 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
 	<ui:define name="corpo">
+	<link type="text/css" rel="stylesheet" href="resources/adamantium-layout/css/theme.css" />
 	<style type="text/css">
-			.ui-fieldset-legend {
-				padding: 10px 10px !important;
+			.ui-fieldset .ui-fieldset-legend {
+  				padding: 15px 10px !important;
 				height: 0.5em;
 				color: black;
 				font-size: 11px;
 				background-color: #7cdbfb !important;
-			}
-			
-			.panelgrlsb {
+				border-radius: 7px;}
+ 			.panelgrlsb {
 				border: none;
 			}
 			
@@ -41,7 +41,7 @@
 			<pf:growl id="prodMessage" globalOnly="true" sticky="true" />
 			<h:panelGroup id="accordPnlGrpProd">
 				<pf:fieldset 
-				legend="[Filtros Manutenção Amostras de Produção]" 
+				legend="[Filtros]" style="margin-top:5px;" 
 				toggleable="true" 
 				toggleSpeed="500" collapsed="true">
 					<pf:ajax event="toggle"
@@ -264,7 +264,7 @@
 				value="#{dtlazyAmostraProducaoView.lazyModel}" var="_rowproducao"
 				paginator="true" rows="10" paginatorPosition="bottom"
 				widgetVar="Table" style="text-align:center" scrollable="true"
-				scrollHeight="400px;" lazy="true">
+				scrollHeight="400px;" lazy="true" >
 				<pf:column width="80" headerText="Opções" style="text-align:center">
 
 					<pf:commandLink
@@ -295,7 +295,7 @@
 					filterStyle="height:2.2em;"
 					filterBy="#{_rowproducao.fichaproducaoid}"
 					sortBy="#{_rowproducao.fichaproducaoid}" filterMatchMode="contains"
-					style="font-size:11px;text-align:center;" width="38">
+					style="font-size:11px;text-align:center;" width="70">
 					<h:outputText value="#{_rowproducao.fichaproducaoid}"
 						style="font-size:10px;color:blue;" />
 				</pf:column>
@@ -322,7 +322,7 @@
 					filterBy="#{_rowproducao.amostra.amostraId}"
 					sortBy="#{_rowproducao.amostra.amostraId}"
 					filterMatchMode="contains"
-					style="font-size:11px;text-align:center;" width="45">
+					style="font-size:11px;text-align:center;" width="60">
 					<h:outputText value="#{_rowproducao.amostra.amostraId}"
 						style="font-size:10px;" />
 				</pf:column>
@@ -484,12 +484,12 @@
 				<pf:panelGrid columns="4" layout="grid"
 					style="border-color:#35b3ee;">
 
-					<pf:column>
+					<pf:column >
 						<h:panelGrid columns="2">
 							<h:outputLabel value="Produção N°:" style="font-size:14px;" />
 							<pf:inputText readonly="true"
 								value="#{producaoController.fichaProducao.fichaproducaoid}"
-								size="6" style="color:blue;text-align:left;" />
+								size="6" style="color:blue;text-align:left;"/>
 							<h:outputLabel value="Data Impressão:" />
 							<pf:inputText readonly="true"
 								value="#{producaoController.fichaProducao.dataimpressao}"
@@ -498,7 +498,7 @@
 									pattern="dd-MM-yyyy hh:mm" />
 							</pf:inputText>
 						</h:panelGrid>
-					</pf:column>
+					</pf:column >
 					<pf:column>
 						<h:panelGrid columns="2">
 							<h:outputLabel value="Amostra N°:" style="font-size:14px;" />

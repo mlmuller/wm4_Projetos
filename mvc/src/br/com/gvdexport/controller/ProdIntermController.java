@@ -201,13 +201,13 @@ public class ProdIntermController implements Serializable {
 		amostra = new Amostra();
 		qtdFichas = 0;
 		listaLivroReferencia = new ArrayList<LivroReferencia>();
-//		listaAmostraProduzir = new ArrayList<Amostra>();
-//		listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
-//		if ((listaAmostraProduzir == null) || (listaAmostraProduzir.isEmpty())) {
-//			qtdFichas = 0;
-//		}else {
-//			qtdFichas = listaAmostraProduzir.size();
-//		}
+		listaAmostraProduzir = new ArrayList<Amostra>();
+		listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
+		if ((listaAmostraProduzir == null) || (listaAmostraProduzir.isEmpty())) {
+			qtdFichas = 0;
+		}else {
+			qtdFichas = listaAmostraProduzir.size();
+		}
 		listaFiltroAmostras = new ArrayList<Amostra>();
 		listaCoresCadastradas = new ArrayList<>();
 		listaEstacoes = new ArrayList<Estacao>();

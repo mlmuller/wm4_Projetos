@@ -8,7 +8,7 @@
 			* {
 				font-size: 11px;
 				font-family:'latobold';
-				line-height: 1.0;
+				line-height: 0.6em;
 				text-align:left;
 			  }
 			  .ui-menu-item  {
@@ -16,12 +16,12 @@
 			    
 			  }
 			  .ui-menuitem .ui-menuitem-link {
-			  	width: 150px; !important;
+			  	width: 100px; !important;
 			    white-space: nowrap;
 
 			  }
 			  .ui-menuitem-text{
-			  	width:100px;
+			  	width:80px;
 			  }
 			  .CorFonte {
 			  	color: red;
@@ -257,7 +257,14 @@
                     </p:submenu>
                 </p:column>
             </p:submenu>
-            
+			<p:submenu label="Sair" icon="fa fa-sign-out" style="color:black;font-size:1.5em;">
+				<p:column>
+				<p:submenu label="Logout" style="height:15px;background-color:#bad9cb;color:black;text-align:center">	
+				<p:menuitem value="Logout" url="authenticate.jsf" actionListener="#{usuarioController.add}">
+				</p:menuitem>
+				</p:submenu>
+				</p:column>
+			</p:submenu> 	           
             
           </p:megaMenu>
 		</h:form>

@@ -183,7 +183,7 @@ public class ProducaoController implements Serializable {
 		listaCoresCadastradas = new ArrayList<>();
 		listaEstacoes = new ArrayList<Estacao>();
 		operacaoPosterior = 0;
-		listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao(EmTransicao.T);
+		listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao();
 		if (listaAmostraALiberar.size() == 0) {
 			Messages.addGlobalWarn("Não há Fichas para Liberar !!!");
 			return;
