@@ -33,6 +33,7 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.gvdexport.dao.AmostraNovaDao;
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.facade.FacadeAcesso;
@@ -55,6 +56,7 @@ import br.com.gvdexport.model.CorteAmostra;
 import br.com.gvdexport.model.CosturaAmostra;
 import br.com.gvdexport.model.DestinoAmCf;
 import br.com.gvdexport.model.DireitoEsquerdo;
+import br.com.gvdexport.model.EmTransicao;
 import br.com.gvdexport.model.Estacao;
 import br.com.gvdexport.model.Fabrica;
 import br.com.gvdexport.model.FichaProducao;
@@ -645,6 +647,7 @@ public class AmostraNovaController implements Serializable {
 
 		//Verificar se ha fichas na producao e se houve ver Status
 		mostraListaProducao = false;
+		PrimeFaces current = PrimeFaces.current();
 		if (amostraedit.getGerada()) {
 			listaFichasProducao = new ArrayList<FichaProducao>();
 			listaFichasProducao = facadeAcesso.getExisteFichaNLProducao(amostraedit.getAmostraId());
@@ -657,7 +660,6 @@ public class AmostraNovaController implements Serializable {
 					}
 				}
 				addMessage(FacesMessage.SEVERITY_WARN, "Existe(m) Ficha(s) em Produção !","");
-				PrimeFaces current = PrimeFaces.current();
 				if (mostraListaProducao) {
 					current.executeScript("PF('listaAmostraemProdDlg').show()");
 				}else {
@@ -667,7 +669,7 @@ public class AmostraNovaController implements Serializable {
 				return;
 			}
 		}
-		
+
 		amostraClone = new Amostra();
 		posicaoAtual = 0;
 		amostra = amostraedit;
@@ -713,7 +715,6 @@ public class AmostraNovaController implements Serializable {
 			buscaListaDestinoAm(amostra);
 		}
 		imageResize = ResizeImagem(amostraedit);
-		PrimeFaces current = PrimeFaces.current();
 		if (!mostraListaProducao) {
 			current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
 		}
@@ -2649,6 +2650,7 @@ public class AmostraNovaController implements Serializable {
 
 	public void inicializaVetorCores() {
 		listaCoresCadastradas = new ArrayList<>();
+		
 	}
 
 	public void iniciaTransCores() {
@@ -2726,7 +2728,13 @@ public class AmostraNovaController implements Serializable {
     	Boolean temMarca = false;
     	for (FichaProducao fichaProducao : listaFichasProducao) {
 			if (fichaProducao.getAliberar()) {
-				fichaProducaoDao.update(fichaProducao);
+				try {
+					fichaProducao.setAliberar(true);
+					fichaProducao.setLiberadoalteraramostra(EmTransicao.T);
+					fichaProducaoDao.update(fichaProducao);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				temMarca = true;
 				msgRec=Long.toString(fichaProducao.getFichaproducaoid()).trim();
 				msgAgrupa +=msgRec+",";
@@ -2745,7 +2753,17 @@ public class AmostraNovaController implements Serializable {
     	String destinatario = "ti@gvdintl.com.br";
     	String assunto = "Solicitação liberacao Fichas em Produção";
     	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
-   }
+    	try {
+    		/*T=Significa, solicitado desbloqueio na producao,somente podera alterar
+    		quando Almoxarifado liberar, sera mudado status para "X"*/
+    		
+			amostra.setPrioridaDeProducao(PrioridadeProducao.T);
+			amostraDao.update(amostra);
+			
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+		}
+    }
 
     public List<String> ajustaCronometro(FichaProducao fichaProducao) {
     	eventos = new ArrayList<>();

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html >
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -251,7 +251,7 @@
 										<pf:ajax process="@this" />
 									</pf:selectOneMenu>
 									<pf:commandLink>
-										<i class="fa fa-folder-open" style="font-size: 1.5em; color: #ddd507;" />
+										<i class="fa fa-folder-open" style="font-size: 1.5em; color: #f3d404;" />
 									
 									</pf:commandLink>
 								</h:panelGrid>
@@ -576,10 +576,9 @@
 							</pf:commandButton>
 
 
-							<pf:commandButton id="btnFechar" rendered="#{amostraNovaController.parametros.fechaTransicao}" value="Fechar" icon="fa fa-fw fa-times-circle-o"
-								actionListener="#{amostraNovaController.inicializaVetorCores()}"
+							<pf:commandButton id="btnFechar" value="Fechar" actionListener="#{amostraNovaController.inicializaVetorCores()}"
 								oncomplete="PF('addEditFormAmostraNovaDlg').hide()"
-								update=":crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra"
+								update=":crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra "
 								style="font-size: 12px;background-color:#ea1428" styleClass="botao"> 
 							</pf:commandButton>
 							<pf:dataTable id="tblCoresAmostra"

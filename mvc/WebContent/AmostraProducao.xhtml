@@ -9,58 +9,59 @@
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
 
 	<ui:define name="corpo">
-		<style type="text/css">
+	 <style type="text/css">
+
 		.ui-fieldset-legend {
-			padding: 10px 10px !important;
-			height: 0.5em;
-			color: black;
-			font-size: 11px;
-			background-color: #7cdbfb !important;
+				padding: 10px 10px !important;
+				height: 0.5em;
+				color: black;
+				font-size: 11px;
+				background-color: #7cdbfb !important;
 		}
-.TabelaAux thead th {
-	border: none !important;
-	background: none !important;
-	display: none !important;
-}
-
-.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
-	overflow: hidden;
-}
-
-.hide-column-names table thead tr {
-	display: none;
-}
-
-
-.customPanelGrid .ui-panelgrid-content {
-	align-items: center;
-}
-
-.panelgrlsb {
-	border: none;
-}
-
-.pangrdicb .uipanelgrid {
-	border: 1px;
-}
-
-.alturaLinha .ui-panelgrid {
-	padding: 2px 5px;
-}
-
-.alinhamento {
-	horizontal-align: right;
-}
-
-.alinhaData {
-	horizontal-align: right;
-	font-size: 14px;
-}
-
-.alinhaColunas {
-	text-align: center !important;
-}
-</style>
+	
+		.TabelaAux thead th {
+			border: none !important;
+			background: none !important;
+			display: none !important;
+		}
+		
+		.TabelaAux2 .dataTableMargin .ui-datatable-tablewrapper {
+			overflow: hidden;
+		}
+		
+		.hide-column-names table thead tr {
+			display: none;
+		}
+		
+		.customPanelGrid .ui-panelgrid-content {
+			align-items: center;
+		}
+		
+		.panelgrlsb {
+			border: none;
+		}
+		
+		.pangrdicb .uipanelgrid {
+			border: 1px;
+		}
+		
+		.alturaLinha .ui-panelgrid {
+			padding: 2px 5px;
+		}
+		
+		.alinhamento {
+			horizontal-align: right;
+		}
+		
+		.alinhaData {
+			horizontal-align: right;
+			font-size: 14px;
+		}
+		
+		.alinhaColunas {
+			text-align: center !important;
+		}
+	</style>
 		<h:form id="crudFormAmosIntProd">
 			<pf:growl id="prodMessage" globalOnly="true" sticky="true" />
 			<h:panelGroup id="accordPnl">

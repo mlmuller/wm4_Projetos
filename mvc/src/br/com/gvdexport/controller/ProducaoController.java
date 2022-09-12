@@ -154,6 +154,8 @@ public class ProducaoController implements Serializable {
 	private Integer sequenciaCor;
 	@Getter	@Setter
 	private Integer ultimaSequencia;
+	@Getter @Setter
+	private Integer qtdTransicao;
 
 	@Inject
 	private FacadeAcesso facadeAcesso;
@@ -176,6 +178,7 @@ public class ProducaoController implements Serializable {
 	@PostConstruct
 	public void init() {
 		amostra = new Amostra();
+		qtdTransicao =0;
 		fichaProducao = new FichaProducao();
 		listaLivroReferencia = new ArrayList<LivroReferencia>();
 		listaAmostraProduzir = new ArrayList<Amostra>();
@@ -187,12 +190,22 @@ public class ProducaoController implements Serializable {
 		if (listaAmostraALiberar.size() == 0) {
 			Messages.addGlobalWarn("Não há Fichas para Liberar !!!");
 			return;
+		}else {
+			qtdTransicao = listaAmostraALiberar.size();
 		}
 		operacao = 0;
 		pf = true;
 		ca = true;
 		md = false;
 		dt = false;
+	}
+	public void badgeTransicao() {
+		qtdTransicao = 0;
+		if (listaAmostraALiberar.isEmpty() || listaAmostraALiberar == null) {
+			listaAmostraALiberar = new ArrayList<FichaProducao>();
+			listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao();
+			qtdTransicao = listaAmostraALiberar.size();
+	}
 	}
 	public void ExecuteLiberar() {
 	   	String msgAgrupa = "";
