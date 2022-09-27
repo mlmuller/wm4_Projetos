@@ -650,7 +650,7 @@ public class AmostraNovaController implements Serializable {
 	}
 
 	public void logAmostra() {
-	
+		//teste
 		listaLogsAmostra = new ArrayList<LogAmostrasNovas>();
 		listaLogsAmostra = facadelogs.getBuscaLogsAmostraNova(amostra.getAmostraId());
 		PrimeFaces current = PrimeFaces.current();
