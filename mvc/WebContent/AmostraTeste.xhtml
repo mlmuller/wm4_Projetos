@@ -250,7 +250,8 @@
 											itemLabel="#{tpamostra.label}" />
 										<pf:ajax process="@this" />
 									</pf:selectOneMenu>
-									<pf:commandLink>
+									<pf:commandLink
+										actionListener="#{amostraNovaController.LogAmostra()}">
 										<i class="fa fa-folder-open" style="font-size: 1.5em; color: #f3d404;" />
 									
 									</pf:commandLink>

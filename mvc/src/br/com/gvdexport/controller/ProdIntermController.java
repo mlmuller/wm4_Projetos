@@ -273,8 +273,10 @@ public class ProdIntermController implements Serializable {
 		}
 		}
 		if (!temFichaCorSelecionada) {
+			if (qtdCores > 1) {
 			Messages.addGlobalError("Selecione pelo menos uma cor !");
 			return;
+			}
 		}
 		amostraFichaProduzirFinal = new Amostra();
 		for (Amostra amostraFichaProduzir : listaAmostraProduzir) {

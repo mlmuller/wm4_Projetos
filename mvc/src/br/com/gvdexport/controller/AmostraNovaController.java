@@ -37,6 +37,7 @@ import br.com.gvdexport.dao.AmostraNovaDao;
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.facade.FacadeLogs;
 import br.com.gvdexport.facade.FacadeView;
 import br.com.gvdexport.logs.logsControllerAmostras;
 import br.com.gvdexport.model.AcabamentoAmostra;
@@ -91,6 +92,8 @@ public class AmostraNovaController implements Serializable {
 	private Amostra auxAmostra;
 	@Getter @Setter
 	private List<Amostra> listaAmostras;
+	@Getter @Setter
+	private List<LogAmostrasNovas> listaLogsAmostra;
 	@Getter @Setter
 	private List<String> eventos;
 	@Getter @Setter
@@ -328,6 +331,8 @@ public class AmostraNovaController implements Serializable {
 
 	@Inject
 	private FacadeAcesso facadeAcesso;
+	@Inject
+	private FacadeLogs facadelogs;
 
 	@Inject
 	private CrudDao<CorCorteAm, Long> corCorteAmostraDao;
@@ -391,6 +396,7 @@ public class AmostraNovaController implements Serializable {
 		listaFiltroAmostras = new ArrayList<Amostra>();
 		listaCoresCadastradas = new ArrayList<>();
 		listaAmostras = new ArrayList<Amostra>();
+		listaLogsAmostra = new ArrayList<LogAmostrasNovas>();
 		// (Operacao Posterior)
 		// = 0, continua noutro perido
 		// = 1, contniua adicao da ficha no mesmo momento
@@ -643,6 +649,19 @@ public class AmostraNovaController implements Serializable {
 		}
 	}
 
+	public void logAmostra() {
+	
+		listaLogsAmostra = new ArrayList<LogAmostrasNovas>();
+		listaLogsAmostra = facadelogs.getBuscaLogsAmostraNova(amostra.getAmostraId());
+		PrimeFaces current = PrimeFaces.current();
+		if (listaLogsAmostra.size() == 0) {
+			Messages.addGlobalWarn("Não há alterações para esta Amostra");
+			return;
+		}else {
+			current.executeScript("PF('dlgLog').show()");
+		}
+		
+	}
 	public void edit(Amostra amostraedit) throws CloneNotSupportedException, IOException {
 
 		//Verificar se ha fichas na producao e se houve ver Status
@@ -1521,18 +1540,11 @@ public class AmostraNovaController implements Serializable {
 						amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
 					}
 				}
-				if ((amostra.getPrioridaDeProducao().equals(PrioridadeProducao.N) || amostra.getPrioridaDeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridaDeProducao().equals(PrioridadeProducao.N))) {
+				 
+				if ((amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X) || amostra.getPrioridaDeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridaDeProducao().equals(PrioridadeProducao.N))) {
 					amostra.setPrioridaDeProducao(amostraClone.getPrioridaDeProducao());
-					if (listaFichasProducao.size() == 0){
-						addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha já foi liberada", "");
-					}else {
-						
-					}
-				}
-				if (!amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
-					addMessage(FacesMessage.SEVERITY_WARN, "Qual o motivo para esta alteraçao?fale com Administrador!", "");
+					addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha já foi liberada, não pode alterar Prioridade!", "");
 					return;
-					//Se a mudança for de Normal para Urgente, ver qual a melhor situacao.
 				}
 			}
 
@@ -1575,11 +1587,12 @@ public class AmostraNovaController implements Serializable {
 			amostra.setMercado(amostra.getMercado());
 			Boolean mAux = false;
 			if ((amostra != amostraClone) && (operacao == 1))  {
+
 				mAux = logsControllerAmostrasNovas.logAmostrasNovasEdicao(amostra, amostraClone);
 			}
 			amostra.setLog(mAux);
 			amostra = amostraDao.update(amostra);
-			Messages.addGlobalInfo("Ficha adicionada com Sucesso !");
+			Messages.addGlobalInfo("Operação realizada com Sucesso !");
 			parametros.setAbacor(false);
 			operacaoPosterior = 1;
 			btnVisao = false;

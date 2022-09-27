@@ -327,6 +327,7 @@ public class ProducaoController implements Serializable {
 //	        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Filtros", "Visiveis:" + event.getVisibility());
 //	        FacesContext.getCurrentInstance().addMessage(null, msg);
 	    }
+	@SuppressWarnings("rawtypes")
 	public void referenciaSelecionada(SelectEvent event) {
 		livroReferencia = new LivroReferencia();
 		livroReferencia = (LivroReferencia) event.getObject();

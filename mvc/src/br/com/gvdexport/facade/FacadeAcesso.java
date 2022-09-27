@@ -1244,6 +1244,7 @@ public class FacadeAcesso implements Serializable {
 		}
 		
 	}
+
 	
 	// Etiquetas pegar apenas Jack Rogers
 	public List<Etiquetas> findJackRogers(String customer) {

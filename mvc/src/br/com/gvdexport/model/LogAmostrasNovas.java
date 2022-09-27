@@ -43,6 +43,12 @@ public class LogAmostrasNovas implements Serializable,Cloneable {
 	@Column(nullable = false)
 	private byte[] ip;
 	
+	@Column(length = 25, nullable = false)
+	private String ipmask;
+	
+	@Column(length = 15,nullable =  false)
+	private String horario;
+	
 	@Column(length = 25,nullable = false)
 	private String nomedesktop;
 	
