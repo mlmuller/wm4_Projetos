@@ -114,7 +114,14 @@ public class ParametrosTransientes implements Serializable {
 	@Transient
 	@Column(length = 1, nullable = true)
 	private Boolean saveTransicao;
-	
+
+	@Transient
+	@Column(length = 1, nullable = true)
+	private Boolean temLog;
+
+	@Transient
+	@Column(length = 20 , nullable = true)
+	private String logModulo;
 	/*
 	 * Estas variavies serao usadas em todos os modulos, para ser ou nao reenderizado nas telas
 	 * de inclusao, estas estao relacionadas as cores de acabamento (Corte,Costura,Solado,Acabamento)

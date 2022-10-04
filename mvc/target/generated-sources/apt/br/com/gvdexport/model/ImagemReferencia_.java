@@ -26,6 +26,7 @@ public abstract class ImagemReferencia_ {
 	public static volatile SingularAttribute<ImagemReferencia, Integer> referencia;
 	public static volatile SingularAttribute<ImagemReferencia, Integer> versao;
 	public static volatile SingularAttribute<ImagemReferencia, String> nomearquivo;
+	public static volatile SingularAttribute<ImagemReferencia, String> caminhoarquivo;
 
 	public static final String EXTENSAO = "extensao";
 	public static final String USUARIOSTAMP = "usuariostamp";
@@ -44,6 +45,7 @@ public abstract class ImagemReferencia_ {
 	public static final String REFERENCIA = "referencia";
 	public static final String VERSAO = "versao";
 	public static final String NOMEARQUIVO = "nomearquivo";
+	public static final String CAMINHOARQUIVO = "caminhoarquivo";
 
 }
 

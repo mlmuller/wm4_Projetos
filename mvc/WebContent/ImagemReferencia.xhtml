@@ -46,7 +46,7 @@
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
 			{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				style="text-align:center">
-				<pf:column width="70">
+				<pf:column width="75">
 					<pf:commandLink
 						action="#{imagemLivroReferenciaController.edit(_row)}"
 						title="#{msg['botao.edit']}"
@@ -70,6 +70,16 @@
 						process="@this" title="#{msg['botao.delete']}">
 						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
 					</pf:commandLink>
+
+					<pf:commandLink
+						action="#{imagemLivroReferenciaController.Pdfs(_row)}"
+						title="Ver Peças"
+						update=":showBase"
+						oncomplete="PF('showFormImagemBaseDlg').show()"
+						style="font-size:11px;">
+						<i class="fa fa-fw fa-image" style="font-size: 1.5em;" />
+					</pf:commandLink>
+
 					
 				</pf:column>
 				<pf:column headerText="#{msg['usocomum.label.id']}"
@@ -89,7 +99,7 @@
 						<f:param name="idimagem" value="#{_row.imagemlivroreferenciaid}"/>
 					</pf:graphicImage>
 				</pf:column>
-				<pf:column	headerText="Zoom">
+				<pf:column	headerText="Zoom" width="50px;">
 					<h:outputLink id="ZoomImagem" value="#">
 						<i class="fa fa-fw fa-search-plus" style="font-size:18px;" />
 					</h:outputLink>
@@ -301,5 +311,18 @@
 		  </h:form>	
 		</pf:dialog>
 
+		<pf:dialog header="Peças destacadas" widgetVar="showFormImagemBaseDlg"
+			draggable="true" modal="false" position="top top"
+			showEffect="flip"
+			resizable="false" width="100%" height="700px" >
+			<div class="card">
+			<h:form id="showBase">
+			   <pf:media value="#{imagemLivroReferenciaController.caminhoFin}" player="pdf" 
+			   		width="100%" height="700px">
+				<h:outputLink value="#{imagemLivroReferenciaController.caminhoFin}">click</h:outputLink>   		
+   		   	   </pf:media>
+		  </h:form>	
+		  </div>
+		</pf:dialog>
 	</ui:define>
 </ui:decorate>

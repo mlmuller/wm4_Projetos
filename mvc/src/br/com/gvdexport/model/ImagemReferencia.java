@@ -78,6 +78,9 @@ public class ImagemReferencia implements Serializable,Cloneable {
 	
 	@Column(length = 25 , nullable = false)
 	private String nomearquivo;
+
+	@Column(length = 25 , nullable = false)
+	private String caminhoarquivo;
 	
 	@Lob
 	@Column(name="imagem",nullable=true)

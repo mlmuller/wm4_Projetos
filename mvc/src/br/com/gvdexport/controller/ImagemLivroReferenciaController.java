@@ -3,10 +3,14 @@ package br.com.gvdexport.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,17 +18,23 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
+import org.primefaces.shaded.commons.io.output.ByteArrayOutputStream;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.pdf.PdfWriter;
 
 import br.com.gvdexport.dao.ImagemLivroReferenciaDao;
 import br.com.gvdexport.facade.FacadeAcesso;
@@ -85,7 +95,12 @@ public class ImagemLivroReferenciaController implements Serializable {
 	private StreamedContent image;
 	private StreamedContent imagens;
 	private StreamedContent imagem;
-	
+	@Getter @Setter
+	private StreamedContent streamedContent;
+	@Getter @Setter
+	private String caminho;
+	@Getter @Setter
+	private String caminhoFin;
 
 //	LazyImagemReferenciaDataModel dataModel = new LazyImagemReferenciaDataModel();
 //
@@ -111,12 +126,8 @@ public class ImagemLivroReferenciaController implements Serializable {
 			extensao = nome.substring((nome.lastIndexOf('.')+1), nome.length());
 			OutputStream stream = new FileOutputStream(file);
 			stream.write(uploadedFile.getContent());
-			//Primefaces 11.0
-//			stream.write(uploadedFile.getContent());
 			stream.close();
 			byte[] imageCalc = uploadedFile.getContent();
-			//primefaces 11.0
-//			byte[] imageCalc = uploadedFile.getContent();
 			BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imageCalc));
 			if(bi.getWidth() > bi.getHeight()) {
 			  if (imagemReferencia.getTipogrupoimagem().name().equals("C")) {
@@ -282,6 +293,14 @@ public class ImagemLivroReferenciaController implements Serializable {
 		}
 	}
 	
+	public void carregaPdf(ImagemReferencia referencia) {
+		listaImagemReferencia = new ArrayList<>();
+		listaImagemReferencia = facadeAcesso.existeReferenciaImagem(referencia.getReferencia(), referencia.getAbreviacao());
+		if(listaImagemReferencia.size() == 0) {
+	    	Messages.addGlobalInfo("Não há Imagens para esta Referência!");
+	    	return;
+		}
+	}
 	
 	  public StreamedContent getImagem() throws IOException{
 
@@ -300,8 +319,9 @@ public class ImagemLivroReferenciaController implements Serializable {
 	    			return new DefaultStreamedContent();
 	    		}
 	    	}
-		}
-    public StreamedContent getImagens() {
+	}
+ 
+	  public StreamedContent getImagens() {
     	String id = "";
     	FacesContext context = FacesContext.getCurrentInstance();
     	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
@@ -326,7 +346,33 @@ public class ImagemLivroReferenciaController implements Serializable {
     	}
     }
     
-	public void complementaImagemLivroReferencia() {
+
+	  
+	  public void Pdfs(ImagemReferencia referencia) throws FileNotFoundException {
+	     
+	     ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+
+	     caminhoFin = context.getRealPath("c:///resources//"+"BaseTeste.pdf");
+	     try {
+	            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+  	             final Document document = new Document();
+	            PdfWriter.getInstance(document, out);
+	            document.open();
+
+//	            for (int i = 0; i < 50; i++) {
+//	                document.add(new Paragraph("All work and no play makes Jack a dull boy"));
+//	            }
+
+	            document.close();
+	            streamedContent = DefaultStreamedContent.builder().stream(() -> new ByteArrayInputStream(out.toByteArray()))
+	                        .contentType("application/pdf").build();
+	        }
+	        catch (final Exception e) {
+
+	        }
+  }
+    public void complementaImagemLivroReferencia() {
 		if(operacao == 0) {
 		  imagemReferencia.setAbreviacao(imagemReferencia.getLivroreferencia().getAbreviacao());
 		  imagemReferencia.setReferencia(imagemReferencia.getLivroreferencia().getReferencia());

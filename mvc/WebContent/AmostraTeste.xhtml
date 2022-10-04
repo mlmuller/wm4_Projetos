@@ -251,8 +251,8 @@
 										<pf:ajax process="@this" />
 									</pf:selectOneMenu>
 									<pf:commandLink
-										actionListener="#{amostraNovaController.LogAmostra()}">
-										<i class="fa fa-folder-open" style="font-size: 1.5em; color: #f3d404;" />
+										action="#{amostraNovaController.visaoLogs()}" >
+										<i class="fa fa-folder-open" style="font-size: 1.5em; color:#{amostraNovaController.parametros.temLog eq false ? '#f7da19' : '#47e10a'}" />
 									
 									</pf:commandLink>
 								</h:panelGrid>
@@ -1789,7 +1789,6 @@
 				</pf:commandButton >
 				</h:form>
 			</pf:dialog>
-
 
 	</ui:define>
 </ui:composition>

@@ -33,7 +33,6 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import br.com.gvdexport.dao.AmostraNovaDao;
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.facade.FacadeAcesso;
@@ -93,7 +92,7 @@ public class AmostraNovaController implements Serializable {
 	@Getter @Setter
 	private List<Amostra> listaAmostras;
 	@Getter @Setter
-	private List<LogAmostrasNovas> listaLogsAmostra;
+	private List<LogAmostrasNovas> listaLogs;
 	@Getter @Setter
 	private List<String> eventos;
 	@Getter @Setter
@@ -339,6 +338,9 @@ public class AmostraNovaController implements Serializable {
 
 	@Inject
 	private FacadeView facadeView;
+	
+	@Inject
+	private FacadeLogs facadeLogs;
 
 	@Inject
 	private UsuarioLogadoController usuarioLogado;
@@ -396,7 +398,7 @@ public class AmostraNovaController implements Serializable {
 		listaFiltroAmostras = new ArrayList<Amostra>();
 		listaCoresCadastradas = new ArrayList<>();
 		listaAmostras = new ArrayList<Amostra>();
-		listaLogsAmostra = new ArrayList<LogAmostrasNovas>();
+		listaLogs = new ArrayList<LogAmostrasNovas>();
 		// (Operacao Posterior)
 		// = 0, continua noutro perido
 		// = 1, contniua adicao da ficha no mesmo momento
@@ -405,6 +407,8 @@ public class AmostraNovaController implements Serializable {
 		operacao = 0;
 		btnVisao = false;
 		statusGeracao = false;
+		parametros.setTemLog(false);
+		parametros.setLogModulo("Não Há");
 		// inicializa varaveis de pesquisa
 		// inicializa datas
 		iniSolicitacao = null;
@@ -649,23 +653,17 @@ public class AmostraNovaController implements Serializable {
 		}
 	}
 
-	public void logAmostra() {
-		listaLogsAmostra = new ArrayList<LogAmostrasNovas>();
-		listaLogsAmostra = facadelogs.getBuscaLogsAmostraNova(amostra.getAmostraId());
-		PrimeFaces current = PrimeFaces.current();
-		if (listaLogsAmostra.size() == 0) {
-			Messages.addGlobalWarn("Não há alterações para esta Amostra");
-			return;
-		}else {
-			current.executeScript("PF('dlgLog').show()");
-		}
-		
-	}
 	public void edit(Amostra amostraedit) throws CloneNotSupportedException, IOException {
-
+		parametros.setTemLog(false);
 		//Verificar se ha fichas na producao e se houve ver Status
-		mostraListaProducao = false;
 		PrimeFaces current = PrimeFaces.current();
+		mostraListaProducao = false;
+		listaLogs = new ArrayList<LogAmostrasNovas>();
+		listaLogs = facadeAcesso.getBuscaLogsAmostraNova(amostraedit.getAmostraId());
+		if (listaLogs.size() != 0) {
+			parametros.setTemLog(true);
+			parametros.setLogModulo("Amostras Novas");
+		}
 		if (amostraedit.getGerada()) {
 			listaFichasProducao = new ArrayList<FichaProducao>();
 			listaFichasProducao = facadeAcesso.getExisteFichaNLProducao(amostraedit.getAmostraId());
@@ -2831,4 +2829,25 @@ public class AmostraNovaController implements Serializable {
     public void CheckSeHouveAlteração() {
     	
     }
+	// ------Visão Logs
+	public void visaoLogs() {
+	  if (listaLogs.size() != 0) {
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("modal", true);
+		options.put("width", 640);
+		options.put("height", 340);
+		options.put("contentWidth", "100%");
+		options.put("contentHeight", "100%");
+		options.put("headerElement", "referenciaheader");
+		options.put("resizable", false);
+		options.put("closable", true);
+		options.put("position", "left,top");
+		options.put("showEffect", "flip");
+		PrimeFaces.current().dialog().openDynamic("frkLogs", options, null);
+	  }else {
+		Messages.addGlobalWarn("Não há alterações para esta Amostra");
+		return;
+
+	  }
+	}
 }

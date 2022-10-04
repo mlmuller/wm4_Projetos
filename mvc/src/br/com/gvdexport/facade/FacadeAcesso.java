@@ -52,6 +52,7 @@ import br.com.gvdexport.model.Hts;
 import br.com.gvdexport.model.ImagemReferencia;
 import br.com.gvdexport.model.Importador;
 import br.com.gvdexport.model.LivroReferencia;
+import br.com.gvdexport.model.LogAmostrasNovas;
 import br.com.gvdexport.model.MarcaCliente;
 import br.com.gvdexport.model.Material;
 import br.com.gvdexport.model.Modelo;
@@ -1244,8 +1245,18 @@ public class FacadeAcesso implements Serializable {
 		}
 		
 	}
-
-	
+	//Logs Amostras Novas
+	public List<LogAmostrasNovas> getBuscaLogsAmostraNova(Long amostraid){
+		try {
+			TypedQuery<LogAmostrasNovas> q = em.createQuery("SELECT lan " + 
+					   "FROM  LogAmostrasNovas lan " +
+					   "WHERE lan.amostra.amostraId=:Id ",LogAmostrasNovas.class);
+						q.setParameter("Id",amostraid);
+						return q.getResultList();
+		} catch (RuntimeException ex) {
+			return null;
+		}
+	}
 	// Etiquetas pegar apenas Jack Rogers
 	public List<Etiquetas> findJackRogers(String customer) {
 		try {
