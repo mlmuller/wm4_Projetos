@@ -4,6 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
 
 	<ui:define name="corpo">
@@ -72,7 +73,7 @@
 					</pf:commandLink>
 
 					<pf:commandLink
-						action="#{imagemLivroReferenciaController.Pdfs(_row)}"
+						action="#{pdfsController.getPdfDownload}"
 						title="Ver Peças"
 						update=":showBase"
 						oncomplete="PF('showFormImagemBaseDlg').show()"
@@ -316,10 +317,9 @@
 			showEffect="flip"
 			resizable="false" width="100%" height="700px" >
 			<div class="card">
-			<h:form id="showBase">
-			   <pf:media value="#{imagemLivroReferenciaController.caminhoFin}" player="pdf" 
-			   		width="100%" height="700px">
-				<h:outputLink value="#{imagemLivroReferenciaController.caminhoFin}">click</h:outputLink>   		
+			<h:form id="showBase" enctype="multipart/form-data">
+			   <pf:media value="#{pdfsController.streamedContent}"  player="pdf" 
+			   		height="800px" width="800px" cache="false" >
    		   	   </pf:media>
 		  </h:form>	
 		  </div>
