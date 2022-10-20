@@ -351,7 +351,7 @@ public class CriaFichaProducaoController implements Serializable {
 		operacao = 0;
 		duplica = false;
 		mStatus = true;
-		amostra.setPrioridaDeProducao(PrioridadeProducao.X);
+		amostra.setPrioridadeProducao(PrioridadeProducao.X);
 		amostra.setDataSolicitacao(amostraDao.getLocalDate());
 		amostra.setPares(BigDecimal.ZERO);
 		amostra.setPargvd(BigDecimal.ZERO);
@@ -572,7 +572,7 @@ public class CriaFichaProducaoController implements Serializable {
 		// aqui devera ser verificado se alterar prioridade, devera ter cadastro
 		// completo,caso contrario avisa, que
 		// o que falta (Cor,acabamentos,etc...)
-		if (amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
+		if (amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
 			parametros.setPrioridade(true);
 		}
 		// Atualiza variaveis de infomacao
@@ -951,11 +951,11 @@ public class CriaFichaProducaoController implements Serializable {
 			if ((operacao == 2) || (operacao == 1)) {
 				// Verificacao da Prioridade , se for primeira alteracao da Prioridae guarda
 				// data Stamp - Liberacao Producao
-				if (((amostra.getPrioridaDeProducao().name().equals("N") || ((amostra.getPrioridaDeProducao().name().equals("U"))))
-						&& (amostraClone.getPrioridaDeProducao().name().equals("X")))) {
+				if (((amostra.getPrioridadeProducao().name().equals("N") || ((amostra.getPrioridadeProducao().name().equals("U"))))
+						&& (amostraClone.getPrioridadeProducao().name().equals("X")))) {
 					amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
 				}
-				if (!amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
+				if (!amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
 					//	
 					//Verficar a opcao U = Urgente
 					//Aqui verificar na tabela de producao se ja foi liberada ou ainda 
@@ -993,7 +993,7 @@ public class CriaFichaProducaoController implements Serializable {
 			}
 			// Se for inclusao, e ja for liberado a ficha para producao,atribui data e hora
 			if (operacao == 0) {
-				if (!amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)){
+				if (!amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)){
 					amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
 				}
 			}

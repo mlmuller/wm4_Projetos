@@ -447,7 +447,7 @@ public class AmostraNovaController implements Serializable {
 		mStatus = true;
 		mostraListaProducao = false;
 		amostra.setGerada(false);
-		amostra.setPrioridaDeProducao(PrioridadeProducao.X);
+		amostra.setPrioridadeProducao(PrioridadeProducao.X);
 		amostra.setDataSolicitacao(amostraDao.getLocalDate());
 		amostra.setPares(BigDecimal.ZERO);
 		amostra.setPargvd(BigDecimal.ZERO);
@@ -654,8 +654,11 @@ public class AmostraNovaController implements Serializable {
 	}
 
 	public void edit(Amostra amostraedit) throws CloneNotSupportedException, IOException {
+		amostraClone = new Amostra();
+		posicaoAtual = 0;
+		amostra = amostraedit;
 		parametros.setTemLog(false);
-		//Verificar se ha fichas na producao e se houve ver Status
+		//Verificar se ha fichas na producao e se houver, ver Status
 		PrimeFaces current = PrimeFaces.current();
 		mostraListaProducao = false;
 		listaLogs = new ArrayList<LogAmostrasNovas>();
@@ -664,7 +667,7 @@ public class AmostraNovaController implements Serializable {
 			parametros.setTemLog(true);
 			parametros.setLogModulo("Amostras Novas");
 		}
-		if (amostraedit.getGerada()) {
+		if (amostra.getGerada()) {
 			listaFichasProducao = new ArrayList<FichaProducao>();
 			listaFichasProducao = facadeAcesso.getExisteFichaNLProducao(amostraedit.getAmostraId());
 			if (listaFichasProducao.size() != 0) {
@@ -675,20 +678,23 @@ public class AmostraNovaController implements Serializable {
 						mostraListaProducao = true;
 					}
 				}
-				addMessage(FacesMessage.SEVERITY_WARN, "Existe(m) Ficha(s) em Produção !","");
 				if (mostraListaProducao) {
+					addMessage(FacesMessage.SEVERITY_WARN, "Existe(m) Ficha(s) em Produção !","");
 					current.executeScript("PF('listaAmostraemProdDlg').show()");
 				}else {
+					//adic em 19/10/2022, todas esta em transito,entao precisa atribuir,reg vindo
+					//do datatable,caso nao , mostrará tela vazia...
 					current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
+					current.ajax().update("crudFormAmostraSecundario");
 				}
 				
 				return;
 			}
 		}
 
-		amostraClone = new Amostra();
+//		amostraClone = new Amostra();
 		posicaoAtual = 0;
-		amostra = amostraedit;
+//		amostra = amostraedit;
 		amostraClone = (Amostra) amostra.clone();
 		//Campo é informado na construcao(Solado, e é gravado na tabela de amostras
 		operacao = 1;
@@ -715,7 +721,7 @@ public class AmostraNovaController implements Serializable {
 		// aqui devera ser verificado se alterar prioridade, devera ter cadastro
 		// completo,caso contrario avisa, que
 		// o que falta (Cor,acabamentos,etc...)
-		if (amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
+		if (amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
 			parametros.setPrioridade(true);
 		}
 		// Atualiza variaveis de infomacao
@@ -726,11 +732,11 @@ public class AmostraNovaController implements Serializable {
 
 		// Lista com cores da amostra Selecionada
 		listaCoresCadastradas = new ArrayList<>();
-		listaCoresCadastradas = facadeAcesso.getBuscaCoresAmostra(amostra.getAmostraId());
-		if (amostraedit.getCliente().getGrpclienteinvoice() != null) {
+		listaCoresCadastradas = facadeAcesso.getBuscaCoresAmostra(amostraedit.getAmostraId());
+		if (amostra.getCliente().getGrpclienteinvoice() != null) {
 			buscaListaDestinoAm(amostra);
 		}
-		imageResize = ResizeImagem(amostraedit);
+		imageResize = ResizeImagem(amostra);
 		if (!mostraListaProducao) {
 			current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
 		}
@@ -1137,7 +1143,7 @@ public class AmostraNovaController implements Serializable {
 		operacao = 3;
 		amostraClone = (Amostra) amostradup.clone();
 		// adicionado em 02/09
-		amostraClone.setPrioridaDeProducao(null);
+		amostraClone.setPrioridadeProducao(null);
 		amostraClone.setDtxfct(null);
 		amostraClone.setGerada(false);
 		amostraClone.setUsuarioStamp(usuarioLogado.getUsuariologado().getUsuario());
@@ -1170,7 +1176,7 @@ public class AmostraNovaController implements Serializable {
 			// Duplica ficha
 			amostraClone.setAmostraId(null);
 			auxAmostra = amostraClone;
-			auxAmostra.setPrioridaDeProducao(PrioridadeProducao.X);
+			auxAmostra.setPrioridadeProducao(PrioridadeProducao.X);
 			auxAmostra.setDataLiberacaoProducao(null);
 			auxAmostra = amostraDao.update(auxAmostra);
 			// Duplica Cores Ficha
@@ -1524,13 +1530,13 @@ public class AmostraNovaController implements Serializable {
 				// Verificacao da Prioridade , se for primeira alteracao da Prioridae guarda
 				// data Stamp - Liberacao Producao
 				
-				if (((amostra.getPrioridaDeProducao().name().equals("N")
-						|| ((amostra.getPrioridaDeProducao().name().equals("U"))))
-						&& (amostraClone.getPrioridaDeProducao().name().equals("X")))) {
+				if (((amostra.getPrioridadeProducao().name().equals("N")
+						|| ((amostra.getPrioridadeProducao().name().equals("U"))))
+						&& (amostraClone.getPrioridadeProducao().name().equals("X")))) {
 					if (amostra.getCoresAmostra().size() == 0) {
 			    		addMessage(FacesMessage.SEVERITY_INFO, "Não é possivel Alterar, pois não há Cor(es) Cadastrada(s)!", "");
 						//						Messages.addGlobalWarn("");
-						amostra.setPrioridaDeProducao(amostraClone.getPrioridaDeProducao());
+						amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
 						return;	
 					}
 					if (amostra.getDataLiberacaoProducao() == null) {
@@ -1538,8 +1544,8 @@ public class AmostraNovaController implements Serializable {
 					}
 				}
 				 
-				if ((amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X) || amostra.getPrioridaDeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridaDeProducao().equals(PrioridadeProducao.N))) {
-					amostra.setPrioridaDeProducao(amostraClone.getPrioridaDeProducao());
+				if ((amostra.getPrioridadeProducao().equals(PrioridadeProducao.X) || amostra.getPrioridadeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridadeProducao().equals(PrioridadeProducao.N))) {
+					amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
 					addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha já foi liberada, não pode alterar Prioridade!", "");
 					return;
 				}
@@ -1573,7 +1579,7 @@ public class AmostraNovaController implements Serializable {
 			}
 			// Se for inclusao, e ja for liberado a ficha para producao,atribui data e hora
 			if ((operacao == 0) || (operacao == 1)) {
-				if (!amostra.getPrioridaDeProducao().equals(PrioridadeProducao.X)) {
+				if (!amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
 					amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
 					amostra.setGerada(false);
 				}
@@ -2767,7 +2773,7 @@ public class AmostraNovaController implements Serializable {
     		/*T=Significa, solicitado desbloqueio na producao,somente podera alterar
     		quando Almoxarifado liberar, sera mudado status para "X"*/
     		
-			amostra.setPrioridaDeProducao(PrioridadeProducao.T);
+			amostra.setPrioridadeProducao(PrioridadeProducao.T);
 			amostraDao.update(amostra);
 			
 		} catch (RuntimeException ex) {

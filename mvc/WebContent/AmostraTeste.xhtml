@@ -197,14 +197,16 @@
 						style="text-align:center;">
 						<pf:dataTable var="cor" value="#{_rowamostra.coresAmostra}"
 							styleClass="hide-column-names alturalinhaDatatable">
-							<pf:column style="font-size:9px;width=5px;">
+							<pf:column style="font-size:9px;width:3px;text-align:center;">
 								<h:outputText value="#{cor.desenvolveramostra}" />
 							</pf:column>
-							<pf:column style="font-size:9px;width:5px;">
-								<li style="color:#{(cor.producao ? 'green' : 'red')}"><h:outputText
-										value="#{cor.marca}" /></li>
+							<pf:column style="font-size:9px;width:5px;font-weight:bold;text-align:center">
+								<li style="color:#{(cor.producao ? 'green' : 'red')}">
+								<h:outputText
+									value="#{cor.marca}" />
+								</li>
 							</pf:column>
-							<pf:column style="font-size:9px;width:90px;">
+							<pf:column style="font-size:9px;" width="90">
 								<h:outputText value="#{cor.material}" style="font-size:9px;white-space:normal;" />
 							</pf:column>
 							<pf:column style="font-size:9px;" width="70">
@@ -424,7 +426,7 @@
 									<h:panelGrid columns="2">
 										<pf:outputLabel value="#{msg['usocomum.label.prioridade']}" />
 										<pf:selectOneMenu
-											value="#{amostraNovaController.amostra.prioridaDeProducao}"
+											value="#{amostraNovaController.amostra.prioridadeProducao}"
 											filter="true" filterMatchMode="contains"
 											style="vertical-align:middle;font-size:12px;">
 											<f:selectItem itemValue="#{null}"
@@ -1609,110 +1611,6 @@
 			</pf:dialog>
 
 			<pf:dialog header="Lista de fichas em Produção não Liberadas"
-				widgetVar="listaAmostraemProducaoDlg" width="75%" height="250px"
-				resizable="false" position="center middle" showEffect="clip"
-				modal="true" draggable="true" closable="true" appendTo="@(body)">
-				<h:form id="emProducao">
-				<pf:growl id="fichaDesbloqueio" showDetail="true"/>		
-			    <pf:dataTable  id="tblAmostraemProducao" var="_rowemProducao"
-					value="#{amostraNovaController.listaFichasProducao}" paginator="true" rows="3"
-					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-					rowsPerPageTemplate="3,5,10" paginatorPosition="bottom" >
-
-			        <pf:column headerText="" style="width:10%;text-align:center" >
-					     <pf:selectBooleanCheckbox value="#{_rowemProducao.aliberar}"/>
-			        </pf:column>
-
-					<pf:column headerText="#{msg['amostra.label.amostra']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.amostra.amostraId}"
-							style="font-size:10x;" />
-					</pf:column>
-					<pf:column headerText="#{msg['cliente.label.nome']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.amostra.cliente.sucinto}"
-							style="font-size:15x;" />
-					</pf:column>
-
-					<pf:column headerText="#{msg['producao.label.fichaprod']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.fichaproducaoid}"
-							style="font-size:15x;" />
-					</pf:column>
-
-					<pf:column headerText="#{msg['producao.label.entrada']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.dataentrada}"
-							style="font-size:25x;">
-							<f:convertDateTime 
-								type="localDate" 
-								dateStyle="long"
-								pattern="dd-MM-yyyy HH:MM" />
-							
-						</h:outputText>
-
-					</pf:column>
-			    
-					<pf:column headerText="#{msg['producao.lab.dataalmoxarido']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.dataalmoxarifado ne null ? _rowemProducao.dataalmoxarifado:amostraNovaController.status}" style="color:#{_rowemProducao.dataalmoxarifado ne null ? 'green':'red'}">
-						<f:convertDateTime 
-								type="localDate" 
-								dateStyle="long"
-								pattern="dd-MM-yyyy" />
-						</h:outputText>
-					</pf:column>
-
-					<pf:column headerText="#{msg['producao.label.dtcorte']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.datacorte ne null ? _rowemProducao.datacorte:amostraNovaController.status}" style="color:#{_rowemProducao.datacorte ne null ? 'green':'red'}">
-							<f:convertDateTime 
-								type="localDate" 
-								dateStyle="long"
-								pattern="dd-MM-yyyy" />
-						</h:outputText>	
-					</pf:column>
-
-					<pf:column headerText="#{msg['producao.lab.datacostura']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.datacostura ne null ? _rowemProducao.datacostura:amostraNovaController.status}" style="color:#{_rowemProducao.datacostura ne null ? 'green':'red'}">
-							<f:convertDateTime 
-								type="localDate" 
-								dateStyle="long"
-								pattern="dd-MM-yyyy" />
-						</h:outputText>	
-
-					</pf:column>
-
-					<pf:column headerText="#{msg['producao.label.premontagem']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-								<h:outputText value="#{_rowemProducao.datamontagem ne null ? _rowemProducao.datamontagem:amostraNovaController.status}" style="color:#{_rowemProducao.datamontagem ne null ? 'green':'red'}">
-							<f:convertDateTime 
-								type="localDate" 
-								dateStyle="long"
-								pattern="dd-MM-yyyy" />
-						</h:outputText>	
-
-					</pf:column>
-
-			     </pf:dataTable>
-				<pf:commandButton value="#{msg['botao.execucao']}"
-					actionListener="#{amostraNovaController.executaDesbloqueio}"
-					update="emProducao emProducao:tblAmostraemProducao fichaDesbloqueio"  style="font-size:12px;">
-				</pf:commandButton>
-					
-				</h:form>
-			</pf:dialog>
-
-			<pf:dialog header="Lista de fichas em Produção não Liberadas"
 				widgetVar="listaAmostraemProdDlg" width="75%" height="450px"
 				resizable="false" position="center middle" showEffect="clip"
 				modal="true" draggable="true" closable="false" appendTo="@(body)" styleClass="customDialogx">
@@ -1779,7 +1677,7 @@
 					  
 					</pf:column>
 			     </pf:dataTable>
-				<pf:commandButton value="#{msg['botao.execucao']}" title="Execute para solicitar Liberação"
+				<pf:commandButton value="#{msg['botao.solicite']}" title="Solicite Liberação"
 					actionListener="#{amostraNovaController.executaDesbloqueio()}"
 					update="emProducaox emProducaox:tblAmostraemProd fichaDesbloqueiox"  style="font-size:12px;">
 				</pf:commandButton >

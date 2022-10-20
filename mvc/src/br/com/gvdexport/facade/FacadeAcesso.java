@@ -62,9 +62,11 @@ import br.com.gvdexport.model.Nbm;
 import br.com.gvdexport.model.Pais;
 import br.com.gvdexport.model.Personagem;
 import br.com.gvdexport.model.PrazoPagamento;
+import br.com.gvdexport.model.PrioridadeProducao;
 import br.com.gvdexport.model.RazaoAlteracao;
 import br.com.gvdexport.model.Regiao;
 import br.com.gvdexport.model.TipoCalcado;
+import br.com.gvdexport.model.TipoLiberacao;
 import br.com.gvdexport.model.Transportador;
 
 @Named
@@ -910,7 +912,9 @@ public class FacadeAcesso implements Serializable {
 	public List<Amostra> getExisteFichaNLAmostra() {
 		try {
 			TypedQuery<Amostra> q = em.createQuery("FROM Amostra am " + "WHERE am.gerada = false" + " and "
-		                                                              + "am.temcor = true ", Amostra.class);
+		                                                              + "am.temcor = true " + " and "
+		                                                              +	"am.prioridadeProducao = :prioridade",Amostra.class);
+			q.setParameter("prioridade",PrioridadeProducao.X);
 			return q.getResultList();
 		} catch (Exception ex) {
 			ex.printStackTrace();

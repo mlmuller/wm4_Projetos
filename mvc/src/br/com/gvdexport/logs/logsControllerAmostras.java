@@ -277,10 +277,10 @@ public class logsControllerAmostras implements Serializable {
 							logAmostrasNovas = new LogAmostrasNovas();
 						}
 					}
-					if (Amostraold.getPrioridaDeProducao() != null) {
-						if (!amostranew.getPrioridaDeProducao().equals(Amostraold.getPrioridaDeProducao())) {
+					if (Amostraold.getPrioridadeProducao() != null) {
+						if (!amostranew.getPrioridadeProducao().equals(Amostraold.getPrioridadeProducao())) {
 							logAmostrasNovas.setDescricaocampo("Prioridade");
-							logAmostrasNovas.setValoranterior(Amostraold.getPrioridaDeProducao().name());
+							logAmostrasNovas.setValoranterior(Amostraold.getPrioridadeProducao().name());
 							amostranew.setLog(true);
 							logAmostraAux.add(logAmostrasNovas);
 							logAmostrasNovas = new LogAmostrasNovas();

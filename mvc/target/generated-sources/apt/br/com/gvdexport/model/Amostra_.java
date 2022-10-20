@@ -36,6 +36,7 @@ public abstract class Amostra_ {
 	public static volatile SingularAttribute<Amostra, Componente> componente;
 	public static volatile SingularAttribute<Amostra, Boolean> temcor;
 	public static volatile SingularAttribute<Amostra, Integer> versaoRefer;
+	public static volatile SingularAttribute<Amostra, PrioridadeProducao> prioridadeProducao;
 	public static volatile SingularAttribute<Amostra, DestinoAmCf> destinoAmCf;
 	public static volatile SingularAttribute<Amostra, String> usuarioStamp;
 	public static volatile SingularAttribute<Amostra, String> sucCliente;
@@ -45,7 +46,6 @@ public abstract class Amostra_ {
 	public static volatile SingularAttribute<Amostra, LocalDate> dataSolicitacao;
 	public static volatile SingularAttribute<Amostra, Cliente> cliente;
 	public static volatile SingularAttribute<Amostra, String> obsBase;
-	public static volatile SingularAttribute<Amostra, PrioridadeProducao> prioridaDeProducao;
 	public static volatile SingularAttribute<Amostra, Estacao> estacao;
 	public static volatile SingularAttribute<Amostra, String> sucFabrica;
 	public static volatile SingularAttribute<Amostra, LocalDate> dataEntrega;
@@ -81,6 +81,7 @@ public abstract class Amostra_ {
 	public static final String COMPONENTE = "componente";
 	public static final String TEMCOR = "temcor";
 	public static final String VERSAO_REFER = "versaoRefer";
+	public static final String PRIORIDADE_PRODUCAO = "prioridadeProducao";
 	public static final String DESTINO_AM_CF = "destinoAmCf";
 	public static final String USUARIO_STAMP = "usuarioStamp";
 	public static final String SUC_CLIENTE = "sucCliente";
@@ -90,7 +91,6 @@ public abstract class Amostra_ {
 	public static final String DATA_SOLICITACAO = "dataSolicitacao";
 	public static final String CLIENTE = "cliente";
 	public static final String OBS_BASE = "obsBase";
-	public static final String PRIORIDA_DE_PRODUCAO = "prioridaDeProducao";
 	public static final String ESTACAO = "estacao";
 	public static final String SUC_FABRICA = "sucFabrica";
 	public static final String DATA_ENTREGA = "dataEntrega";

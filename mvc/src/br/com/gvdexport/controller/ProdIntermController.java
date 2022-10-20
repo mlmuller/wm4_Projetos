@@ -374,6 +374,9 @@ public class ProdIntermController implements Serializable {
 			listaFinalSelecaoProducao.add(fichaProducao);
 			try {
 				String marcaCerta = "\u2713";
+				if ((corFinal.getDesenvolveramostra().equals(SimNao.N)) || (!corFinal.getProducao())) {
+					marcaCerta = "\u0021";
+				}
 				fichaProducaoDao.update(fichaProducao);
 				Messages.addGlobalInfo("Ficha Produção Gerada com sucesso !");
 				corFinal.setProducao(true);
@@ -428,7 +431,7 @@ public class ProdIntermController implements Serializable {
 
 	}
 
-	public void referenciaSelecionada(SelectEvent event) {
+	public void referenciaSelecionada(SelectEvent<?> event) {
 		livroReferencia = new LivroReferencia();
 		livroReferencia = (LivroReferencia) event.getObject();
 		amostra.setLivroReferencia(livroReferencia);
@@ -441,39 +444,39 @@ public class ProdIntermController implements Serializable {
 		amostra.setConstrucao(livroReferencia.getConstrucao());
 	}
 
-	public void clienteSelecionado(SelectEvent event) {
+	public void clienteSelecionado(SelectEvent<?> event) {
 		cliente = new Cliente();
 		cliente = (Cliente) event.getObject();
 		amostra.setCliente(cliente);
 		amostra.setSucCliente(cliente.getSucinto());
 	}
 
-	public void fabricaSelecionada(SelectEvent event) {
+	public void fabricaSelecionada(SelectEvent<?> event) {
 		fabrica = new Fabrica();
 		fabrica = (Fabrica) event.getObject();
 		amostra.setFabrica(fabrica);
 		amostra.setSucFabrica(fabrica.getSucinto());
 	}
 
-	public void construcaoSelecionada(SelectEvent event) {
+	public void construcaoSelecionada(SelectEvent<?> event) {
 		construcao = new Construcao();
 		construcao = (Construcao) event.getObject();
 
 	}
 
-	public void formaSelecionada(SelectEvent event) {
+	public void formaSelecionada(SelectEvent<?> event) {
 		forma = new Forma();
 		forma = (Forma) event.getObject();
 
 	}
 
-	public void estacaoSelecionada(SelectEvent event) {
+	public void estacaoSelecionada(SelectEvent<?> event) {
 		estacaoCliente = new Estacao();
 		estacaoCliente = (Estacao) event.getObject();
 		amostra.setEstacao(estacaoCliente);
 	}
 
-	public void corSelecionada(SelectEvent event) {
+	public void corSelecionada(SelectEvent<?> event) {
 		Cor corEscolha = new Cor();
 		corEscolha = (Cor) event.getObject();
 	}

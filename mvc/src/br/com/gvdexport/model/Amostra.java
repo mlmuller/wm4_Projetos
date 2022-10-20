@@ -133,7 +133,7 @@ public class Amostra implements Serializable,Cloneable {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length=1)
-	private PrioridadeProducao prioridaDeProducao;
+	private PrioridadeProducao prioridadeProducao;
 	
 	private LocalDate datCadCam;
 		
