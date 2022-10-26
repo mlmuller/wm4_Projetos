@@ -884,9 +884,12 @@ public class FacadeAcesso implements Serializable {
 	// Verifica a existencia de Fichas nao liberadas
 	public List<FichaProducao> getExisteFichaALProducao() {
 		try {
-			TypedQuery<FichaProducao> q = em.createQuery("FROM FichaProducao fa " + "WHERE fa.liberadoalteraramostra =: transito",
+			TypedQuery<FichaProducao> q = em.createQuery("FROM FichaProducao fa " + 
+					"WHERE fa.liberadoalteraramostra =: transito"+
+					" OR "+ "fa.liberadoalteraramostra =: bloqueio",
 					FichaProducao.class);
 			q.setParameter("transito", EmTransicao.T);
+			q.setParameter("bloqueio", EmTransicao.L);
 			return q.getResultList();
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -228,6 +228,7 @@ public class ProducaoController implements Serializable {
     	String assunto = "Confirmação, liberada(s) Ficha(s) em Produção";
     	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
 	}
+	
 	//Metodo auxiliar para gravacao das cores selecionadas
 	public void gerarFichaProdCor(Amostra amostraFichaProduzir) {
 		Integer xCores = (amostraFichaProduzir.getCoresAmostra().size()-1);
@@ -317,7 +318,7 @@ public class ProducaoController implements Serializable {
 	  {
 	    setActiveIndexes("");
 	  }
-	   public void onTabChange(TabChangeEvent event) {
+	   public void onTabChange(TabChangeEvent<?> event) {
 //	        FacesMessage msg = new FacesMessage("", "Ativo: " + event.getTab().getTitle());
 //	        FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -341,40 +342,40 @@ public class ProducaoController implements Serializable {
 		amostra.setConstrucao(livroReferencia.getConstrucao());
 	}
 
-	public void clienteSelecionado(SelectEvent event) {
+	public void clienteSelecionado(SelectEvent<?> event) {
 		cliente = new Cliente();
 		cliente = (Cliente) event.getObject();
 		amostra.setCliente(cliente);
 		amostra.setSucCliente(cliente.getSucinto());
 	}
 
-	public void fabricaSelecionada(SelectEvent event) {
+	public void fabricaSelecionada(SelectEvent<?> event) {
 		fabrica = new Fabrica();
 		fabrica = (Fabrica) event.getObject();
 		amostra.setFabrica(fabrica);
 		amostra.setSucFabrica(fabrica.getSucinto());
 	}
 
-	public void construcaoSelecionada(SelectEvent event) {
+	public void construcaoSelecionada(SelectEvent<?> event) {
 		construcao = new Construcao();
 		construcao = (Construcao) event.getObject();
 
 	}
 
-	public void formaSelecionada(SelectEvent event) {
+	public void formaSelecionada(SelectEvent<?> event) {
 		forma = new Forma();
 		forma = (Forma) event.getObject();
 
 	}
 
 
-	public void estacaoSelecionada(SelectEvent event) {
+	public void estacaoSelecionada(SelectEvent<?> event) {
 		estacaoCliente = new Estacao();
 		estacaoCliente = (Estacao) event.getObject();
 		amostra.setEstacao(estacaoCliente);
 	}	
 
-	public void corSelecionada(SelectEvent event) {
+	public void corSelecionada(SelectEvent<?> event) {
 		Cor corEscolha = new Cor();
 		corEscolha = (Cor) event.getObject();
 	}
@@ -470,6 +471,12 @@ public class ProducaoController implements Serializable {
 		}else {
 			dt = false;
 		}
+    	
+    }
+    public void imprimiProducao() {
+    	
+    }
+    public void executeTravar() {
     	
     }
 }

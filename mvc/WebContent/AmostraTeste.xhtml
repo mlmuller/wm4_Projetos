@@ -10,7 +10,10 @@
 	<ui:define name="corpo">
 	
 	<style type="text/css">
-	
+
+	.panelgrlsb .ui-panelgrid {
+		border: none !important;
+	}
 	.customDialogx .ui-dialog-titlebar.ui-widget-header {
     	background: #c1dbcf;
     	color: black;
@@ -511,14 +514,23 @@
 						</pf:column>
 
 					</pf:panelGrid>
-					<pf:panel>
-						<h:panelGrid id="btnSave" columns="3" rendered="#{amostraNovaController.parametros.saveTransicao}" >
-							<pf:commandButton value="#{msg['botao.save']}" 
+					<pf:panel style="border-color:#35b3ee;">
+						<h:panelGrid id="btnSave" 
+						columns="3" 
+						rendered="#{amostraNovaController.parametros.saveTransicao}" 
+						styleClass="panelgrlsb">
+							  <pf:commandButton value="#{msg['botao.save']}" 
 								actionListener="#{amostraNovaController.verificaAntesSave}"
 								proccess="@this"
-								update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao" />
+								update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao"/>
+							   <pf:selectBooleanCheckbox
+									rendered="#{amostraNovaController.liberaTransito}" 
+									value="#{amostraNovaController.solicitaLiberacao}" itemLabel="Rebloqueio?">
+									<pf:ajax listener="#{amostraNovaController.executaBloqueio()}" 
+									update="amostraSecundario btnSave"/>
+							   </pf:selectBooleanCheckbox>								
 						</h:panelGrid>
-					</pf:panel>
+					</pf:panel>	
 					<pf:panel style="horizontal-align:center;">
 
 						<h:panelGroup id="pnlGrpCor">

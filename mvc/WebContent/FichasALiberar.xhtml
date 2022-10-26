@@ -40,10 +40,30 @@
 				value="#{producaoController.listaAmostraALiberar}" paginator="true" rows="3"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="3,5,10" paginatorPosition="bottom" >
+					<pf:column width="85" headerText="Opções" style="text-align:center">
 
-		        <pf:column headerText="" style="width:10%;text-align:center" >
-				     <pf:selectBooleanCheckbox value="#{_rowemProducao.aliberar}"/>
-		        </pf:column>
+						<pf:commandLink
+							actionListener="#{producaoController.edit(_rowemProducao)}"
+							title="#{msg['botao.edit']}">
+							<i class="fa fa-pencil" style="font-size: 1.5em; color: #06aa0e;" />
+
+						</pf:commandLink>
+
+						<pf:commandLink
+							action="#{producaoController.imprimiProducao(_rowemProducao)}"
+							title="Imprimir">
+							<i class="fa fa-print" style="font-size: 1.5em; color: #0e71eb;" />
+						</pf:commandLink>
+					</pf:column>
+					<pf:column headerText="#{msg['producao.label.status']}"
+						filterStyle="height:2.2em;" 
+						style="font-size:11px;text-align:center;" width="60">
+						<h:outputText value="#{_rowemProducao.liberadoalteraramostra eq 'T' ? 'Em Alteração' : 'Rebloquear' }" style="color:#{_rowemProducao.liberadoalteraramostra eq 'T' ? 'green':'red'}"/>
+					</pf:column>
+			        <pf:column headerText="" style="width:10%;text-align:center" >
+					     <pf:selectBooleanCheckbox value="#{_rowemProducao.aliberar}"/>
+			        </pf:column>
+
 
 				<pf:column headerText="#{msg['amostra.label.amostra']}"
 					filterStyle="height:2.2em;" 
@@ -126,10 +146,21 @@
 				</pf:column>
 
 		     </pf:dataTable>
-			<pf:commandButton value="#{msg['botao.execucao']}"
-				actionListener="#{producaoController.ExecuteLiberar}"
-				update="crudFormALiberar crudFormALiberar:tblAmostraALiberar"  style="font-size:12px;">
-		</pf:commandButton>
+			 <h:panelGrid columns="2" >
+			   <pf:column>
+					<pf:commandButton value="#{msg['botao.executeliberar']}"
+						actionListener="#{producaoController.ExecuteLiberar}"
+						update="crudFormALiberar crudFormALiberar:tblAmostraALiberar"  style="font-size:12px;">
+					</pf:commandButton>
+			   </pf:column>
+			   <pf:column>
+					<pf:commandButton value="#{msg['botao.executatrava']}"
+						actionListener="#{producaoController.executeTravar}"
+						update="crudFormALiberar crudFormALiberar:tblAmostraALiberar"  style="font-size:12px;">
+					</pf:commandButton>
+			   </pf:column>
+			</h:panelGrid>
+			
 	</h:form>
 
 	</ui:define>

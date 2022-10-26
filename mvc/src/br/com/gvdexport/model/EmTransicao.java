@@ -3,7 +3,8 @@ package br.com.gvdexport.model;
 public enum EmTransicao {
 	  S("Sim"),
 	  N("Nao"),
-	  T("Transição");
+	  T("Transição"),
+	  L("Liberado");
 	    private String label;
 	    
 	    private EmTransicao(String label) {

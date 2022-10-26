@@ -179,7 +179,7 @@ public class AmostraNovaController implements Serializable {
 	@Getter @Setter
 	private Integer Number2;
 
-	//Estas variaveis definirao se houverão alterações nas etapas em relacao aos clones
+	//Estas variaveis definirao se haverão alterações nas etapas em relacao aos clones
 	
 	@Getter @Setter
 	private Boolean fase1;
@@ -328,6 +328,12 @@ public class AmostraNovaController implements Serializable {
 	@Getter @Setter
 	private StreamedContent imageResize;
 
+	@Getter @Setter
+	private Boolean liberaTransito;
+	
+	@Getter @Setter
+	private Boolean solicitaLiberacao;
+	
 	@Inject
 	private FacadeAcesso facadeAcesso;
 	@Inject
@@ -409,6 +415,7 @@ public class AmostraNovaController implements Serializable {
 		statusGeracao = false;
 		parametros.setTemLog(false);
 		parametros.setLogModulo("Não Há");
+		liberaTransito = false;
 		// inicializa varaveis de pesquisa
 		// inicializa datas
 		iniSolicitacao = null;
@@ -424,6 +431,7 @@ public class AmostraNovaController implements Serializable {
 		largura = "";
 		altura = "";
 		mostraListaProducao = false;
+		solicitaLiberacao = false;
 		imageResize = null;
 		inicializaParametros();
 		inicializaConsulta();
@@ -673,22 +681,25 @@ public class AmostraNovaController implements Serializable {
 			if (listaFichasProducao.size() != 0) {
 				qtdFichas = listaFichasProducao.size();
 				for (FichaProducao fichaProducao : listaFichasProducao) {
-					
+
 					if (fichaProducao.getLiberadoalteraramostra().name().equals("N")) {
 						mostraListaProducao = true;
+					}
+					if (fichaProducao.getLiberadoalteraramostra().name().equals("T")) {
+						liberaTransito = true;
 					}
 				}
 				if (mostraListaProducao) {
 					addMessage(FacesMessage.SEVERITY_WARN, "Existe(m) Ficha(s) em Produção !","");
 					current.executeScript("PF('listaAmostraemProdDlg').show()");
+					return;
 				}else {
-					//adic em 19/10/2022, todas esta em transito,entao precisa atribuir,reg vindo
-					//do datatable,caso nao , mostrará tela vazia...
-					current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
-					current.ajax().update("crudFormAmostraSecundario");
+//					//adic em 19/10/2022, todas esta em transito,entao precisa atribuir,reg vindo
+//					//do datatable,caso nao , mostrará tela vazia...
+//					current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
+//					current.ajax().update("crudFormAmostraSecundario");
 				}
 				
-				return;
 			}
 		}
 
@@ -2736,6 +2747,24 @@ public class AmostraNovaController implements Serializable {
     public void addMessage(FacesMessage.Severity severity,String summary,String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity,summary,detail));
+    }
+    public void executaBloqueio() {
+    	if (listaFichasProducao.size() != 0){
+			for (FichaProducao fichaProducao : listaFichasProducao) {
+				
+				if (fichaProducao.getLiberadoalteraramostra().equals(EmTransicao.T)) {
+					fichaProducao.setLiberadoalteraramostra(EmTransicao.L);
+					try {
+						fichaProducaoDao.update(fichaProducao);
+						Messages.addGlobalInfo("Solicitação de Bloqueio realizado com sucesso !");
+					} catch (RuntimeException re) {
+						Messages.addGlobalInfo("Não foi possivel atualizar Ficha(s) Produção(es)!");
+						return;
+					}
+				}
+			}
+			liberaTransito = false;
+    	}
     }
     public void executaDesbloqueio() throws MessagingException {
     	String msgAgrupa = "";
