@@ -23,6 +23,7 @@ import br.com.gvdexport.model.CorCorteAm;
 import br.com.gvdexport.model.CorCosturaAm;
 import br.com.gvdexport.model.EnderecoCliente;
 import br.com.gvdexport.model.FichaProducao;
+import br.com.gvdexport.model.LogAmostraFichaProducao;
 import br.com.gvdexport.model.LogAmostrasNovas;
 
 @Dependent
@@ -137,6 +138,11 @@ public class GenericDao<T,ID> implements Serializable {
     public LogAmostrasNovas updateLogAmostraNova(LogAmostrasNovas logAmostraNova) {
 		return (LogAmostrasNovas)  this.em.merge(logAmostraNova);
     }
+    @Transactional
+    public LogAmostraFichaProducao updateLogAmostraFichaProducao(LogAmostraFichaProducao logAmostraFichaProducao) {
+		return (LogAmostraFichaProducao)  this.em.merge(logAmostraFichaProducao);
+    }
+
     //
     
 	// Etapas Producao Amostras Novas

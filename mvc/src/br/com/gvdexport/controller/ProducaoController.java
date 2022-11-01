@@ -211,29 +211,47 @@ public class ProducaoController implements Serializable {
     	String msg = "Olá,Fichas em Produção Liberadas cfe Solicitação:";
 		for (FichaProducao fichaProducaoALiberar:listaAmostraALiberar ) {
 		  if (fichaProducaoALiberar.getAliberar() && !fichaProducaoALiberar.getLiberadoalteraramostra().equals(EmTransicao.L)) {
-		   if (fichaProducaoALiberar.getLiberadoalteraramostra().equals(EmTransicao.N)) {	  
+		   if (fichaProducaoALiberar.getLiberadoalteraramostra().equals(EmTransicao.W)) {	  
 			fichaProducaoALiberar.setLiberadoalteraramostra(EmTransicao.T);
 			fichaProducaoALiberar.setSemaforo("#f22c11"); //red
 			fichaProducaoALiberar.setDatacorrecao(fichaProducaoDao.getDateLocalTime());
-			fichaProducaoDao.update(fichaProducaoALiberar);
-			msgRec=Long.toString(fichaProducao.getAmostra().getAmostraId()).trim();
+			msgRec=Long.toString(fichaProducaoALiberar.getAmostra().getAmostraId()).trim()+"/"+fichaProducaoALiberar.getCoramostra().getSequenciaCorAmostra();
 			msgAgrupa +=msgRec+",";
 			msgRec = "";
-			}
-		   
+
+		   try {
+			fichaProducaoDao.update(fichaProducaoALiberar);
+		   	   } catch (RuntimeException ex) {
+		   		ex.printStackTrace();
+		    }
+	    }
+
 		  }else {
-			  Messages.addGlobalWarn("Você nao pode alterar/imprimir, esta em Alteração,Verifique com Dpto de Amostra!");
+			  Messages.addGlobalWarn("Você nao pode alterar/imprimir, está em Alteração,Verifique com Dpto de Amostra!");
 			  return;
 		  }
 		}
  
-		if (!msgRec.isEmpty()) {
+		if (!msgAgrupa.isEmpty()) {
 			msg+=System.lineSeparator()+msgAgrupa;
     		String remetente = "almoxarifado2@gvdintl.com.br";
     		String senha = "Vav91126";
+    		//Alterar aqui destinatario
+    		//email destino, deve ser obtido do cadastro de usuarios
     		String destinatario = "ti@gvdintl.com.br";
     		String assunto = "Confirmação, liberada(s) Ficha(s) em Produção";
     		enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
+    		//
+    		//* Reatualiza Lista 
+    		listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao();
+    		if (listaAmostraALiberar.size() == 0) {
+    			Messages.addGlobalWarn("Não há Fichas Pendentes !!!");
+    			qtdTransicao = 0;
+    			return;
+    		}else {
+    			qtdTransicao = listaAmostraALiberar.size();
+    		}
+
 		}
 	}
 	

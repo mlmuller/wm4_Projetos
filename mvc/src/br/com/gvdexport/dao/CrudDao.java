@@ -21,6 +21,8 @@ import br.com.gvdexport.model.CorCosturaAm;
 import br.com.gvdexport.model.EmTransicao;
 import br.com.gvdexport.model.EnderecoCliente;
 import br.com.gvdexport.model.FichaProducao;
+import br.com.gvdexport.model.LogAmostraFichaProducao;
+import br.com.gvdexport.model.LogAmostraFichaProducao_;
 import br.com.gvdexport.model.LogAmostrasNovas;
 
 @Named("crudDao")
@@ -228,6 +230,14 @@ public class CrudDao<T,ID> implements Serializable{
 	    	
 	    	for (LogAmostrasNovas logAmostraNova : listaLogAmostraNova) {
 	    		dao.updateLogAmostraNova(logAmostraNova);
+	    	}
+	    	
+	    }
+	    //Logs - Salvar multiplis itens pós alteração, durante producao
+	    public void updateLogAmostraFichaProducao(List<LogAmostraFichaProducao> listaLogAmostraFichaProducao) {
+	    	
+	    	for (LogAmostraFichaProducao logAmostraFichaProducao : listaLogAmostraFichaProducao) {
+	    		dao.updateLogAmostraFichaProducao(logAmostraFichaProducao);
 	    	}
 	    	
 	    }
