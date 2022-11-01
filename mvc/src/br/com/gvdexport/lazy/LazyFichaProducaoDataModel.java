@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.management.IntrospectionException;
 
 import org.apache.commons.collections4.ComparatorUtils;
 import org.primefaces.model.FilterMeta;
@@ -20,19 +18,16 @@ import org.primefaces.util.LocaleUtils;
 import br.com.gvdexport.model.FichaProducao;
 import br.com.gvdexport.util.ShowcaseUtil;
 
-public class LazyAmostraProducaoDataModel extends LazyDataModel<FichaProducao> {
+public class LazyFichaProducaoDataModel extends LazyDataModel<FichaProducao> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private ShowcaseUtil showCaseUtil;
-	
 	private List<FichaProducao> datasource;
 
-    public LazyAmostraProducaoDataModel(List<FichaProducao> datasource) {
+    public LazyFichaProducaoDataModel(List<FichaProducao> datasource) {
     	this.datasource = datasource;
     }
  
@@ -62,7 +57,7 @@ public class LazyAmostraProducaoDataModel extends LazyDataModel<FichaProducao> {
     @Override
     public List<FichaProducao> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
         // apply offset & filters
-        List<FichaProducao> amostraProducao = datasource.stream()
+        List<FichaProducao> fichaProducao = datasource.stream()
                 .skip(offset)
                 .filter(o -> filter(FacesContext.getCurrentInstance(), filterBy.values(), o))
                 .limit(pageSize)
@@ -71,12 +66,12 @@ public class LazyAmostraProducaoDataModel extends LazyDataModel<FichaProducao> {
         // sort
         if (!sortBy.isEmpty()) {
             List<Comparator<FichaProducao>> comparators = sortBy.values().stream()
-                    .map(o -> new LazyAmostraProducaoSorter(o.getField(), o.getOrder()))
+                    .map(o -> new LazyFichaProducaoSorter(o.getField(), o.getOrder()))
                     .collect(Collectors.toList());
             Comparator<FichaProducao> cp = ComparatorUtils.chainedComparator(comparators); // from apache
-            amostraProducao.sort(cp);
+            fichaProducao.sort(cp);
         }
-        return amostraProducao;
+        return fichaProducao;
     }
 
     private boolean filter(FacesContext context, Collection<FilterMeta> filterBy, Object o) {
@@ -84,19 +79,14 @@ public class LazyAmostraProducaoDataModel extends LazyDataModel<FichaProducao> {
 
         for (FilterMeta filter : filterBy) {
             FilterConstraint constraint = filter.getConstraint();
-            Object filterValue = filter.getFilterValue();
-
-            try {
-            	Object columnValue = String.valueOf(showCaseUtil.getPropertyValueViaReflection(o, filter.getField()));
-                matching = constraint.isMatching(context, columnValue, filterValue, LocaleUtils.getCurrentLocale());
-            }
-            catch (ReflectiveOperationException | IntrospectionException e) {
-                matching = false;
-            } catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (java.beans.IntrospectionException e) {
-				e.printStackTrace();
-			}
+            	Object filterValue = filter.getFilterValue();
+            	Object columnValue;
+            	try {
+                	columnValue = String.valueOf(ShowcaseUtil.getPropertyValueViaReflection(o, filter.getField()));
+                	matching = constraint.isMatching(context, columnValue, filterValue, LocaleUtils.getCurrentLocale());
+				} catch (Exception e) {
+					matching = false;
+				}
 
             if (!matching) {
                 break;

@@ -51,6 +51,7 @@ public class ProducaoController implements Serializable {
 
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -171,10 +172,7 @@ public class ProducaoController implements Serializable {
 
 	@Inject
 	private EnviadorEmail enviadorEmail;
-//	LazyProducaoAmostraDataModel dataModel = new LazyProducaoAmostraDataModel();
-//	public LazyDataModel<FichaProducao> getModel() {
-//		return dataModel;
-//	}
+
 	@PostConstruct
 	public void init() {
 		amostra = new Amostra();
@@ -205,28 +203,38 @@ public class ProducaoController implements Serializable {
 			listaAmostraALiberar = new ArrayList<FichaProducao>();
 			listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao();
 			qtdTransicao = listaAmostraALiberar.size();
-	}
+		}
 	}
 	public void ExecuteLiberar() {
 	   	String msgAgrupa = "";
     	String msgRec = "";
-    	String msg = "Olá, Fichas em Produção Liberadas cfe Solicitação:";
+    	String msg = "Olá,Fichas em Produção Liberadas cfe Solicitação:";
 		for (FichaProducao fichaProducaoALiberar:listaAmostraALiberar ) {
+		  if (fichaProducaoALiberar.getAliberar() && !fichaProducaoALiberar.getLiberadoalteraramostra().equals(EmTransicao.L)) {
+		   if (fichaProducaoALiberar.getLiberadoalteraramostra().equals(EmTransicao.N)) {	  
 			fichaProducaoALiberar.setLiberadoalteraramostra(EmTransicao.T);
+			fichaProducaoALiberar.setSemaforo("#f22c11"); //red
 			fichaProducaoALiberar.setDatacorrecao(fichaProducaoDao.getDateLocalTime());
 			fichaProducaoDao.update(fichaProducaoALiberar);
 			msgRec=Long.toString(fichaProducao.getAmostra().getAmostraId()).trim();
 			msgAgrupa +=msgRec+",";
 			msgRec = "";
+			}
+		   
+		  }else {
+			  Messages.addGlobalWarn("Você nao pode alterar/imprimir, esta em Alteração,Verifique com Dpto de Amostra!");
+			  return;
+		  }
 		}
  
-		
-		msg+=System.lineSeparator()+msgAgrupa;
-    	String remetente = "almoxarifado2@gvdintl.com.br";
-    	String senha = "Vav91126";
-    	String destinatario = "ti@gvdintl.com.br";
-    	String assunto = "Confirmação, liberada(s) Ficha(s) em Produção";
-    	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
+		if (!msgRec.isEmpty()) {
+			msg+=System.lineSeparator()+msgAgrupa;
+    		String remetente = "almoxarifado2@gvdintl.com.br";
+    		String senha = "Vav91126";
+    		String destinatario = "ti@gvdintl.com.br";
+    		String assunto = "Confirmação, liberada(s) Ficha(s) em Produção";
+    		enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
+		}
 	}
 	
 	//Metodo auxiliar para gravacao das cores selecionadas
@@ -477,6 +485,10 @@ public class ProducaoController implements Serializable {
     	
     }
     public void executeTravar() {
+    	
+    }
+    
+    public void limpaInformacao() {
     	
     }
 }

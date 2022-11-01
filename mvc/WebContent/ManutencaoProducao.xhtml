@@ -8,7 +8,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
 	<ui:define name="corpo">
-	<link type="text/css" rel="stylesheet" href="resources/adamantium-layout/css/theme.css" />
 	<style type="text/css">
 			.ui-fieldset .ui-fieldset-legend {
   				padding: 15px 10px !important;
@@ -18,7 +17,7 @@
 				background-color: #7cdbfb !important;
 				border-radius: 7px;}
  			.panelgrlsb {
-				border: none;
+				border: none !important;
 			}
 			
 			.alinhaData {
@@ -37,7 +36,6 @@
 
  	</style>
 		<h:form id="crudFormManProducao">
-			<pf:panel styleClass="panelgrlsb" />
 			<pf:growl id="prodMessage" globalOnly="true" sticky="true" />
 			<h:panelGroup id="accordPnlGrpProd">
 				<pf:fieldset 
@@ -476,8 +474,8 @@
 		</h:form>
 
 		<pf:dialog header="Manutenção Ficha Produção"
-			widgetVar="addEditFormManProdDlg" width="85%" height="700px"
-			resizable="false" position="center middle" showEffect="clip"
+			widgetVar="addEditFormManProdDlg" width="85%" height="725px"
+			resizable="false" position="center top" showEffect="clip"
 			modal="true" draggable="true" closable="true" appendTo="@(body)">
 			<h:form id="ManFormAmostraProd">
 				<pf:growl id="manProdMensagem" life="6000" />
@@ -740,6 +738,7 @@
 							</pf:datePicker>
 						</h:panelGrid>
 					</pf:column>
+
 					<pf:column>
 						<h:panelGrid columns="2">
 							<h:outputLabel value="#{msg['producao.lab.situacao']}" />
@@ -755,17 +754,9 @@
 								<pf:ajax process="@this" />
 							</pf:selectOneMenu>
 						</h:panelGrid>
-						<h:panelGrid columns="2">
-							<pf:outputLabel value="#{msg['producao.lab.comentario']}"
-								style="font-size:11px;height:0.7em;" />
-							<pf:inputTextarea cols="90" maxlength="590"
-								value="#{producaoController.fichaProducao.comentario}"
-								style="font-size:13px;height:40%;" autoResize="false">
-							</pf:inputTextarea>
-						</h:panelGrid>
-					</pf:column>
-
-					<pf:column>
+						</pf:column>
+						
+						<pf:column>
 						<h:panelGrid columns="2">
 							<h:outputLabel value="#{msg['producao.lab.liberacao']}" />
 							<pf:selectOneMenu
@@ -781,7 +772,21 @@
 							</pf:selectOneMenu>
 						</h:panelGrid>
 					</pf:column>
+		
 				</pf:panelGrid>
+				<pf:panelGrid columns="2" layout="grid"
+					style="border-color:#35b3ee;">
+				   <pf:column>
+						<h:panelGrid columns="2">
+							<pf:outputLabel value="#{msg['producao.lab.comentario']}"
+								style="font-size:11px;height:0.7em;" />
+							<pf:inputTextarea cols="90" maxlength="590"
+								value="#{producaoController.fichaProducao.comentario}"
+								style="font-size:13px;height:40%;" autoResize="false">
+							</pf:inputTextarea>
+						</h:panelGrid>
+					</pf:column>
+				</pf:panelGrid>				
 				<pf:panelGrid layout="grid" columns="1"
 					style="border-color:#35b3ee;">
 					<pf:column>

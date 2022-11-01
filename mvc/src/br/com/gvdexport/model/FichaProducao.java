@@ -130,6 +130,9 @@ public class FichaProducao implements Serializable,Cloneable{
 	@Column(length=1,nullable=false)
 	private EmTransicao liberadoalteraramostra = EmTransicao.N;
 	
+	@Column(length = 7,nullable = true)
+	private String semaforo;
+	
 	//Cor Confirmacao
 	@ManyToOne(optional = true)
 	@JoinColumn(name="corconfirmacao",referencedColumnName="confcor_pk",nullable = true,foreignKey=@ForeignKey(name="FK_fichaproducao_corconfirmacao"))

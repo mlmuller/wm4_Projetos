@@ -41,6 +41,7 @@ public abstract class FichaProducao_ {
 	public static volatile SingularAttribute<FichaProducao, BigDecimal> paresatual;
 	public static volatile SingularAttribute<FichaProducao, String> comentario;
 	public static volatile SingularAttribute<FichaProducao, LocalDate> datamodelagem;
+	public static volatile SingularAttribute<FichaProducao, String> semaforo;
 	public static volatile SingularAttribute<FichaProducao, Long> fichaproducaoid;
 	public static volatile SingularAttribute<FichaProducao, LocalDate> datacostura;
 	public static volatile SingularAttribute<FichaProducao, CorConfirmacao> corconfirmacao;
@@ -76,6 +77,7 @@ public abstract class FichaProducao_ {
 	public static final String PARESATUAL = "paresatual";
 	public static final String COMENTARIO = "comentario";
 	public static final String DATAMODELAGEM = "datamodelagem";
+	public static final String SEMAFORO = "semaforo";
 	public static final String FICHAPRODUCAOID = "fichaproducaoid";
 	public static final String DATACOSTURA = "datacostura";
 	public static final String CORCONFIRMACAO = "corconfirmacao";

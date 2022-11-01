@@ -886,10 +886,13 @@ public class FacadeAcesso implements Serializable {
 		try {
 			TypedQuery<FichaProducao> q = em.createQuery("FROM FichaProducao fa " + 
 					"WHERE fa.liberadoalteraramostra =: transito"+
-					" OR "+ "fa.liberadoalteraramostra =: bloqueio",
+					" OR "+ "fa.liberadoalteraramostra =: bloqueio"+
+					" OR "+ "fa.liberadoalteraramostra =: liberada",
 					FichaProducao.class);
 			q.setParameter("transito", EmTransicao.T);
-			q.setParameter("bloqueio", EmTransicao.L);
+			q.setParameter("liberada", EmTransicao.L);
+			q.setParameter("bloqueio", EmTransicao.W);
+			
 			return q.getResultList();
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.management.IntrospectionException;
 
 import org.apache.commons.collections4.ComparatorUtils;
 import org.primefaces.model.FilterMeta;
@@ -27,9 +25,6 @@ public class LazyConstrucaoDataModel extends LazyDataModel<Construcao> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private ShowcaseUtil showCaseUtil;
-	
 	private List<Construcao> datasource;
 
     public LazyConstrucaoDataModel(List<Construcao> datasource) {
@@ -84,19 +79,14 @@ public class LazyConstrucaoDataModel extends LazyDataModel<Construcao> {
 
         for (FilterMeta filter : filterBy) {
             FilterConstraint constraint = filter.getConstraint();
-            Object filterValue = filter.getFilterValue();
-
-            try {
-            	Object columnValue = String.valueOf(showCaseUtil.getPropertyValueViaReflection(o, filter.getField()));
-                matching = constraint.isMatching(context, columnValue, filterValue, LocaleUtils.getCurrentLocale());
-            }
-            catch (ReflectiveOperationException | IntrospectionException e) {
-                matching = false;
-            } catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (java.beans.IntrospectionException e) {
-				e.printStackTrace();
-			}
+            	Object filterValue = filter.getFilterValue();
+            	Object columnValue;
+            	try {
+                	columnValue = String.valueOf(ShowcaseUtil.getPropertyValueViaReflection(o, filter.getField()));
+                	matching = constraint.isMatching(context, columnValue, filterValue, LocaleUtils.getCurrentLocale());
+				} catch (Exception e) {
+					matching = false;
+				}
 
             if (!matching) {
                 break;

@@ -8,160 +8,176 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
 	<ui:define name="corpo">
-	<style type="text/css">
-			.ui-fieldset-legend {
-				padding: 10px 10px !important;
-				height: 0.5em;
-				color: black;
-				font-size: 11px;
-				background-color: #7cdbfb !important;
-			}
-			
-			.panelgrlsb {
-				border: none;
-			}
-			
-			.alinhaData {
-				horizontal-align: right;
-				font-size: 14px;
-			}
-			
-			.alinhaColunas {
-				text-align: center !important;
-			}
+		<style type="text/css">
+.ui-fieldset-legend {
+	padding: 10px 10px !important;
+	height: 0.5em;
+	color: black;
+	font-size: 11px;
+	background-color: #7cdbfb !important;
+}
 
-			.ui-widget button{
-				border-top-right-radius: 15px;
-			} 
+.panelgrlsb .ui-panelgrid {
+	border: none !important;
+}
 
- 	</style>
-	    <h:form id="crudFormALiberar">
-		    <pf:dataTable  id="tblAmostraALiberar" var="_rowemProducao"
-				value="#{producaoController.listaAmostraALiberar}" paginator="true" rows="3"
+.pangrdicb .uipanelgrid {
+	border: 1px;
+}
+
+.alinhaData {
+	horizontal-align: right;
+	font-size: 14px;
+}
+
+.alinhaColunas {
+	text-align: center !important;
+}
+
+.ui-widget button {
+	border-top-right-radius: 15px;
+}
+</style>
+		<h:form id="crudFormALiberar">
+		 <pf:growl id="aLiberar"/>
+		 <pf:panel header="Liberações e Bloqueios Fichas para Produção" style="border-color:#35b3ee;" />
+			<pf:dataTable id="tblAmostraALiberar" var="_rowemProducao"
+				value="#{producaoController.listaAmostraALiberar}" paginator="true"
+				rows="3"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-				rowsPerPageTemplate="3,5,10" paginatorPosition="bottom" >
-					<pf:column width="85" headerText="Opções" style="text-align:center">
+				rowsPerPageTemplate="3,5,10" paginatorPosition="bottom">
+				<pf:column width="85" headerText="Opções" style="text-align:center">
 
-						<pf:commandLink
-							actionListener="#{producaoController.edit(_rowemProducao)}"
-							title="#{msg['botao.edit']}">
-							<i class="fa fa-pencil" style="font-size: 1.5em; color: #06aa0e;" />
+					<pf:commandLink
+						actionListener="#{producaoController.edit(_rowemProducao)}"
+						title="#{msg['botao.edit']}" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
+						<i class="fa fa-pencil" style="font-size: 1.5em; color: #06aa0e;" />
 
-						</pf:commandLink>
+					</pf:commandLink>
 
-						<pf:commandLink
-							action="#{producaoController.imprimiProducao(_rowemProducao)}"
-							title="Imprimir">
-							<i class="fa fa-print" style="font-size: 1.5em; color: #0e71eb;" />
-						</pf:commandLink>
-					</pf:column>
-					<pf:column headerText="#{msg['producao.label.status']}"
-						filterStyle="height:2.2em;" 
-						style="font-size:11px;text-align:center;" width="60">
-						<h:outputText value="#{_rowemProducao.liberadoalteraramostra eq 'T' ? 'Em Alteração' : 'Rebloquear' }" style="color:#{_rowemProducao.liberadoalteraramostra eq 'T' ? 'green':'red'}"/>
-					</pf:column>
-			        <pf:column headerText="" style="width:10%;text-align:center" >
-					     <pf:selectBooleanCheckbox value="#{_rowemProducao.aliberar}"/>
-			        </pf:column>
+					<pf:commandLink
+						action="#{producaoController.imprimiProducao(_rowemProducao)}"
+						title="Imprimir" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
+						<i class="fa fa-print" style="font-size: 1.5em; color: #0e71eb;" />
+					</pf:commandLink>
 
+					<pf:commandLink
+						action="#{producaoController.limpaInformacao(_rowemProducao)}"
+						title="Apagar informações de Datas Etapas" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
+						<i class="fa fa-eraser" style="font-size: 1.5em; color: #eb520e;" />
+					</pf:commandLink>
+
+				</pf:column>
+
+				<pf:column headerText="#{msg['producao.label.status']}"
+					filterStyle="height:2.2em;"
+					style="font-size:11px;text-align:center;" width="60">
+					<h:outputText
+						value="#{_rowemProducao.liberadoalteraramostra.label}"
+						style="color:#{_rowemProducao.semaforo}" />
+				</pf:column>
+				<pf:column headerText="" style="width:10%;text-align:center">
+					<pf:selectBooleanCheckbox value="#{_rowemProducao.aliberar}" />
+				</pf:column>
 
 				<pf:column headerText="#{msg['amostra.label.amostra']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
 					<h:outputText value="#{_rowemProducao.amostra.amostraId}"
 						style="font-size:10x;" />
 				</pf:column>
 				<pf:column headerText="#{msg['cliente.label.nome']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
 					<h:outputText value="#{_rowemProducao.amostra.cliente.sucinto}"
 						style="font-size:15x;" />
 				</pf:column>
 
 				<pf:column headerText="#{msg['producao.label.fichaprod']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
 					<h:outputText value="#{_rowemProducao.fichaproducaoid}"
 						style="font-size:15x;" />
 				</pf:column>
 
 				<pf:column headerText="#{msg['producao.label.entrada']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
 					<h:outputText value="#{_rowemProducao.dataentrada}"
 						style="font-size:25x;">
-						<f:convertDateTime 
-							type="localDate" 
-							dateStyle="long"
+						<f:convertDateTime type="localDate" dateStyle="long"
 							pattern="dd-MM-yyyy HH:MM" />
-						
+
 					</h:outputText>
 
 				</pf:column>
-		    
+
 				<pf:column headerText="#{msg['producao.lab.dataalmoxarido']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
-					<h:outputText value="#{_rowemProducao.dataalmoxarifado ne null ? _rowemProducao.dataalmoxarifado:amostraNovaController.status}" style="color:#{_rowemProducao.dataalmoxarifado ne null ? 'green':'red'}">
-					<f:convertDateTime 
-							type="localDate" 
-							dateStyle="long"
+					<h:outputText
+						value="#{_rowemProducao.dataalmoxarifado ne null ? _rowemProducao.dataalmoxarifado:amostraNovaController.status}"
+						style="color:#{_rowemProducao.dataalmoxarifado ne null ? 'green':'red'}">
+						<f:convertDateTime type="localDate" dateStyle="long"
 							pattern="dd-MM-yyyy" />
 					</h:outputText>
 				</pf:column>
 
 				<pf:column headerText="#{msg['producao.label.dtcorte']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
-					<h:outputText value="#{_rowemProducao.datacorte ne null ? _rowemProducao.datacorte:amostraNovaController.status}" style="color:#{_rowemProducao.datacorte ne null ? 'green':'red'}">
-						<f:convertDateTime 
-							type="localDate" 
-							dateStyle="long"
+					<h:outputText
+						value="#{_rowemProducao.datacorte ne null ? _rowemProducao.datacorte:amostraNovaController.status}"
+						style="color:#{_rowemProducao.datacorte ne null ? 'green':'red'}">
+						<f:convertDateTime type="localDate" dateStyle="long"
 							pattern="dd-MM-yyyy" />
-					</h:outputText>	
+					</h:outputText>
 				</pf:column>
 
 				<pf:column headerText="#{msg['producao.lab.datacostura']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
-					<h:outputText value="#{_rowemProducao.datacostura ne null ? _rowemProducao.datacostura:amostraNovaController.status}" style="color:#{_rowemProducao.datacostura ne null ? 'green':'red'}">
-						<f:convertDateTime 
-							type="localDate" 
-							dateStyle="long"
+					<h:outputText
+						value="#{_rowemProducao.datacostura ne null ? _rowemProducao.datacostura:amostraNovaController.status}"
+						style="color:#{_rowemProducao.datacostura ne null ? 'green':'red'}">
+						<f:convertDateTime type="localDate" dateStyle="long"
 							pattern="dd-MM-yyyy" />
-					</h:outputText>	
+					</h:outputText>
 
 				</pf:column>
 
 				<pf:column headerText="#{msg['producao.label.premontagem']}"
-					filterStyle="height:2.2em;" 
+					filterStyle="height:2.2em;"
 					style="font-size:11px;text-align:center;" width="60">
-							<h:outputText value="#{_rowemProducao.datamontagem ne null ? _rowemProducao.datamontagem:amostraNovaController.status}" style="color:#{_rowemProducao.datamontagem ne null ? 'green':'red'}">
-						<f:convertDateTime 
-							type="localDate" 
-							dateStyle="long"
+					<h:outputText
+						value="#{_rowemProducao.datamontagem ne null ? _rowemProducao.datamontagem:amostraNovaController.status}"
+						style="color:#{_rowemProducao.datamontagem ne null ? 'green':'red'}">
+						<f:convertDateTime type="localDate" dateStyle="long"
 							pattern="dd-MM-yyyy" />
-					</h:outputText>	
+					</h:outputText>
 
 				</pf:column>
 
-		     </pf:dataTable>
-			 <h:panelGrid columns="2" >
-			   <pf:column>
-					<pf:commandButton value="#{msg['botao.executeliberar']}"
-						actionListener="#{producaoController.ExecuteLiberar}"
-						update="crudFormALiberar crudFormALiberar:tblAmostraALiberar"  style="font-size:12px;">
-					</pf:commandButton>
-			   </pf:column>
-			   <pf:column>
-					<pf:commandButton value="#{msg['botao.executatrava']}"
-						actionListener="#{producaoController.executeTravar}"
-						update="crudFormALiberar crudFormALiberar:tblAmostraALiberar"  style="font-size:12px;">
-					</pf:commandButton>
-			   </pf:column>
-			</h:panelGrid>
-			
-	</h:form>
+			</pf:dataTable>
+			<pf:panel style="border-color:#35b3ee;">
+				<pf:column>
+					<h:panelGrid columns="3" styleClass="panelgrlsb">
+						<pf:column>
+							<pf:commandButton value="#{msg['botao.executeliberar']}"
+								actionListener="#{producaoController.ExecuteLiberar}"
+								update="crudFormALiberar crudFormALiberar:tblAmostraALiberar aLiberar"
+								style="font-size:12px;margin-right: 15px;" title="Liberar Fichas Solicitadas">
+							</pf:commandButton>
+							<pf:commandButton value="#{msg['botao.executatrava']}"
+								actionListener="#{producaoController.executeTravar}"
+								update="crudFormALiberar crudFormALiberar:tblAmostraALiberar aLiberar"
+								style="font-size:12px;" title="Rebloquear para não permitir alterações">
+							</pf:commandButton>
+						</pf:column>
+					</h:panelGrid>
+				</pf:column>
+			</pf:panel>
+		</h:form>
 
 	</ui:define>
 

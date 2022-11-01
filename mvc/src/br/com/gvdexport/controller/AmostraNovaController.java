@@ -81,9 +81,11 @@ import lombok.Setter;
 @SessionScoped
 public class AmostraNovaController implements Serializable {
 
-	/**
+	/*
+	 * 
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Getter	@Setter
 	private Amostra amostra;
@@ -2752,8 +2754,9 @@ public class AmostraNovaController implements Serializable {
     	if (listaFichasProducao.size() != 0){
 			for (FichaProducao fichaProducao : listaFichasProducao) {
 				
-				if (fichaProducao.getLiberadoalteraramostra().equals(EmTransicao.T)) {
-					fichaProducao.setLiberadoalteraramostra(EmTransicao.L);
+				if (fichaProducao.getLiberadoalteraramostra().equals(EmTransicao.L)) {
+					fichaProducao.setLiberadoalteraramostra(EmTransicao.N);
+					fichaProducao.setSemaforo("#000000");
 					try {
 						fichaProducaoDao.update(fichaProducao);
 						Messages.addGlobalInfo("Solicitação de Bloqueio realizado com sucesso !");
@@ -2774,8 +2777,10 @@ public class AmostraNovaController implements Serializable {
     	for (FichaProducao fichaProducao : listaFichasProducao) {
 			if (fichaProducao.getAliberar()) {
 				try {
+					fichaProducao.setAliberar(false);
+					fichaProducao.setLiberadoalteraramostra(EmTransicao.W);
+					fichaProducao.setSemaforo("#e77318");
 					fichaProducao.setAliberar(true);
-					fichaProducao.setLiberadoalteraramostra(EmTransicao.T);
 					fichaProducaoDao.update(fichaProducao);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -2793,17 +2798,20 @@ public class AmostraNovaController implements Serializable {
     	}
     	msgAgrupa="Ficha(s) : "+msgAgrupa;
     	msg+=System.lineSeparator()+msgAgrupa;
-    	String remetente = "calceb@gvdintl.com.br";
-    	String senha = "Lom57544";
+    	//Alterar aqui para o email do dpto solicitante-Amostras
+    	String remetente = "ti@gvdintl.com.br";
+    	String senha = "Fus99907";
     	String destinatario = "ti@gvdintl.com.br";
     	String assunto = "Solicitação liberacao Fichas em Produção";
     	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
     	try {
     		/*T=Significa, solicitado desbloqueio na producao,somente podera alterar
     		quando Almoxarifado liberar, sera mudado status para "X"*/
-    		
+    		//Na amostra de producao,status alterar para W,e na amostra fica como Transicao
 			amostra.setPrioridadeProducao(PrioridadeProducao.T);
 			amostraDao.update(amostra);
+			//
+			//* Atualiza Lista
 			
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();

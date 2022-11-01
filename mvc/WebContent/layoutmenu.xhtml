@@ -155,14 +155,14 @@
                 </p:column>
             </p:submenu>
 
-            <p:submenu label="Atelier" icon="fa fa-picture-o" style="color:black;">
+            <p:submenu label="Atelier" icon="fa fa-picture-o" style="color:black;"  >
                 <p:column>
                     <p:submenu label="Cadastros" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
                         <p:menuitem value="Motivo" url="#"/>
                         <p:menuitem value="Setor" url="#"/>
                     </p:submenu>
                     <p:submenu label="Produção" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
-                  	    <p:menuitem value="Nova Produção" url="AmostraProducao.jsf">
+                  	    <p:menuitem value="Nova Produção" url="AmostraProducao.jsf" actionListener="#{producaoController.badgeTransicao()}">
                   	      <p:badge value="#{prodIntermController.qtdFichas}" styleClass="CorFonte" severity="danger" >
                   	      <i class="pi pi-bell" style="font-size: 1.5rem;" title="Novas fichas a Produzir"/>
                   	      </p:badge>

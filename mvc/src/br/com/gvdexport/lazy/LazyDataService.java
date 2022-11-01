@@ -112,7 +112,11 @@ public class LazyDataService implements Serializable {
 	 * Final Lazy Amostra
 	 */
 	
-	   public List<FichaProducao> getAmostraProducao() {
+	/*
+	 * Inicial Lazy FichaProducao
+	 */
+
+	public List<FichaProducao> getAmostraProducao() {
 	   	    amostrasProducao = new ArrayList<FichaProducao>();
 	    	CriteriaBuilder cb = em.getCriteriaBuilder();
 	        CriteriaQuery<FichaProducao> q = cb.createQuery(FichaProducao.class);
@@ -161,7 +165,11 @@ public class LazyDataService implements Serializable {
 
 		/*
 		 * Fim Lazy Amostra Producao
-		 */
+		*/
+
+		/*
+		 * Inicio Lazy Imagem Referencia
+		*/
 
 		   public List<ImagemReferencia> getImagemreferencia() {
 		   	    livroImagem = new ArrayList<ImagemReferencia>();
@@ -212,10 +220,15 @@ public class LazyDataService implements Serializable {
 
 
 			/*
-			 * Fim Lazy Imagen de Referencias
+			 * Fim Lazy Imagem de Referencias
 			 *
 		    */
 
+			/*
+			 * Inicio Lazy Referencias
+			 *
+		    */
+			
 			   public List<LivroReferencia> getlivroReferencia() {
 			   	    livroReferencia = new ArrayList<LivroReferencia>();
 			    	CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -264,7 +277,7 @@ public class LazyDataService implements Serializable {
 				}	
 
 				/*
-				 * Fim Lazy Construcoes
+				 * Fim Lazy Referencias
 				 *
 			    */
 
@@ -364,9 +377,56 @@ public class LazyDataService implements Serializable {
 							Long count = em.createQuery(select).getSingleResult();
 							return count.intValue();
 						}
-
 						//
 						// Fim  Lazy Material
 						//
+						// Inicio Lazy Construcao
+						//
+						   public List<Construcao> getConstrucao() {
+						   	    construcao = new ArrayList<Construcao>();
+						    	CriteriaBuilder cb = em.getCriteriaBuilder();
+						        CriteriaQuery<Construcao> q = cb.createQuery(Construcao.class);
+						        Root<Construcao> root = q.from(Construcao.class);
+						        CriteriaQuery<Construcao> select = q.select(root);
+						        TypedQuery<Construcao> query = em.createQuery(select);
+						        construcao = query.getResultList();
+						        return construcao;
+						    }
+							public int getConstrucaoTotalCount() {
+								try {
+									TypedQuery<Long> query = em.createQuery("Select count(*) From Construcao", Long.class);
+									return query.getSingleResult().intValue();
+								} catch (Exception e) {
+									e.printStackTrace();
+									return 0;
 
+								}
+							}
+
+							public int getFilteredRowConstrucao(Map<String, Object> filters) {
+								CriteriaBuilder cb = em.getCriteriaBuilder();
+								CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
+								Root<Construcao> root = criteriaQuery.from(Construcao.class);
+								CriteriaQuery<Long> select = criteriaQuery.select(cb.count(root));
+
+								if (filters != null && filters.size() > 0) {
+									List<Predicate> predicates = new ArrayList<>();
+									for (Map.Entry<String, Object> entry : filters.entrySet()) {
+										String field = entry.getKey();
+										Object value = entry.getValue();
+										if (value == null) {
+											continue;
+										}
+										Expression<String> expr = root.get(field).as(String.class);
+										Predicate p = cb.like(cb.lower(expr), "%" + value.toString().toLowerCase() + "%");
+										predicates.add(p);
+									}
+									if (predicates.size() > 0) {
+										criteriaQuery.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+									}
+								}
+								Long count = em.createQuery(select).getSingleResult();
+								return count.intValue();
+							}	
+						//Fim Lazy Construcao	
 }

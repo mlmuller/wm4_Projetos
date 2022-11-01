@@ -12,8 +12,8 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
-import br.com.gvdexport.lazy.LazyAmostraProducaoDataModel;
 import br.com.gvdexport.lazy.LazyDataService;
+import br.com.gvdexport.lazy.LazyFichaProducaoDataModel;
 import br.com.gvdexport.model.FichaProducao;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +38,7 @@ public class lazyAmostraProducaoView implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		lazyModel = new LazyAmostraProducaoDataModel(service.getAmostraProducao());
+		lazyModel = new LazyFichaProducaoDataModel(service.getAmostraProducao());
 	}
 
 

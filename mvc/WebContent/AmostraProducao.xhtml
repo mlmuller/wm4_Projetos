@@ -63,6 +63,7 @@
 		}
 	</style>
 		<h:form id="crudFormAmosIntProd">
+		 <pf:panel header="Geração de fichas para Produção" style="border-color:#35b3ee;" />
 			<pf:growl id="prodMessage" globalOnly="true" sticky="true" />
 			<h:panelGroup id="accordPnl">
 				<pf:fieldset legend="Filtros Amostras de Produção" 
@@ -416,7 +417,10 @@
 			<pf:commandButton value="#{msg['botao.geracao']}"
 				actionListener="#{prodIntermController.gerarFichadeProducao}"
 				oncomplete="PF('gerarFormAmostraProducaoDlg').show()"
-				update=":crudFormAmostraProdSecundario crudFormAmosIntProd:tblFiltroAmostra" style="font-size:12px;">
+				update=":crudFormAmostraProdSecundario 
+				:crudFormAmosIntProd:tblFiltroAmostra 
+				:crudFormAmosIntProd:tblFiltroAmostra:tblFiltroCor" 
+				style="font-size:12px;">
 			</pf:commandButton>
 
 	

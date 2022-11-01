@@ -9,22 +9,22 @@
 ----------------------------------*/
 @font-face {
   font-family: 'latobold';
-  src: url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.eot']}");
-  src: url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.woff2']}") format('woff2'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.woff']}") format('woff'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.ttf']}") format('truetype'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.svg']}#latobold") format('svg');
+  src: url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.eot']}");
+  src: url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.woff']}") format('woff'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.svg']}#latobold") format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'latolight';
-  src: url("#{resource['primefaces-adamantium:fonts/lato-light-webfont.eot']}");
-  src: url("#{resource['primefaces-adamantium:fonts/lato-light-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['primefaces-adamantium:fonts/lato-light-webfont.woff2']}") format('woff2'), url("#{resource['primefaces-adamantium:fonts/lato-light-webfont.woff']}") format('woff'), url("#{resource['primefaces-adamantium:fonts/lato-light-webfont.ttf']}") format('truetype'), url("#{resource['primefaces-adamantium:fonts/lato-light-webfont.svg']}#latolight") format('svg');
+  src: url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.eot']}");
+  src: url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.woff']}") format('woff'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.svg']}#latolight") format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'latoregular';
-  src: url("#{resource['primefaces-adamantium:fonts/lato-regular-webfont.eot']}");
-  src: url("#{resource['primefaces-adamantium:fonts/lato-regular-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['primefaces-adamantium:fonts/lato-regular-webfont.woff2']}") format('woff2'), url("#{resource['primefaces-adamantium:fonts/lato-regular-webfont.woff']}") format('woff'), url("#{resource['primefaces-adamantium:fonts/lato-regular-webfont.ttf']}") format('truetype'), url("#{resource['primefaces-adamantium:fonts/lato-regular-webfont.svg']}#latoregular") format('svg');
+  src: url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.eot']}");
+  src: url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.woff']}") format('woff'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.svg']}#latoregular") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -165,33 +165,33 @@ label.ui-state-error {
 }
 .ui-icon,
 .ui-widget-content .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/ui-icons_72b42d_256x240.png']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/ui-icons_72b42d_256x240.png']}");
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/ui-icons_ffffff_256x240.png']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/ui-icons_ffffff_256x240.png']}");
 }
 .ui-state-active .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/ui-icons_ffffff_256x240.png']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/ui-icons_ffffff_256x240.png']}");
 }
 .ui-state-highlight .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/ui-icons_4eb305_256x240.png']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/ui-icons_4eb305_256x240.png']}");
 }
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/ui-icons_cd0a0a_256x240.png']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/ui-icons_cd0a0a_256x240.png']}");
 }
 .mudatestex .ui-state-error-text .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/ui-icons_cd0a0a_256x240.png']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/ui-icons_cd0a0a_256x240.png']}");
 }
 /* positioning */
 .ui-icon-default {
-  background-image: url("#{resource['primefaces-adamantium:images/default.svg']}") !important;
+  background-image: url("#{resouces['primefaces-adamantium:images/default.svg']}") !important;
   background-position: center;
   background-size: 100%;
 }
 .ui-icon-blank {
-  background-image: url("#{resource['primefaces-adamantium:images/blank.svg']}") !important;
+  background-image: url("#{resouces['primefaces-adamantium:images/blank.svg']}") !important;
   background-position: center;
   background-size: 100%;
 }
@@ -427,7 +427,7 @@ label.ui-state-error {
   background-position: -48px -96px;
 }
 .ui-icon-note {
-  background-image: url("#{resource['primefaces-adamantium:images/note.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/note.svg']}");
   background-position: center;
   background-size: 100%;
 }
@@ -807,7 +807,7 @@ label {
   margin-right: 10px !important;
 }
 .ui-breadcrumb .ui-icon-home {
-  background-image: url("#{resource['primefaces-adamantium:images/breadcrumb-home.svg']}") !important;
+  background-image: url("#{resouces['primefaces-adamantium:images/breadcrumb-home.svg']}") !important;
   background-position: center 5px !important;
   background-size: 70% !important;
   height: 27px;
@@ -816,7 +816,7 @@ label {
 }
 .ui-breadcrumb-chevron {
   height: 16px !important;
-  background-image: url("#{resource['primefaces-adamantium:images/breadcrumb-arrow.svg']}") !important;
+  background-image: url("#{resouces['primefaces-adamantium:images/breadcrumb-arrow.svg']}") !important;
   background-position: center !important;
   background-size: 50% !important;
   margin-top: 3px !important;
@@ -845,13 +845,13 @@ label {
 /*.ui-datatable-scrollable{border:0px; background-color:transparent;}
 .ui-datatable-scrollable:hover{border:0px !important; background-color:transparent;}*/
 .ui-datatable .ui-icon-arrowthick-1-s {
-  background-image: url("#{resource['primefaces-adamantium:images/right-one-arrow-for-data.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/right-one-arrow-for-data.svg']}");
   background-position: center !important;
   background-size: 110%;
   background-repeat: no-repeat;
 }
 .ui-datatable .ui-icon-arrowthick-1-s {
-  background-image: url("#{resource['primefaces-adamantium:images/right-one-arrow-for-data.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/right-one-arrow-for-data.svg']}");
   background-position: center !important;
   background-size: 110%;
   background-repeat: no-repeat;
@@ -987,27 +987,27 @@ label {
   transition: all 0.2s ease;
 }
 .ui-datatable table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-s {
-  background-image: url("#{resource['primefaces-adamantium:images/downarrow-gray.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/downarrow-gray.svg']}");
   background-position: center !important;
   background-size: 110%;
 }
 .ui-datatable table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-e {
-  background-image: url("#{resource['primefaces-adamantium:images/rightarrow-gray.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/rightarrow-gray.svg']}");
   background-position: center !important;
   background-size: 110%;
 }
 .ui-datatable table tbody tr td .ui-row-editor .ui-icon-pencil {
-  background-image: url("#{resource['primefaces-adamantium:images/pen-blue.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/pen-blue.svg']}");
   background-position: center !important;
   background-size: 120%;
 }
 .ui-datatable table tbody tr td .ui-row-editor .ui-icon-check {
-  background-image: url("#{resource['primefaces-adamantium:images/check-blue.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/check-blue.svg']}");
   background-position: center !important;
   background-size: 120%;
 }
 .ui-datatable table tbody tr td .ui-row-editor .ui-icon-close {
-  background-image: url("#{resource['primefaces-adamantium:images/delete-red.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/delete-red.svg']}");
   background-position: center !important;
   background-size: 120%;
 }
@@ -1023,13 +1023,13 @@ label {
   color: #f1f6f9;
 }
 .ui-datatable table tbody tr td .ui-icon-arrow-4 {
-  background-image: url("#{resource['primefaces-adamantium:images/movearrow-gray.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/movearrow-gray.svg']}");
   background-position: center !important;
   background-size: 100%;
 }
 .ui-datatable table thead tr .ui-state-default .ui-icon-carat-2-n-s,
 .ui-datatable .ui-datatable-sticky table thead tr .ui-state-default .ui-icon-carat-2-n-s {
-  background-image: url("#{resource['primefaces-adamantium:images/updown-navy-arrow.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/updown-navy-arrow.svg']}");
   background-position: center !important;
   background-size: 110%;
   background-repeat: no-repeat;
@@ -1037,7 +1037,7 @@ label {
 }
 .ui-datatable table thead tr .ui-state-hover .ui-icon-carat-2-n-s,
 .ui-datatable .ui-datatable-sticky table thead tr .ui-state-hover .ui-icon-carat-2-n-s {
-  background-image: url("#{resource['primefaces-adamantium:images/updown-navy-arrow.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/updown-navy-arrow.svg']}");
   background-position: center !important;
   background-size: 110%;
   background-repeat: no-repeat;
@@ -1045,7 +1045,7 @@ label {
 }
 .ui-datatable table thead tr .ui-state-active .ui-icon-triangle-1-n,
 .ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-n {
-  background-image: url("#{resource['primefaces-adamantium:images/uparrow-navy.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/uparrow-navy.svg']}");
   background-position: center !important;
   background-size: 110%;
   background-repeat: no-repeat;
@@ -1053,7 +1053,7 @@ label {
 }
 .ui-datatable table thead tr .ui-state-active .ui-icon-triangle-1-s,
 .ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-s {
-  background-image: url("#{resource['primefaces-adamantium:images/downarrow-navy.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/downarrow-navy.svg']}");
   background-position: center !important;
   background-size: 110%;
   background-repeat: no-repeat;
@@ -1112,14 +1112,14 @@ label {
   background-image: none;
 }
 .ui-datatable > .ui-icon-arrowthick-1-s {
-  background-image: url("#{resource['primefaces-adamantium:images/downarrow-blue.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/downarrow-blue.svg']}");
   background-position: center !important;
   background-size: 100%;
   background-repeat: no-repeat;
   margin-left: 5px;
 }
 .ui-datatable > .ui-icon-arrowthick-1-n {
-  background-image: url("#{resource['primefaces-adamantium:images/uparrow-blue.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/uparrow-blue.svg']}");
   background-position: center !important;
   background-size: 100%;
   background-repeat: no-repeat;
@@ -1239,7 +1239,7 @@ label {
   box-sizing: border-box;
 }
 .ui-picklist .ui-picklist-filter-container .ui-icon {
-  background-image: url("#{resource['primefaces-adamantium:images/search-icon.svg']}");
+  background-image: url("#{resouces['primefaces-adamantium:images/search-icon.svg']}");
   background-position: center !important;
   background-repeat: no-repeat;
   background-size: 100%;
