@@ -368,8 +368,9 @@
 										</pf:datePicker>
 
 										<h:outputLabel value="#{msg['usocomum.label.solicitacao']}" />
-										<pf:datePicker readonlyInput="true" locale="pt"
-											value="#{amostraNovaController.amostra.dataSolicitacao}">
+										<pf:datePicker pattern="dd-MM-yyy" 
+											value="#{amostraNovaController.amostra.dataSolicitacao}" 
+											size="10" monthNavigator="true">
 											<pf:effect event="dbclick" type="slide" />
 											<f:convertDateTime type="localDate" pattern="dd-MM-yyyy"
 												dateStyle="short" />

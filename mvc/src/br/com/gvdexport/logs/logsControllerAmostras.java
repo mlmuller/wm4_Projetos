@@ -4,19 +4,25 @@ import java.io.Serializable;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import br.com.gvdexport.controller.UsuarioLogadoController;
 import br.com.gvdexport.dao.LogAmostraFichaProducaoDao;
 import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.model.Amostra;
+import br.com.gvdexport.model.LogAmostraFichaProducao;
 import br.com.gvdexport.model.LogAmostrasNovas;
 import br.com.gvdexport.model.PrioridadeProducao;
 import lombok.Getter;
@@ -36,6 +42,8 @@ public class logsControllerAmostras implements Serializable {
 	@Getter
 	@Setter
 	private List<LogAmostrasNovas> logAmostraAux;
+	@Getter @Setter
+	private List<LogAmostraFichaProducao> logAmostraFichaProducaoAux;
 	@Getter
 	@Setter
 	private LogAmostrasNovas logAmostrasNovas;
@@ -76,70 +84,74 @@ public class logsControllerAmostras implements Serializable {
 	@Inject
 	private LogAmostraFichaProducaoDao logAmostraFichaProducaoDao;
 
-	public Boolean logAmostrasNovasEdicao(Amostra amostranew, Amostra Amostraold) {
-		logAmostraAux = new ArrayList<LogAmostrasNovas>();
+	@SuppressWarnings("unchecked")
+	public Boolean logAmostrasNovasEdicao(Amostra amostranew, Amostra Amostraold) throws CloneNotSupportedException {
+		logAmostraAux = (List<LogAmostrasNovas>) new ArrayList<LogAmostrasNovas>().clone();
 		logAmostrasNovas = new LogAmostrasNovas();
-		cloneAmostrasNovas = new LogAmostrasNovas();
+//		LogAmostrasNovas cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+		LogAmostrasNovas cloneAuxAmostra = SerializationUtils.clone(logAmostrasNovas);
 		log = false;
-		try {
+		 try {
 			if (amostranew != Amostraold) {
 				logAmostrasNovas.setAmostra(Amostraold);
-				logAmostrasNovas.setDataStamp(LocalDateTime.now());
 				ipmask = "";
 				buscaPorIpEstacao();
 				logAmostrasNovas.setUsuarioStamp(usuarioLogado.getUsuariologado().getUsuario());
 				logAmostrasNovas.setIp(addip);
 				logAmostrasNovas.setIpmask(ipmask);
 				logAmostrasNovas.setNomedesktop(hostName);
-				cloneAmostrasNovas = (LogAmostrasNovas) logAmostrasNovas.clone();
-				logAmostrasNovas = cloneAmostrasNovas;
+				logAmostrasNovas.setDataStamp(LocalDateTime.now());
+				cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
 				if (!amostranew.getAbreviacao().equals(Amostraold.getAbreviacao().trim())) {
 					log = true;
-					logAmostrasNovas.setDescricaocampo("Abreviação");
-					logAmostrasNovas.setValoranterior(Amostraold.getAbreviacao());
+					cloneAuxAmostra.setDescricaocampo("Abreviação");
+					cloneAuxAmostra.setValoranterior(Amostraold.getAbreviacao());
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					logAmostraAux.add(cloneAuxAmostra);
 				}
-
 				if (!amostranew.getReferencia().equals(Amostraold.getReferencia())) {
 					logAmostrasNovas.setDescricaocampo("Referência");
 					logAmostrasNovas.setValoranterior(Integer.toString(Amostraold.getReferencia()));
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 
 				if (!amostranew.getVersaoRefer().equals(Amostraold.getVersaoRefer())) {
 					logAmostrasNovas.setDescricaocampo("Versão Ref");
 					logAmostrasNovas.setValoranterior(Integer.toString(Amostraold.getVersaoRefer()));
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 
 				if (!amostranew.getCliente().equals(Amostraold.getCliente())) {
 					logAmostrasNovas.setDescricaocampo("Cliente");
 					logAmostrasNovas.setValoranterior((Amostraold.getSucCliente()));
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 
 				if (amostranew.getComplementoSolado() != Amostraold.getComplementoSolado()) {
 					logAmostrasNovas.setDescricaocampo("Solado Complemento");
 					logAmostrasNovas.setValoranterior(Amostraold.getComplementoSolado());
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 
 				if (!amostranew.getConstrucaoNome().equals(Amostraold.getConstrucaoNome())) {
 					logAmostrasNovas.setDescricaocampo("Nome Construção");
 					logAmostrasNovas.setValoranterior(Amostraold.getConstrucaoNome());
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 
 				if ((!amostranew.getVersao().equals(Amostraold.getVersao()))
@@ -147,8 +159,9 @@ public class logsControllerAmostras implements Serializable {
 					logAmostrasNovas.setDescricaocampo("Versão Construção");
 					logAmostrasNovas.setValoranterior(Amostraold.getComplementoSolado());
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 				if (Amostraold.getDataEntrega() != null) {
 					if (!amostranew.getDataEntrega().equals(Amostraold.getDataEntrega())) {
@@ -157,23 +170,26 @@ public class logsControllerAmostras implements Serializable {
 						valor = Amostraold.getDataEntrega().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 						logAmostrasNovas.setValoranterior(valor);
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add((LogAmostrasNovas) cloneAuxAmostra.clone());
+						
 					}
 				}
-				if (Amostraold.getDataLiberacaoProducao() != null) {
-					if (!amostranew.getDataLiberacaoProducao().equals(Amostraold.getDataLiberacaoProducao())) {
-						logAmostrasNovas.setDescricaocampo("Liberação Produção");
-						String dataformatada = "";
-						LocalDateTime currentLocalDateTime = Amostraold.getDataLiberacaoProducao();
-						DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-						dataformatada = currentLocalDateTime.format(dateTimeFormatter);
-						logAmostrasNovas.setValoranterior(dataformatada);
-						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
-					}
-				}
+//				if (Amostraold.getDataLiberacaoProducao() != null) {
+//					if (!amostranew.getDataLiberacaoProducao().equals(Amostraold.getDataLiberacaoProducao())) {
+//						logAmostrasNovas.setDescricaocampo("Liberação Produção");
+//						String dataformatada = "";
+//						LocalDateTime currentLocalDateTime = Amostraold.getDataLiberacaoProducao();
+//						DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//						dataformatada = currentLocalDateTime.format(dateTimeFormatter);
+//						logAmostrasNovas.setValoranterior(dataformatada);
+//						amostranew.setLog(true);
+//						logAmostraAux.add(logAmostrasNovas);
+//						logAmostrasNovas = new LogAmostrasNovas();
+//						logAmostrasNovas = cloneAmostrasNovas;
+//					}
+//				}
 				if (Amostraold.getDataSolicitacao() != null) {
 					if (!amostranew.getDataSolicitacao().equals(Amostraold.getDataSolicitacao())) {
 						logAmostrasNovas.setDescricaocampo("Data Solicitação");
@@ -181,8 +197,9 @@ public class logsControllerAmostras implements Serializable {
 						valor = Amostraold.getDataSolicitacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 						logAmostrasNovas.setValoranterior(valor);
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add((LogAmostrasNovas) cloneAuxAmostra.clone());
 					}
 				}
 				if (Amostraold.getDestinoAmCf() != null) {
@@ -190,43 +207,48 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Destino Amostra confirmação");
 						logAmostrasNovas.setValoranterior(Amostraold.getDestinoAmCf().getDestino());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add((LogAmostrasNovas) cloneAuxAmostra.clone());
 					}
 				}
 				if (Amostraold.getDtxfct() != null) {
 					if (!amostranew.getDtxfct().equals(Amostraold.getDtxfct())) {
-						logAmostrasNovas.setDescricaocampo("Data Entrega");
+						logAmostrasNovas.setDescricaocampo("Amostra Para");
 						String valor = "";
 						valor = Amostraold.getDtxfct().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 						logAmostrasNovas.setValoranterior(valor);
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (!amostranew.getEstacao().equals(Amostraold.getEstacao())) {
 					logAmostrasNovas.setDescricaocampo("Estação");
 					logAmostrasNovas.setValoranterior(Amostraold.getEstacao().getNome());
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 
 				if (!amostranew.getFabrica().equals(Amostraold.getFabrica())) {
 					logAmostrasNovas.setDescricaocampo("Fábrica");
 					logAmostrasNovas.setValoranterior(Amostraold.getSucFabrica());
 					amostranew.setLog(true);
-					logAmostraAux.add(logAmostrasNovas);
-					logAmostrasNovas = new LogAmostrasNovas();
+					cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+					cloneAuxAmostra = logAmostrasNovas;
+					logAmostraAux.add(cloneAuxAmostra);
 				}
 				if (Amostraold.getMarcaCliente() != null) {
 					if (!amostranew.getMarcaCliente().equals(Amostraold.getMarcaCliente())) {
 						logAmostrasNovas.setDescricaocampo("Marca Cliente");
 						logAmostrasNovas.setValoranterior(Amostraold.getMarcaCliente().getNome());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getMercado() != null) {
@@ -234,8 +256,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Mercado");
 						logAmostrasNovas.setValoranterior(Amostraold.getMercado().name());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getObsBase() != null) {
@@ -243,8 +266,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Observação Base");
 						logAmostrasNovas.setValoranterior(Amostraold.getObsBase());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getObsSolado() != null) {
@@ -252,8 +276,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Observação Solado");
 						logAmostrasNovas.setValoranterior(Amostraold.getObsSolado());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getPares() != null) {
@@ -261,8 +286,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Par(es)Cancelado(s)");
 						logAmostrasNovas.setValoranterior(String.valueOf(Amostraold.getParCancelado().doubleValue()));
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getPares() != null) {
@@ -270,8 +296,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Par(es) Amostra");
 						logAmostrasNovas.setValoranterior(String.valueOf(Amostraold.getPares().doubleValue()));
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getPargvd() != null) {
@@ -279,8 +306,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Par(es)GVD");
 						logAmostrasNovas.setValoranterior(String.valueOf(Amostraold.getPargvd().doubleValue()));
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getPersonagem() != null) {
@@ -288,8 +316,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Personagem");
 						logAmostrasNovas.setValoranterior(Amostraold.getPersonagem().getNome());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getPrioridadeProducao() != null) {
@@ -297,8 +326,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Prioridade");
 						logAmostrasNovas.setValoranterior(Amostraold.getPrioridadeProducao().name());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
 				if (Amostraold.getTipo() != null) {
@@ -306,19 +336,36 @@ public class logsControllerAmostras implements Serializable {
 						logAmostrasNovas.setDescricaocampo("Tipo Amostra");
 						logAmostrasNovas.setValoranterior(Amostraold.getTipo().name());
 						amostranew.setLog(true);
-						logAmostraAux.add(logAmostrasNovas);
-						logAmostrasNovas = new LogAmostrasNovas();
+						cloneAuxAmostra = (LogAmostrasNovas) new LogAmostrasNovas().clone();
+						cloneAuxAmostra = logAmostrasNovas;
+						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
+				//Aqui grava em dois pontos, para termos situacao de historico direto
+				//e Tambem a importancia,caso haja alteracao indevida,a principio sistema nao permiti
 				if (logAmostraAux.size() != 0) {
-					if (!Amostraold.getPrioridadeProducao().equals(PrioridadeProducao.T)) {
-						logAmostrasNovasdao.updateLogAmostraNova(logAmostraAux);
-					} else {
+					logAmostrasNovasdao.updateLogAmostraNova(logAmostraAux);
+					logAmostraFichaProducaoAux = (List<LogAmostraFichaProducao>) new ArrayList<LogAmostraFichaProducao>().clone();
+					if (Amostraold.getPrioridadeProducao().equals(PrioridadeProducao.T)) {
+						LogAmostraFichaProducao aux = (LogAmostraFichaProducao) new LogAmostraFichaProducao().clone();
+						for (int i = 0; i < logAmostraAux.size(); i++) {
+							aux.setAmostra(logAmostraAux.get(i).getAmostra());
+							aux.setDataStamp(logAmostraAux.get(i).getDataStamp());
+							aux.setDescricaocampo(logAmostraAux.get(i).getDescricaocampo());
+							aux.setHorario(logAmostraAux.get(i).getHorario());
+							aux.setIp(logAmostraAux.get(i).getIp());
+							aux.setIpmask(logAmostraAux.get(i).getIpmask());
+							aux.setNomedesktop(logAmostraAux.get(i).getNomedesktop());
+							aux.setUsuarioStamp(logAmostraAux.get(i).getUsuarioStamp());
+							aux.setValoranterior(logAmostraAux.get(i).getValoranterior());
+							logAmostraFichaProducaoAux.add(aux);
+							aux = new LogAmostraFichaProducao();
+						}
 						// logAmostraFichaProducaoDao - pós e durante producao
-						logAmostraFichaProducaoDao.update(logAmostrasNovas);
+						logAmostraFichaProducaoDao.updateLogAmostraFichaProducao(logAmostraFichaProducaoAux);
+						}
 					}
 				}
-			}
 		} catch (CloneNotSupportedException | UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -342,7 +389,6 @@ public class logsControllerAmostras implements Serializable {
 			amostranew.setLog(true);
 			logAmostrasNovasdao.update(logAmostrasNovas);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

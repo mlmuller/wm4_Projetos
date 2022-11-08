@@ -12,7 +12,7 @@
 	<title>GVD-Import Export</title>
 	<link rel="shortcut icon" href="#{request.contextPath}/resources/images/piramide.ico" type="image/x-icon" />
 	<link rel="icon" href="#{request.contextPath}/resources/images/piramide.ico" type="image/x-icon" />
- 	<h:outputStylesheet name="css/adamantium-layout.css" library="adamantium-layout"/>	
+ 	<h:outputStylesheet name="css/theme.css" library="adamantium-layout"/>	
  </h:head>
 <h:body styleClass="imageBackGround" >
  <p:growl id="message"/>
@@ -40,8 +40,13 @@
 		</p:panelGrid>
 		</p:column>	
 	    </p:panelGrid> 
-		<h:panelGrid columns="1">
+		<h:panelGrid columns="2">
+			<p:column>
+			<img src="resources/adamantium-layout/images/avatar1.svg" width="50px"  />
+			</p:column>
+			<p:column>
 			<p:commandButton value="Login" style="font-size:11px;" actionListener="#{usuarioController.validaUsuario()}" update=":message"/>
+			</p:column>
 		</h:panelGrid>
 	  </h:form>
  	</p:dialog>

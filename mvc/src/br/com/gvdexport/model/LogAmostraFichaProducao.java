@@ -1,6 +1,7 @@
 package br.com.gvdexport.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -32,7 +33,7 @@ public class LogAmostraFichaProducao implements Serializable,Cloneable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "logAmostraSeq")
 	@SequenceGenerator(name = "logAmostraSeq", sequenceName = "s_logAmostra", allocationSize = 1)
 	@Column(name="logamos_pk",updatable=false,nullable=false)
-	private Long logamostraId;
+	private Long logamostraFichaProducaoId;
 
 	@Column(length=60)
 	private String descricaocampo;
@@ -46,7 +47,7 @@ public class LogAmostraFichaProducao implements Serializable,Cloneable {
 	@Column(length = 25, nullable = false)
 	private String ipmask;
 	
-	@Column(length = 15,nullable =  false)
+	@Column(length = 15,nullable =  true)
 	private String horario;
 	
 	@Column(length = 25,nullable = false)
@@ -65,12 +66,12 @@ public class LogAmostraFichaProducao implements Serializable,Cloneable {
 
 	@Override
 	public String toString() {
-		return "LogAmostrasNovas [logamostraId=" + logamostraId + "]";
+		return "LogAmostrasNovas [logamostraId=" + logamostraFichaProducaoId + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(logamostraId);
+		return Objects.hash(logamostraFichaProducaoId);
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class LogAmostraFichaProducao implements Serializable,Cloneable {
 		if (getClass() != obj.getClass())
 			return false;
 		LogAmostraFichaProducao other = (LogAmostraFichaProducao) obj;
-		return Objects.equals(logamostraId, other.logamostraId);
+		return Objects.equals(logamostraFichaProducaoId, other.logamostraFichaProducaoId);
 	}
 
 	@Override

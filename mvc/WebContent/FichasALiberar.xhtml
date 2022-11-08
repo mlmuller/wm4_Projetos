@@ -66,6 +66,12 @@
 						title="Apagar informações de Datas Etapas" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
 						<i class="fa fa-eraser" style="font-size: 1.5em; color: #eb520e;" />
 					</pf:commandLink>
+					<pf:commandLink
+						action="#{producaoController.verHistorico(_rowemProducao)}"
+						title="Histórico das alterações pós Liberação" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
+						<i class="fa fa-flag-o" style="font-size: 1.5em; color: #4ceb0e;" />
+					</pf:commandLink>
+
 
 				</pf:column>
 

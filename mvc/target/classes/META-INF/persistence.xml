@@ -128,6 +128,7 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>br.com.gvdexport.model.EtqDragDrop</class>
 		<class>br.com.gvdexport.model.Sequencial</class>
 		<class>br.com.gvdexport.model.LogAmostrasNovas</class>
+		<class>br.com.gvdexport.model.LogAmostraFichaProducao</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>

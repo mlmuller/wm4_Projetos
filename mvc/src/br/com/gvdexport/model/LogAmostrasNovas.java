@@ -1,6 +1,7 @@
 package br.com.gvdexport.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -46,7 +47,7 @@ public class LogAmostrasNovas implements Serializable,Cloneable {
 	@Column(length = 25, nullable = false)
 	private String ipmask;
 	
-	@Column(length = 15,nullable =  false)
+	@Column(length = 15,nullable =  true)
 	private String horario;
 	
 	@Column(length = 25,nullable = false)

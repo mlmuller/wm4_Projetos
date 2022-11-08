@@ -1592,7 +1592,7 @@ public class AmostraNovaController implements Serializable {
 			}
 			// Se for inclusao, e ja for liberado a ficha para producao,atribui data e hora
 			if ((operacao == 0) || (operacao == 1)) {
-				if (!amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
+				if ((!amostra.getPrioridadeProducao().equals(PrioridadeProducao.X))&& (!amostra.getPrioridadeProducao().equals(PrioridadeProducao.T))) {
 					amostra.setDataLiberacaoProducao(amostraDao.getDateLocalTime());
 					amostra.setGerada(false);
 				}
@@ -1609,6 +1609,9 @@ public class AmostraNovaController implements Serializable {
 			amostra.setLog(mAux);
 			amostra = amostraDao.update(amostra);
 			Messages.addGlobalInfo("Operação realizada com Sucesso !");
+			if (mAux) {
+				listaLogs = facadeAcesso.getBuscaLogsAmostraNova(amostra.getAmostraId());
+			}
 			parametros.setAbacor(false);
 			operacaoPosterior = 1;
 			btnVisao = false;

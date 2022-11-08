@@ -11,13 +11,7 @@
 	<ui:define name="corpo">
 	 <style type="text/css">
 
-		.ui-fieldset-legend {
-				padding: 10px 10px !important;
-				height: 0.5em;
-				color: black;
-				font-size: 11px;
-				background-color: #7cdbfb !important;
-		}
+		
 	
 		.TabelaAux thead th {
 			border: none !important;
@@ -63,9 +57,9 @@
 		}
 	</style>
 		<h:form id="crudFormAmosIntProd">
-		 <pf:panel header="Geração de fichas para Produção" style="border-color:#35b3ee;" />
+		 <pf:panel header="Geração de fichas para Produção"/>
 			<pf:growl id="prodMessage" globalOnly="true" sticky="true" />
-			<h:panelGroup id="accordPnl">
+			<h:panelGroup id="accordPnl" style="border:noborder">
 				<pf:fieldset legend="Filtros Amostras de Produção" 
 				toggleable="true" collapsed="true" >
 					<pf:ajax event="toggle"
@@ -147,10 +141,11 @@
 												process="@this" update="pnlreferencia" />
 										</pf:commandLink>
 										<h:outputLabel value="Versão:"
-											style="font-size:12px;height:0.7em;" />
+											style="font-size:12px;height:1.5em;" />
 										<pf:inputText readonly="true"
 											value="#{prodIntermController.amostra.livroReferencia.versaorefer}"
-											size="3" maxlength="3" />
+											size="3" 
+											maxlength="3" />
 									</h:panelGrid>
 
 									<h:panelGrid columns="5">
@@ -166,11 +161,10 @@
 											</pf:ajax>
 										</pf:commandLink>
 										<h:outputLabel value="Versão:"
-											style="font-size:12px;height:0.7em;" />
+											style="font-size:12px;height:1.5em;" />
 										<pf:inputText readonly="true"
 											value="#{prodIntermController.amostra.livroReferencia.construcao.versao}"
-											style="font-size:12px; 
-									height:0.7em;" size="3"
+											size="3"
 											maxlength="3" />
 									</h:panelGrid>
 									<h:panelGrid columns="3">

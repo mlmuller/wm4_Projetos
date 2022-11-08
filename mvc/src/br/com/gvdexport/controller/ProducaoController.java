@@ -509,4 +509,8 @@ public class ProducaoController implements Serializable {
     public void limpaInformacao() {
     	
     }
+
+    public void verHistorico() {
+    	
+    }
 }

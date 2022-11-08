@@ -11,7 +11,6 @@
 	font-size: 100%;
 }
 
-
 .ui-panel-title {
 	font-size: 0.8em;
 	color: blue;
@@ -23,38 +22,37 @@
 </h:head>
 <h:body>
 	<h:form>
-		<div class="card">
-			<i id="referenciaheader" style="display: none; text-align: center"></i>
-			<pf:panel header="Logs - #{amostraNovaController.parametros.logModulo}" style="text-align:center;"/>
+		<pf:card header="Logs Amostras Novas" style="font-size:12px;color:blue;text-align:center;background-color:#f0f0d6">
 			<pf:dataTable value="#{amostraNovaController.listaLogs}" var="_rowr"
-				rows="12" scrollHeight="800px">
+				rows="12" 
+				scrollHeight="800px" style="font-size:11px;align-text:center">
+	
 				<pf:column headerText="#{msg['logs.valalt']}"
-					style="font-size:11px;width:25px;">
+					style="font-size:10px;width:40px;align-text:center">
 					<h:outputText value="#{_rowr.descricaocampo}" />
 				</pf:column>
 				<pf:column headerText="#{msg['logs.valant']}"
-					style="font-size:11px;width:50px;">
+					style="font-size:10px;width:30px;align-text:center">
 					<h:outputText value="#{_rowr.valoranterior}" />
 				</pf:column>
 				<pf:column headerText="#{msg['logs.usuatu']}"
-					style="font-size:11px;width:25px;">
+					style="font-size:10px;width:20px;align-text:center">
 					<h:outputText value="#{_rowr.usuarioStamp}" />
 				</pf:column>
-				<pf:column headerText="#{msg['logs.valdata']}"
-						   style="font-size:11px;width:110px;">
-					<pf:datePicker readonlyInput="true"
-						value="#{_rowr.dataStamp}" style="font-size:11px;" >
-						<f:convertDateTime type="localDateTime"
-							pattern="dd-MM-yyyy HH:mm:ss" dateStyle="long"  />
-					</pf:datePicker>
+				<pf:column headerText="#{msg['logs.valdata']}" style="font-size:10px;width:85px;">
+					<h:outputText value="#{_rowr.dataStamp}"
+						style="font-size:10x;">
+						<f:convertDateTime timeZone="Europe/Warsaw"
+                                               pattern="dd-MM-yyyy HH:mm" 
+                                               type="localDateTime" />
+					</h:outputText>
 				</pf:column>
-				
 				<pf:column headerText="#{msg['logs.usuid']}"
-					style="font-size:10px;width:25px;">
+					style="font-size:10px;width:15px;">
 					<h:outputText value="#{_rowr.ipmask}" />
 				</pf:column>
 			</pf:dataTable>
-		</div>
+		</pf:card>
 	</h:form>
 </h:body>
 </html>

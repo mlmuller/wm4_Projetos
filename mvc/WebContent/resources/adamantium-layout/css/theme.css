@@ -9,22 +9,22 @@
 ----------------------------------*/
 @font-face {
   font-family: 'latobold';
-  src: url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.eot']}");
-  src: url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.woff']}") format('woff'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.svg']}#latobold") format('svg');
+  src: url("#{resouce['primefaces-adamantium:fonts/lato-bold-webfont.eot']}");
+  src: url("#{resouce['primefaces-adamantium:fonts/lato-bold-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.woff']}") format('woff'), url("#{resource['primefaces-adamantium:fonts/lato-bold-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-bold-webfont.svg']}#latobold") format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'latolight';
-  src: url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.eot']}");
-  src: url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.woff']}") format('woff'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.svg']}#latolight") format('svg');
+  src: url("#{resouce['primefaces-adamantium:fonts/lato-light-webfont.eot']}");
+  src: url("#{resouce['primefaces-adamantium:fonts/lato-light-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.woff']}") format('woff'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-light-webfont.svg']}#latolight") format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'latoregular';
-  src: url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.eot']}");
-  src: url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.woff']}") format('woff'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.svg']}#latoregular") format('svg');
+  src: url("#{resouce['primefaces-adamantium:fonts/lato-regular-webfont.eot']}");
+  src: url("#{resouce['primefaces-adamantium:fonts/lato-regular-webfont.eot']}#iefix") format('embedded-opentype'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.woff2']}") format('woff2'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.woff']}") format('woff'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.ttf']}") format('truetype'), url("#{resouces['primefaces-adamantium:fonts/lato-regular-webfont.svg']}#latoregular") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -64,11 +64,22 @@
   color: #ffffff;
   font-size: 8px;
 }
-.ui-inputfield.ui-state-focus {
- height: 11px;
+.imageBackGround{
+  background-image: url("#{resource['adamantium-layout:images/fundogvd.png']}");
+  background-repeat: no-repeat;
+  background-size:100%;
 }
-/* Interaction states
-----------------------------------*/
+.loginback {
+  background-image: url("#{resource['adamantium-layout:images/loginback.svg']}");
+  background-repeat: repeat;
+
+}
+/*
+Aqui definit efito hover sobre campo input, fazendo com que reduza altura quando focus
+.ui-inputfield.ui-state-focus {
+ height: 15px;
+}
+
 .ui-state-default a,
 .ui-state-default a:link,
 .ui-state-default a:visited {
@@ -99,6 +110,7 @@
   color: #ffffff;
   text-decoration: none;
 }
+*/
 /* Interaction Cues
 ----------------------------------*/
 .ui-state-highlight a,
@@ -3217,17 +3229,17 @@ hr.ui-widget-header {
 }
 /*Style For UI Fieldset------------------------------------------------------------------------------------- */
 .ui-fieldset {
-  border: solid 1px #e0e0e0;
-  background-color: #ffffff;
+  border: solid 1px #fcf0ac;
+  background-color: #fcf0ac;
   font-family: 'latoregular';
   border-radius: 2px;
 }
 .ui-fieldset-legend {
-  color: #ffffff;
-  font-size: 14px;
-  line-height: 15px;
+  color: #0288d1;
+  font-size: 11px;
+  line-height: 13px;
   font-family: 'latobold';
-  background-color: #0288d1;
+  background-color: #fcf0ac;
   padding: 13px 20px !important;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
@@ -3240,8 +3252,9 @@ hr.ui-widget-header {
   transition: all 0.2s ease;
 }
 .ui-fieldset-legend.ui-state-hover {
-  background-color: #1797dd;
+  background-color: #fcf0ac;
 }
+/*
 .ui-fieldset-legend .ui-icon-plusthick {
   background-image: url("#{resource['primefaces-adamantium:images/plus-sign-white.svg']}");
   background-position: center !important;
@@ -3262,24 +3275,9 @@ hr.ui-widget-header {
   font-size: 15px;
   color: #546e7a;
 }
+*/
 /*Style For UI InputField ------------------------------------------------------------------------------------- */
-.ui-inputfield {
-  color: #546e7a;
-  font-size: 12px;
-  font-family: 'latoregular' !important;
-  padding: 9px 10px !important;
-  border: solid 0px #c6d6df;
-  border-bottom: solid 1px #b0bec5;
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  -ms-transition: all 0.2s ease;
-  -o-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-  background-color: #f5f5f5;
-  border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-}
+
 .ui-inputfield.ui-state-hover,
 .ui-inputfield.ui-state-focus {
   border: solid 0px #c6d6df;
