@@ -3251,7 +3251,7 @@ hr.ui-widget-header {
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.ui-fieldset-legend.ui-state-hover {
+.ui-fieldset-legend.ui-state-hover .{
   background-color: #fcf0ac;
 }
 /*
