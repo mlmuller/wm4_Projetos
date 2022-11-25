@@ -111,7 +111,7 @@
                     <p:submenu label="Composição" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
                         <p:menuitem value="Construções" url="Construcao.jsf" style="text-align:left;"/>
                         <p:menuitem value="Formas" url="Forma.jsf" style="text-align:left;"/>
-                        <p:menuitem value="Reserva Referência" url="LivroReferencia.jsf" style="text-align:left;"/>
+                        <p:menuitem value="Reserva Referência" url="LivroReferencia.jsf" style="text-align:left;" />
                         <p:menuitem value="Imagens" url="ImagemReferencia.jsf" style="text-align:left;"/>
                         <p:menuitem value="Modelos" url="Modelo.jsf" style="text-align:left;"/>
                         
@@ -162,12 +162,12 @@
                         <p:menuitem value="Setor" url="#"/>
                     </p:submenu>
                     <p:submenu label="Produção" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
-                  	    <p:menuitem value="Nova Produção" url="AmostraProducao.jsf" actionListener="#{producaoController.badgeTransicao()}">
-                  	      <p:badge value="#{prodIntermController.qtdFichas}" styleClass="CorFonte" severity="danger" >
+                  	    <p:menuitem value="Nova Produção" url="AmostraProducao.jsf" actionListener="#{prodIntermController.badgeaGerar()}" update="badgeGerar">
+                  	      <p:badge id="badgeGerar" value="#{prodIntermController.qtdFichas}" styleClass="CorFonte" severity="danger" >
                   	      <i class="pi pi-bell" style="font-size: 1.5rem;" title="Novas fichas a Produzir"/>
                   	      </p:badge>
                   	    </p:menuitem>
-                        <p:menuitem value="A Liberar" url="FichasALiberar.jsf">
+                        <p:menuitem value="A Liberar" url="FichasALiberar.jsf" actionListener="#{producaoController.badgeTransicao()}">
   						<p:badge value="#{producaoController.qtdTransicao}" severity="warning">
                   	      <i class="pi pi-envelope" style="font-size: 1.5rem;" title="Fichas,a Liberar"/>
   						</p:badge>

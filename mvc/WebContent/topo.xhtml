@@ -8,17 +8,24 @@
     
     <!-- TOPO START -->
     <div id="layout-topbar" >
-        <a href="#"><h:graphicImage name="images/logoGVD2017.jpg"  library="adamantium-layout" style="height:40px;  margin-top:10px;" /></a>
+  	   <p:panelGrid columns="2" layout="grid" style="border:none">
+  	    <p:column>
+        <a href="#"><h:graphicImage name="images/logoGVD2017.jpg"  library="adamantium-layout" style="height:25px;  margin-top:10px;" /></a>
         <ul id="top-menu">
+         </ul>
+          </p:column>  
+          <p:column >
             <li>
-                <a><i class="icon-user2"></i> 
-                <span>
-                  <p:outputLabel value="Olá, "/>
-                  <p:inputText value="#{usuarioLogadoController.usuariologado.nome}" />
+                <a><i class="icon-user2" style="color:green"></i> 
+                <span >
+                  <p:outputLabel value="Olá, " />
+                  <p:inputText value="#{usuarioLogadoController.usuariologado.nome}" style="border:none;text-align:left;" />
                  </span>
                 </a>
             </li>
-         </ul>
+          </p:column>
+
+         </p:panelGrid>
     </div>
     <!-- TOPO END -->
 </ui:composition>

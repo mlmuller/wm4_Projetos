@@ -28,6 +28,7 @@ public abstract class FichaProducao_ {
 	public static volatile SingularAttribute<FichaProducao, BigDecimal> pares;
 	public static volatile SingularAttribute<FichaProducao, LocalDate> dataacabamento;
 	public static volatile SingularAttribute<FichaProducao, LocalDate> datamontagem;
+	public static volatile SingularAttribute<FichaProducao, Boolean> temlog;
 	public static volatile SingularAttribute<FichaProducao, Amostra> amostra;
 	public static volatile SingularAttribute<FichaProducao, LocalDate> datafalmoxarifado;
 	public static volatile SingularAttribute<FichaProducao, EmTransicao> liberadoalteraramostra;
@@ -64,6 +65,7 @@ public abstract class FichaProducao_ {
 	public static final String PARES = "pares";
 	public static final String DATAACABAMENTO = "dataacabamento";
 	public static final String DATAMONTAGEM = "datamontagem";
+	public static final String TEMLOG = "temlog";
 	public static final String AMOSTRA = "amostra";
 	public static final String DATAFALMOXARIFADO = "datafalmoxarifado";
 	public static final String LIBERADOALTERARAMOSTRA = "liberadoalteraramostra";

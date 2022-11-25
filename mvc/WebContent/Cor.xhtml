@@ -12,7 +12,7 @@
 			<pf:commandButton value="#{msg['botao.add']}"
 				action="#{corController.add()}" oncomplete="PF('addEditFormCorDlg').show()" 
 				update=":addEditFormCor"/>
-			<pf:dataTable id="tblLazyCor" value="#{dtlazyCorAmostraView.lazyModel}" var="_row"
+			<pf:dataTable id="tblLazyCor" value="#{corController.lazyModel}" var="_row"
 				paginator="true" rows="10" paginatorPosition="bottom"
 				scrollHeight="800px" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 

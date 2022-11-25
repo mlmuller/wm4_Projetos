@@ -52,6 +52,7 @@ import br.com.gvdexport.model.Hts;
 import br.com.gvdexport.model.ImagemReferencia;
 import br.com.gvdexport.model.Importador;
 import br.com.gvdexport.model.LivroReferencia;
+import br.com.gvdexport.model.LogAmostraFichaProducao;
 import br.com.gvdexport.model.LogAmostrasNovas;
 import br.com.gvdexport.model.MarcaCliente;
 import br.com.gvdexport.model.Material;
@@ -66,7 +67,6 @@ import br.com.gvdexport.model.PrioridadeProducao;
 import br.com.gvdexport.model.RazaoAlteracao;
 import br.com.gvdexport.model.Regiao;
 import br.com.gvdexport.model.TipoCalcado;
-import br.com.gvdexport.model.TipoLiberacao;
 import br.com.gvdexport.model.Transportador;
 
 @Named
@@ -1267,6 +1267,20 @@ public class FacadeAcesso implements Serializable {
 			return null;
 		}
 	}
+	//Logs Amostras Fichas Producao-alterações pós-liberações
+	public List<LogAmostraFichaProducao> getBuscaLogsFihaProducao(Long amostraid){
+		try {
+			TypedQuery<LogAmostraFichaProducao> q = em.createQuery("SELECT lfp " + 
+					   "FROM  LogAmostraFichaProducao lfp " +
+					   "WHERE lfp.amostra.amostraId=:Id ",LogAmostraFichaProducao.class);
+						q.setParameter("Id",amostraid);
+						return q.getResultList();
+		} catch (RuntimeException ex) {
+			return null;
+		}
+	}
+
+	
 	// Etiquetas pegar apenas Jack Rogers
 	public List<Etiquetas> findJackRogers(String customer) {
 		try {

@@ -989,7 +989,7 @@ label {
 .ui-datatable table tbody tr td {
   color: #546e7a;
   border: solid 1px #d9e3e8;
-  font-size: 8px;
+  font-size: 10px;
   /*14*/
   font-family: 'latoregular';
   -webkit-transition: all 0.2s ease;
@@ -3236,7 +3236,7 @@ hr.ui-widget-header {
 }
 .ui-fieldset-legend {
   color: #0288d1;
-  font-size: 11px;
+  font-size: 0.9em;
   line-height: 13px;
   font-family: 'latobold';
   background-color: #fcf0ac;
@@ -3271,11 +3271,12 @@ hr.ui-widget-header {
   margin-right: 5px;
   margin-top: 0px !important;
 }
+*/
 .ui-fieldset-content {
   font-size: 15px;
   color: #546e7a;
 }
-*/
+
 /*Style For UI InputField ------------------------------------------------------------------------------------- */
 
 .ui-inputfield.ui-state-hover,
@@ -3916,7 +3917,7 @@ hr.ui-widget-header {
 }
 .ui-selectonemenu,
 .ui-selectcheckboxmenu {
-  font-size: 16px !important;
+  font-size: 12px !important;
   font-family: 'latoregular' !important;
   padding: 0px 56px 0px 0px !important;
   border-bottom: solid 1px #B0BEC5 !important;
@@ -3933,7 +3934,7 @@ hr.ui-widget-header {
 .ui-selectonemenu .ui-selectonemenu-trigger,
 .ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger {
   padding: 0px 12px !important;
-  font-size: 16px;
+  font-size: 12px;
   color: #ffffff !important;
   text-shadow: none;
   z-index: 100;
@@ -4353,8 +4354,8 @@ background-color:altera fundo do Grow..
   position: relative;
   background-position: center;
   background-color: transparent;
-  border-bottom: solid 3px #26c6da;
-  border-right: solid 3px #26c6da;
+  border-bottom: solid 1px #26c6da;
+  border-right: solid 1px #26c6da;
   width: 2px;
   height: 5px;
   margin-left: 6px;

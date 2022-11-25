@@ -214,7 +214,16 @@ public class ProdIntermController implements Serializable {
 		operacaoPosterior = 0;
 		operacao = 0;
 	}
-
+	
+	public void badgeaGerar() {
+		if ((listaAmostraProduzir == null) || (listaAmostraProduzir.isEmpty())) {
+			qtdFichas = 0;
+			listaAmostraProduzir = new ArrayList<Amostra>();
+			listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
+			qtdFichas = listaAmostraProduzir.size();
+		}
+		
+	}
 	// ajusta selecao das cores caso, seja marcado na amostra
 	public void checkCoresDaAmostra(Amostra auxAmostra) {
 		Integer xCores = 0;
@@ -371,6 +380,7 @@ public class ProdIntermController implements Serializable {
 			fichaProducao.setPares(corFinal.getTotalPar());
 			fichaProducao.setParesatual(corFinal.getTotalPar());
 			fichaProducao.setSituacao(SituacaoProducao.L);
+			fichaProducao.setTemlog(false);
 			listaFinalSelecaoProducao.add(fichaProducao);
 			try {
 				String marcaCerta = "\u2713";
@@ -425,7 +435,7 @@ public class ProdIntermController implements Serializable {
 		setActiveIndexes("");
 	}
 
-	public void onTabChange(TabChangeEvent event) {
+	public void onTabChange(TabChangeEvent<?> event) {
 //	        FacesMessage msg = new FacesMessage("", "Ativo: " + event.getTab().getTitle());
 //	        FacesContext.getCurrentInstance().addMessage(null, msg);
 

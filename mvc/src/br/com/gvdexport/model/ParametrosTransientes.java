@@ -113,6 +113,10 @@ public class ParametrosTransientes implements Serializable {
 	
 	@Transient
 	@Column(length = 1, nullable = true)
+	private Boolean allTransicao;
+	
+	@Transient
+	@Column(length = 1, nullable = true)
 	private Boolean saveTransicao;
 
 	@Transient

@@ -86,32 +86,32 @@
 				<pf:column headerText="#{msg['construcao.label.construcao']}"
 					filterStyle="height:2.2em;" filterBy="#{_row.construcao}"
 					sortBy="#{_row.construcao}" filterMatchMode="contains"
-					style="font-size:12px;">
+					style="font-size:12px;" width="50px;">
 					<h:outputText value="#{_row.construcao}" />
 				</pf:column>
 				<pf:column headerText="#{msg['construcao.label.versao']}"
 					filterStyle="height:2.2em;" filterBy="#{_row.versao}"
 					sortBy="#{_row.versao}" filterMatchMode="contains"
-					style="font-size:12px;" width="30px;">
+					style="font-size:12px;" width="10px;">
 					<h:outputText value="#{_row.versao}" />
 				</pf:column>
 				<pf:column headerText="#{msg['construcao.label.forma']}"
 					filterStyle="height:2.2em;"
 					filterBy="#{_row.referenciaforma}"
 					sortBy="#{_row.referenciaforma}" filterMatchMode="contains"
-					style="font-size:12px;" width="40px;">
+					style="font-size:12px;" width="10px;">
 					<h:outputText value="#{_row.referenciaforma}" />
 				</pf:column>
 				<pf:column headerText="#{msg['construcao.label.bloqueio']}"
 					filterStyle="height:2.2em;" filterBy="#{_row.bloqueio}"
 					sortBy="#{_row.bloqueio}" filterMatchMode="contains"
-					style="font-size:12px;" width="50px">
+					style="font-size:12px;" width="15px">
 					<h:outputText value="#{_row.bloqueio.label}" />
 				</pf:column>
 				<pf:column headerText="#{msg['construcao.label.comercial']}" width="70px">
 					<h:outputText value="#{construcaoController.construcao.comercial ? 'Negociada' : 'Não Negociada'}" style="font-size:12px;" />
 				</pf:column>
-				<pf:column headerText="#{msg['construcao.label.situacao']}" width="40px;">
+				<pf:column headerText="#{msg['construcao.label.situacao']}" width="20px;">
 					<h:outputText
 						value="#{construcaoController.construcao.situacao.label}" style="font-size:12px;" />
 				</pf:column>
@@ -131,21 +131,21 @@
 							<pf:row style="horizontal-align:left" >
 								<h:panelGrid  columns="9">
 									<h:outputLabel value="Construcao:"
-										style="font-size:11px;heigth:0.7em" />
+										style="font-size:11px;" />
 									<pf:inputText
 										value="#{construcaoController.construcao.construcao}"
 										requiredMessage="Por favor , informe nome Construção !"
 										required="true"
-										style="height:0.7em;font-size:11px;" size="15"
+										style="font-size:11px;" size="15"
 										maxlength="18" converter="upperCaseConverter" placeholder="(Informe Construção)">
 										<pf:ajax event="blur" update="@this" />
 									</pf:inputText>
 									<h:outputLabel value="Versão:"
-										style="text-align:left;font-size:12px;height:0.7em;" />
+										style="text-align:left;font-size:12px;" />
 									<pf:inputText value="#{construcaoController.construcao.versao}" 
 									requiredMessage="Por Favor,informe Versão !" 
 									required="true" 
-									style="font-size:12px; height:0.7em;" size="2" maxlength="2" />
+									style="font-size:12px;" size="2" maxlength="2" />
 									<pf:commandLink action="#{construcaoController.verVersoesConstrucao()}" update=":formVerVersoes"
 									oncomplete="PF('verVersoesFormConstrucaoDlg').show()" title="Pesquisa Versões" >
 									<i class="fa fa-eye" style="font-size:1.5em;"/>
@@ -163,7 +163,7 @@
 									converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
 										<f:selectItem itemValue="#{null}"
 											itemLabel="#{msg['usuario.label.escolher']}"
-											style="font-size:12px;height:0.7em;text-align:left;"  />
+											style="font-size:12px;text-align:left;"  />
 										<f:selectItems value="#{construcaoController.listaFormas}"
 											var="formas" itemValue="#{formas}"
 											itemLabel="#{formas.referenciaforma}"/>
@@ -174,27 +174,27 @@
 								<h:panelGrid columns="6">
 								
 									<h:outputLabel value="#{msg['construcao.label.bloqueio']}"
-										style="font-size:12px;height:0.7px;text-align:left;" />
+										style="font-size:12px;text-align:left;" />
 									<pf:selectOneMenu
 										value="#{construcaoController.construcao.bloqueio}"
 										converter="omnifaces.SelectItemsConverter" filter="true"
 										filterMatchMode="contains">
 										<f:selectItem itemValue="#{null}"
 											itemLabel="#{msg['usuario.label.escolher']}"
-											style="font-size:12px;height:0.7em;text-align:left;"  />
+											style="font-size:12px;text-align:left;"  />
 										<f:selectItems value="#{construcaoController.simnao}"
 											var="simnao" itemValue="#{simnao}"
 											itemLabel="#{simnao.label}"/>
 									</pf:selectOneMenu>
 									<h:outputLabel value="#{msg['construcao.label.situacao']}"
-										style="font-size:12px;height:0.7px;" />
+										style="font-size:12px;" />
 									<pf:selectOneMenu
 										value="#{construcaoController.construcao.situacao}"
 										converter="omnifaces.SelectItemsConverter" filter="true"
 										filterMatchMode="contains">
 										<f:selectItem itemValue="#{null}"
 											itemLabel="#{msg['usuario.label.escolher']}"
-											style="font-size:12px;height:0.7em;text-align:left;" />
+											style="font-size:12px;text-align:left;" />
 										<f:selectItems value="#{construcaoController.situacao}"
 											var="situacao" itemValue="#{situacao}"
 											itemLabel="#{situacao.label}" />
@@ -212,16 +212,16 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.solalaminada}"
-											size="23" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="23" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solalaminadamaterial}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solalaminadaespessura}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solalaminadafornecedor}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -232,18 +232,18 @@
 										<h:outputText value="#{msg['usocomum.label.descricao']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.labeldescricao2}"
-											size="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="20" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.descricao2}"
-											size="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="48" style="text-align:left;font-size:12px;"/>
 										<h:outputText value="#{msg['construcao.label.labelb'] }" />
 										<h:outputText value="#{msg['usocomum.label.descricao']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.labeldescricao4}"
-											size="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="20" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.descricao4}"
-											size="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="48" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -257,19 +257,19 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.solainjetada}"
-											size="18" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="18" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solainjetadamaterial}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solainjabrasao}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solainjdureza}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.solainjfornecedor}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 
 									</h:panelGrid>
 								</pf:fieldset>
@@ -282,7 +282,7 @@
 										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
 										<pf:inputText
 											value="#{construcaoController.construcao.carimbosola}"
-											size="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="45" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -296,16 +296,16 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.entressola}"
-											size="23" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="23" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.entressolamaterial}"
-											size="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.entressolaespessura}"
-											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" maxlength="10" style="text-align:leftfont-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.entressolafornecedor}"
-											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" maxlength="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 
@@ -320,16 +320,16 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.vira1}"
-											size="19" maxlength="18" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="19" maxlength="18" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.vira1material}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.vira1referencia}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.vira1fornecedor}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 
@@ -344,16 +344,16 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.vira2}"
-											size="19" maxlength="18" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="19" maxlength="18" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.vira2material}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.vira2referencia}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.vira2fornecedor}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 
@@ -364,7 +364,7 @@
 										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
 										<pf:inputText
 											value="#{construcaoController.construcao.tipobeira}"
-											size="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="45" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -380,16 +380,16 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.salto}"
-											size="32" maxlength="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="32" maxlength="45" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.saltomaterial}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.saltoreferencia}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.saltofornecedor}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -400,7 +400,7 @@
 										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
 										<pf:inputText
 											value="#{construcaoController.construcao.fixasalto}"
-											size="46" maxlength="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="46" maxlength="45" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -413,11 +413,11 @@
 
 										<pf:inputText
 											value="#{construcaoController.construcao.labeldescricao1}"
-											size="21" maxlength="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="21" maxlength="20" style="text-align:left;font-size:12px;"/>
 										
 										<pf:inputText
 											value="#{construcaoController.construcao.descricao1}"
-											size="49" maxlength="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="49" maxlength="48" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -432,19 +432,19 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.tacao}"
-											size="18" maxlength="17" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="18" maxlength="17" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.tacaomaterial}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.tacaoespessura}"
-											size="6" maxlength="5" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="6" maxlength="5" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.tacaodurreza}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.tacaofornecedor}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 
 									</h:panelGrid>
 								</pf:fieldset>
@@ -456,7 +456,7 @@
 										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
 										<pf:inputText
 											value="#{construcaoController.construcao.fixatacao}"
-											size="46" maxlength="45" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="46" maxlength="45" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -468,13 +468,13 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.plataforma}"
-											size="29" maxlength="28" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="29" maxlength="28" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.plataformamaterial}"
-											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.plataformafornecedor}"
-											size="10" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" maxlength="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -487,16 +487,16 @@
 										<h:outputText value="#{msg['usocomum.label.fornecedor']}" />
 										<pf:inputText
 											value="#{construcaoController.construcao.palmilhamontagem}"
-											size="29" maxlength="28" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="29" maxlength="28" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.palmilhamonpadrao}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.palmilhamontagemcodigo}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 										<pf:inputText
 											value="#{construcaoController.construcao.palmilhamontagemfornecedor}"
-											size="11" maxlength="10" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="11" maxlength="10" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -506,7 +506,7 @@
 										<h:outputText value="#{msg['usocomum.label.descricao'] }" />
 										<pf:inputText
 											value="#{construcaoController.construcao.relevobico}"
-											size="10" maxlength="10" placeholder="Milimetros" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="10" maxlength="10" placeholder="Milimetros" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>
@@ -519,11 +519,11 @@
 
 										<pf:inputText
 											value="#{construcaoController.construcao.labeldescricao3}"
-											size="22" maxlength="20" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="22" maxlength="20" style="text-align:left;font-size:12px;"/>
 										
 										<pf:inputText
 											value="#{construcaoController.construcao.descricao3}"
-											size="50" maxlength="48" style="text-align:left;height:0.7em;font-size:12px;"/>
+											size="50" maxlength="48" style="text-align:left;font-size:12px;"/>
 									</h:panelGrid>
 								</pf:fieldset>
 							</pf:row>

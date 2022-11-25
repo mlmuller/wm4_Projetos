@@ -50,6 +50,8 @@ public class FichaProducao implements Serializable,Cloneable{
 	@Column(nullable=true)
 	private Boolean aliberar;
 
+	@Column(nullable = true)
+	private Boolean temlog;
 	@Column(length = 10, nullable = false)
 	private String usuariostamp;
 	

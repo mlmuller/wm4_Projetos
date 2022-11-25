@@ -16,13 +16,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.PrimeFaces;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.ToggleEvent;
+import org.primefaces.model.LazyDataModel;
 
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.lazy.LazyDataService;
+import br.com.gvdexport.lazy.LazyFichaProducaoDataModel;
 import br.com.gvdexport.model.Amostra;
 import br.com.gvdexport.model.Cliente;
 import br.com.gvdexport.model.Construcao;
@@ -35,6 +39,7 @@ import br.com.gvdexport.model.Fabrica;
 import br.com.gvdexport.model.FichaProducao;
 import br.com.gvdexport.model.Forma;
 import br.com.gvdexport.model.LivroReferencia;
+import br.com.gvdexport.model.LogAmostraFichaProducao;
 import br.com.gvdexport.model.Mercado;
 import br.com.gvdexport.model.ParametrosTransientes;
 import br.com.gvdexport.model.PrioridadeProducao;
@@ -69,6 +74,8 @@ public class ProducaoController implements Serializable {
 	private List<CorAmostra> listaTmpCoresSelecionasAmostras;
 	@Getter @Setter
 	private List<FichaProducao> listaFinalSelecaoProducao;
+	@Getter @Setter
+	private List<LogAmostraFichaProducao> logFichaProducao;
 	@Getter	@Setter
 	private CorAmostra corAmostraClone;
 	@Getter	@Setter
@@ -103,7 +110,15 @@ public class ProducaoController implements Serializable {
 	private LivroReferencia referenciaSelecionada;
 	@Getter @Setter
 	private List<Estacao> listaEstacoes;
-	
+	//Itens Lazy
+	@Getter @Setter
+	private LazyDataModel<FichaProducao> lazyModel;
+	@Getter @Setter
+	private FichaProducao amostraProducaoSelecionada;
+	//------------------------------------------------
+	@Inject
+	private LazyDataService service;
+
     private String activeIndexes = null;
     private List<Tab> accordionTabs = null;
 
@@ -176,6 +191,7 @@ public class ProducaoController implements Serializable {
 	@PostConstruct
 	public void init() {
 		amostra = new Amostra();
+
 		qtdTransicao =0;
 		fichaProducao = new FichaProducao();
 		listaLivroReferencia = new ArrayList<LivroReferencia>();
@@ -183,6 +199,7 @@ public class ProducaoController implements Serializable {
 		listaAmostraALiberar = new ArrayList<FichaProducao>();
 		listaCoresCadastradas = new ArrayList<>();
 		listaEstacoes = new ArrayList<Estacao>();
+		logFichaProducao = new ArrayList<LogAmostraFichaProducao>();
 		operacaoPosterior = 0;
 		listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao();
 		if (listaAmostraALiberar.size() == 0) {
@@ -196,7 +213,21 @@ public class ProducaoController implements Serializable {
 		ca = true;
 		md = false;
 		dt = false;
+		renovaLazy();
 	}
+	//Lazy
+	public void renovaLazy() {
+		lazyModel = new LazyFichaProducaoDataModel(service.getAmostraProducao());
+	}
+	public void setService(LazyDataService service) {
+		this.service = service;
+	}
+	
+	public void onRowSelect(SelectEvent<FichaProducao> event) {
+	        FacesMessage msg = new FacesMessage("Amostra Producao Selecionada", String.valueOf(event.getObject().getFichaproducaoid()));
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	//---------------------------------------------------------------------------------
 	public void badgeTransicao() {
 		qtdTransicao = 0;
 		if (listaAmostraALiberar.isEmpty() || listaAmostraALiberar == null) {
@@ -204,6 +235,7 @@ public class ProducaoController implements Serializable {
 			listaAmostraALiberar = facadeAcesso.getExisteFichaALProducao();
 			qtdTransicao = listaAmostraALiberar.size();
 		}
+		
 	}
 	public void ExecuteLiberar() {
 	   	String msgAgrupa = "";
@@ -299,6 +331,7 @@ public class ProducaoController implements Serializable {
 				corFinal.setProducao(true);
 				corAmostraNovaDao.update(corFinal);
 				geradaOk = true;
+				renovaLazy();
 			} catch (RuntimeException ex) {
 				Messages.addGlobalError("Não foi possivel gerar ficha de Produção !"+"-"+fichaProducao.getAmostra());
 				ex.printStackTrace();
@@ -458,6 +491,7 @@ public class ProducaoController implements Serializable {
 		try {
 			fichaProducaoDao.update(fichaProducao);
 			addMessage(FacesMessage.SEVERITY_INFO,"Ficha Atualizada com sucesso !","");
+			renovaLazy();
 		} catch (Exception e) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "Não foi possivel Atualizar Ficha !","");
 			e.printStackTrace();
@@ -510,7 +544,42 @@ public class ProducaoController implements Serializable {
     	
     }
 
-    public void verHistorico() {
-    	
+    public void verHistorico(FichaProducao fichaProducao) {
+//		logFichaProducao = new ArrayList<LogAmostraFichaProducao>();
+//		logFichaProducao = facadeAcesso.getBuscaLogsFihaProducao(fichaProducao.getAmostra().getAmostraId());
+//		inicializaParametros();
+//		if ((!logFichaProducao.equals(null)) && (logFichaProducao.size() != 0)) {
+//			parametros.setLogModulo("Ficha Produção");
+//		}else {
+//			Messages.addGlobalInfo("Não há alterações pós-liberação para esta Ficha Produção!");
+//			return;
+//		}
+//    	
     }
+	// ------Visão Logs
+	public void visaoFichaProducaoLogs(FichaProducao fichaProducao) {
+		logFichaProducao = new ArrayList<LogAmostraFichaProducao>();
+		logFichaProducao = facadeAcesso.getBuscaLogsFihaProducao(fichaProducao.getAmostra().getAmostraId());
+		inicializaParametros();
+		parametros.setLogModulo("Ficha Produção");
+		if (logFichaProducao.size() != 0) {
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("modal", true);
+		options.put("width", 640);
+		options.put("height", 340);
+		options.put("contentWidth", "100%");
+		options.put("contentHeight", "100%");
+		options.put("headerElement", "referenciaheader");
+		options.put("resizable", false);
+		options.put("closable", true);
+		options.put("position", "left,top");
+		options.put("showEffect", "flip");
+		PrimeFaces.current().dialog().openDynamic("frkLogsProducao", options, null);
+	  }else {
+		Messages.addGlobalWarn("Não há alterações pós-Liberações para esta Amostra");
+		return;
+
+	  }
+	}
+
 }

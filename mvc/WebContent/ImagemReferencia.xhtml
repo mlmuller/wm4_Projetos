@@ -18,6 +18,7 @@
 		}
 		.alinhamento {
 			text-align: center;
+			font-weight: bold;
 		}
 		.ui-fieldset-legend {
 			padding: 10px 10px !important;
@@ -31,7 +32,19 @@
 			width: 250px;
 			height: 30px;
 		}
-		</style>
+  .product-item .product-item-content {
+        border: 1px solid var(--surface-d);
+        border-radius: 3px;
+        margin: .3rem;
+        text-align: center;
+        padding: 2rem 0;
+    }
+
+    .product-item .product-image {
+        width: 50%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+    }
+	</style>
 		<h:form id="crudFormImagemLivroReferencia">
 			<pf:panel header="#{msg['imagem.label.titulo']}">
 			</pf:panel>
@@ -41,7 +54,7 @@
 				oncomplete="PF('addEditFormImagemLivroReferenciaDlg').show()"
 				style="font-size:11px;" />
 			<pf:dataTable id="tblLazyImagemLivroReferencia"
-				value="#{dtlazyLivroImagemView.lazyModel}" 
+				value="#{imagemLivroReferenciaController.lazyModel}" 
 				var="_row" paginator="true" rows="3" paginatorPosition="bottom"
 				scrollHeight="800px"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
@@ -58,14 +71,12 @@
 						<i class="fa fa-fw fa-edit" style="font-size: 1.5em;" />
 					</pf:commandLink>
 					<pf:commandLink
-						action="#{imagemLivroReferenciaController.carregaCarrocel(_row)}"
-						title="Ver Fotos Refer/Versão(ões)"
-						update=":showCarrocel"
-						oncomplete="PF('showFormImagemCarrocelDlg').show()"
-						style="font-size:11px;">
+						action="#{imagemLivroReferenciaController.carregaImagensVersoes(_row)}"
+						title="Ver Fotos Refer/Versão(ões)" oncomplete="PF('showFormImagemGalleriaDlg').show()"
+						style="font-size:11px;" update=":showGalleria">
 						<i class="fa fa-fw fa-image" style="font-size: 1.5em;" />
 					</pf:commandLink>
-	
+
 					<pf:commandLink
 						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
 						process="@this" title="#{msg['botao.delete']}">
@@ -99,7 +110,7 @@
 					height="#{_row.imheight}" cache="false">
 						<f:param name="idimagem" value="#{_row.imagemlivroreferenciaid}"/>
 					</pf:graphicImage>
-				</pf:column>
+							</pf:column>
 				<pf:column	headerText="Zoom" width="50px;">
 					<h:outputLink id="ZoomImagem" value="#">
 						<i class="fa fa-fw fa-search-plus" style="font-size:18px;" />
@@ -188,7 +199,7 @@
 								filterMatchMode="contains" required="true" requiredMessage="Por favor, informe Tipo de Imagem !" >
 								<f:selectItem itemValue="#{null}"
 									itemLabel="Tipo Imagem"
-									style="font-size:12px;height:0.7em;text-align:left;width:200px;" />
+									style="font-size:12px;text-align:left;width:200px;" />
 								<f:selectItems
 									value="#{imagemLivroReferenciaController.tipoimagem}"
 									var="tipoimagem" itemValue="#{tipoimagem}"
@@ -205,7 +216,7 @@
 								filterMatchMode="contains" required="true" requiredMessage="Por favor, informe Grupo Produto Imagem !" >
 								<f:selectItem itemValue="#{null}"
 									itemLabel="Grupo Imagem"
-									style="font-size:12px;height:0.7em;text-align:left;width:200px;" />
+									style="font-size:12px;text-align:left;width:200px;" />
 								<f:selectItems
 									value="#{imagemLivroReferenciaController.tipogrupoimagem}"
 									var="tipogimagem" itemValue="#{tipogimagem}"
@@ -222,7 +233,7 @@
 				  			<pf:inputText value="#{imagemLivroReferenciaController.informaReferencia}"
 								requiredMessage="Por favor , informe Referência !"
 								required="true" 
-								style="height:0.7em;font-size:12px;" size="7" maxlength="7">
+								style="font-size:12px;" size="7" maxlength="7">
 							</pf:inputText>
 
 							<pf:commandLink
@@ -238,7 +249,7 @@
 								filterMatchMode="contains">
 								<f:selectItem itemValue="#{null}"
 									itemLabel="Referencia/Versão"
-									style="font-size:12px;height:0.7em;text-align:left;width:200px;" />
+									style="font-size:12px;text-align:left;width:200px;" />
 								<f:selectItems
 									value="#{imagemLivroReferenciaController.listaLivroReferencia}"
 									var="livroreferencia" itemValue="#{livroreferencia}"
@@ -282,7 +293,8 @@
 				<h:panelGrid id="btnSave" columns="2">
 					<pf:commandButton rendered="#{imagemLivroReferenciaController.mstatus}"  value="#{msg['botao.save']}"
 						actionListener="#{imagemLivroReferenciaController.save()}"
-						update="addEditFormImagemLivroReferencia :crudFormImagemLivroReferencia :crudFormImagemLivroReferencia:tblLazyImagemLivroReferencia" 
+						update="addEditFormImagemLivroReferencia :crudFormImagemLivroReferencia 
+						:crudFormImagemLivroReferencia:tblLazyImagemLivroReferencia" 
 						oncomplete="PF('addEditFormImagemLivroReferenciaDlg').hide();" process="@this" />
 					<pf:commandButton value="#{msg['botao.cancel']}"
 						onclick="PF('addEditFormImagemLivroReferenciaDlg').hide(); return false;" />
@@ -311,7 +323,6 @@
 				</pf:galleria>
 		  </h:form>	
 		</pf:dialog>
-
 		<pf:dialog header="Peças destacadas" widgetVar="showFormImagemBaseDlg"
 			draggable="true" modal="false" position="top top"
 			showEffect="flip"
@@ -324,5 +335,30 @@
 		  </h:form>	
 		  </div>
 		</pf:dialog>
+
+		<pf:dialog header="Referencia e suas Versôes" widgetVar="showFormImagemGalleriaDlg"
+			draggable="true" modal="false" position="top center"
+			showEffect="flip"
+			onShow="PF('showFormImagemGalleriaDlg').initPosition()"
+			resizable="false" width="80%" >
+			 <h:form id="showGalleria">
+	 			<pf:galleria value="#{imagemLivroReferenciaController.listaImagemVersoes}" 
+	 			var="fotografia" 
+				 style="max-width: 340px" showCaption="true" numVisible="3">
+
+					<pf:graphicImage value="#{imagemLivroReferenciaController.foto}" 
+					showCaption="true" 
+					cache="false" 
+					style="display: block" >
+						<f:param name="id_foto" value="#{fotografia.imagemlivroreferenciaid}"/>
+						<div>#{fotografia.construcaonome} #{fotografia.referencia} #{fotografia.versaorefer} </div>
+					</pf:graphicImage>
+
+				</pf:galleria>
+ 		     </h:form>
+
+
+		</pf:dialog>
+		
 	</ui:define>
 </ui:decorate>

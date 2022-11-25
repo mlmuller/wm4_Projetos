@@ -129,7 +129,7 @@ public class Amostra implements Serializable,Cloneable {
 	private LocalDateTime dataLiberadaAltProducao;
 
 	@Transient
-	private LocalDate dataLibPrdFinal;
+	private LocalDateTime dataLibPrdFinal;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length=1)

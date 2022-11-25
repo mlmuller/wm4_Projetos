@@ -8,36 +8,36 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:pf="http://primefaces.org/ui" template="template.xhtml">
 	<ui:define name="corpo">
-		<style type="text/css">
-.ui-fieldset-legend {
-	padding: 10px 10px !important;
-	height: 0.5em;
-	color: black;
-	font-size: 11px;
-	background-color: #7cdbfb !important;
-}
-
-.panelgrlsb .ui-panelgrid {
-	border: none !important;
-}
-
-.pangrdicb .uipanelgrid {
-	border: 1px;
-}
-
-.alinhaData {
-	horizontal-align: right;
-	font-size: 14px;
-}
-
-.alinhaColunas {
-	text-align: center !important;
-}
-
-.ui-widget button {
-	border-top-right-radius: 15px;
-}
-</style>
+	<style type="text/css">
+	.ui-fieldset-legend {
+		padding: 10px 10px !important;
+		height: 0.5em;
+		color: black;
+		font-size: 11px;
+		background-color: #7cdbfb !important;
+	}
+	
+	.panelgrlsb .ui-panelgrid {
+		border: none !important;
+	}
+	
+	.pangrdicb .uipanelgrid {
+		border: 1px;
+	}
+	
+	.alinhaData {
+		horizontal-align: right;
+		font-size: 14px;
+	}
+	
+	.alinhaColunas {
+		text-align: center !important;
+	}
+	
+	.ui-widget button {
+		border-top-right-radius: 15px;
+	}
+	</style>
 		<h:form id="crudFormALiberar">
 		 <pf:growl id="aLiberar"/>
 		 <pf:panel header="Liberações e Bloqueios Fichas para Produção" style="border-color:#35b3ee;" />
@@ -51,7 +51,7 @@
 					<pf:commandLink
 						actionListener="#{producaoController.edit(_rowemProducao)}"
 						title="#{msg['botao.edit']}" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
-						<i class="fa fa-pencil" style="font-size: 1.5em; color: #06aa0e;" />
+						<i class="fa fa-pencil" style="font-size: 1.5em; color: #edb53e;" />
 
 					</pf:commandLink>
 
@@ -67,9 +67,9 @@
 						<i class="fa fa-eraser" style="font-size: 1.5em; color: #eb520e;" />
 					</pf:commandLink>
 					<pf:commandLink
-						action="#{producaoController.verHistorico(_rowemProducao)}"
-						title="Histórico das alterações pós Liberação" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
-						<i class="fa fa-flag-o" style="font-size: 1.5em; color: #4ceb0e;" />
+						action="#{producaoController.visaoFichaProducaoLogs(_rowemProducao)}"
+						title="Histórico das alterações Pós-ReBloqueio" rendered="#{_rowemProducao.liberadoalteraramostra eq 'L'}">
+						<i class="fa fa-book" style="font-size: 1.5em; color: #47e10a;" />
 					</pf:commandLink>
 
 

@@ -39,7 +39,7 @@
 				style="font-size:11px;" />
 
 			<pf:dataTable id="tblLazyLivroReferencia"
-				value="#{dtlazyLivroReferenciaView.lazyModel}" var="_row"
+				value="#{livroReferenciaController.lazyModel}" var="_row"
 				paginator="true" rows="10" paginatorPosition="bottom"
 				scrollHeight="800px"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
@@ -50,21 +50,22 @@
 						title="#{msg['botao.edit']}" update=":altEditFormLivroReferencia"
 						oncomplete="PF('altEditFormLivroReferenciaDlg').show()"
 						style="font-size:11px;">
-						<i class="fa fa-fw fa-edit" />
+						<i class="pi pi-user-edit" style="font-size: 1.2em;color: #0e71eb;" />
 					</pf:commandLink>
 
 					<pf:commandLink
 						action="#{livroReferenciaController.duplicaLivroReferencia(_row)}" 
-						title="#{msg['botao.duplicar'] }" update=":altEditFormLivroReferencia"
-						oncomplete="PF('addEditFormLivroReferenciaDlg').show()" 
+						title="#{msg['botao.duplicar'] }" 
+						update=":altEditFormLivroReferencia :altEditFormLivroReferencia:btnSave"
+						oncomplete="PF('altEditFormLivroReferenciaDlg').show()" 
 						 style="font-size:11px;">
-						<i class="fa fa-clone" />
+						<i class="pi pi-clone" style="font-size: 1.2em;color: #eb520e;"/>
 					</pf:commandLink>
 
 					<pf:commandLink
 						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
 						process="@this" title="#{msg['botao.delete']}">
-						<i class="fa fa-fw fa-trash-o" />
+						<i class="pi pi-trash" style="font-size: 1.2em;color: #47e10a;" />
 					</pf:commandLink>
 
 				</pf:column>
@@ -148,7 +149,7 @@
 
 							<pf:inputText
 								value="#{livroReferenciaController.livroReferencia.abreviacao}"
-								style="height:0.7em;font-size:12px;" size="3" maxlength="3" converter="upperCaseConverter">
+								style="font-size:12px;" size="3" maxlength="3" converter="upperCaseConverter">
 								<pf:ajax event="blur" update="@this" immediate="true" />
 								
 							</pf:inputText>	
@@ -157,11 +158,11 @@
 					<pf:row>
 						<h:panelGrid columns="8" styleClass="panelgrlsb">
 							<h:outputLabel value="Construcao?"
-								style="font-size:12px;heigth:0.7em" />
+								style="font-size:12px;" />
 							<pf:inputText
 								value="#{livroReferenciaController.construcaoSelecionada}"
 								requiredMessage="Por favor , informe nome Construção !"
-								required="true" style="height:0.7em;font-size:12px;" size="18" 
+								required="true" style="font-size:12px;" size="18" 
 								maxlength="18" converter="upperCaseConverter">
 								<pf:ajax event="blur" update="@this" immediate="true" />
 							</pf:inputText>
@@ -179,7 +180,7 @@
 								filterMatchMode="contains">
 								<f:selectItem itemValue="#{null}"
 									itemLabel="Construção/Versão/Forma"
-									style="font-size:12px;height:0.7em;text-align:left;width:200px;"/>
+									style="font-size:12px;text-align:left;width:200px;"/>
 								<f:selectItems
 									value="#{livroReferenciaController.listaConstrucao}"
 									var="construcao" itemValue="#{construcao}"
@@ -189,10 +190,10 @@
 							</pf:selectOneMenu>
 							<h:panelGrid id="grdConstrucao" columns="4" styleClass="panelgrlsb">
 								<h:outputLabel value="Versão:"
-									style="text-align:left;font-size:12px;height:0.7em;" />
+									style="text-align:left;font-size:12px;" />
 								<pf:inputText readonly="true"
 									value="#{livroReferenciaController.livroReferencia.construcao.versao}"
-									style="font-size:12px; height:0.7em;" size="2" maxlength="2" />
+									style="font-size:12px;" size="2" maxlength="2" />
 	
 								<h:outputLabel value="#{msg['construcao.label.forma']}" />
 								<pf:inputText readonly="true"
@@ -229,7 +230,7 @@
 					<pf:commandButton rendered="#{livroReferenciaController.MStatus}"
 						value="#{msg['botao.save']}"
 						actionListener="#{livroReferenciaController.save()}" 
-						update="addEditFormLivroReferencia addEditFormLivroReferencia:pnlComplReferencia addEditFormLivroReferencia:btnSave :crudFormLivroReferencia :crudFormLivroReferencia:tblLazyLivroReferencia " process="@this" />
+						update="addEditFormLivroReferencia addEditFormLivroReferencia:pnlComplReferencia addEditFormLivroReferencia:btnSave :crudFormLivroReferencia :crudFormLivroReferencia:tblLazyLivroReferencia " immediate="true" />
 						
 					<pf:commandButton value="#{msg['botao.cancel']}"
 						onclick="PF('addEditFormLivroReferenciaDlg').hide(); return false;" />
@@ -292,7 +293,7 @@
 							<pf:inputText
 								value="#{livroReferenciaController.construcaoSelecionada}"
 								requiredMessage="Por favor , informe nome Construção !"
-								required="true" style="height:0.7em;font-size:12px;" size="18" 
+								required="true" style="font-size:12px;" size="18" 
 								maxlength="18" converter="upperCaseConverter">
 								<pf:ajax event="blur" update="@this" immediate="true" />
 							</pf:inputText>
@@ -300,7 +301,7 @@
 							<pf:commandLink
 								action="#{livroReferenciaController.buscaConstrucoes()}"
 								update="altEditFormLivroReferencia">
-								<i class="fa fa-search" style="font-size: 1.5em;"
+								<i class="fa fa-search" style="font-size: 1.3em;"
 									title="Pesquisa Construção" />
 							</pf:commandLink>
 
@@ -310,7 +311,7 @@
 								filterMatchMode="contains">
 								<f:selectItem itemValue="#{null}"
 									itemLabel="Construção/Versão/Forma"
-									style="font-size:12px;height:0.7em;text-align:left;width:200px;"/>
+									style="font-size:12px;text-align:left;width:200px;"/>
 								<f:selectItems
 									value="#{livroReferenciaController.listaConstrucao}"
 									var="construcao" itemValue="#{construcao}"
@@ -323,7 +324,7 @@
 									style="text-align:left;font-size:12px;height:0.7em;" />
 								<pf:inputText readonly="true"
 									value="#{livroReferenciaController.livroReferencia.construcao.versao}"
-									style="font-size:12px; height:0.7em;" size="2" maxlength="2" />
+									style="font-size:12px;" size="2" maxlength="2" />
 	
 								<h:outputLabel value="#{msg['construcao.label.forma']}" />
 								<pf:inputText readonly="true"
@@ -336,7 +337,7 @@
 						<h:panelGrid columns="2" styleClass="panelgrlsb">
 							<h:outputLabel
 								value="#{msg['livroreferencia.label.referenciacliente']}"
-								style="height:0.7em;font-size:12px;" />
+								style="font-size:12px;" />
 							<pf:inputText
 								value="#{livroReferenciaController.livroReferencia.referenciacliente}" />
 						</h:panelGrid>

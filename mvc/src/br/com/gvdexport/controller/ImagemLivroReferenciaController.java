@@ -17,20 +17,27 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.imgscalr.Scalr;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
 import br.com.gvdexport.dao.ImagemLivroReferenciaDao;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.lazy.LazyDataService;
+import br.com.gvdexport.lazy.LazyLivroImagemDataModel;
+import br.com.gvdexport.model.Amostra;
 import br.com.gvdexport.model.ImagemReferencia;
 import br.com.gvdexport.model.LivroReferencia;
 import br.com.gvdexport.model.TipoGrupoProduto;
@@ -54,6 +61,9 @@ public class ImagemLivroReferenciaController implements Serializable {
 	@Getter @Setter
 	private ImagemReferencia imagemReferencia;
 	@Getter @Setter
+	private ImagemReferencia auxImagem;
+
+	@Getter @Setter
 	private ImagemReferencia cloneImagemReferencia;
 	@Getter @Setter
 	private Integer referenciaSelecionada;
@@ -64,6 +74,7 @@ public class ImagemLivroReferenciaController implements Serializable {
 	@Getter @Setter
 	private Boolean Mstatus;
 	@Getter @Setter
+	private ImagemReferencia photo;
 	private List<LivroReferencia> listaLivroReferenciaVersao;
 	@Getter @Setter
  	private List<TipoImagem> tipoimagem = Arrays.asList(TipoImagem.values());
@@ -77,17 +88,32 @@ public class ImagemLivroReferenciaController implements Serializable {
 	private UploadedFile uploadedfile;
 	@Getter @Setter
 	private StreamedContent fileImagem;
-
+	//Lazy
+	@Getter @Setter
+	private LazyDataModel<ImagemReferencia> lazyModel;
+	@Getter @Setter
+	private Amostra amostraSelecionada;
+	
+	@Inject
+	private LazyDataService service;
+	//------------------------------------------------------
+	
 	@Inject
 	private FacadeAcesso facadeAcesso;
 	@Inject
 	private ImagemLivroReferenciaDao imagemLivroReferenciaDao;
 	@Inject
 	private UsuarioLogadoController usuarioLogado;
-
-	private StreamedContent image;
+	
+	//Teste de imagem
+	@Getter @Setter
+	private List<ImagemReferencia> listaImagemVersoes;
 	private StreamedContent imagens;
 	private StreamedContent imagem;
+	private StreamedContent image;	
+	
+	private StreamedContent imagemCar;
+
 	@Getter @Setter
 	private StreamedContent streamedContent;
 	@Getter @Setter
@@ -97,22 +123,27 @@ public class ImagemLivroReferenciaController implements Serializable {
 	@Getter @Setter
 	private ByteArrayOutputStream data;
 
-	
-	
-//	LazyImagemReferenciaDataModel dataModel = new LazyImagemReferenciaDataModel();
-//
-//	public LazyDataModel<ImagemReferencia> getModel(){
-//		return dataModel;
-//	}
 	@PostConstruct
 	public void init() {
     	Mstatus = true;
     	operacao = 0;
     	listaLivroReferencia = new ArrayList<LivroReferencia>();
     	imagemReferencia = new ImagemReferencia();
-//    	pfwidth = "30%";
-//   	pfheight = "15%";
-   }
+    	renovaLazy();
+	}
+	//Lazy 
+	public void renovaLazy() {
+		lazyModel = new LazyLivroImagemDataModel(service.getImagemreferencia());
+	}
+	public void setService(LazyDataService service) {
+		this.service = service;
+	}
+	
+	public void onRowSelect(SelectEvent<Amostra> event) {
+	        FacesMessage msg = new FacesMessage("Imagem Selecionada", String.valueOf(event.getObject().getAmostraId()));
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	//---------------------------------------------------------------------	
 	public void upload(FileUploadEvent event) {
 		try {
 			String nome,extensao;
@@ -143,53 +174,55 @@ public class ImagemLivroReferenciaController implements Serializable {
 				imagemReferencia.setFoto(fileEmpty);
 			}
 			imagemReferencia.setFoto(event.getFile().getContent());
+			//--------------------------
+    		ByteArrayInputStream bais = new ByteArrayInputStream(imagemReferencia.getFoto());
+    		BufferedImage biMenor = null;
+    		
+    	    biMenor = ImageIO.read(bais);
+    	    int w = biMenor.getWidth()/3;
+    	    int h = biMenor.getHeight()/3;
+    		imagemReferencia.setExtensao(extensao);
+			imagemReferencia.setNomearquivo(nome);
+	
+			BufferedImage recNovo = resizeImage(bi, w, h);
+			//Convert BufferedImage to byte;
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(recNovo, imagemReferencia.getExtensao().trim(), baos);
+			byte[] byteb = baos.toByteArray();
+			imagemReferencia.setFotob(byteb);
+			imagemReferencia.setImwidthb(String.valueOf(w));
+			imagemReferencia.setImheightb(String.valueOf(h));
+			
+			//--------------------------
 			//primefaces 11.0
 			//imagemReferencia.setFoto(event.getFile().getContent() );
-			imagemReferencia.setExtensao(extensao);
-			imagemReferencia.setNomearquivo(nome);
 			Messages.addGlobalInfo("UpLoad OK :"+uploadedFile.getFileName()+" Pronto Para Salvar !");
 			return;
 		} catch (IOException ex) {
 			Messages.addGlobalError("Não foi possivel Salvar Imagem!");
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}	
 
-	//Extrair imagem do banco
-	public void setImage(StreamedContent image) {
-			this.image = image;
-	}
-	
-	public StreamedContent getImage() throws IOException,SQLException {
-    	String id = "";
-    	FacesContext context = FacesContext.getCurrentInstance();
-    	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-    		return new DefaultStreamedContent();
-    		
-    	}else {
-    		id = context.getExternalContext().getRequestParameterMap().get("id_imagem");
-    	}
-    	
-    	if(id != null) {
-    		Long idImagem = Long.parseLong(id);
-    		ImagemReferencia aux = imagemLivroReferenciaDao.find(idImagem);
-    		String mime = "image/"+aux.getExtensao();
-    		String name = aux.getNomearquivo();
-    		byte[] foto = aux.getFoto();
-  //  		return new DefaultStreamedContent(new ByteArrayInputStream(foto),mime);
-			//primefaces 11.0
+	//Segundo teste de reducao de imagem
+	//Imagem Maior
+	public StreamedContent imagemMaior(ImagemReferencia imagemReferencia){
+
+		if (imagemReferencia.getFoto() != null) {
+			String mime = imagemReferencia.getExtensao();
+			String nome = imagemReferencia.getNomearquivo();
+			byte[] foto = imagemReferencia.getFoto();
     		StreamedContent streamedcontent = DefaultStreamedContent.builder()
-			.name(name)
-			.contentType(mime).stream(()->new ByteArrayInputStream(foto))
-			.build();
-			return streamedcontent;
-    	}else {
-    		return new DefaultStreamedContent();
+    				.name(nome)
+    				.contentType(mime).stream(()->new ByteArrayInputStream(foto))
+    				.build();
 
-    	}
-    }
-
-
+			return(streamedcontent);
+		}
+		return new DefaultStreamedContent();
+	}
 	
 	public void add() {
 		imagemReferencia = new ImagemReferencia();
@@ -242,7 +275,7 @@ public class ImagemLivroReferenciaController implements Serializable {
 			imagemLivroReferenciaDao.update(imagemReferencia);
 			operacao = 0;
 			Messages.addGlobalInfo("Operação realizada com Sucesso !");
-//			getModel();
+			renovaLazy();
 			} catch (Exception ex) {
 				Messages.addGlobalError("Não foi possivel Executar Operação com a Imagem ! ");
 				ex.printStackTrace();
@@ -298,26 +331,26 @@ public class ImagemLivroReferenciaController implements Serializable {
 	    	return;
 		}
 	}
-	
-	  public StreamedContent getImagem() throws IOException{
-
-	    	String id = "";
-	    	FacesContext context = FacesContext.getCurrentInstance();
-	    	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-	    		return new DefaultStreamedContent();
-	    		
-	    	}else {
-	    		id = context.getExternalContext().getRequestParameterMap().get("idimagem");
-	    		if (id != null) {
-	    		Long idImtbl = Long.parseLong(id);
-	    		ImagemReferencia aux = imagemLivroReferenciaDao.find(idImtbl);
-	    		return aux.getImagem(); 
-	    		}else {
-	    			return new DefaultStreamedContent();
-	    		}
+	public void carregaImagensVersoes(ImagemReferencia referencia) {
+		listaImagemVersoes = new ArrayList<ImagemReferencia>();
+		listaImagemVersoes = facadeAcesso.existeReferenciaImagem(referencia.getReferencia(),referencia.getAbreviacao().trim());
+	    if ((listaImagemVersoes.size() == 0) || (listaImagemVersoes.size() == 1)){
+	    	if (listaImagemVersoes.size() == 0) {
+		    	Messages.addGlobalInfo("Não há Variações para esta Referência!");
+		    	return;
 	    	}
+	    	else {
+		    	Messages.addGlobalInfo("Há Somente uma Referência!");
+		    	return;
+		    }
+	    }
 	}
- 
+
+	BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws Exception {
+	    return Scalr.resize(originalImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight, Scalr.OP_ANTIALIAS);
+	}
+	
+	
 	  public StreamedContent getImagens() {
     	String id = "";
     	FacesContext context = FacesContext.getCurrentInstance();
@@ -342,9 +375,36 @@ public class ImagemLivroReferenciaController implements Serializable {
     		return streamedcontent;
     	}
     }
-    
-	  
-	public byte[] Pdfs(ImagemReferencia imagemReferencia) throws IOException {     
+	//rotina anterior
+		public StreamedContent getImage() throws IOException,SQLException {
+	    	String id = "";
+	    	FacesContext context = FacesContext.getCurrentInstance();
+	    	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+	    		return new DefaultStreamedContent();
+	    		
+	    	}else {
+	    		id = context.getExternalContext().getRequestParameterMap().get("id_imagem");
+	    	}
+	    	
+	    	if(id != null) {
+	    		Long idImagem = Long.parseLong(id);
+	    		ImagemReferencia aux = imagemLivroReferenciaDao.find(idImagem);
+	    		String mime = "image/"+aux.getExtensao();
+	    		String name = aux.getNomearquivo();
+	    		byte[] foto = aux.getFoto();
+	  //  		return new DefaultStreamedContent(new ByteArrayInputStream(foto),mime);
+				//primefaces 11.0
+	    		StreamedContent streamedcontent = DefaultStreamedContent.builder()
+				.name(name)
+				.contentType(mime).stream(()->new ByteArrayInputStream(foto))
+				.build();
+				return streamedcontent;
+	    	}else {
+	    		return new DefaultStreamedContent();
+
+	    	}
+	    }
+		public byte[] Pdfs(ImagemReferencia imagemReferencia) throws IOException {     
 
 	     caminhoFin = "c:\\Base\\BaseTeste.pdf";
     	 InputStream inputStream = null;
@@ -387,13 +447,84 @@ public class ImagemLivroReferenciaController implements Serializable {
 		  
 		}
 	}
+	//Imagem Maior=========
 	
-	
+	public StreamedContent getImagem() throws IOException{
+
+	String id = "";
+	FacesContext context = FacesContext.getCurrentInstance();
+	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+		return new DefaultStreamedContent();
+		
+	}else {
+		id = context.getExternalContext().getRequestParameterMap().get("idimagem");
+		if (id != null) {
+    		Long idImtbl = Long.parseLong(id);
+    		ImagemReferencia aux = imagemLivroReferenciaDao.find(idImtbl);
+    		return aux.getImagem(); 
+		}
+		return new DefaultStreamedContent();
+	}
+}
+	//Imagem Menor=========
+		public StreamedContent getImagemCar() {
+	    	FacesContext context = FacesContext.getCurrentInstance();
+	    	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+	    		return new DefaultStreamedContent();
+	    		
+	    	}else {
+	    		if (auxImagem != null) {
+	    			return auxImagem.getImagemCar();
+	    		}else {
+	    			return new DefaultStreamedContent();
+	    		}
+	    	}
+	}
+	//=========
+
+		//Metodo para obter foto menor
+		public StreamedContent getFoto() throws IOException,SQLException {
+	    	String id = "";
+	    	FacesContext context = FacesContext.getCurrentInstance();
+	    	if(context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+	    		return new DefaultStreamedContent();
+	    		
+	    	}else {
+	    		id = context.getExternalContext().getRequestParameterMap().get("id_foto");
+	    	}
+	    	
+	    	if(id != null) {
+	    		Long idImagem = Long.parseLong(id);
+	    		ImagemReferencia aux = imagemLivroReferenciaDao.find(idImagem);
+	    		String mime = "image/"+aux.getExtensao();
+	    		String name = aux.getNomearquivo();
+	    		byte[] foto = aux.getFotob();
+	  //  		return new DefaultStreamedContent(new ByteArrayInputStream(foto),mime);
+				//primefaces 11.0
+	    		StreamedContent streamedcontent = DefaultStreamedContent.builder()
+				.name(name)
+				.contentType(mime).stream(()->new ByteArrayInputStream(foto))
+				.build();
+				return streamedcontent;
+	    	}else {
+	    		return new DefaultStreamedContent();
+
+	    	}
+	    }
+
+		
 	public void setImagem(StreamedContent imagem) {
 		this.imagem = imagem;
 	}
 	public void setImagens(StreamedContent imagens) {
 		this.imagens = imagens;
 	}
+	public void setImagemCar(StreamedContent imagemCar) {
+		this.imagemCar = imagemCar;
+	}
 	
+	//Extrair imagem do banco
+	public void setImage(StreamedContent image) {
+				this.image = image;
+	}
 }

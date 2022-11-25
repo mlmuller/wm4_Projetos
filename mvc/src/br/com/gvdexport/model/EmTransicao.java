@@ -12,7 +12,7 @@ public enum EmTransicao {
 	  N("Nao"),
 	  T("Transição"),
 	  W("A Liberar"),
-	  L("Liberado");
+	  L("Rebloqueio");
 	    private String label;
 	    
 	    private EmTransicao(String label) {

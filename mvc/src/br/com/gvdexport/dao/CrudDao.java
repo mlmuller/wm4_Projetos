@@ -22,7 +22,6 @@ import br.com.gvdexport.model.EmTransicao;
 import br.com.gvdexport.model.EnderecoCliente;
 import br.com.gvdexport.model.FichaProducao;
 import br.com.gvdexport.model.LogAmostraFichaProducao;
-import br.com.gvdexport.model.LogAmostraFichaProducao_;
 import br.com.gvdexport.model.LogAmostrasNovas;
 
 @Named("crudDao")

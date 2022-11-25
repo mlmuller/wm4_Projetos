@@ -11,6 +11,11 @@
 	
 	<style type="text/css">
 
+	.indivcheckbox .ui-icon-check {
+	    width: 5px;
+	    height: 5px;
+	}
+
 	.panelgrlsb .ui-panelgrid {
 		border: none !important;
 	}
@@ -51,7 +56,7 @@
 					style="font-size:12px;"
 					oncomplete="PF('addEditFormAmostraNovaDlg').show()" />
 				<pf:dataTable id="tblFiltroAmostra" var="_rowamostra"
-					value="#{dtlazyAmostraView.lazyModel}" lazy="true" paginator="true" rows="10"
+					value="#{amostraNovaController.lazyModel}" lazy="true" paginator="true" rows="10"
 					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 					rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" widgetVar="fichaAmostra1" rowHover="true" >
 					<pf:column width="85" headerText="Opções" style="text-align:center">
@@ -61,7 +66,7 @@
 							title="#{msg['botao.edit']}"  
 							update=":crudFormAmostraSecundario 
 							:crudFormAmostraSecundario:btnSave :crudFormAmostraSecundario:btnFechar 
-							:emProducaox :emProducaox:tblAmostraemProd :emProducaox:tblAmostraemProd:teste" immediate="true">
+							:emProducaox :emProducaox:tblAmostraemProd :emProducaox:tblAmostraemProd:teste :crudFormAmostraSecundario:pnlTransicao" immediate="true">
 							<i class="fa fa-pencil" style="font-size: 1.5em; color: #06aa0e;" />
 
 						</pf:commandLink>
@@ -427,17 +432,17 @@
 											size="3" />
 									</h:panelGrid>
 
-									<h:panelGrid columns="2">
+									<h:panelGrid columns="2" id="pnlTransicao">
 										<pf:outputLabel value="#{msg['usocomum.label.prioridade']}" />
 										<pf:selectOneMenu
 											value="#{amostraNovaController.amostra.prioridadeProducao}"
 											filter="true" filterMatchMode="contains"
-											style="vertical-align:middle;font-size:12px;">
+											style="vertical-align:middle;font-size:12px;" disabled="#{amostraNovaController.parametros.allTransicao}" >
 											<f:selectItem itemValue="#{null}"
-												itemLabel="#{msg['usuario.label.escolher']}" />
+												itemLabel="#{msg['usuario.label.escolher']}" itemDisabled="#{amostraNovaController.parametros.allTransicao}" />
 											<f:selectItems value="#{amostraNovaController.prioridade}"
 												var="prioridade" itemValue="#{prioridade}"
-												itemLabel="#{prioridade.label}" />
+												itemLabel="#{prioridade.label}" itemDisabled="#{amostraNovaController.parametros.allTransicao}" />
 											<pf:ajax process="@this" />
 										</pf:selectOneMenu>
 									</h:panelGrid>
@@ -526,9 +531,9 @@
 								update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao"/>
 							   <pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.liberaTransito}" 
-									value="#{amostraNovaController.solicitaLiberacao}" itemLabel="Rebloqueio?">
-									<pf:ajax listener="#{amostraNovaController.executaBloqueio()}" 
-									update="amostraSecundario btnSave"/>
+									value="#{amostraNovaController.solicitaLiberacao}" itemLabel="Rebloqueio?" styleClass="indivcheckbox">
+									<pf:ajax listener="#{amostraNovaController.executaSolicitacaoBloqueio()}" 
+									update="amostraSecundario"/>
 							   </pf:selectBooleanCheckbox>								
 						</h:panelGrid>
 					</pf:panel>	

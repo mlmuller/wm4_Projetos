@@ -79,7 +79,7 @@ public class ImagemReferencia implements Serializable,Cloneable {
 	@Column(length = 25 , nullable = false)
 	private String nomearquivo;
 
-	@Column(length = 25 , nullable = false)
+	@Column(length = 25 , nullable = true)
 	private String caminhoarquivo;
 	
 	@Lob
@@ -92,6 +92,16 @@ public class ImagemReferencia implements Serializable,Cloneable {
 	@Column(length = 5, nullable = true)
 	private String imheight;
 
+	@Lob
+	@Column(name="imagemb",nullable=true)
+	private byte[] fotob ;
+
+	@Column(length = 5,nullable = true)
+	private String imwidthb;
+	
+	@Column(length = 5, nullable = true)
+	private String imheightb;
+
 	@Transient
 	public StreamedContent getImagem() {
 		if (this.getFoto() != null) {
@@ -101,6 +111,22 @@ public class ImagemReferencia implements Serializable,Cloneable {
     		StreamedContent streamedcontent = DefaultStreamedContent.builder()
     				.name(nome)
     				.contentType(mime).stream(()->new ByteArrayInputStream(foto))
+    				.build();
+
+			return(streamedcontent);
+		}
+		return new DefaultStreamedContent();
+	}
+	
+	@Transient
+	public StreamedContent getImagemCar() {
+		if (this.getFotob() != null) {
+			String mimeb = this.getExtensao();
+			String nomeb = this.getNomearquivo();
+			byte[] fotob = this.getFotob();
+    		StreamedContent streamedcontent = DefaultStreamedContent.builder()
+    				.name(nomeb)
+    				.contentType(mimeb).stream(()->new ByteArrayInputStream(fotob))
     				.build();
 
 			return(streamedcontent);

@@ -11,10 +11,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.model.LazyDataModel;
 
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.facade.DGAFacadeCompKey;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.lazy.LazyCoresAmostraModel;
+import br.com.gvdexport.lazy.LazyDataService;
 import br.com.gvdexport.model.Cor;
 import br.com.gvdexport.model.Situacao;
 import lombok.Getter;
@@ -38,6 +41,14 @@ public class CorController implements Serializable {
 	private Integer tipoOperacao;
 	@Getter @Setter
 	private List<Situacao> ativoInativo = Arrays.asList(Situacao.values());
+	@Getter @Setter
+	private LazyDataModel<Cor> lazyModel;
+	@Getter @Setter
+	private Cor corSelecionada;
+	
+	@Inject
+	private LazyDataService service;
+
 	@Inject
 	private CrudDao<Cor, Long> corDao;
 	@Inject
@@ -47,14 +58,16 @@ public class CorController implements Serializable {
 	@Inject
 	private UsuarioLogadoController logadoController;
 	
-//	LazyCorDataModel dataModel = new LazyCorDataModel();
-//	public LazyDataModel<Cor> getModel(){
-//		return dataModel;
-//	}
 	@PostConstruct
 	public void init() {
 		tipoOperacao = 0;
+		renovaLazy();
 	}
+
+	public void renovaLazy() {
+		lazyModel = new LazyCoresAmostraModel(service.getCor());
+	}
+	
 	public void add() {
 		this.cor = new Cor() ;
 		cor.setSituacao(Situacao.A);
@@ -84,6 +97,7 @@ public class CorController implements Serializable {
 			cor.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
 			corDao.update(cor);
 	        Messages.addGlobalInfo("Cor salva com Sucesso!");
+	        renovaLazy();
 		} catch (RuntimeException ex) {
 	        Messages.addGlobalError("Não foi possivel,executar Processo!");
 			ex.printStackTrace();
@@ -93,6 +107,7 @@ public class CorController implements Serializable {
 		try {
 			corDao.delete(cor.getCorid());
 			Messages.addGlobalInfo("Cor Cancelada com Sucesso!");
+			lazyModel = new LazyCoresAmostraModel(service.getCor());
 		} catch (RuntimeException ex) {
 			Messages.addGlobalError("Não foi possivel Cancelar Cor!");
 			ex.printStackTrace();

@@ -4,14 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.LazyDataModel;
 
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.lazy.LazyDataService;
+import br.com.gvdexport.lazy.LazyLivroReferenciaDataModel;
 import br.com.gvdexport.model.Construcao;
 import br.com.gvdexport.model.LivroReferencia;
 import br.com.gvdexport.model.Sequencial;
@@ -54,6 +61,12 @@ public class LivroReferenciaController implements Serializable {
 	private Boolean libVersaoReferencia;
 	@Getter @Setter
 	private Boolean habilitaComplemento;
+	//variaveis para Lazy
+	@Getter @Setter
+	private LazyDataModel<LivroReferencia> lazyModel;
+	@Getter @Setter
+	private LivroReferencia livroReferenciaSelecionado;
+
 	
 	@Inject
 	private FacadeAcesso facadeAcesso;
@@ -63,13 +76,11 @@ public class LivroReferenciaController implements Serializable {
 	private CrudDao<Construcao, Long> construcaoDao;
 	@Inject
 	private CrudDao<LivroReferencia, Long> livroReferenciaDao;
+	@Inject
+	private LazyDataService service;
 	
-//	LazyLivroReferenciaDataModel dataModel= new LazyLivroReferenciaDataModel();
-//	public LazyDataModel<LivroReferencia> getModel() {
-//		return dataModel;
-//	}
-//    @PostConstruct
 
+    @PostConstruct
 	public void init() {
     	listaConstrucao = new ArrayList<Construcao>();
     	mStatus = true;
@@ -77,7 +88,21 @@ public class LivroReferenciaController implements Serializable {
     	livroReferencia = new LivroReferencia();
     	construcaoSelecionada = "";
     	habilitaComplemento = true;
+    	renovaLazy();
     }
+    //Dados para Lazy
+    public void renovaLazy() {
+		lazyModel = new LazyLivroReferenciaDataModel(service.getlivroReferencia());
+    }
+	public void setService(LazyDataService service) {
+		this.service = service;
+	}
+	
+	public void onRowSelect(SelectEvent<LivroReferencia> event) {
+	        FacesMessage msg = new FacesMessage("Referencia Selecionada", String.valueOf(event.getObject().getLivroreferenciaid()));
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	//------------------------------(Fim Lazy)-------------------------------------------
 	//
 	// Operacao 0 = inclusao
 	//          1 = Alteração
@@ -111,6 +136,7 @@ public class LivroReferenciaController implements Serializable {
 	}
 	public void duplicaLivroReferencia(LivroReferencia livroreferenciadup) throws CloneNotSupportedException {
 		cloneLivroReferencia = new LivroReferencia();
+		mStatus=false;
 		this.livroReferencia = livroreferenciadup;
 		cloneLivroReferencia = (LivroReferencia) livroreferenciadup.clone();
 		verVersoesLivroReferencia();
@@ -137,6 +163,7 @@ public class LivroReferenciaController implements Serializable {
 		try {
 			 livroReferencia = new LivroReferencia();
 			 livroReferencia = livroReferenciaDao.update(cloneLivroReferencia);
+			 renovaLazy();
 			 operacao = 2;
 			 //Clonando novamente,pois neste estagio pode alterar a construcao/versao/forma
 			 //Precisa verificar se a proxima alteracao, possui cadastro....
@@ -224,6 +251,7 @@ public class LivroReferenciaController implements Serializable {
 				   
 				    	
 				   livroReferenciaDao.update(livroReferencia);
+				   renovaLazy();
 				}	
 				if(operacao == 0) {
 					if(livroReferencia.getVersaorefer() > 9) {
@@ -235,6 +263,7 @@ public class LivroReferenciaController implements Serializable {
 					livroReferenciaDao.update(livroReferencia);
 					mStatus = false;
 			    	construcaoSelecionada = "";
+			    	renovaLazy();
 				}
 				Messages.addGlobalInfo("Operação executada com Sucesso!");
 			} catch (RuntimeException ex) {
@@ -247,6 +276,7 @@ public class LivroReferenciaController implements Serializable {
 	public void delete(LivroReferencia livroReferencia) {
 		try {
 			livroReferenciaDao.delete(livroReferencia.getLivroreferenciaid());
+			renovaLazy();
 			Messages.addGlobalInfo("Referência Removida com Sucesso!");
 		} catch (RuntimeException ex) {
    		    Messages.addGlobalError("Não foi possivel remover Referência!");

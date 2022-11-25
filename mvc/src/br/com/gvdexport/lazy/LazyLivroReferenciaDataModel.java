@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.management.IntrospectionException;
 
 import org.apache.commons.collections4.ComparatorUtils;
 import org.primefaces.model.FilterMeta;

@@ -203,7 +203,7 @@
 
 							<pf:column id="colu3">
 								<pf:panel style="border-color:#35b3ee;">
-								<pf:panelGrid layout="grid" columns="4" styleClass="alinhaData" style="border:none;">
+								<pf:panelGrid layout="grid" columns="6" styleClass="alinhaData" style="border:none;">
 									<pf:fieldset legend="#{msg['usocomum.label.amostrap']}"
 										style="text-align:center;
 										             width:450px;
@@ -214,7 +214,7 @@
 										<pf:column>
 											<pf:datePicker
 												value="#{prodIntermController.amostra.dtxfct}"
-												pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+												pattern="dd-MM-yyyy" monthNavigator="true" size="5"
 												style="text-align:left;">
 												<f:convertDateTime type="localDate" dateStyle="short"
 													pattern="dd-MM-yyyy" />
@@ -227,12 +227,11 @@
 										<pf:column>
 											<pf:datePicker
 												value="#{prodIntermController.amostra.dataXfcFinal}"
-												pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+												pattern="dd-MM-yyyy" monthNavigator="true" size="5"
 												style="text-align:left;">
 												<pf:effect event="dbclick" type="slide" />
 												<f:convertDateTime type="localDate" dateStyle="short"
 													pattern="dd-MM-yyyy" />
-												<pf:ajax update="@this" />
 											</pf:datePicker>
 										</pf:column>
 									</pf:fieldset>
@@ -250,7 +249,7 @@
 										<pf:column>
 											<pf:datePicker
 												value="#{prodIntermController.amostra.dataLiberacaoProducao}"
-												pattern="dd-MM-yyyy" monthNavigator="true" size="9"
+												pattern="dd-MM-yyyy" monthNavigator="true" size="5"
 												style="text-align:left;">
 												<f:convertDateTime type="localDate" dateStyle="short"
 													pattern="dd-MM-yyyy" />
@@ -263,12 +262,10 @@
 										<pf:column>
 											<pf:datePicker
 												value="#{prodIntermController.amostra.dataLibPrdFinal}"
-												pattern="dd-MM-yyyy" monthNavigator="true" size="9"
-												style="text-align:left;">
+												pattern="dd-MM-yyyy" monthNavigator="true" size="5"
+												style="text-align:left;" locale="pt">
 												<pf:effect event="dbclick" type="slide" />
-												<f:convertDateTime type="localDate" dateStyle="short"
-													pattern="dd-MM-yyyy" />
-												<pf:ajax update="@this" />
+
 											</pf:datePicker>
 										</pf:column>
 									</pf:fieldset>

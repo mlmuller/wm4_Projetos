@@ -31,6 +31,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 
 import br.com.gvdexport.dao.CrudDao;
@@ -38,6 +40,9 @@ import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.facade.FacadeAcesso;
 import br.com.gvdexport.facade.FacadeLogs;
 import br.com.gvdexport.facade.FacadeView;
+import br.com.gvdexport.lazy.LazyAmostraDataModel;
+import br.com.gvdexport.lazy.LazyDataService;
+import br.com.gvdexport.lazy.LazyLivroReferenciaDataModel;
 import br.com.gvdexport.logs.logsControllerAmostras;
 import br.com.gvdexport.model.AcabamentoAmostra;
 import br.com.gvdexport.model.Amostra;
@@ -180,6 +185,14 @@ public class AmostraNovaController implements Serializable {
 	private Integer Number1;
 	@Getter @Setter
 	private Integer Number2;
+	//Itens para Lazy e reLazy
+	@Getter @Setter
+	private LazyDataModel<Amostra> lazyModel;
+	@Getter @Setter
+	private Amostra amostraSelecionada;
+	@Getter @Setter
+	private List<FilterMeta> filterBy;	
+
 
 	//Estas variaveis definirao se haverão alterações nas etapas em relacao aos clones
 	
@@ -199,7 +212,8 @@ public class AmostraNovaController implements Serializable {
 	private Boolean fase5;
 	
 	// Esta variavel,deve ser tambem relacionada com o tipo de usuario
-
+	@Getter @Setter
+	private List<Tipo> tipos = Arrays.asList(Tipo.values());
 	@Getter	@Setter
 	private Boolean mStatus;
 	@Getter	@Setter
@@ -348,9 +362,6 @@ public class AmostraNovaController implements Serializable {
 	private FacadeView facadeView;
 	
 	@Inject
-	private FacadeLogs facadeLogs;
-
-	@Inject
 	private UsuarioLogadoController usuarioLogado;
 
 	@Inject
@@ -397,6 +408,9 @@ public class AmostraNovaController implements Serializable {
 
 	@Inject
 	private LogAmostrasNovasDao logAmostraNovaDao;
+	//Lazy
+	@Inject
+	private LazyDataService service;
 	
 	@PostConstruct
 	public void init(){
@@ -417,6 +431,7 @@ public class AmostraNovaController implements Serializable {
 		statusGeracao = false;
 		parametros.setTemLog(false);
 		parametros.setLogModulo("Não Há");
+		parametros.setAllTransicao(false);
 		liberaTransito = false;
 		// inicializa varaveis de pesquisa
 		// inicializa datas
@@ -443,7 +458,20 @@ public class AmostraNovaController implements Serializable {
 		//Variavel para uso na atualizacao se for selecionado apenas uma cor
 		Number1 = 0;
 		Number2 = 100;
+		renovaLazy();
 	}
+	//Chamadas para Lazy e reLazy
+	   public void renovaLazy() {
+			lazyModel = new LazyAmostraDataModel(service.getAmostra());
+	    }
+		public void setService(LazyDataService service) {
+			this.service = service;
+		}
+		
+		public void onRowSelect(SelectEvent<LivroReferencia> event) {
+		        FacesMessage msg = new FacesMessage("Referencia Selecionada", String.valueOf(event.getObject().getLivroreferenciaid()));
+		        FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 
 	//
 	// Operacao 0 = inclusao
@@ -668,6 +696,7 @@ public class AmostraNovaController implements Serializable {
 		posicaoAtual = 0;
 		amostra = amostraedit;
 		parametros.setTemLog(false);
+		parametros.setAllTransicao(false);
 		//Verificar se ha fichas na producao e se houver, ver Status
 		PrimeFaces current = PrimeFaces.current();
 		mostraListaProducao = false;
@@ -689,6 +718,7 @@ public class AmostraNovaController implements Serializable {
 					}
 					if (fichaProducao.getLiberadoalteraramostra().name().equals("T")) {
 						liberaTransito = true;
+						parametros.setAllTransicao(true);
 					}
 				}
 				if (mostraListaProducao) {
@@ -705,9 +735,7 @@ public class AmostraNovaController implements Serializable {
 			}
 		}
 
-//		amostraClone = new Amostra();
 		posicaoAtual = 0;
-//		amostra = amostraedit;
 		amostraClone = (Amostra) amostra.clone();
 		//Campo é informado na construcao(Solado, e é gravado na tabela de amostras
 		operacao = 1;
@@ -894,7 +922,7 @@ public class AmostraNovaController implements Serializable {
 
 		// Costura
 		if (!construcaoAmostraPresente.isPresent()) {
-			Messages.addGlobalError("Por Favor, antes, você deveria, Inserir Dados construcao");
+			Messages.addGlobalError("Por Favor, antes, você deveria, Inserir Dados na Construcao");
 			return;
 		} else {
 			Construcao construcaoAmostraClone = new Construcao();
@@ -1026,6 +1054,7 @@ public class AmostraNovaController implements Serializable {
 		if (listaCorMultiAux.size() != 0) {
 			try {
 				corAmostraMultidao.deleteCorMulti(listaCorMultiAux);
+				renovaLazy();
 			} catch (RuntimeException ex) {
 				Messages.addGlobalError("Não foi possivel Excluir Combinação Multi para cor Selecionada!");
 				ex.printStackTrace();
@@ -1038,6 +1067,7 @@ public class AmostraNovaController implements Serializable {
 		if (listaCabedalMultiAux.size() != 0) {
 			try {
 				corAmostraMultidao.deleteCabedalMulti(listaCabedalMultiAux);
+				renovaLazy();
 			} catch (RuntimeException ex) {
 				Messages.addGlobalError("Não foi possivel Excluir Combinação Multi para cor Selecionada!");
 				ex.printStackTrace();
@@ -1117,6 +1147,7 @@ public class AmostraNovaController implements Serializable {
 			return;
 		}
 		// atualiza nova situacao de pares da Amostra
+
 
 	}
 
@@ -1428,8 +1459,10 @@ public class AmostraNovaController implements Serializable {
 					}
 				}
 				corCabedalAmostraDao.updateCorCabedalAmostra(listaCorCabedalFinal);
+
 			}
 			setDuplica(true);
+			renovaLazy();
 			Messages.addGlobalInfo("Replicação Nova amostra com sucesso !");
 			return;
 		} catch (Exception ex) {
@@ -1616,6 +1649,7 @@ public class AmostraNovaController implements Serializable {
 			operacaoPosterior = 1;
 			btnVisao = false;
 			parametros.setBtncheck(false);
+			renovaLazy();
 			// Guarda ID gerado, para uso posterior nas tabelas de ligação a ficha
 		} catch (Exception ex) {
 			Messages.addGlobalError("Não foi possivel executar a operação Ficha de Amostra!");
@@ -1672,6 +1706,7 @@ public class AmostraNovaController implements Serializable {
 				// Adicionar Multi - tabela muitos --> muitos
 				facadeView.saveMultiCorAmostraNova(corAmostra, operacao);
 				amostraDao.update(amostra);
+				renovaLazy();
 				Messages.addGlobalInfo("Material/Cor Cadastrados com Sucesso!");
 				inicializaCor();
 				parametros.setBtnfecha(true);
@@ -1775,6 +1810,7 @@ public class AmostraNovaController implements Serializable {
 					Messages.addGlobalInfo("Material/Cor Alterado com Sucesso!");
 					inicializaCor();
 				}
+				renovaLazy();
 			}
 		} catch (RuntimeException ex) {
 			Messages.addGlobalError("Não foi possivel incluir Cor !");
@@ -2753,19 +2789,28 @@ public class AmostraNovaController implements Serializable {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity,summary,detail));
     }
-    public void executaBloqueio() {
+    public void executaSolicitacaoBloqueio() {
+    	Boolean executadoSolicitacao = false;
     	if (listaFichasProducao.size() != 0){
 			for (FichaProducao fichaProducao : listaFichasProducao) {
-				
-				if (fichaProducao.getLiberadoalteraramostra().equals(EmTransicao.L)) {
-					fichaProducao.setLiberadoalteraramostra(EmTransicao.N);
-					fichaProducao.setSemaforo("#000000");
+				//Solicitado rebloqueio,e altera transcao para Distribuicao bloqeuar
+				if (fichaProducao.getLiberadoalteraramostra().equals(EmTransicao.T)) {
+					fichaProducao.setLiberadoalteraramostra(EmTransicao.L);
+					fichaProducao.setSemaforo("green");
 					try {
 						fichaProducaoDao.update(fichaProducao);
-						Messages.addGlobalInfo("Solicitação de Bloqueio realizado com sucesso !");
+						amostra.setPrioridadeProducao(PrioridadeProducao.N);
+						amostraDao.update(amostra);
+						if (!solicitaLiberacao) {
+							Messages.addGlobalInfo("Solicitação de Bloqueio realizado com sucesso !");
+							solicitaLiberacao = true;
+						}
 					} catch (RuntimeException re) {
 						Messages.addGlobalInfo("Não foi possivel atualizar Ficha(s) Produção(es)!");
 						return;
+					}
+					if (solicitaLiberacao) {
+						
 					}
 				}
 			}

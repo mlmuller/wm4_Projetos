@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -22,6 +19,7 @@ import br.com.gvdexport.controller.UsuarioLogadoController;
 import br.com.gvdexport.dao.LogAmostraFichaProducaoDao;
 import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.model.Amostra;
+import br.com.gvdexport.model.FichaProducao;
 import br.com.gvdexport.model.LogAmostraFichaProducao;
 import br.com.gvdexport.model.LogAmostrasNovas;
 import br.com.gvdexport.model.PrioridadeProducao;
@@ -176,20 +174,6 @@ public class logsControllerAmostras implements Serializable {
 						
 					}
 				}
-//				if (Amostraold.getDataLiberacaoProducao() != null) {
-//					if (!amostranew.getDataLiberacaoProducao().equals(Amostraold.getDataLiberacaoProducao())) {
-//						logAmostrasNovas.setDescricaocampo("Liberação Produção");
-//						String dataformatada = "";
-//						LocalDateTime currentLocalDateTime = Amostraold.getDataLiberacaoProducao();
-//						DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//						dataformatada = currentLocalDateTime.format(dateTimeFormatter);
-//						logAmostrasNovas.setValoranterior(dataformatada);
-//						amostranew.setLog(true);
-//						logAmostraAux.add(logAmostrasNovas);
-//						logAmostrasNovas = new LogAmostrasNovas();
-//						logAmostrasNovas = cloneAmostrasNovas;
-//					}
-//				}
 				if (Amostraold.getDataSolicitacao() != null) {
 					if (!amostranew.getDataSolicitacao().equals(Amostraold.getDataSolicitacao())) {
 						logAmostrasNovas.setDescricaocampo("Data Solicitação");
@@ -363,7 +347,7 @@ public class logsControllerAmostras implements Serializable {
 						}
 						// logAmostraFichaProducaoDao - pós e durante producao
 						logAmostraFichaProducaoDao.updateLogAmostraFichaProducao(logAmostraFichaProducaoAux);
-						}
+					}
 					}
 				}
 		} catch (CloneNotSupportedException | UnknownHostException e) {

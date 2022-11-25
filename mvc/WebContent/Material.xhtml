@@ -12,7 +12,7 @@
 			<pf:commandButton value="#{msg['botao.add']}"
 				action="#{materialController.add()}" oncomplete="PF('addEditFormMaterialDlg').show()" 
 				update=":addEditFormMaterial"/>
-			<pf:dataTable id="tblLazyMaterial" value="#{dtlazyMaterialView.lazyModel}" var="_row"
+			<pf:dataTable id="tblLazyMaterial" value="#{materialController.lazyModel}" var="_row"
 				paginator="true" rows="10" paginatorPosition="bottom"
 				scrollHeight="800px" lazy="true" widgetVar="Table" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 

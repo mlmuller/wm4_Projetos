@@ -10,11 +10,12 @@
 	<ui:define name="corpo">
 	<style type="text/css">
 			.ui-fieldset .ui-fieldset-legend {
-  				padding: 15px 10px !important;
-				height: 0.5em;
-				color: black;
-				font-size: 11px;
-				background-color: #7cdbfb !important;
+  				color: #0288d1;
+			    font-size: 0.9em;
+			    line-height: 13px;
+			    font-family: 'latobold';
+			    background-color: #fcf0ac;
+			    padding: 13px 20px !important;
 				border-radius: 7px;}
  			.panelgrlsb {
 				border: none !important;
@@ -221,8 +222,8 @@
 											<pf:column>
 												<pf:datePicker
 													value="#{producaoController.amostra.dataLiberacaoProducao}"
-													pattern="dd-MM-yyyy" monthNavigator="true" size="9"
-													style="text-align:left;">
+													pattern="dd-MM-yyyy" monthNavigator="true" size="15"
+													style="text-align:left;" >
 													<f:convertDateTime type="localDate" dateStyle="short"
 														pattern="dd-MM-yyyy" />
 													<pf:effect event="dbclick" type="slide" />
@@ -234,10 +235,10 @@
 											<pf:column>
 												<pf:datePicker
 													value="#{producaoController.amostra.dataLibPrdFinal}"
-													pattern="dd-MM-yyyy" monthNavigator="true" size="9"
-													style="text-align:left;">
+													pattern="dd-MM-yyyy" monthNavigator="true" size="15"
+													style="text-align:left;" locale="pt">
 													<pf:effect event="dbclick" type="slide" />
-													<f:convertDateTime type="localDate" dateStyle="short"
+													<f:convertDateTime type="localDate" dateStyle="default"
 														pattern="dd-MM-yyyy" />
 													<pf:ajax update="@this" />
 												</pf:datePicker>

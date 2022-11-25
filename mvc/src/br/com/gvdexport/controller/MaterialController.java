@@ -7,17 +7,25 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.LazyDataModel;
 
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.facade.DGAFacadeCompKey;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.lazy.LazyDataService;
+import br.com.gvdexport.lazy.LazyMaterialDataModel;
 import br.com.gvdexport.model.Cor;
 import br.com.gvdexport.model.Material;
 import br.com.gvdexport.model.Situacao;
+import br.com.gvdexport.model.Tipo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +47,18 @@ public class MaterialController implements Serializable {
 	private Integer tipoOperacao;
 	@Getter @Setter
 	private List<Situacao> ativoInativo = Arrays.asList(Situacao.values());
+	//Lazy
+	@Getter @Setter
+	private LazyDataModel<Material> lazyModel;
+	@Getter @Setter
+	private Material materialSelecionado;
+	@Getter @Setter
+	private List<FilterMeta> filterBy;	
+	@Getter @Setter
+	private List<Tipo> tipos = Arrays.asList(Tipo.values());
+	@Inject
+	private LazyDataService service;
+	//---------------------------------------------
 	@Inject
 	private CrudDao<Material, Long> materialDao;
 	@Inject
@@ -60,7 +80,20 @@ public class MaterialController implements Serializable {
 		this.material = new Material() ;
 		material.setSituacao(Situacao.A);
 	}
+	//Lazy
+	public void renovaLazy() {
+		lazyModel = new LazyMaterialDataModel(service.getMaterial());
 
+	}
+	public void setService(LazyDataService service) {
+		this.service = service;
+	}
+	
+	public void onRowSelect(SelectEvent<Material> event) {
+	        FacesMessage msg = new FacesMessage("Material Selecionado", String.valueOf(event.getObject().getMaterialid()));
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	//---------------------------------------------------------------------------------
 	public void edit(Material material) throws CloneNotSupportedException {
 		this.material = material;
 		materialClone = new Material();
