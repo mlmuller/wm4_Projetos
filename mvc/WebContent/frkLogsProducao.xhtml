@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pf="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.ui-widget {
+	font-size: 100%;
+}
+
+.ui-panel-title {
+	font-size: 0.8em;
+	color: blue;
+}
+	.ui-datatable-odd { background:#f0f0f0 !important;} // light silver alternar linhas
+	.ui-datatable-even { background:#ffffff !important; } // white
+
+</style>
+</h:head>
+<h:body>
+	<h:form>
+		<pf:card header="#{producaoController.parametros.logModulo}" style="font-size:12px;color:blue;text-align:center;background-color:#f0f0d6">
+			<pf:dataTable value="#{producaoController.logFichaProducao}" var="_rowr"
+				rows="12" 
+				scrollHeight="800px" style="font-size:11px;align-text:center">
+	
+				<pf:column headerText="#{msg['logs.valalt']}"
+					style="font-size:10px;width:40px;align-text:center">
+					<h:outputText value="#{_rowr.descricaocampo}" />
+				</pf:column>
+				<pf:column headerText="#{msg['logs.valant']}"
+					style="font-size:10px;width:30px;align-text:center">
+					<h:outputText value="#{_rowr.valoranterior}" />
+				</pf:column>
+				<pf:column headerText="#{msg['logs.usuatu']}"
+					style="font-size:10px;width:20px;align-text:center">
+					<h:outputText value="#{_rowr.usuarioStamp}" />
+				</pf:column>
+				<pf:column headerText="#{msg['logs.valdata']}" style="font-size:10px;width:85px;">
+					<h:outputText value="#{_rowr.dataStamp}"
+						style="font-size:10x;">
+						<f:convertDateTime timeZone="GMT-3"
+                                               pattern="dd-MM-yyyy HH:mm" 
+                                               type="localDateTime" />
+					</h:outputText>
+				</pf:column>
+				<pf:column headerText="#{msg['logs.usuid']}"
+					style="font-size:10px;width:15px;">
+					<h:outputText value="#{_rowr.ipmask}" />
+				</pf:column>
+			</pf:dataTable>
+		</pf:card>
+	</h:form>
+</h:body>
+</html>
