@@ -1,7 +1,6 @@
 package br.com.gvdexport.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

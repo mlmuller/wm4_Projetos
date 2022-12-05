@@ -18,19 +18,19 @@
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
 				{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
 				style="text-align:center;width:60%">
-				<pf:column width="40">
+				<pf:column width="10">
 					<pf:commandLink action="#{corController.edit(_row)}"
 						update=":addEditFormCor"
 						oncomplete="PF('addEditFormCorDlg').show()"
 						title="#{msg['botao.edit']}">
-						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;color: #edb53e;" />
 					</pf:commandLink>
 
 					<pf:commandLink
 						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
 						action="#{corController.delete(_row)}" update=":crudFormCor"
 						title="#{msg['botao.delete']}">
-						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;color: #f77e6b;" />
 					</pf:commandLink>
 				</pf:column>
 

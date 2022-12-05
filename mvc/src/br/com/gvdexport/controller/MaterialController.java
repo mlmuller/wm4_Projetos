@@ -75,6 +75,7 @@ public class MaterialController implements Serializable {
 	@PostConstruct
 	public void init() {
 		tipoOperacao = 0;
+		renovaLazy();
 	}
 	public void add() {
 		this.material = new Material() ;
@@ -117,6 +118,7 @@ public class MaterialController implements Serializable {
 			material.setDatastamp(dgaFacade.gettimeStamp());
 			material.setUsuariostamp(logadoController.getUsuariologado().getUsuario());
 			materialDao.update(material);
+			renovaLazy();
 	        Messages.addGlobalInfo("Material salvo com Sucesso!");
 		} catch (RuntimeException ex) {
 	        Messages.addGlobalError("Não foi possivel,executar Processo!");
@@ -126,6 +128,7 @@ public class MaterialController implements Serializable {
 	public void delete(Material material ) {
 		try {
 			materialDao.delete(material.getMaterialid());
+			renovaLazy();
 			Messages.addGlobalInfo("Material Cancelado com Sucesso!");
 		} catch (RuntimeException ex) {
 			Messages.addGlobalError("Não foi possivel Cancelar Material!");

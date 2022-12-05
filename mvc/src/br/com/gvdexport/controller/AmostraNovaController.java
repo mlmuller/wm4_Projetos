@@ -42,7 +42,6 @@ import br.com.gvdexport.facade.FacadeLogs;
 import br.com.gvdexport.facade.FacadeView;
 import br.com.gvdexport.lazy.LazyAmostraDataModel;
 import br.com.gvdexport.lazy.LazyDataService;
-import br.com.gvdexport.lazy.LazyLivroReferenciaDataModel;
 import br.com.gvdexport.logs.logsControllerAmostras;
 import br.com.gvdexport.model.AcabamentoAmostra;
 import br.com.gvdexport.model.Amostra;
@@ -497,7 +496,7 @@ public class AmostraNovaController implements Serializable {
 		umaCorPrincipal = 0;
 		parametros.setPrioridade(true);
 		parametros.setBtncheck(true);
-		parametros.setSaveTransicao(false);
+		parametros.setSaveTransicao(true);
 		parametros.setFechaTransicao(false);
 		//		parametros.setBtnvisao(true); comentado em 26/01
 		setBtnVisao(false);

@@ -19,7 +19,6 @@ import br.com.gvdexport.controller.UsuarioLogadoController;
 import br.com.gvdexport.dao.LogAmostraFichaProducaoDao;
 import br.com.gvdexport.dao.LogAmostrasNovasDao;
 import br.com.gvdexport.model.Amostra;
-import br.com.gvdexport.model.FichaProducao;
 import br.com.gvdexport.model.LogAmostraFichaProducao;
 import br.com.gvdexport.model.LogAmostrasNovas;
 import br.com.gvdexport.model.PrioridadeProducao;

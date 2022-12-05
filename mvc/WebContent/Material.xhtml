@@ -19,19 +19,19 @@
 				{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
 				style="text-align:center;width:60%">
 
-				<pf:column width="50">
+				<pf:column width="10">
 					<pf:commandLink action="#{materialController.edit(_row)}"
 						update=":addEditFormMaterial"
 						oncomplete="PF('addEditFormMaterialDlg').show()"
 						title="#{msg['botao.edit']}">
-						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;color: #edb53e;" />
 					</pf:commandLink>
 
 					<pf:commandLink
 						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
 						action="#{materialController.delete(_row)}" update=":crudFormMaterial"
 						title="#{msg['botao.delete']}">
-						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;color: #f77e6b;" />
 					</pf:commandLink>
 				</pf:column>
 

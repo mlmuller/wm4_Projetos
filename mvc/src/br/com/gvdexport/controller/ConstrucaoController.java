@@ -12,9 +12,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.model.LazyDataModel;
 
 import br.com.gvdexport.dao.CrudDao;
 import br.com.gvdexport.facade.FacadeAcesso;
+import br.com.gvdexport.lazy.LazyConstrucaoDataModel;
+import br.com.gvdexport.lazy.LazyDataService;
 import br.com.gvdexport.model.Amostra;
 import br.com.gvdexport.model.Construcao;
 import br.com.gvdexport.model.FichaProducao;
@@ -68,6 +71,8 @@ public class ConstrucaoController implements Serializable {
 	private Boolean temFicha;
 	//Esta variavel,deve ser tambem relacionada com o tipo de usuario
 	@Getter @Setter
+	private LazyDataModel<Construcao> lazyModel;
+	@Getter @Setter
 	private Boolean mStatus;
 	@Getter @Setter
 	private Boolean somenteLeitura;
@@ -77,7 +82,8 @@ public class ConstrucaoController implements Serializable {
 	private UsuarioLogadoController usuarioLogado;
 	@Inject
 	private CrudDao<Construcao, Long> construcaoDao;
-	
+	@Inject
+	private LazyDataService service;
 //	LazyConstrucaoDataModel dataModel = new LazyConstrucaoDataModel();
 //	public LazyDataModel<Construcao> getModel() {
 //		return dataModel;
@@ -93,8 +99,15 @@ public class ConstrucaoController implements Serializable {
     	construcao = new Construcao();
     	setMStatus(true);
     	listaConstrucao = construcaoDao.findAll();
+    	renovaLazy();
     }
-	
+	//Chamadas para Lazy e reLazy
+	   public void renovaLazy() {
+			lazyModel = new LazyConstrucaoDataModel(service.getConstrucao());
+	    }
+		public void setService(LazyDataService service) {
+			this.service = service;
+		}
 	//
 	// Operacao 0 = inclusao
 	//          1 = Alteração
@@ -216,6 +229,7 @@ public class ConstrucaoController implements Serializable {
 			 referenciaForma = construcao.getForma().getReferenciaforma();
 			 refresh();
 			 operacao = 2;
+			 renovaLazy();
 			 Messages.addGlobalInfo("Construcão Duplicada com Sucesso,liberada para alteração !");
 		} catch (Exception ex) {
 			Messages.addGlobalError("Não foi possivel Duplicar Referencia !");
@@ -309,6 +323,7 @@ public class ConstrucaoController implements Serializable {
 				construcao.setReferenciaforma(construcao.getForma().getReferenciaforma());
 				construcaoDao.update(construcao);
 				add();
+				renovaLazy();
 			}
 			Messages.addGlobalInfo("Operação executada com Sucesso!");
 		} catch (RuntimeException ex) {
@@ -322,6 +337,7 @@ public class ConstrucaoController implements Serializable {
 			// Para remover nao pode haver fichas nem amostra e confirmacao
 			construcaoDao.delete(construcao.getConstrucaoid());
 			refresh();
+			renovaLazy();
 			Messages.addGlobalInfo("Construção Removida com Sucesso!");
 		} catch (RuntimeException ex) {
    		    Messages.addGlobalError("Não foi possivel remover Construção!");
@@ -363,9 +379,5 @@ public class ConstrucaoController implements Serializable {
 			mStatus = true;
 		}
 	}
-
-//	public LazyDataModel<Construcao> getDataModel() {
-//		return dataModel;
-//	}
 
 }

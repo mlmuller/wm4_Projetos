@@ -31,18 +31,18 @@
 			<pf:dataTable value="#{formaController.listaFormas}" var="_row"
 				paginator="true" rows="10" paginatorPosition="bottom"
 				scrollHeight="800px" style="text-align:center">
-				<pf:column width="50">
+				<pf:column width="45">
 					<pf:commandLink action="#{formaController.edit(_row)}"
 						update=":addEditFormForma"
 						oncomplete="PF('addEditFormFormaDlg').show()"
 						title="#{msg['botao.edit']}" style="font-size:12px;">
-						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;" />
+						<i class="fa fa-fw fa-pencil-square-o" style="font-size: 1.5em;color: #edb53e;" />
 					</pf:commandLink>
 					<pf:commandLink
 						onclick="if (!confirm('#{msg['botao.confirm']}')) return false;"
 						action="#{formaController.delete(_row)}" update=":crudFormForma"
 						title="#{msg['botao.delete']}" style="font-size:12px;">
-						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;" />
+						<i class="fa fa-fw fa-trash-o" style="font-size: 1.5em;color: #f77e6b;" />
 					</pf:commandLink>
 				</pf:column>
 				<pf:column headerText="#{msg['usocomum.label.id']}"

@@ -41,16 +41,16 @@
 				style="font-size:11px;" />
 				
 				<pf:dataTable id="tblLazyConstrucao" 
-				value="#{dtlazyConstrucaoView.lazyModel}" 
+				value="#{construcaoController.lazyModel}" 
 				var="_row" 
 				paginator="true" 
-				rows="5" 
+				rows="8" 
 				paginatorPosition="bottom" 
 				scrollHeight="800px" 
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} 
 			{PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
 				style="text-align:center">
-				<pf:column width="87">
+				<pf:column width="15">
 					<pf:commandLink action="#{construcaoController.edit(_row)}" 
 					title="#{msg['botao.edit']}" update="crudFormConstrucao:construcaoMensagem :addEditFormConstrucao" 
 					oncomplete="PF('addEditFormConstrucaoDlg').show()" 
