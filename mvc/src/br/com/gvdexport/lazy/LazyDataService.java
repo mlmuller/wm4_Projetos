@@ -17,12 +17,17 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.com.gvdexport.model.Amostra;
+import br.com.gvdexport.model.Amostra_;
 import br.com.gvdexport.model.Construcao;
 import br.com.gvdexport.model.Cor;
+import br.com.gvdexport.model.Cor_;
 import br.com.gvdexport.model.FichaProducao;
+import br.com.gvdexport.model.FichaProducao_;
 import br.com.gvdexport.model.ImagemReferencia;
 import br.com.gvdexport.model.LivroReferencia;
+import br.com.gvdexport.model.LivroReferencia_;
 import br.com.gvdexport.model.Material;
+import br.com.gvdexport.model.Material_;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +52,7 @@ public class LazyDataService implements Serializable {
 	@Setter
 	private List<LivroReferencia> livroReferencia;
 
-	@Getter @Setter
+	@Setter
 	private List<Construcao> construcao;
 
 	@Setter
@@ -66,6 +71,7 @@ public class LazyDataService implements Serializable {
    	  CriteriaBuilder cb = em.getCriteriaBuilder();
       CriteriaQuery<Amostra> q = cb.createQuery(Amostra.class);
       Root<Amostra> root = q.from(Amostra.class);
+      q.orderBy(cb.desc(root.get(Amostra_.amostraId)));
       CriteriaQuery<Amostra> select = q.select(root);
       TypedQuery<Amostra> query = em.createQuery(select);
       amostras = query.getResultList();
@@ -121,6 +127,7 @@ public class LazyDataService implements Serializable {
 	    	CriteriaBuilder cb = em.getCriteriaBuilder();
 	        CriteriaQuery<FichaProducao> q = cb.createQuery(FichaProducao.class);
 	        Root<FichaProducao> root = q.from(FichaProducao.class);
+	        q.orderBy(cb.desc(root.get(FichaProducao_.fichaproducaoid)));
 	        CriteriaQuery<FichaProducao> select = q.select(root);
 	        TypedQuery<FichaProducao> query = em.createQuery(select);
 	        amostrasProducao = query.getResultList();
@@ -234,6 +241,7 @@ public class LazyDataService implements Serializable {
 			    	CriteriaBuilder cb = em.getCriteriaBuilder();
 			        CriteriaQuery<LivroReferencia> q = cb.createQuery(LivroReferencia.class);
 			        Root<LivroReferencia> root = q.from(LivroReferencia.class);
+			        q.orderBy(cb.desc(root.get(LivroReferencia_.livroreferenciaid)));
 			        CriteriaQuery<LivroReferencia> select = q.select(root);
 			        TypedQuery<LivroReferencia> query = em.createQuery(select);
 			        livroReferencia = query.getResultList();
@@ -286,6 +294,7 @@ public class LazyDataService implements Serializable {
 				    	CriteriaBuilder cb = em.getCriteriaBuilder();
 				        CriteriaQuery<Cor> q = cb.createQuery(Cor.class);
 				        Root<Cor> root = q.from(Cor.class);
+				        q.orderBy(cb.desc(root.get(Cor_.corid)));
 				        CriteriaQuery<Cor> select = q.select(root);
 				        TypedQuery<Cor> query = em.createQuery(select);
 				        cor = query.getResultList();
@@ -336,6 +345,7 @@ public class LazyDataService implements Serializable {
 					    	CriteriaBuilder cb = em.getCriteriaBuilder();
 					        CriteriaQuery<Material> q = cb.createQuery(Material.class);
 					        Root<Material> root = q.from(Material.class);
+					        q.orderBy(cb.desc(root.get(Material_.materialid)));
 					        CriteriaQuery<Material> select = q.select(root);
 					        TypedQuery<Material> query = em.createQuery(select);
 					        material = query.getResultList();

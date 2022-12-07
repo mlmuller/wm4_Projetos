@@ -264,8 +264,9 @@ public class logsControllerAmostras implements Serializable {
 						logAmostraAux.add(cloneAuxAmostra);
 					}
 				}
-				if (Amostraold.getPares() != null) {
-					if (!amostranew.getParCancelado().equals(Amostraold.getParCancelado())) {
+
+				if (Amostraold.getParCancelado() != null) {
+					if (!amostranew.getParCancelado().equals(Amostraold.getParCancelado())) { 
 						logAmostrasNovas.setDescricaocampo("Par(es)Cancelado(s)");
 						logAmostrasNovas.setValoranterior(String.valueOf(Amostraold.getParCancelado().doubleValue()));
 						amostranew.setLog(true);
@@ -273,7 +274,7 @@ public class logsControllerAmostras implements Serializable {
 						cloneAuxAmostra = logAmostrasNovas;
 						logAmostraAux.add(cloneAuxAmostra);
 					}
-				}
+				}	
 				if (Amostraold.getPares() != null) {
 					if (!amostranew.getPares().equals(Amostraold.getPares())) {
 						logAmostrasNovas.setDescricaocampo("Par(es) Amostra");

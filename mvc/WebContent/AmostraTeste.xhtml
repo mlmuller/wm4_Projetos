@@ -56,9 +56,9 @@
 					style="font-size:12px;"
 					oncomplete="PF('addEditFormAmostraNovaDlg').show()" />
 				<pf:dataTable id="tblFiltroAmostra" var="_rowamostra"
-					value="#{amostraNovaController.lazyModel}" lazy="true" paginator="true" rows="10"
+					value="#{amostraNovaController.lazyModel}" lazy="true" paginator="true" rows="5"
 					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-					rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" widgetVar="fichaAmostra1" rowHover="true" >
+					rowsPerPageTemplate="3,5,10" paginatorPosition="bottom" widgetVar="fichaAmostra1" rowHover="true" scrollHeight="530px" scrollable="true" >
 					<pf:column width="85" headerText="Opções" style="text-align:center">
 
 						<pf:commandLink
@@ -209,7 +209,7 @@
 								<h:outputText value="#{cor.desenvolveramostra}" />
 							</pf:column>
 							<pf:column style="font-size:9px;width:5px;font-weight:bold;text-align:center">
-								<li style="color:#{(cor.producao ? 'green' : 'red')}">
+								<li style="color:#{cor.producao ? 'green' : 'red'}">
 								<h:outputText
 									value="#{cor.marca}" />
 								</li>
@@ -239,11 +239,11 @@
 
 			<!-- Amostra Nova Cadastro -->
 			<pf:dialog header="Cadastro de amostras Novas"
-				widgetVar="addEditFormAmostraNovaDlg" width="99%" resizable="false"
+				widgetVar="addEditFormAmostraNovaDlg" width="99%" height="770px" resizable="false"
 				position="center top" showEffect="clip" modal="true"
 				draggable="false" closable="false" appendTo="@(body)">
 				<h:form id="crudFormAmostraSecundario">
-					<pf:growl id="amostraSecundario" globalOnly="true" />
+					<pf:growl id="amostraSecundario" globalOnly="true" sticky="true" />
 					<pf:panelGrid columns="3" layout="grid"
 						style="border-color:#35b3ee;">
 						<pf:column>
@@ -432,7 +432,7 @@
 											size="3" />
 									</h:panelGrid>
 
-									<h:panelGrid columns="2" id="pnlTransicao">
+									<h:panelGrid columns="2" id="pnlTransicao" rendered="#{amostraNovaController.parametros.inpdataliberacao}">
 										<pf:outputLabel value="#{msg['usocomum.label.prioridade']}" />
 										<pf:selectOneMenu
 											value="#{amostraNovaController.amostra.prioridadeProducao}"
@@ -447,14 +447,14 @@
 										</pf:selectOneMenu>
 									</h:panelGrid>
 									<h:panelGrid columns="2" id="pnlDataLiberacao"
-										styleClass="panelgrlsb">
+										styleClass="panelgrlsb" rendered="#{amostraNovaController.parametros.inpdataliberacao}">
 										<h:outputLabel value="#{msg['usocomum.label.liberap']}" />
-										<pf:datePicker readonlyInput="true"
-											value="#{amostraNovaController.amostra.dataLiberacaoProducao}"
-											size="20">
-											<f:convertDateTime type="localDateTime"
-												pattern="dd-MM-yyyy HH:mm:ss" dateStyle="long" />
-										</pf:datePicker>
+											<pf:datePicker
+												value="#{producaoController.amostra.dataLiberacaoProducao}"
+												pattern="dd-MM-yyyy HH:mm" monthNavigator="true" size="15"
+												style="text-align:left;" locale="pt">
+												<pf:effect event="dbclick" type="slide" />
+											</pf:datePicker>
 									</h:panelGrid>
 									<h:panelGrid columns="3">
 										<h:outputLabel value="#{msg['usocomum.label.estacao']}" />
@@ -528,7 +528,12 @@
 							  <pf:commandButton value="#{msg['botao.save']}" 
 								actionListener="#{amostraNovaController.verificaAntesSave}"
 								proccess="@this"
-								update="crudFormAmostraSecundario pnlGrpCor :crudFormAmosPrimario :crudFormAmosPrimario:tblFiltroAmostra crudFormAmostraSecundario:pnlDataLiberacao"/>
+								update="crudFormAmostraSecundario 
+								pnlGrpCor 
+								:crudFormAmosPrimario
+								crudFormAmostraSecundario:amostraSecundario 
+								:crudFormAmosPrimario:tblFiltroAmostra 
+								crudFormAmostraSecundario:pnlDataLiberacao"/>
 							   <pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.liberaTransito}" 
 									value="#{amostraNovaController.solicitaLiberacao}" itemLabel="Rebloqueio?" styleClass="indivcheckbox">
@@ -810,49 +815,49 @@
 					</pf:panelGrid>
 					<pf:panelGrid columns="9" layout="grid"
 						style="border-color:#35b3ee;line-height:10px;">
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:outputLabel value="Local" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:outputLabel value="Material" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:3%">
 							<h:panelGrid>
 								<pf:outputLabel value="S" />
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:outputLabel value="Cor" />
 							</h:panelGrid>
 
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:3%">
 							<h:panelGrid>
 								<pf:outputLabel value="S" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:outputLabel value="Compl" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:outputLabel value="Cp" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:outputLabel value="Remove" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:3%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:outputLabel value="Cor+" />
 							</h:panelGrid>
@@ -861,7 +866,7 @@
 
 					<pf:panelGrid id="grp0Panel" columns="9" layout="grid"
 						style="line-height:10px;border-color:#35b3ee;">
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita1}"
@@ -869,7 +874,7 @@
 									size="2" maxlength="2" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita1}"
@@ -878,12 +883,12 @@
 									size="15" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita1}"
 									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha1)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Material(1)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.materialSelecionado}"
@@ -891,7 +896,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita1}"
@@ -900,13 +905,13 @@
 									size="15" maxlength="15" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita1}"
 									action="#{facadeView.visaoMultiCor(amostraNovaController.linha1)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Cor(1)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.corSelecionada}"
@@ -914,7 +919,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita1}"
@@ -922,7 +927,7 @@
 									title="Complemento Cor" size="10" maxlength="10" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.parametros.habilita1}"
@@ -930,26 +935,26 @@
 									title="Selecione uma Cor Principal" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:commandButton id="lmp1"
 									rendered="#{amostraNovaController.parametros.btnlimpa1}"
 									title="Remover"
 									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha1)}"
 									icon="fa fa-eraser"
-									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									style="font-size: 1.2em;color:red;background-color:#bad9cb"
 									update="inpMaterial1 inpCor1 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:3%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandButton id="inpbot1"
 									rendered="#{amostraNovaController.parametros.botao1}"
 									title="Nova Posição"
 									actionListener="#{amostraNovaController.addCor}"
 									icon="fa fa-chevron-down"
-									style="width:15px;background-color:#bad9cb"
+									style="width:12px;background-color:#bad9cb"
 									update="inpbot1 grp1Panel lmp2 corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
@@ -958,7 +963,7 @@
 
 					<pf:panelGrid id="grp1Panel" columns="9" layout="grid"
 						style="line-height:10px;border-color:#35b3ee;">
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita2}"
@@ -966,7 +971,7 @@
 									size="2" maxlength="3" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita2}"
@@ -974,12 +979,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).matNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita2}"
 									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha2)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Material(2)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.materialSelecionado}"
@@ -987,7 +992,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column >
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita2}"
@@ -995,12 +1000,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).corNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita2}"
 									action="#{facadeView.visaoMultiCor(amostraNovaController.linha2)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Cor(2)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.corSelecionada}"
@@ -1008,7 +1013,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column >
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita2}"
@@ -1016,34 +1021,34 @@
 									size="10" maxlength="10" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.parametros.habilita2}"
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha2).corPrincipal}"></pf:selectBooleanCheckbox>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:commandButton id="lmp2"
 									rendered="#{amostraNovaController.parametros.btnlimpa2}"
 									title="Remover"
 									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha2)}"
 									icon="fa fa-eraser"
-									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									style="font-size: 1.2em;color:red;background-color:#bad9cb"
 									update="inpMaterial2 inpCor2 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:3%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandButton id="inpbot2"
 									rendered="#{amostraNovaController.parametros.botao2}"
 									title="Nova Posição"
 									actionListener="#{amostraNovaController.addCor}"
 									icon="fa fa-chevron-down"
-									style="text-align:center;width:15px;background-color:#bad9cb"
+									style="text-align:center;width:12px;background-color:#bad9cb"
 									update="inpbot2 grp2Panel lmp3 corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
@@ -1054,7 +1059,7 @@
 					<pf:panelGrid id="grp2Panel" columns="9" layout="grid"
 						style="line-height:10px;border-color:#35b3ee;">
 
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita3}"
@@ -1062,7 +1067,7 @@
 									size="2" maxlength="3" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita3}"
@@ -1070,12 +1075,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha3).matNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita3}"
 									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha3)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Material(3)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.materialSelecionado}"
@@ -1083,7 +1088,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita3}"
@@ -1092,12 +1097,12 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita3}"
 									action="#{facadeView.visaoMultiCor(amostraNovaController.linha3)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Cor(3)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.corSelecionada}"
@@ -1105,7 +1110,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita3}"
@@ -1113,7 +1118,7 @@
 									size="10" maxlength="10" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.parametros.habilita3}"
@@ -1121,27 +1126,27 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:commandButton id="lmp3"
 									rendered="#{amostraNovaController.parametros.btnlimpa3}"
 									title="Remover"
 									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha3)}"
 									icon="fa fa-eraser"
-									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									style="font-size: 1.2em;color:red;background-color:#bad9cb"
 									update="inpMaterial3 inpCor3 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:3%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandButton id="inpbot3"
 									rendered="#{amostraNovaController.parametros.botao3}"
 									title="Nova Posição"
 									actionListener="#{amostraNovaController.addCor}"
 									icon="fa fa-chevron-down"
-									style="text-align:center;width:15px;background-color:#bad9cb"
+									style="text-align:center;width:12px;background-color:#bad9cb"
 									update="inpbot3 grp3Panel lmp4 corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
@@ -1154,7 +1159,7 @@
 					<pf:panelGrid id="grp3Panel" columns="9" layout="grid"
 						style="line-height:10px;border-color:#35b3ee;">
 
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita4}"
@@ -1162,7 +1167,7 @@
 									size="2" maxlength="3" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita4}"
@@ -1170,12 +1175,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).matNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita4}"
 									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha4)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Material(4)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.materialSelecionado}"
@@ -1183,7 +1188,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita4}"
@@ -1191,12 +1196,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).corNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita4}"
 									action="#{facadeView.visaoMultiCor(amostraNovaController.linha4)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Cor(4)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.corSelecionada}"
@@ -1204,7 +1209,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita4}"
@@ -1212,34 +1217,34 @@
 									size="7" maxlength="7" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.parametros.habilita4}"
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha4).corPrincipal}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:commandButton id="lmp4"
 									rendered="#{amostraNovaController.parametros.btnlimpa4}"
 									title="Remover"
 									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha4)}"
 									icon="fa fa-eraser"
-									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									style="font-size: 1.2em;color:red;background-color:#bad9cb"
 									update="inpMaterial4 inpCor4 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:3%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandButton id="inpbot4"
 									rendered="#{amostraNovaController.parametros.botao4}"
 									title="Nova Combinação"
 									actionListener="#{amostraNovaController.addCor}"
 									icon="fa fa-chevron-down"
-									style="text-align:center;width:15px;background-color:#bad9cb"
+									style="text-align:center;width:12px;background-color:#bad9cb"
 									update="inpbot4 grp4Panel lmp5 corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>
@@ -1249,7 +1254,7 @@
 
 					<pf:panelGrid id="grp4Panel" columns="9" layout="grid"
 						style="line-height:10px;border-color:#35b3ee;">
-						<pf:column style="width:5%"> 
+						<pf:column style="width:6%"> 
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita5}"
@@ -1257,7 +1262,7 @@
 									size="2" maxlength="3" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita5}"
@@ -1265,12 +1270,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).matNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita5}"
 									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha5)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Material(5)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.materialSelecionado}"
@@ -1278,7 +1283,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita5}"
@@ -1286,12 +1291,12 @@
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).corNome}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita5}"
 									action="#{facadeView.visaoMultiCor(amostraNovaController.linha5)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Cor(5)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.corSelecionada}"
@@ -1299,7 +1304,7 @@
 								</pf:commandLink>
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita5}"
@@ -1307,35 +1312,35 @@
 									size="10" maxlength="10" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.parametros.habilita5}"
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha5).corPrincipal}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:commandButton id="lmp5"
 									rendered="#{amostraNovaController.parametros.btnlimpa5}"
 									title="Remover"
 									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha5)}"
 									icon="fa fa-eraser"
-									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									style="font-size: 1.2em;color:red;background-color:#bad9cb"
 									update="inpMaterial5 inpCor5 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem idCheck">
 								</pf:commandButton>
 							</h:panelGrid>
 
 						</pf:column>
 
-						<pf:column style="width:3%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandButton id="inpbot5"
 									rendered="#{amostraNovaController.parametros.botao5}"
 									title="Nova Combinação"
 									actionListener="#{amostraNovaController.addCor}"
 									icon="fa fa-chevron-down"
-									style="text-align:center;width:15px;background-color:#bad9cb"
+									style="text-align:center;width:12px;background-color:#bad9cb"
 									update="inpbot5 grp5Panel lmp6 corMensagem idCheck">
 								</pf:commandButton>
 							</h:panelGrid>
@@ -1344,7 +1349,7 @@
 					<pf:panelGrid id="grp5Panel" columns="9" layout="grid"
 						style="line-height:10px;border-color:#35b3ee;">
 
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita6}"
@@ -1353,7 +1358,7 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita6}"
@@ -1362,12 +1367,12 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita6}"
 									action="#{facadeView.visaoMultiMaterial(amostraNovaController.linha6)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Material(6)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.materialSelecionado}"
@@ -1376,7 +1381,7 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita6}"
@@ -1385,12 +1390,12 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:2%">
+						<pf:column style="width:4%">
 							<h:panelGrid>
 								<pf:commandLink
 									rendered="#{amostraNovaController.parametros.habilita6}"
 									action="#{facadeView.visaoMultiCor(amostraNovaController.linha6)}">
-									<i class="fa fa-search" style="font-size: 1.5em;"
+									<i class="fa fa-search" style="font-size: 1.2em;"
 										title="Pesquisa Cor(6)" />
 									<pf:ajax event="dialogReturn"
 										listener="#{amostraNovaController.corSelecionada}"
@@ -1399,7 +1404,7 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:15%">
+						<pf:column style="width:16%">
 							<h:panelGrid>
 								<pf:inputText
 									rendered="#{amostraNovaController.parametros.habilita6}"
@@ -1408,21 +1413,21 @@
 							</h:panelGrid>
 						</pf:column>
 
-						<pf:column style="width:5%">
+						<pf:column style="width:6%">
 							<h:panelGrid>
 								<pf:selectBooleanCheckbox
 									rendered="#{amostraNovaController.parametros.habilita6}"
 									value="#{facadeView.listaMultiCor.get(amostraNovaController.linha6).corPrincipal}" />
 							</h:panelGrid>
 						</pf:column>
-						<pf:column style="width:7%">
+						<pf:column style="width:8%">
 							<h:panelGrid>
 								<pf:commandButton id="lmp6"
 									rendered="#{amostraNovaController.parametros.btnlimpa6}"
 									title="Remover"
 									actionListener="#{facadeView.apagaDadosMulti(amostraNovaController.linha6)}"
 									icon="fa fa-eraser"
-									style="font-size: 1.5em;color:red;background-color:#bad9cb"
+									style="font-size: 1.2em;color:red;background-color:#bad9cb"
 									update="inpMaterial6 inpCor6 grp0Panel grp1Panel grp2Panel grp3Panel grp4Panel grp5Panel corMensagem pnlgrpVisualizacao">
 								</pf:commandButton>
 							</h:panelGrid>

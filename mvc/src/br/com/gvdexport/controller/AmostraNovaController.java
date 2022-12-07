@@ -434,21 +434,7 @@ public class AmostraNovaController implements Serializable {
 		liberaTransito = false;
 		// inicializa varaveis de pesquisa
 		// inicializa datas
-		iniSolicitacao = null;
-		finSolicitacao = null;
-		iniamostrap = null;
-		finamostrap = null;
-		inisaidaf = null;
-		finsaidaf = null;
-		iniliberap = null;
-		finliberap = null;
-		informaCor = "";
-		informaCorp = "";
-		largura = "";
-		altura = "";
-		mostraListaProducao = false;
-		solicitaLiberacao = false;
-		imageResize = null;
+		inicializaVariaveis();
 		inicializaParametros();
 		inicializaConsulta();
 		iniciaTransCores();
@@ -498,6 +484,7 @@ public class AmostraNovaController implements Serializable {
 		parametros.setBtncheck(true);
 		parametros.setSaveTransicao(true);
 		parametros.setFechaTransicao(false);
+		parametros.setInpdataliberacao(false);
 		//		parametros.setBtnvisao(true); comentado em 26/01
 		setBtnVisao(false);
 		listaCoresComposicao = new ArrayList<>();
@@ -510,6 +497,7 @@ public class AmostraNovaController implements Serializable {
 		refazComposicao = 0;
 		inicializaVetoresOperacoes();
 		imageResize = null;
+		inicializaVariaveis();
 	}
 
 	// Inicaliza parametros de mostragem das abas, em modo true
@@ -753,6 +741,7 @@ public class AmostraNovaController implements Serializable {
 		parametros.setAbacor(false);
 		parametros.setSaveTransicao(true);
 		parametros.setFechaTransicao(true);
+		parametros.setInpdataliberacao(false);
 		setBtnVisao(false);
 		// Libera campo para alteracao
 		// Aqui devera aparecer verificacao se possui fichas em producao
@@ -761,9 +750,6 @@ public class AmostraNovaController implements Serializable {
 		// aqui devera ser verificado se alterar prioridade, devera ter cadastro
 		// completo,caso contrario avisa, que
 		// o que falta (Cor,acabamentos,etc...)
-		if (amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
-			parametros.setPrioridade(true);
-		}
 		// Atualiza variaveis de infomacao
 		facadeView.editCor(amostra.getReferencia().toString().trim(), amostra.getSucCliente(),
 				amostra.getEstacao().getNome(), amostra.getSucFabrica(), amostra.getComponente().getDef1().trim());
@@ -776,9 +762,21 @@ public class AmostraNovaController implements Serializable {
 		if (amostra.getCliente().getGrpclienteinvoice() != null) {
 			buscaListaDestinoAm(amostra);
 		}
+		if ((amostra.getPrioridadeProducao() != amostraClone.getPrioridadeProducao()) && ((listaCoresCadastradas == null || listaCoresCadastradas.size() == 0))) {
+			addMessage(FacesMessage.SEVERITY_WARN, "Não é possivel Liberar Produção, Não tem Cor(es) Cadastradas !","");
+			amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
+			return;
+		}
+		if (amostra.getPrioridadeProducao().equals(PrioridadeProducao.X)) {
+			parametros.setPrioridade(true);
+		}
 		imageResize = ResizeImagem(amostra);
 		if (!mostraListaProducao) {
 			current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
+		}
+		//Habilita campo para liberacao de producao
+		if ((listaCoresCadastradas != null) && (listaCoresCadastradas.size() != 0)) {
+			parametros.setInpdataliberacao(true);
 		}
 	}
 
@@ -1582,6 +1580,7 @@ public class AmostraNovaController implements Serializable {
 			    		addMessage(FacesMessage.SEVERITY_INFO, "Não é possivel Alterar, pois não há Cor(es) Cadastrada(s)!", "");
 						//						Messages.addGlobalWarn("");
 						amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
+						
 						return;	
 					}
 					if (amostra.getDataLiberacaoProducao() == null) {
@@ -1591,7 +1590,7 @@ public class AmostraNovaController implements Serializable {
 				 
 				if ((amostra.getPrioridadeProducao().equals(PrioridadeProducao.X) || amostra.getPrioridadeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridadeProducao().equals(PrioridadeProducao.N))) {
 					amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
-					addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha já foi liberada, não pode alterar Prioridade!", "");
+					addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha já foi liberada, não é possível, alterar Prioridade!", "");
 					return;
 				}
 			}
@@ -2939,5 +2938,23 @@ public class AmostraNovaController implements Serializable {
 		return;
 
 	  }
+	}
+
+	public void inicializaVariaveis() {
+		iniSolicitacao = null;
+		finSolicitacao = null;
+		iniamostrap = null;
+		finamostrap = null;
+		inisaidaf = null;
+		finsaidaf = null;
+		iniliberap = null;
+		finliberap = null;
+		informaCor = "";
+		informaCorp = "";
+		largura = "";
+		altura = "";
+		mostraListaProducao = false;
+		solicitaLiberacao = false;
+		imageResize = null;
 	}
 }

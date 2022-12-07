@@ -919,7 +919,8 @@ public class FacadeAcesso implements Serializable {
 		try {
 			TypedQuery<Amostra> q = em.createQuery("FROM Amostra am " + "WHERE am.gerada = false" + " and "
 		                                                              + "am.temcor = true " + " and "
-		                                                              +	"am.prioridadeProducao = :prioridade",Amostra.class);
+		                                                              +	"am.prioridadeProducao = :prioridade "
+		                                                              + "Order BY " + "am.amostraId Desc ",Amostra.class);
 			q.setParameter("prioridade",PrioridadeProducao.X);
 			return q.getResultList();
 		} catch (Exception ex) {

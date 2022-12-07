@@ -327,9 +327,9 @@ public class ProducaoController implements Serializable {
 			listaFinalSelecaoProducao.add(fichaProducao);
 			try {
 				fichaProducaoDao.update(fichaProducao);
-				Messages.addGlobalInfo("Ficha Produção Gerada com sucesso !");
 				corFinal.setProducao(true);
 				corAmostraNovaDao.update(corFinal);
+				Messages.addGlobalInfo("Ficha Produção Gerada com sucesso !");
 				geradaOk = true;
 				renovaLazy();
 			} catch (RuntimeException ex) {

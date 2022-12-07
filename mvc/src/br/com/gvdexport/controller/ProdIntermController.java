@@ -227,20 +227,15 @@ public class ProdIntermController implements Serializable {
 	// ajusta selecao das cores caso, seja marcado na amostra
 	public void checkCoresDaAmostra(Amostra auxAmostra) {
 		Integer xCores = 0;
-		if (auxAmostra.getCoresAmostra().size() > 1) {
-			xCores = (auxAmostra.getCoresAmostra().size() - 1);
-		   
-	   }else {
+		if (auxAmostra.getCoresAmostra().size() != 0) {
 			xCores = (auxAmostra.getCoresAmostra().size());
 	   }
 		setQtdCores(0);
 		if (auxAmostra.getAmostraselecao()) {
 			for (int i = 0; i < xCores; i++) {
 				if (auxAmostra.getCoresAmostra().get(i).getDesenvolveramostra().equals(SimNao.S)) {
-					if (!auxAmostra.getCoresAmostra().get(i).getProducao()) {
 						auxAmostra.getCoresAmostra().get(i).setCorselecao(true);
 						qtdCores++;
-					}
 				}
 			}
 		}else {
@@ -266,10 +261,7 @@ public class ProdIntermController implements Serializable {
 		Integer xCores = 0;
 		setQtdCores(0);
 		for (Amostra amostraFichaProduzir : listaAmostraProduzir) {
-			if (amostraFichaProduzir.getCoresAmostra().size() > 1) {
-			  xCores = (amostraFichaProduzir.getCoresAmostra().size() - 1);
-			}else
-			{
+			if (amostraFichaProduzir.getCoresAmostra().size() != 0) {
 			  xCores = (amostraFichaProduzir.getCoresAmostra().size());
 			}
 			for (int i = 0; i < xCores; i++) {
@@ -318,9 +310,7 @@ public class ProdIntermController implements Serializable {
 	// Metodo auxiliar para gravacao das cores selecionadas
 	public void gerarFichaProdCor(Amostra amostraFichaProduzir) {
 		Integer xCores = 0;
-		if (amostraFichaProduzir.getCoresAmostra().size() > 1) {
-			xCores = (amostraFichaProduzir.getCoresAmostra().size() - 1);
-		}else {
+		if (amostraFichaProduzir.getCoresAmostra().size() != 1) {
 			xCores = amostraFichaProduzir.getCoresAmostra().size();
 		}
 		Integer xCoresGeradas = 0; // Aqui mostrar se ha fichas ja criadas
