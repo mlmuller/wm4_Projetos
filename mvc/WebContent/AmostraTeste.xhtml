@@ -39,8 +39,8 @@
 	.ui-widget .ui-widget {
 	    font-size: 12px !important;
 	 }   
-	.alturalinhaDatatable .ui-datatable-data{
-		height: 20px;		
+	.alturalinhaDatatable .ui-datatable .ui-datatable-data tr{
+		height: 15px;		
 	}
   }
 
@@ -208,11 +208,9 @@
 							<pf:column style="font-size:9px;width:3px;text-align:center;">
 								<h:outputText value="#{cor.desenvolveramostra}" />
 							</pf:column>
-							<pf:column style="font-size:9px;width:5px;font-weight:bold;text-align:center">
-								<li style="color:#{cor.producao ? 'green' : 'red'}">
+							<pf:column style="text-align:center">
 								<h:outputText
-									value="#{cor.marca}" />
-								</li>
+									value="#{cor.marca}" style="font-size:1.2em;color:#{cor.producao eq 'true' ? 'green' : 'red'}" title="Status geração ficha Produção" />
 							</pf:column>
 							<pf:column style="font-size:9px;" width="90">
 								<h:outputText value="#{cor.material}" style="font-size:9px;white-space:normal;" />
@@ -449,12 +447,12 @@
 									<h:panelGrid columns="2" id="pnlDataLiberacao"
 										styleClass="panelgrlsb" rendered="#{amostraNovaController.parametros.inpdataliberacao}">
 										<h:outputLabel value="#{msg['usocomum.label.liberap']}" />
-											<pf:datePicker
-												value="#{producaoController.amostra.dataLiberacaoProducao}"
-												pattern="dd-MM-yyyy HH:mm" monthNavigator="true" size="15"
-												style="text-align:left;" locale="pt">
-												<pf:effect event="dbclick" type="slide" />
-											</pf:datePicker>
+										<h:outputText
+											value="#{amostraNovaController.amostra.dataLiberacaoProducao}" 
+											style="color:green">
+											<f:convertDateTime type="localDate" dateStyle="long"
+												pattern="dd-MM-yyyy HH:mm a" />
+										</h:outputText>
 									</h:panelGrid>
 									<h:panelGrid columns="3">
 										<h:outputLabel value="#{msg['usocomum.label.estacao']}" />

@@ -33,7 +33,7 @@ public class Cidade implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cidadeSeq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cidadeSeq")
 	@SequenceGenerator(name = "cidadeSeq", sequenceName = "s_cidade", allocationSize = 1)
 	@Column(name="cida_pk",updatable=false,nullable=false)
 	private Long cidadeid;

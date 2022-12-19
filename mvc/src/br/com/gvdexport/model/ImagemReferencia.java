@@ -41,7 +41,7 @@ public class ImagemReferencia implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO ,generator = "imreferenciaseq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator = "imreferenciaseq")
 	@SequenceGenerator(name= "imreferenciaseq",sequenceName = "s_imreferencia", allocationSize = 1)
 	@Column(name="imlire_pk",updatable=false,nullable=false)
 	private Long imagemlivroreferenciaid;

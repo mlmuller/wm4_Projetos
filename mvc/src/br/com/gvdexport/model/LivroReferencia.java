@@ -31,7 +31,7 @@ public class LivroReferencia implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO ,generator = "referenciaseq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator = "referenciaseq")
 	@SequenceGenerator(name= "referenciaseq",sequenceName = "s_referencia", allocationSize = 1)
 	@Column(name="lire_pk",updatable=false,nullable=false)
 	private Long livroreferenciaid;

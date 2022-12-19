@@ -380,10 +380,8 @@
 						<pf:column style="text-align:center;">
 							<h:outputText value="#{cor.desenvolveramostra}" />
 						</pf:column>
-						<pf:column>
-							<li style="color:#{(cor.producao ? 'green' : 'red')}" >
-								<h:outputText value="#{cor.marca}"/>
-							</li>
+						<pf:column style="text-align:center;">
+							<h:outputText value="#{cor.marca}" style="color:#{cor.producao eq 'true' ? 'green' : 'red'}"/>
 						</pf:column>
 						<pf:column style="font-size:9px;" width="3">
 							<h:outputText value="#{cor.sequenciaCorAmostra}" 

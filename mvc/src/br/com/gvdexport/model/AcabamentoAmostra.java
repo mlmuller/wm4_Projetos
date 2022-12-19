@@ -30,7 +30,7 @@ public class AcabamentoAmostra implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "amostraacabSeq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "amostraacabSeq")
 	@SequenceGenerator(name = "amostraacabSeq", sequenceName = "s_amostraacab", allocationSize = 1)
 	@Column(name="idacabamentoamostra",updatable=false,nullable=false)
 	private Long id;

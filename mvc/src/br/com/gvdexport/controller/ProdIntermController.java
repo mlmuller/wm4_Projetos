@@ -205,7 +205,7 @@ public class ProdIntermController implements Serializable {
 		listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
 		if ((listaAmostraProduzir == null) || (listaAmostraProduzir.isEmpty())) {
 			qtdFichas = 0;
-		}else {
+		} else {
 			qtdFichas = listaAmostraProduzir.size();
 		}
 		listaFiltroAmostras = new ArrayList<Amostra>();
@@ -214,7 +214,7 @@ public class ProdIntermController implements Serializable {
 		operacaoPosterior = 0;
 		operacao = 0;
 	}
-	
+
 	public void badgeaGerar() {
 		if ((listaAmostraProduzir == null) || (listaAmostraProduzir.isEmpty())) {
 			qtdFichas = 0;
@@ -222,23 +222,24 @@ public class ProdIntermController implements Serializable {
 			listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
 			qtdFichas = listaAmostraProduzir.size();
 		}
-		
+
 	}
+
 	// ajusta selecao das cores caso, seja marcado na amostra
 	public void checkCoresDaAmostra(Amostra auxAmostra) {
 		Integer xCores = 0;
 		if (auxAmostra.getCoresAmostra().size() != 0) {
 			xCores = (auxAmostra.getCoresAmostra().size());
-	   }
+		}
 		setQtdCores(0);
 		if (auxAmostra.getAmostraselecao()) {
 			for (int i = 0; i < xCores; i++) {
 				if (auxAmostra.getCoresAmostra().get(i).getDesenvolveramostra().equals(SimNao.S)) {
-						auxAmostra.getCoresAmostra().get(i).setCorselecao(true);
-						qtdCores++;
+					auxAmostra.getCoresAmostra().get(i).setCorselecao(true);
+					qtdCores++;
 				}
 			}
-		}else {
+		} else {
 			for (int i = 0; i < xCores; i++) {
 				if (auxAmostra.getCoresAmostra().get(i).getDesenvolveramostra().equals(SimNao.S)) {
 					if (!auxAmostra.getCoresAmostra().get(i).getProducao()) {
@@ -256,64 +257,89 @@ public class ProdIntermController implements Serializable {
 	// Metodos para identificar selecao total ou parcial
 
 	public void gerarFichadeProducao() {
-		Boolean temFichaCorSelecionada = false;
+		List<Amostra> auxListaProduzir = new ArrayList<Amostra>();
 		parcialTotal = false;
 		Integer xCores = 0;
 		setQtdCores(0);
-		for (Amostra amostraFichaProduzir : listaAmostraProduzir) {
-			if (amostraFichaProduzir.getCoresAmostra().size() != 0) {
-			  xCores = (amostraFichaProduzir.getCoresAmostra().size());
-			}
-			for (int i = 0; i < xCores; i++) {
-				if ((amostraFichaProduzir.getCoresAmostra().get(i).getCorselecao() != null) && (amostraFichaProduzir.getCoresAmostra().get(i).getCorselecao())) {
-					temFichaCorSelecionada = true;
-				}
-			if (amostraFichaProduzir.getCoresAmostra().get(i).getDesenvolveramostra().equals(SimNao.S)) {
-				qtdCores++;
-			}
-		}
-		}
-		if (!temFichaCorSelecionada) {
-			if (qtdCores > 1) {
-			Messages.addGlobalError("Selecione pelo menos uma cor !");
+		xCores = (listaAmostraProduzir.size());
+
+		if (xCores == 0) {
+			Messages.addGlobalWarn("Não há fichas selecionadas para geração de Produção !");
 			return;
+		}
+
+		//Consistencia , para verificação se foi marcado cor, mas nao a ficha,primeiro marca a ficha, e se necessario
+		//desmarque alguma cor que nao queira gerar naquele instante
+		for (Amostra amostraProduzir : listaAmostraProduzir) {
+			if (!amostraProduzir.getAmostraselecao()) {
+				for (int i = 0; i < amostraProduzir.getCoresAmostra().size(); i++) {
+					if (amostraProduzir.getCoresAmostra().get(i).getCorselecao()) {
+						qtdCores++;
+					}
+				}
+				if (qtdCores != 0) {
+					Messages.addGlobalWarn("Selecione Primeiro Amostra, e desmarque a cor caso seja necessario após !");
+					return;
+				}
 			}
 		}
-		amostraFichaProduzirFinal = new Amostra();
+		setQtdCores(0);
 		for (Amostra amostraFichaProduzir : listaAmostraProduzir) {
-			gerarFichaProdCor(amostraFichaProduzir);
-			amostraFichaProduzirFinal = amostraFichaProduzir;
+			if (amostraFichaProduzir.getAmostraselecao()) {
+				auxListaProduzir.add(amostraFichaProduzir);
+			}
+		}
+		if (auxListaProduzir.size() == 0) {
+			Messages.addGlobalError("Não há Amostra(s) para geração de Produção !");
+			return;
+		}
+
+		amostraFichaProduzirFinal = new Amostra();
+		Integer xCoresGeradas = 0; // Aqui mostrar se ha fichas ja criadas
+		for (Amostra amostraFichaProduzirAux : auxListaProduzir) {
+			xCores = amostraFichaProduzirAux.getCoresAmostra().size();
+			for (int i = 0; i < xCores; i++) {
+				if (amostraFichaProduzirAux.getCoresAmostra().get(i).getCorselecao()) {
+					xCoresGeradas++;
+				}
+			}
+			//Se valores diferentes, a ficha, nao pode ser marcada como gerada,exstira um parcial 
+			if (xCoresGeradas == xCores) {
+				setParcialTotal(true);
+
+			} else {
+				setParcialTotal(false);
+
+			}
+
+			gerarFichaProdCor(amostraFichaProduzirAux,xCores);
+			amostraFichaProduzirFinal = amostraFichaProduzirAux;
+			if ((listaTmpCoresSelecionasAmostras != null) && (!listaTmpCoresSelecionasAmostras.isEmpty())) {
+				Boolean geradaOk = geraBancoFichaProducao();
+				if ((geradaOk) && (parcialTotal)) {
+					amostraFichaProduzirFinal.setGerada(true);
+					amostraDao.update(amostraFichaProduzirFinal);
+				} else {
+					amostraFichaProduzirFinal.setGerada(false);
+					amostraDao.update(amostraFichaProduzirFinal);
+				}
+				amostraFichaProduzirFinal = new Amostra();
+				// Refaz consulta se ha pendencias e renova visao do datatable
+				listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
+				if (listaAmostraProduzir.size() == 0) {
+					qtdFichas = 0;
+				}
+				Messages.addGlobalInfo("Ficha(s) Produção(ões) Gerada(s) com sucesso !");
+			}
 		}
 		// Tudo certo, gera linhas de gravacao no banco
 		//
-		if ((listaTmpCoresSelecionasAmostras != null) && (!listaTmpCoresSelecionasAmostras.isEmpty())) {
-			Boolean geradaOk = geraBancoFichaProducao();
-			if ((geradaOk) && (parcialTotal)) {
-				amostraFichaProduzirFinal.setGerada(true);
-				amostraDao.update(amostraFichaProduzirFinal);
-			} else {
-				amostraFichaProduzirFinal.setGerada(false);
-				amostraDao.update(amostraFichaProduzirFinal);
-			}
-			amostraFichaProduzirFinal = new Amostra();
-			// Refaz consulta se ha pendencias e renova visao do datatable
-			listaAmostraProduzir = facadeAcesso.getExisteFichaNLAmostra();
-			if (listaAmostraProduzir.size() == 0) {
-				qtdFichas = 0;
-			}
-		} else {
-			Messages.addGlobalWarn("Não ha Amostras para geração de Producao!");
-			return;
-		}
-	}
-
+		// aqui foi adicionado for next principal,pois pode ter mais de uma amostra
+		// para gerar..
+	 }
 	// Metodo auxiliar para gravacao das cores selecionadas
-	public void gerarFichaProdCor(Amostra amostraFichaProduzir) {
-		Integer xCores = 0;
-		if (amostraFichaProduzir.getCoresAmostra().size() != 1) {
-			xCores = amostraFichaProduzir.getCoresAmostra().size();
-		}
-		Integer xCoresGeradas = 0; // Aqui mostrar se ha fichas ja criadas
+	public void gerarFichaProdCor(Amostra amostraFichaProduzir,Integer xCores) {
+		// observar que vetor começa de 0
 		listaTmpCoresSelecionasAmostras = new ArrayList<>();
 		// duas situacoes, se for marcado na amostra pega todas, se nao verificar cores
 		// afirmadas
@@ -321,9 +347,12 @@ public class ProdIntermController implements Serializable {
 			for (int i = 0; i < xCores; i++) {
 				if ((amostraFichaProduzir.getCoresAmostra().get(i).getDesenvolveramostra().equals(SimNao.S))) {
 					listaTmpCoresSelecionasAmostras.add(amostraFichaProduzir.getCoresAmostra().get(i));
-					if ((amostraFichaProduzir.getGerada() != null) && (amostraFichaProduzir.getGerada())) {
-						xCoresGeradas++;
-					}
+//					if ((amostraFichaProduzir.getGerada() != null) && (!amostraFichaProduzir.getGerada())) {
+//						// adicionado em 07/10/22
+//						if (!amostraFichaProduzir.getCoresAmostra().get(i).getProducao()) {
+//							xCoresGeradas++;
+//						}
+//					}
 				}
 			}
 		} else {
@@ -334,20 +363,14 @@ public class ProdIntermController implements Serializable {
 						&& (!amostraFichaProduzir.getCoresAmostra().get(i).getProducao())) {
 					listaTmpCoresSelecionasAmostras.add(amostraFichaProduzir.getCoresAmostra().get(i));
 				}
-				if ((amostraFichaProduzir.getCoresAmostra().get(i).getProducao() != null) && (amostraFichaProduzir.getCoresAmostra().get(i).getProducao())) {
-					xCoresGeradas++;
-				}
+//				if ((amostraFichaProduzir.getCoresAmostra().get(i).getProducao() != null)
+//						&& (!amostraFichaProduzir.getCoresAmostra().get(i).getProducao())) {
+//					xCoresGeradas++;
+//				}
 			}
 			// Codigo determina se a amostra foi criada parcial ou total, se parcial
 			// gerada=false,pois podera ser gerada
 			// em momento posterior, outra(as) cores
-		}
-		if ((xCoresGeradas+1) == qtdCores) {
-			setParcialTotal(true);
-
-		} else {
-			setParcialTotal(false);
-
 		}
 
 	}
@@ -373,12 +396,15 @@ public class ProdIntermController implements Serializable {
 			fichaProducao.setTemlog(false);
 			listaFinalSelecaoProducao.add(fichaProducao);
 			try {
-				String marcaCerta = "\u2713";
-				if ((corFinal.getDesenvolveramostra().equals(SimNao.N)) || (!corFinal.getProducao())) {
-					marcaCerta = "\u0021";
+				String marcaCerta = "✓";
+				if ((corFinal.getDesenvolveramostra().equals(SimNao.N))) {
+					marcaCerta = "🚫";
+				}else {
+					if (!corFinal.getProducao()) {
+						marcaCerta = "⌚";
+					}
 				}
 				fichaProducaoDao.update(fichaProducao);
-				Messages.addGlobalInfo("Ficha Produção Gerada com sucesso !");
 				corFinal.setProducao(true);
 				corFinal.setMarca(marcaCerta);
 				corAmostraNovaDao.update(corFinal);
@@ -480,9 +506,10 @@ public class ProdIntermController implements Serializable {
 		Cor corEscolha = new Cor();
 		corEscolha = (Cor) event.getObject();
 	}
-    public void filtrosManIntProducao(ToggleEvent event) {
+
+	public void filtrosManIntProducao(ToggleEvent event) {
 //        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Filtros", "Visiveis:" + event.getVisibility());
 //        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+	}
 
 }

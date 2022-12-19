@@ -39,7 +39,7 @@ public class FichaProducao implements Serializable,Cloneable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "fichaproducaoSeq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fichaproducaoSeq")
 	@SequenceGenerator(name = "fichaproducaoSeq", sequenceName = "s_fichaproducao", allocationSize = 1)
 	@Column(name="fichaproducao_pk",updatable=false,nullable=false)
 	private Long fichaproducaoid;

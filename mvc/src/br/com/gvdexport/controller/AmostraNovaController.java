@@ -163,7 +163,7 @@ public class AmostraNovaController implements Serializable {
 	private Integer operacaoPosterior;
 	@Getter @Setter
 	private Boolean salvaUm;
-	// Esta variavel comb e boolean , verificar se È necessario produzir a amostra
+	// Esta variavel comb e boolean , verificar se √© necessario produzir a amostra
 	// ou nao.
 	@Getter @Setter
 	private Integer verProduzAmostra;
@@ -193,7 +193,7 @@ public class AmostraNovaController implements Serializable {
 	private List<FilterMeta> filterBy;	
 
 
-	//Estas variaveis definirao se haver„o alteraÁıes nas etapas em relacao aos clones
+	//Estas variaveis definirao se haver√£o altera√ß√µes nas etapas em relacao aos clones
 	
 	@Getter @Setter
 	private Boolean fase1;
@@ -429,7 +429,7 @@ public class AmostraNovaController implements Serializable {
 		btnVisao = false;
 		statusGeracao = false;
 		parametros.setTemLog(false);
-		parametros.setLogModulo("N„o H·");
+		parametros.setLogModulo("N√£o H√°");
 		parametros.setAllTransicao(false);
 		liberaTransito = false;
 		// inicializa varaveis de pesquisa
@@ -460,8 +460,8 @@ public class AmostraNovaController implements Serializable {
 
 	//
 	// Operacao 0 = inclusao
-	// 1 = AlteraÁ„o
-	// 2 = DuplicaÁ„o
+	// 1 = Altera√ß√£o
+	// 2 = Duplica√ß√£o
 	public void add() {
 		amostra = new Amostra();
 		operacao = 0;
@@ -517,7 +517,7 @@ public class AmostraNovaController implements Serializable {
 		corAmostra.setAmostraId(amostra.getAmostraId());
 		corAmostra.setAmostra(amostra);
 		corAmostra.setDesenvolveramostra(SimNao.S);
-		corAmostra.setMarca("?");
+		corAmostra.setMarca("‚è±");
 		corAmostra.setTotalPar(BigDecimal.ZERO);
 		corAmostra.setParGvd(BigDecimal.ZERO);
 		corAmostra.setParCancelado(BigDecimal.ZERO);
@@ -550,11 +550,11 @@ public class AmostraNovaController implements Serializable {
 		parametros.setBtnlimpa6(false);
 		// inicializa transientes cores de acabamento
 		iniciaTransCores();
-		// Carrega todas as listas , porque se n„o carregar, e chamar por exemplo Corte,
+		// Carrega todas as listas , porque se n√£o carregar, e chamar por exemplo Corte,
 		// em uma nova
 		// Cor, este carregar corretamente a nova cor, mas paa a proxima aba, ex:
 		// Costura, verificar que as variaveis de Renderizacao
-		// s„o as mesmas e carregar os includes do anterior. A Nova consulta tem 4 cor,
+		// s√£o as mesmas e carregar os includes do anterior. A Nova consulta tem 4 cor,
 		// e a anterior tem duas,os includes sao todos carregados..
 		setBtnVisao(false);
 		//
@@ -575,7 +575,7 @@ public class AmostraNovaController implements Serializable {
 		if ((operacaoPosterior == 0) || operacaoPosterior == 1) {
 			listaCoresCadastradas = facadeAcesso.getBuscaCoresAmostra(amostra.getAmostraId());
 			if (listaCoresCadastradas.size() > 3) {
-				Messages.addGlobalError("N„o È possivel incluir Novas Cores, Limite de 4 Cores!");
+				Messages.addGlobalError("N√£o √© possivel incluir Novas Cores, Limite de 4 Cores!");
 				FacesContext.getCurrentInstance().validationFailed();
 				return;
 			}
@@ -709,12 +709,12 @@ public class AmostraNovaController implements Serializable {
 					}
 				}
 				if (mostraListaProducao) {
-					addMessage(FacesMessage.SEVERITY_WARN, "Existe(m) Ficha(s) em ProduÁ„o !","");
+					addMessage(FacesMessage.SEVERITY_WARN, "Existe(m) Ficha(s) em Produ√ß√£o !","");
 					current.executeScript("PF('listaAmostraemProdDlg').show()");
 					return;
 				}else {
 //					//adic em 19/10/2022, todas esta em transito,entao precisa atribuir,reg vindo
-//					//do datatable,caso nao , mostrar· tela vazia...
+//					//do datatable,caso nao , mostrar√° tela vazia...
 //					current.executeScript("PF('addEditFormAmostraNovaDlg').show()");
 //					current.ajax().update("crudFormAmostraSecundario");
 				}
@@ -724,7 +724,7 @@ public class AmostraNovaController implements Serializable {
 
 		posicaoAtual = 0;
 		amostraClone = (Amostra) amostra.clone();
-		//Campo È informado na construcao(Solado, e È gravado na tabela de amostras
+		//Campo √© informado na construcao(Solado, e √© gravado na tabela de amostras
 		operacao = 1;
 		// adiconado em 14/04
 		operacaoPosterior = 0;
@@ -754,7 +754,7 @@ public class AmostraNovaController implements Serializable {
 		facadeView.editCor(amostra.getReferencia().toString().trim(), amostra.getSucCliente(),
 				amostra.getEstacao().getNome(), amostra.getSucFabrica(), amostra.getComponente().getDef1().trim());
 		// Para liberar este campo nao pode ter ficha de producao e se tiver precisa
-		// libera-la pela ProduÁ„o
+		// libera-la pela Produ√ß√£o
 
 		// Lista com cores da amostra Selecionada
 		listaCoresCadastradas = new ArrayList<>();
@@ -763,7 +763,7 @@ public class AmostraNovaController implements Serializable {
 			buscaListaDestinoAm(amostra);
 		}
 		if ((amostra.getPrioridadeProducao() != amostraClone.getPrioridadeProducao()) && ((listaCoresCadastradas == null || listaCoresCadastradas.size() == 0))) {
-			addMessage(FacesMessage.SEVERITY_WARN, "N„o È possivel Liberar ProduÁ„o, N„o tem Cor(es) Cadastradas !","");
+			addMessage(FacesMessage.SEVERITY_WARN, "N√£o √© possivel Liberar Produ√ß√£o, N√£o tem Cor(es) Cadastradas !","");
 			amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
 			return;
 		}
@@ -835,7 +835,7 @@ public class AmostraNovaController implements Serializable {
 
 		// Corte
 		if (!corteAmostraPresente.isPresent()) {
-			Messages.addGlobalError("Por Favor, antes, vocÍ deveria, Inserir Dados Corte");
+			Messages.addGlobalError("Por Favor, antes, voc√™ deveria, Inserir Dados Corte");
 			return;
 		} else {
 			CorteAmostra corteAmostraClone = new CorteAmostra();
@@ -876,7 +876,7 @@ public class AmostraNovaController implements Serializable {
 
 		// Costura
 		if (!costuraAmostraPresente.isPresent()) {
-			addMessage(FacesMessage.SEVERITY_WARN,"Por Favor, antes, vocÍ deveria, Inserir Dados Costura!" , "");
+			addMessage(FacesMessage.SEVERITY_WARN,"Por Favor, antes, voc√™ deveria, Inserir Dados Costura!" , "");
 			return;
 		} else {
 			CosturaAmostra costuraAmostraClone = new CosturaAmostra();
@@ -919,7 +919,7 @@ public class AmostraNovaController implements Serializable {
 
 		// Costura
 		if (!construcaoAmostraPresente.isPresent()) {
-			Messages.addGlobalError("Por Favor, antes, vocÍ deveria, Inserir Dados na Construcao");
+			Messages.addGlobalError("Por Favor, antes, voc√™ deveria, Inserir Dados na Construcao");
 			return;
 		} else {
 			Construcao construcaoAmostraClone = new Construcao();
@@ -962,7 +962,7 @@ public class AmostraNovaController implements Serializable {
 
 		// Acabamento
 		if (!acabamentoAmostraPresente.isPresent()) {
-			Messages.addGlobalError("Por Favor, antes, vocÍ deveria, Inserir Dados Acabamento");
+			Messages.addGlobalError("Por Favor, antes, voc√™ deveria, Inserir Dados Acabamento");
 			return;
 		} else {
 			AcabamentoAmostra acabamentoAmostraClone = new AcabamentoAmostra();
@@ -996,7 +996,7 @@ public class AmostraNovaController implements Serializable {
 	}
 	public void deleteCor(CorAmostra corDeleteAmostra) {
 		if (corDeleteAmostra == null) {
-			Messages.addGlobalError("N„o h· Cor(es) Cadastrada(s) !");
+			Messages.addGlobalError("N√£o h√° Cor(es) Cadastrada(s) !");
 			return;
 		}
 
@@ -1007,7 +1007,7 @@ public class AmostraNovaController implements Serializable {
 		 * 1) Verificar se a cor tem ficha de producao,caso tenha, solicitar primeiro
 		 * cancelamento na producao 2) Cancelamento na producao, devera ter uma
 		 * justificativa, para efetu-la, que ficara vinculada a amostra de Origem 3)
-		 * Verificar se tem ficha de confirmaÁ„o, caso contrario nao pode ser efetuado.
+		 * Verificar se tem ficha de confirma√ß√£o, caso contrario nao pode ser efetuado.
 		 * 4) Se tiver data de entrega de producao, nao pode ser cancelada 5) Sem
 		 * producao,efetua cancelamento normal de todas
 		 */
@@ -1019,17 +1019,17 @@ public class AmostraNovaController implements Serializable {
 		// quando houver modulo atelier
 		//--Testa se tem ficha producao, primeiros testes
 		if (amostra.getDataLiberacaoProducao() != null) {
-			Messages.addGlobalError("Amostra em ProduÁ„o!!!, n„o pode ser cancelada qualquer cor!");
+			Messages.addGlobalError("Amostra em Produ√ß√£o!!!, n√£o pode ser cancelada qualquer cor!");
 			return;
 		}
 		fichaProducao = new FichaProducao();
 		fichaProducao = facadeAcesso.buscaCoramostraProducao(corDeleteAmostra.getId());
 		if (fichaProducao != null && fichaProducao.getLiberadoalteraramostra().name().equals("L")){
-			Messages.addGlobalError("N„o È possivel Excluir Cor, Ficha ProduÁ„o em circulaÁ„o,Avise Almoxarifado!");
+			Messages.addGlobalError("N√£o √© possivel Excluir Cor, Ficha Produ√ß√£o em circula√ß√£o,Avise Almoxarifado!");
 			return;
 		}
 		if (fichaProducao != null && !fichaProducao.getLiberadoalteraramostra().name().equals("L") && fichaProducao.getSituacao().name().equals("N")){
-			Messages.addGlobalError("N„o È possivel Excluir Cor,Ficha ProduÁ„o,N„o est· liberada !");
+			Messages.addGlobalError("N√£o √© possivel Excluir Cor,Ficha Produ√ß√£o,N√£o est√° liberada !");
 			return;
 		}
 		//-------------------------------------------------
@@ -1053,7 +1053,7 @@ public class AmostraNovaController implements Serializable {
 				corAmostraMultidao.deleteCorMulti(listaCorMultiAux);
 				renovaLazy();
 			} catch (RuntimeException ex) {
-				Messages.addGlobalError("N„o foi possivel Excluir CombinaÁ„o Multi para cor Selecionada!");
+				Messages.addGlobalError("N√£o foi possivel Excluir Combina√ß√£o Multi para cor Selecionada!");
 				ex.printStackTrace();
 				return;
 			}
@@ -1066,13 +1066,13 @@ public class AmostraNovaController implements Serializable {
 				corAmostraMultidao.deleteCabedalMulti(listaCabedalMultiAux);
 				renovaLazy();
 			} catch (RuntimeException ex) {
-				Messages.addGlobalError("N„o foi possivel Excluir CombinaÁ„o Multi para cor Selecionada!");
+				Messages.addGlobalError("N√£o foi possivel Excluir Combina√ß√£o Multi para cor Selecionada!");
 				ex.printStackTrace();
 				return;
 			}
 		}
 		//
-		// Primeira Etapa Cancelamento CombinaÁıes
+		// Primeira Etapa Cancelamento Combina√ß√µes
 		// Busca Cor Corte para Cancelamento
 		//
 		try {
@@ -1082,7 +1082,7 @@ public class AmostraNovaController implements Serializable {
 				corCorteAmostraDao.delete(corCorteAux.getId());
 			}
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel Excluir Cor/CombinaÁ„o Corte!");
+			Messages.addGlobalError("N√£o foi possivel Excluir Cor/Combina√ß√£o Corte!");
 			ex.printStackTrace();
 			return;
 		}
@@ -1094,7 +1094,7 @@ public class AmostraNovaController implements Serializable {
 				corCosturaAmostraDao.delete(corCosturaAux.getId());
 			}
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel Excluir Cor/CombinaÁ„o Costura!");
+			Messages.addGlobalError("N√£o foi possivel Excluir Cor/Combina√ß√£o Costura!");
 			ex.printStackTrace();
 			return;
 		}
@@ -1108,7 +1108,7 @@ public class AmostraNovaController implements Serializable {
 				corSoladoAmostraDao.delete(corSoladoAux.getId());
 			}
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel Excluir Cor/CombinaÁ„o Solado!");
+			Messages.addGlobalError("N√£o foi possivel Excluir Cor/Combina√ß√£o Solado!");
 			ex.printStackTrace();
 			return;
 		}
@@ -1121,7 +1121,7 @@ public class AmostraNovaController implements Serializable {
 				corAcabamentoAmostraDao.delete(corAcabamentoAux.getId());
 			}
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel Excluir Cor/CombinaÁ„o Acabamento!");
+			Messages.addGlobalError("N√£o foi possivel Excluir Cor/Combina√ß√£o Acabamento!");
 			ex.printStackTrace();
 			return;
 		}
@@ -1139,7 +1139,7 @@ public class AmostraNovaController implements Serializable {
 			Messages.addGlobalInfo("Cor Cancelada com Sucesso !");
 
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel Excluir Cor/CombinaÁ„o Acabamento!");
+			Messages.addGlobalError("N√£o foi possivel Excluir Cor/Combina√ß√£o Acabamento!");
 			ex.printStackTrace();
 			return;
 		}
@@ -1460,10 +1460,10 @@ public class AmostraNovaController implements Serializable {
 			}
 			setDuplica(true);
 			renovaLazy();
-			Messages.addGlobalInfo("ReplicaÁ„o Nova amostra com sucesso !");
+			Messages.addGlobalInfo("Replica√ß√£o Nova amostra com sucesso !");
 			return;
 		} catch (Exception ex) {
-			Messages.addGlobalError("N„o foi possivel Duplicar Ficha :" + amostra.getAmostraId());
+			Messages.addGlobalError("N√£o foi possivel Duplicar Ficha :" + amostra.getAmostraId());
 			ex.printStackTrace();
 			return;
 		}
@@ -1541,11 +1541,11 @@ public class AmostraNovaController implements Serializable {
 					erro = false;
 				}
 				if (amostra.getFabrica() == null) {
-					Messages.addGlobalFatal("Selecione F·brica!");
+					Messages.addGlobalFatal("Selecione F√°brica!");
 					erro = false;
 				}
 				if (amostra.getReferencia() == null) {
-					Messages.addGlobalError("Selecione ReferÍncia!");
+					Messages.addGlobalError("Selecione Refer√™ncia!");
 					erro = false;
 				}
 				if (amostra.getDtxfct() == null) {
@@ -1557,7 +1557,7 @@ public class AmostraNovaController implements Serializable {
 					erro = false;
 				}
 				if (amostra.getEstacao() == null) {
-					Messages.addGlobalError("Selecione EstaÁ„o !");
+					Messages.addGlobalError("Selecione Esta√ß√£o !");
 					erro = false;
 				}
 				if (!erro) {
@@ -1577,7 +1577,7 @@ public class AmostraNovaController implements Serializable {
 						|| ((amostra.getPrioridadeProducao().name().equals("U"))))
 						&& (amostraClone.getPrioridadeProducao().name().equals("X")))) {
 					if (amostra.getCoresAmostra().size() == 0) {
-			    		addMessage(FacesMessage.SEVERITY_INFO, "N„o È possivel Alterar, pois n„o h· Cor(es) Cadastrada(s)!", "");
+			    		addMessage(FacesMessage.SEVERITY_INFO, "N√£o √© possivel Alterar, pois n√£o h√° Cor(es) Cadastrada(s)!", "");
 						//						Messages.addGlobalWarn("");
 						amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
 						
@@ -1590,7 +1590,7 @@ public class AmostraNovaController implements Serializable {
 				 
 				if ((amostra.getPrioridadeProducao().equals(PrioridadeProducao.X) || amostra.getPrioridadeProducao().equals(PrioridadeProducao.U)) && (amostraClone.getPrioridadeProducao().equals(PrioridadeProducao.N))) {
 					amostra.setPrioridadeProducao(amostraClone.getPrioridadeProducao());
-					addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha j· foi liberada, n„o È possÌvel, alterar Prioridade!", "");
+					addMessage(FacesMessage.SEVERITY_ERROR, "Esta ficha j√° foi liberada, n√£o √© poss√≠vel, alterar Prioridade!", "");
 					return;
 				}
 			}
@@ -1639,7 +1639,7 @@ public class AmostraNovaController implements Serializable {
 			}
 			amostra.setLog(mAux);
 			amostra = amostraDao.update(amostra);
-			Messages.addGlobalInfo("OperaÁ„o realizada com Sucesso !");
+			Messages.addGlobalInfo("Opera√ß√£o realizada com Sucesso !");
 			if (mAux) {
 				listaLogs = facadeAcesso.getBuscaLogsAmostraNova(amostra.getAmostraId());
 			}
@@ -1648,9 +1648,9 @@ public class AmostraNovaController implements Serializable {
 			btnVisao = false;
 			parametros.setBtncheck(false);
 			renovaLazy();
-			// Guarda ID gerado, para uso posterior nas tabelas de ligaÁ„o a ficha
+			// Guarda ID gerado, para uso posterior nas tabelas de liga√ß√£o a ficha
 		} catch (Exception ex) {
-			Messages.addGlobalError("N„o foi possivel executar a operaÁ„o Ficha de Amostra!");
+			Messages.addGlobalError("N√£o foi possivel executar a opera√ß√£o Ficha de Amostra!");
 			ex.printStackTrace();
 			return;
 		}
@@ -1717,11 +1717,11 @@ public class AmostraNovaController implements Serializable {
 				corAmostra.setDataStamp(corAmostraNovaDao.getDateLocalTime());
 				corAmostra.setUsuarioStamp(usuarioLogado.getUsuariologado().getUsuario());
 				if (corAmostra.getTotalPar().signum() < 0) {
-					Messages.addGlobalError("Informe Quantidade Pares V·lido!");
+					Messages.addGlobalError("Informe Quantidade Pares V√°lido!");
 					return;
 				}
 				if (corAmostra.getTotalPar().signum() == 0) {
-					Messages.addGlobalWarn("Pares igual a Zero, alterado situacao para n„o Produzir!");
+					Messages.addGlobalWarn("Pares igual a Zero, alterado situacao para n√£o Produzir!");
 					corAmostra.setDesenvolveramostra(SimNao.N);
 				}
 				BigDecimal varDiferenca;
@@ -1787,7 +1787,7 @@ public class AmostraNovaController implements Serializable {
 					amostra.setTemcor(true);
 					amostraDao.update(amostra);
 					//
-					// Inclui ou alterar Complemento Cabedal, atravÈs campo na Cor CABEDAL
+					// Inclui ou alterar Complemento Cabedal, atrav√©s campo na Cor CABEDAL
 					//
 					if ((corCabedal != null) && (!corCabedal.getTexto().trim().isEmpty())) {
 						if (!corCabedal.getTexto().trim().equals(corCabedalClone.getTexto().trim())) {
@@ -1811,7 +1811,7 @@ public class AmostraNovaController implements Serializable {
 				renovaLazy();
 			}
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel incluir Cor !");
+			Messages.addGlobalError("N√£o foi possivel incluir Cor !");
 			ex.printStackTrace();
 			return;
 		}
@@ -1945,7 +1945,7 @@ public class AmostraNovaController implements Serializable {
 		if (amostra.getLivroReferencia() == null) {
 			// alterado teste para == 1, antes != 2
 			if (operacaoPosterior == 1) {
-				Messages.addGlobalError("Informe ReferÍncia, para apresentaÁ„o da Imagem !");
+				Messages.addGlobalError("Informe Refer√™ncia, para apresenta√ß√£o da Imagem !");
 				// adicionado em 26/05
 			} else {
 				operacaoPosterior = 0;
@@ -1970,7 +1970,7 @@ public class AmostraNovaController implements Serializable {
 
 
 			} else {
-				Messages.addGlobalError("Imagem n„o encontrada !");
+				Messages.addGlobalError("Imagem n√£o encontrada !");
 				return new DefaultStreamedContent();
 			}
 		} else {
@@ -1981,7 +1981,7 @@ public class AmostraNovaController implements Serializable {
 	public void checagemPreVisualizacao() {
 		//
 		// consistencia pagina de entrada da cor,campos obrigatorios
-		// Tipo Material,pÈ se for pares quebrado,pares,size
+		// Tipo Material,p√© se for pares quebrado,pares,size
 		// Testa uso do Pe
 
 		Optional<CorAmostra> corAmostraOpt = Optional.empty();
@@ -1993,17 +1993,17 @@ public class AmostraNovaController implements Serializable {
 		}
 		// Teste Size
 		if ((corAmostra.getSizeCor() == null) || (corAmostra.getSizeCor().isEmpty())) {
-			Messages.addGlobalError("Informe Size,informacao ObrigatÛria !");
+			Messages.addGlobalError("Informe Size,informacao Obrigat√≥ria !");
 			return;
 		}
 		// Teste Pares
 		if (corAmostra.getTotalPar() == null) {
-			Messages.addGlobalError("… necessario informar total de Pares!");
+			Messages.addGlobalError("√â necessario informar total de Pares!");
 			return;
 
 		} else {
 			if (corAmostra.getTotalPar().compareTo(BigDecimal.ZERO) == 0) {
-				Messages.addGlobalError("… necessario informar total de Pares!");
+				Messages.addGlobalError("√â necessario informar total de Pares!");
 				return;
 			}
 		}
@@ -2012,16 +2012,16 @@ public class AmostraNovaController implements Serializable {
 		// Verificar parte Fracionaria ou nao inteiro para pares da Cor
 		if (diferenca.compareTo(BigDecimal.ZERO) != 0) {
 			if (((diferenca.compareTo(BigDecimal.ZERO)) != 0) && (diferenca.compareTo(new BigDecimal(0.5)) != 0)) {
-				Messages.addGlobalError("Quantidade n„o inteiras,a parte fracionaria n„o pode ser diferente de .5!");
+				Messages.addGlobalError("Quantidade n√£o inteiras,a parte fracionaria n√£o pode ser diferente de .5!");
 				return;
 			}
 		}
 		if (((diferenca.compareTo(BigDecimal.ZERO)) != 0) && (corAmostra.getPe() == null)) {
-			Messages.addGlobalError("Para esta Quantidade de Pares,È necess·rio escolher qual o P… !");
+			Messages.addGlobalError("Para esta Quantidade de Pares,√© necess√°rio escolher qual o P√â !");
 			return;
 		}
 		if (((diferenca.compareTo(BigDecimal.ZERO)) == 0) && (corAmostra.getPe() != null)) {
-			Messages.addGlobalError("Para esta Quantidade de Pares,N√O È necess·rio escolher qual o P… !");
+			Messages.addGlobalError("Para esta Quantidade de Pares,N√ÉO √© necess√°rio escolher qual o P√â !");
 			return;
 		}
 
@@ -2050,7 +2050,7 @@ public class AmostraNovaController implements Serializable {
 		if ((corAmostra.getParCancelado().compareTo(BigDecimal.ZERO) != 0)
 				&& (corAmostra.getParCancelado().compareTo(BigDecimal.ZERO) != 0)) {
 			if (amostra.getDataXfcFinal() == null) {
-				Messages.addGlobalError("Para Cancelar,È necess·rio Amostra ser Produzida !");
+				Messages.addGlobalError("Para Cancelar,√© necess√°rio Amostra ser Produzida !");
 				return;
 
 			} else {
@@ -2126,7 +2126,7 @@ public class AmostraNovaController implements Serializable {
 			btnVisao = true;
 		} else {
 			if ((ajustaMulti.get(0).getMaterial() == null) || (ajustaMulti.get(0).getCor() == null)) {
-				Messages.addGlobalError("Informe Material/Cor,faltando informaÁıes!");
+				Messages.addGlobalError("Informe Material/Cor,faltando informa√ß√µes!");
 				btnVisao = false;
 				return;
 			}else {
@@ -2204,7 +2204,7 @@ public class AmostraNovaController implements Serializable {
 				}
 
 				if (((primeiroMat != 0) || (primeiraCor != 0)) && (mSequenciador != mI)) {
-					Messages.addGlobalError("Informe Material/Cor,faltando informaÁıes!");
+					Messages.addGlobalError("Informe Material/Cor,faltando informa√ß√µes!");
 					primeiroMat = 0;
 					primeiraCor = 0;
 					return;
@@ -2643,7 +2643,7 @@ public class AmostraNovaController implements Serializable {
 			iniciaTransCorteCor();
 
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel incluir Detalhes Corte/Cores!");
+			Messages.addGlobalError("N√£o foi possivel incluir Detalhes Corte/Cores!");
 			ex.printStackTrace();
 			return;
 		}
@@ -2659,7 +2659,7 @@ public class AmostraNovaController implements Serializable {
 			Messages.addGlobalInfo("Dados Detalhe Costura/Cor, alterado com  sucesso !");
 			iniciaTransCosturaCor();
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel Alterar Detalhe(s) Costura/Cor(es) !");
+			Messages.addGlobalError("N√£o foi possivel Alterar Detalhe(s) Costura/Cor(es) !");
 			ex.printStackTrace();
 			return;
 		}
@@ -2679,7 +2679,7 @@ public class AmostraNovaController implements Serializable {
 			iniciaTransSoladoCor();
 
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel incluir Cores Solado !");
+			Messages.addGlobalError("N√£o foi possivel incluir Cores Solado !");
 			ex.printStackTrace();
 			return;
 		}
@@ -2692,12 +2692,12 @@ public class AmostraNovaController implements Serializable {
 		try {
 			acabamentoAmostraDao.update(acabamentoAmostra);
 			acabamentoAmostraDao.saveAmostraCorAcabamento(listaCorAcabamentoAmostra);
-			Messages.addGlobalInfo("Dados Detalhes Acabamento e combinaÁıes, Incluidos com  sucesso !");
+			Messages.addGlobalInfo("Dados Detalhes Acabamento e combina√ß√µes, Incluidos com  sucesso !");
 
 			iniciaTransAcabCor();
 
 		} catch (RuntimeException ex) {
-			Messages.addGlobalError("N„o foi possivel incluir Detalhes Acabamentos/Cores !");
+			Messages.addGlobalError("N√£o foi possivel incluir Detalhes Acabamentos/Cores !");
 			ex.printStackTrace();
 			return;
 		}
@@ -2800,11 +2800,11 @@ public class AmostraNovaController implements Serializable {
 						amostra.setPrioridadeProducao(PrioridadeProducao.N);
 						amostraDao.update(amostra);
 						if (!solicitaLiberacao) {
-							Messages.addGlobalInfo("SolicitaÁ„o de Bloqueio realizado com sucesso !");
+							Messages.addGlobalInfo("Solicita√ß√£o de Bloqueio realizado com sucesso !");
 							solicitaLiberacao = true;
 						}
 					} catch (RuntimeException re) {
-						Messages.addGlobalInfo("N„o foi possivel atualizar Ficha(s) ProduÁ„o(es)!");
+						Messages.addGlobalInfo("N√£o foi possivel atualizar Ficha(s) Produ√ß√£o(es)!");
 						return;
 					}
 					if (solicitaLiberacao) {
@@ -2818,7 +2818,7 @@ public class AmostraNovaController implements Serializable {
     public void executaDesbloqueio() throws MessagingException {
     	String msgAgrupa = "";
     	String msgRec = "";
-    	String msg = "Ol·, Por favor liberar as seguintes Fichas em ProduÁ„o:";
+    	String msg = "Ol√°, Por favor liberar as seguintes Fichas em Produ√ß√£o:";
     	Boolean temMarca = false;
     	for (FichaProducao fichaProducao : listaFichasProducao) {
 			if (fichaProducao.getAliberar()) {
@@ -2838,9 +2838,9 @@ public class AmostraNovaController implements Serializable {
 			}
 		}
     	if (temMarca) {
-    		addMessage(FacesMessage.SEVERITY_INFO, "Fichas enviadas para LiberaÁ„o !", "");
+    		addMessage(FacesMessage.SEVERITY_INFO, "Fichas enviadas para Libera√ß√£o !", "");
     	}else {
-    		addMessage(FacesMessage.SEVERITY_WARN, "N„o foi selecionada,Ficha para Desbloqueio !", "");
+    		addMessage(FacesMessage.SEVERITY_WARN, "N√£o foi selecionada,Ficha para Desbloqueio !", "");
     	}
     	msgAgrupa="Ficha(s) : "+msgAgrupa;
     	msg+=System.lineSeparator()+msgAgrupa;
@@ -2848,7 +2848,7 @@ public class AmostraNovaController implements Serializable {
     	String remetente = "ti@gvdintl.com.br";
     	String senha = "Fus99907";
     	String destinatario = "ti@gvdintl.com.br";
-    	String assunto = "SolicitaÁ„o liberacao Fichas em ProduÁ„o";
+    	String assunto = "Solicita√ß√£o liberacao Fichas em Produ√ß√£o";
     	enviadorEmail.sendMail(remetente, senha, destinatario, msg, assunto);
     	try {
     		/*T=Significa, solicitado desbloqueio na producao,somente podera alterar
@@ -2915,10 +2915,10 @@ public class AmostraNovaController implements Serializable {
     	nomeEventos.add("Acabamento");
     }
     
-    public void CheckSeHouveAlteraÁ„o() {
+    public void CheckSeHouveAltera√ß√£o() {
     	
     }
-	// ------Vis„o Logs
+	// ------Vis√£o Logs
 	public void visaoLogs() {
 	  if (listaLogs.size() != 0) {
 		Map<String, Object> options = new HashMap<String, Object>();
@@ -2934,7 +2934,7 @@ public class AmostraNovaController implements Serializable {
 		options.put("showEffect", "flip");
 		PrimeFaces.current().dialog().openDynamic("frkLogs", options, null);
 	  }else {
-		Messages.addGlobalWarn("N„o h· alteraÁıes para esta Amostra");
+		Messages.addGlobalWarn("N√£o h√° altera√ß√µes para esta Amostra");
 		return;
 
 	  }

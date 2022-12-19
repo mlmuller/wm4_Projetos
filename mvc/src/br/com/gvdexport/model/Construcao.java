@@ -36,7 +36,7 @@ public class Construcao implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "construcaoSeq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "construcaoSeq")
 	@SequenceGenerator(name = "construcaoSeq", sequenceName = "s_construcao", allocationSize = 1)
 	@Column(name="cons_pk",updatable=false,nullable=false)
 	private Long construcaoid;

@@ -32,7 +32,7 @@ public class CosturaConfirmacao implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "confcosturaSeq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "confcosturaSeq")
 	@SequenceGenerator(name = "confcosturaSeq", sequenceName = "s_confcostura", allocationSize = 1)
 	@Column(name="confcostura_pk",updatable=false,nullable=false)
 	private Long id;
