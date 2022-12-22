@@ -123,8 +123,8 @@
 
                 <p:column>
                     <p:submenu label="Amostras Novas" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
-                        <p:menuitem value="Amostras " url="AmostraTeste.jsf" />
-                        <p:menuitem value="Novas 2.2" url="#"/>
+                        <p:menuitem value="Amostras " url="AmostraTeste.jsf" actionListener="#{amostraNovaController.init()}" />
+                        <p:menuitem value="" url="#"/>
                     </p:submenu>
                     <p:submenu label="Etiquetas" style="height:15px;background-color:#bad9cb;color:black;text-align:center">
                         <p:menuitem value="Inserir" url="jretiqueta.jsf"/>
@@ -172,7 +172,7 @@
                   	      <i class="pi pi-envelope" style="font-size: 1.5rem;" title="Fichas,a Liberar"/>
   						</p:badge>
   						</p:menuitem>
-                        <p:menuitem value="Manutenção" url="ManutencaoProducao.jsf"/>
+                        <p:menuitem value="Manutenção" url="ManutencaoProducao.jsf" actionListener="#{producaoController.init()}"/>
                     </p:submenu>
                 </p:column>
                 <p:column>

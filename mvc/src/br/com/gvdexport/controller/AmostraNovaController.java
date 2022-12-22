@@ -184,8 +184,12 @@ public class AmostraNovaController implements Serializable {
 	private Integer Number1;
 	@Getter @Setter
 	private Integer Number2;
+	
+	public LazyDataModel<Amostra> getLazyModel() {
+		return lazyModel;
+	}
+
 	//Itens para Lazy e reLazy
-	@Getter @Setter
 	private LazyDataModel<Amostra> lazyModel;
 	@Getter @Setter
 	private Amostra amostraSelecionada;

@@ -11,6 +11,20 @@
 	
 	<style type="text/css">
 
+	.colorA {  
+ 			border-bottom: 2px solid red;
+	}  
+	
+	.colorB {  
+ 			border-bottom: 2px solid orange;
+ 			font-size: 2em;
+	}  
+
+	.colorC {  
+ 			border-bottom: 2px solid green;
+
+	}  
+
 	.indivcheckbox .ui-icon-check {
 	    width: 5px;
 	    height: 5px;
@@ -42,7 +56,7 @@
 	.alturalinhaDatatable .ui-datatable .ui-datatable-data tr{
 		height: 15px;		
 	}
-  }
+
 
 
 </style>
@@ -209,8 +223,9 @@
 								<h:outputText value="#{cor.desenvolveramostra}" />
 							</pf:column>
 							<pf:column style="text-align:center">
-								<h:outputText
-									value="#{cor.marca}" style="font-size:1.2em;color:#{cor.producao eq 'true' ? 'green' : 'red'}" title="Status geração ficha Produção" />
+ 								<h:outputText value="#{cor.marca}" rendered="#{cor.producao eq 'true'}" styleClass="colorC" title="Ficha Produção Gerada!"/>
+								<h:outputText value="#{cor.marca}" rendered="#{cor.producao eq 'false' and cor.desenvolveramostra eq 'N'}" styleClass="colorA" title="Marcada para Não Produzir"/>
+								<h:outputText value="#{cor.marca}" rendered="#{cor.producao eq 'false' and cor.desenvolveramostra eq 'S'}" styleClass="colorB" title="Disponivel para Geração de Produção!"/>
 							</pf:column>
 							<pf:column style="font-size:9px;" width="90">
 								<h:outputText value="#{cor.material}" style="font-size:9px;white-space:normal;" />

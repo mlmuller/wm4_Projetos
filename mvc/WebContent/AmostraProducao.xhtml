@@ -11,7 +11,19 @@
 	<ui:define name="corpo">
 	 <style type="text/css">
 
-		
+	.colorA {  
+ 			border-bottom: 2px solid red;
+	}  
+	
+	.colorB {  
+ 			border-bottom: 2px solid orange;
+ 			font-size: 2em;
+	}  
+
+	.colorC {  
+ 			border-bottom: 2px solid green;
+
+	}  
 	
 		.TabelaAux thead th {
 			border: none !important;
@@ -381,7 +393,9 @@
 							<h:outputText value="#{cor.desenvolveramostra}" />
 						</pf:column>
 						<pf:column style="text-align:center;">
-							<h:outputText value="#{cor.marca}" style="color:#{cor.producao eq 'true' ? 'green' : 'red'}"/>
+							<h:outputText value="#{cor.marca}" rendered="#{cor.producao eq 'true'}" styleClass="colorC" title="Ficha Produção Gerada!"/>
+							<h:outputText value="#{cor.marca}" rendered="#{cor.producao eq 'false' and cor.desenvolveramostra eq 'N'}" styleClass="colorA" title="Marcada para Não Produzir"/>
+							<h:outputText value="#{cor.marca}" rendered="#{cor.producao eq 'false' and cor.desenvolveramostra eq 'S'}" styleClass="colorB" title="Disponivel para Geração de Produção!"/>
 						</pf:column>
 						<pf:column style="font-size:9px;" width="3">
 							<h:outputText value="#{cor.sequenciaCorAmostra}" 

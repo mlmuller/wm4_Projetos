@@ -110,15 +110,11 @@ public class ProducaoController implements Serializable {
 	private LivroReferencia referenciaSelecionada;
 	@Getter @Setter
 	private List<Estacao> listaEstacoes;
-	//Itens Lazy
-	@Getter @Setter
+	//Itens Laz
 	private LazyDataModel<FichaProducao> lazyModel;
+	
 	@Getter @Setter
 	private FichaProducao amostraProducaoSelecionada;
-	//------------------------------------------------
-	@Inject
-	private LazyDataService service;
-
     private String activeIndexes = null;
     private List<Tab> accordionTabs = null;
 
@@ -188,10 +184,12 @@ public class ProducaoController implements Serializable {
 	@Inject
 	private EnviadorEmail enviadorEmail;
 
+	@Inject
+	private LazyDataService service;
 	@PostConstruct
+	
 	public void init() {
 		amostra = new Amostra();
-
 		qtdTransicao =0;
 		fichaProducao = new FichaProducao();
 		listaLivroReferencia = new ArrayList<LivroReferencia>();
@@ -219,6 +217,8 @@ public class ProducaoController implements Serializable {
 	public void renovaLazy() {
 		lazyModel = new LazyFichaProducaoDataModel(service.getAmostraProducao());
 	}
+
+	
 	public void setService(LazyDataService service) {
 		this.service = service;
 	}
@@ -580,6 +580,9 @@ public class ProducaoController implements Serializable {
 		return;
 
 	  }
+	}
+	public LazyDataModel<FichaProducao> getLazyModel() {
+		return lazyModel;
 	}
 
 }
